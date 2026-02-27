@@ -8,6 +8,18 @@
 
 This solution establishes a zero-budget enterprise collaboration system for `dennisleehappy.org`. It utilizes **Cloudflare** for DNS management, **Zoho Mail** for email hosting, and **Google Workspace Essentials** for team collaboration and Identity (SSO).
 
+### 📦 專案結構 (Project Structure)
+
+Plaintext
+
+```
+sentinel-rs/
+├── Cargo.toml          # 依賴設定檔
+├── README.md           # 專案說明與快速入門
+└── src/
+    └── main.rs         # 核心比對邏輯代碼
+```
+
 ---
 
 ## 2. 系統架構 (System Architecture)
