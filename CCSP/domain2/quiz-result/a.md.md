@@ -335,7 +335,7 @@
 
 - **正解：Centralized IAM with adaptive access controls**
     
-- **你選：每個服務模型各自做 RBAC**
+- **選：每個服務模型各自做 RBAC**
     
 
 **為什麼 centralized IAM 才是最有效**
