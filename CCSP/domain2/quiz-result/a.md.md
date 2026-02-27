@@ -351,7 +351,7 @@
     - 動態條件（device posture / location / risk）
         
 
-**你選項的缺點**
+**選項的缺點**
 
 - 分散 RBAC = 可行但不可控、不可擴展、難以保證一致 least privilege。
     
