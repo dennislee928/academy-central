@@ -397,7 +397,7 @@
 
 - **正解：Cryptographic erasure（cryptoshredding）**
     
-- **你選：Regular third-party security audits**
+- **選：Regular third-party security audits**
     
 
 **為什麼是 cryptographic erasure**
