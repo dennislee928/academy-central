@@ -317,7 +317,7 @@
 - 真正難的是：**可視性、治理一致性、保留/刪除落地、資料流向/責任切割**，而不只是 edge 做 RBAC。
     
 
-**你選的為何不夠「最主要」**
+**選的為何不夠「最主要」**
 
 - edge access control 是其中一個 control；題目問的是「data roles」在新生態需要最大調整的面向，答案更偏 governance/lifecycle。
     
