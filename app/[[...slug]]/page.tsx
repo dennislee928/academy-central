@@ -20,7 +20,8 @@ export async function generateStaticParams() {
 
 function slugHref(segments: string[]) {
   if (segments.length === 0) return '/';
-  return '/' + segments.map(encodeURIComponent).join('/');
+  // 與 next.config 的 trailingSlash: true 一致，靜態匯出後路徑為 .../index.html
+  return '/' + segments.map(encodeURIComponent).join('/') + '/';
 }
 
 export default async function SlugPage({ params }: Props) {
