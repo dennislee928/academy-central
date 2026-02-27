@@ -4,3 +4,6 @@
 .obsidian/workspace.json
 .DS_Store
 .obsidian/*
+/.next
+/node_modules
+/out
