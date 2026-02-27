@@ -20,6 +20,11 @@ const RECURSE_EXCLUDE = new Set(['node_modules', '.git', 'target', 'src']);
 
 const MD_EXTENSIONS = ['.md', '.mdx'];
 
+/** 統一使用 NFC，避免 macOS 檔名 (NFD) 與 URL 解碼 (NFC) 不一致導致找不到檔案 */
+function toNFC(s: string): string {
+  return s.normalize('NFC');
+}
+
 export type ContentEntry = { slug: string[]; filePath: string };
 
 /**
@@ -59,7 +64,7 @@ function walkMdFiles(dirRelative: string): string[] {
 export function pathToSlug(relativePath: string): string[] {
   const normalized = path.normalize(relativePath).replace(/\\/g, '/');
   const withoutExt = normalized.replace(/\.(md|mdx)+$/i, '');
-  const segments = withoutExt.split('/').filter(Boolean);
+  const segments = withoutExt.split('/').filter(Boolean).map(toNFC);
   if (segments[segments.length - 1]?.toLowerCase() === 'readme') {
     return segments.slice(0, -1);
   }
@@ -97,25 +102,32 @@ export function getAllEntries(): ContentEntry[] {
  */
 export function getFilePath(slug: string[]): string | null {
   if (slug.length === 0) return null;
-  const rel = path.join(...slug);
+  const normalizedSlug = slug.map(toNFC);
+  const rel = path.join(...normalizedSlug);
   const base = path.join(CWD, rel);
   for (const ext of ['.md', '.mdx']) {
     const p = base + ext;
     if (fs.existsSync(p) && fs.statSync(p).isFile()) return path.relative(CWD, p).replace(/\\/g, '/');
   }
-  const dir = path.join(CWD, ...slug);
+  const dir = path.join(CWD, ...normalizedSlug);
   if (fs.existsSync(dir) && fs.statSync(dir).isDirectory()) {
     for (const name of ['readme.md', 'README.md', 'index.md', 'index.mdx']) {
       const p = path.join(dir, name);
       if (fs.existsSync(p) && fs.statSync(p).isFile()) return path.relative(CWD, p).replace(/\\/g, '/');
     }
   }
-  const parentDir = path.join(CWD, ...slug.slice(0, -1));
-  const last = slug[slug.length - 1];
+  // 依目錄實際檔名解析（解決 macOS NFD 與 URL NFC 不一致）
+  const parentDir = path.join(CWD, ...normalizedSlug.slice(0, -1));
+  const last = normalizedSlug[normalizedSlug.length - 1];
   if (last && fs.existsSync(parentDir) && fs.statSync(parentDir).isDirectory()) {
-    for (const name of [`${last}.md`, `${last}.mdx`, `${last}.md.md`]) {
-      const p = path.join(parentDir, name);
-      if (fs.existsSync(p) && fs.statSync(p).isFile()) return path.relative(CWD, p).replace(/\\/g, '/');
+    const dirEntries = fs.readdirSync(parentDir, { withFileTypes: true });
+    const lastNFC = toNFC(last);
+    for (const e of dirEntries) {
+      if (!e.isFile() || !MD_EXTENSIONS.includes(path.extname(e.name).toLowerCase())) continue;
+      const baseName = e.name.replace(/\.(md|mdx)+$/i, '');
+      if (toNFC(baseName) !== lastNFC) continue;
+      const p = path.join(parentDir, e.name);
+      return path.relative(CWD, p).replace(/\\/g, '/');
     }
   }
   return null;
@@ -173,13 +185,14 @@ export function getDirectoryChildren(relativeDir: string): { name: string; type:
   const prefix = relativeDir ? relativeDir.split(path.sep) : [];
   for (const e of entries) {
     if (e.name.startsWith('.')) continue;
+    const nameNFC = toNFC(e.name);
     if (e.isDirectory()) {
       if (RECURSE_EXCLUDE.has(e.name)) continue;
-      result.push({ name: e.name, type: 'dir', slug: [...prefix, e.name] });
+      result.push({ name: nameNFC, type: 'dir', slug: [...prefix, nameNFC] });
     } else if (e.isFile() && MD_EXTENSIONS.includes(path.extname(e.name).toLowerCase())) {
-      const base = e.name.replace(/\.(md|mdx)$/i, '');
-      if (base.toLowerCase() === 'readme') result.push({ name: e.name, type: 'file', slug: prefix });
-      else result.push({ name: e.name, type: 'file', slug: [...prefix, base] });
+      const base = toNFC(e.name.replace(/\.(md|mdx)$/i, ''));
+      if (base.toLowerCase() === 'readme') result.push({ name: nameNFC, type: 'file', slug: prefix });
+      else result.push({ name: nameNFC, type: 'file', slug: [...prefix, base] });
     }
   }
   return result.sort((a, b) => {
