@@ -161,7 +161,7 @@
 
 ### Q1（2.3 Data obfuscation/masking）
 
-**題目：**「哪種資料混淆方法會把原始資料改值/打亂，讓你能在不暴露敏感資料的情況下做測試或分析？」
+**題目：**「哪種資料混淆方法會把原始資料改值/打亂，在不暴露敏感資料的情況下做測試或分析？」
 
 - **正解：Data Masking**
     
@@ -402,7 +402,7 @@
 
 **為什麼是 cryptographic erasure**
 
-- 雲上你通常**碰不到實體媒體**，很難用 shred/incinerate。
+- 雲上通常**碰不到實體媒體**，很難用 shred/incinerate。
     
 - 最可控方式是：**資料先加密**，到期/需銷毀時**安全清除金鑰** → 即使殘留 bit 也不可讀。
     
@@ -425,7 +425,7 @@
 
 - **正解：Cloud service customer**
     
-- **你選：Provider & customer 共同負責**
+- **選：Provider & customer 共同負責**
     
 
 **為什麼正解是 customer**
@@ -438,7 +438,7 @@
         題目問的是 **data access controls**，通常落在 customer。
         
 
-**你選的陷阱**
+**選的陷阱**
 
 - shared responsibility 不是「每一件事都共同」；要看 control 類型。資料存取控制通常屬於 customer 的責任區。
     
@@ -456,7 +456,7 @@
 
 - **正解：Centralized data governance framework with defined roles/responsibilities**
     
-- **你選：為每個雲服務做一份責任矩陣**
+- **選：為每個雲服務做一份責任矩陣**
     
 
 **為什麼 governance framework 比矩陣更“有效”**
@@ -472,7 +472,7 @@
 - **Central governance framework** 才是能長期運作的系統：定義角色、流程、標準、稽核節點、合約/DPAs 的落地方式。
     
 
-**你選項為何不夠**
+**選項為何不夠**
 
 - matrix 是必要但不足；題目問「most effectively」，答案選能系統化、可維運的治理機制。
     
@@ -484,7 +484,7 @@
 
 ---
 
-## 你接下來的讀書動作（對應 P0/P1，最短路徑）
+## 接下來的讀書動作（對應 P0/P1，最短路徑）
 
 ### P0（先做）
 
