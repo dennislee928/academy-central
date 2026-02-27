@@ -1,0 +1,8 @@
+# Sentinel-RS 設定範例（複製為 config.toml，勿提交含 secret 的 config.toml）
+# 機密請使用 .env（並加入 .gitignore）
+
+[general]
+domain = "dennisleehappy.org"
+
+[zoho]
+max_mailboxes = 5
