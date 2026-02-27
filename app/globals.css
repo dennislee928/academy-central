@@ -2,31 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground: #171717;
-  --background: #fafafa;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #ededed;
-    --background: #0a0a0a;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
+  @apply bg-black text-white antialiased;
 }
 
-/* Markdown content */
+/* Markdown content — dark theme, Nothing-style minimal */
+.prose {
+  @apply text-white/90 max-w-none;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-white font-bold tracking-tight mt-8 mb-3;
+}
+.prose h1 { @apply text-2xl; }
+.prose h2 { @apply text-xl; }
+.prose h3 { @apply text-lg; }
+.prose p {
+  @apply my-4 leading-relaxed text-white/85;
+}
+.prose a {
+  @apply text-white underline underline-offset-4 hover:opacity-80 transition-opacity;
+}
+.prose ul, .prose ol {
+  @apply my-4 pl-6 text-white/85;
+}
+.prose li {
+  @apply my-1;
+}
+.prose blockquote {
+  @apply border-l-2 border-white/30 pl-4 my-4 text-white/70 italic;
+}
+.prose code {
+  @apply bg-white/10 text-white/90 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+.prose pre {
+  @apply bg-white/5 border border-white/10 rounded-lg p-4 overflow-x-auto my-4;
+}
+.prose pre code {
+  @apply bg-transparent p-0;
+}
 .prose table {
-  @apply w-full border-collapse border border-gray-300 dark:border-gray-600;
+  @apply w-full border-collapse my-6;
 }
 .prose th,
 .prose td {
-  @apply border border-gray-300 dark:border-gray-600 px-3 py-2 text-left;
+  @apply border border-white/20 px-4 py-3 text-left text-white/85;
 }
 .prose th {
-  @apply bg-gray-100 dark:bg-gray-800 font-medium;
+  @apply bg-white/5 font-semibold text-white;
 }

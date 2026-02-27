@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import './globals.css';
-
-const basePath = process.env.NODE_ENV === 'production' ? '/academy-central' : '';
 
 export const metadata: Metadata = {
   title: 'Academy Central',
@@ -15,18 +14,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-TW">
-      <body className="min-h-screen antialiased">
-        <header className="border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur sticky top-0 z-10">
-          <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-4">
-            <a href={basePath ? `${basePath}/` : '/'} className="font-semibold text-lg">
+      <body className="min-h-screen antialiased bg-black text-white">
+        <header className="sticky top-0 z-10 border-b border-white/10 bg-black/90 backdrop-blur-md">
+          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <Link href="/" className="font-semibold text-lg tracking-tight hover:opacity-80 transition-opacity">
               Academy Central
-            </a>
-            <nav className="text-sm text-gray-600 dark:text-gray-400">
-              <a href={basePath ? `${basePath}/` : '/'}>首頁</a>
+            </Link>
+            <nav className="text-sm text-white/70">
+              <Link href="/" className="hover:text-white transition-colors">首頁</Link>
             </nav>
           </div>
         </header>
-        <main className="max-w-4xl mx-auto px-4 py-8">{children}</main>
+        <main className="max-w-5xl mx-auto px-6 py-12">{children}</main>
       </body>
     </html>
   );

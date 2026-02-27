@@ -9,8 +9,6 @@ import {
 } from '@/lib/content';
 import MarkdownContent from '@/components/MarkdownContent';
 
-const basePath = process.env.NODE_ENV === 'production' ? '/academy-central' : '';
-
 type Props = { params: Promise<{ slug?: string[] }> };
 
 export async function generateStaticParams() {
@@ -20,20 +18,29 @@ export async function generateStaticParams() {
   return params;
 }
 
+function slugHref(segments: string[]) {
+  if (segments.length === 0) return '/';
+  return '/' + segments.map(encodeURIComponent).join('/');
+}
+
 export default async function SlugPage({ params }: Props) {
   const { slug } = await params;
   if (!slug || slug.length === 0) {
     const roots = getContentRoots();
     return (
-      <div>
-        <h1 className="text-2xl font-bold mb-2">Academy Central</h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-6">依主 page（母 folder）瀏覽內容。</p>
-        <ul className="space-y-2">
+      <div className="min-h-[60vh] flex flex-col justify-center">
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
+          Academy Central
+        </h1>
+        <p className="text-white/60 text-lg mb-12 max-w-xl">
+          依主 page（母 folder）瀏覽內容。
+        </p>
+        <ul className="space-y-4">
           {roots.map((name) => (
             <li key={name}>
               <Link
-                href={`${basePath}/${encodeURIComponent(name)}`}
-                className="text-blue-600 dark:text-blue-400 hover:underline"
+                href={slugHref([name])}
+                className="block text-xl text-white hover:text-white/90 transition-colors py-2 border-b border-white/10 hover:border-white/30"
               >
                 {name}
               </Link>
@@ -51,18 +58,16 @@ export default async function SlugPage({ params }: Props) {
     const content = readFileContent(filePath);
     const breadcrumbs = slug.map((s, i) => ({
       label: s,
-      href: `${basePath}/${slug.slice(0, i + 1).map(encodeURIComponent).join('/')}`,
+      href: slugHref(slug.slice(0, i + 1)),
     }));
     return (
       <div>
-        <nav className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-          <Link href={basePath ? basePath + '/' : '/'} className="hover:underline">
-            首頁
-          </Link>
+        <nav className="mb-8 text-sm text-white/60 flex flex-wrap items-center gap-1">
+          <Link href="/" className="hover:text-white transition-colors">首頁</Link>
           {breadcrumbs.map((b) => (
             <span key={b.href}>
-              {' / '}
-              <Link href={b.href} className="hover:underline">
+              <span className="mx-1">/</span>
+              <Link href={b.href} className="hover:text-white transition-colors">
                 {b.label}
               </Link>
             </span>
@@ -77,8 +82,8 @@ export default async function SlugPage({ params }: Props) {
   if (children.length === 0) {
     return (
       <div>
-        <p className="text-gray-600 dark:text-gray-400">此路徑下尚無內容。</p>
-        <Link href={basePath ? basePath + '/' : '/'} className="text-blue-600 dark:text-blue-400 mt-4 inline-block">
+        <p className="text-white/60 mb-6">此路徑下尚無內容。</p>
+        <Link href="/" className="text-white hover:opacity-80 transition-opacity inline-block">
           ← 回首頁
         </Link>
       </div>
@@ -87,30 +92,28 @@ export default async function SlugPage({ params }: Props) {
 
   const breadcrumbs = slug.map((s, i) => ({
     label: s,
-    href: `${basePath}/${slug.slice(0, i + 1).map(encodeURIComponent).join('/')}`,
+    href: slugHref(slug.slice(0, i + 1)),
   }));
   return (
     <div>
-      <nav className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        <Link href={basePath ? basePath + '/' : '/'} className="hover:underline">
-          首頁
-        </Link>
+      <nav className="mb-8 text-sm text-white/60 flex flex-wrap items-center gap-1">
+        <Link href="/" className="hover:text-white transition-colors">首頁</Link>
         {breadcrumbs.map((b) => (
           <span key={b.href}>
-            {' / '}
-            <Link href={b.href} className="hover:underline">
+            <span className="mx-1">/</span>
+            <Link href={b.href} className="hover:text-white transition-colors">
               {b.label}
             </Link>
           </span>
         ))}
       </nav>
-      <h1 className="text-xl font-bold mb-4">{slug[slug.length - 1] ?? '目錄'}</h1>
-      <ul className="space-y-2">
+      <h1 className="text-3xl font-bold tracking-tight mb-8">{slug[slug.length - 1] ?? '目錄'}</h1>
+      <ul className="space-y-3">
         {children.map((c) => (
           <li key={c.slug.join('/')}>
             <Link
-              href={`${basePath}/${c.slug.map(encodeURIComponent).join('/')}`}
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              href={slugHref(c.slug)}
+              className="block text-lg text-white/90 hover:text-white py-2 border-b border-white/10 hover:border-white/30 transition-colors"
             >
               {c.type === 'dir' ? `📁 ${c.name}` : c.name.replace(/\.(md|mdx)$/i, '')}
             </Link>
