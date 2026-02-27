@@ -141,3 +141,362 @@
 - **Archive**：長期保存/符合法規保留（retention）＋取回成本/可用性
     
 - **Destroy**：雲上無法物理粉碎 → 常用 **cryptographic erasure / cryptoshredding**
+---
+### 錯題分佈（以每題的「主要考點 section」歸類）
+
+**總錯題：11 題**
+
+|Domain 2 section|命中錯題數|錯題占比（在 11 題內）|重要度(1-5)*|風險分數（命中×重要度）|Priority|對應錯題|
+|---|---|---|---|---|---|---|
+|**2.1 Cloud data concepts**|**4**|**36.4%**|5|**20**|**P0**|Q6, Q8, Q10, Q11|
+|**2.3 Data security tech/strategy**|**3**|**27.3%**|5|**15**|**P0**|Q1, Q2, Q4|
+|**2.7 Retention / deletion / archiving**|**2**|**18.2%**|4|**8**|**P1**|Q3, Q9|
+|**2.5 Data classification**|1|9.1%|4|4|**P1**|Q5|
+|**2.6 IRM**|1|9.1%|4|4|**P1**|Q7|
+|2.2 Storage architectures|0|0%|3|0|尚未考到|—|
+|2.4 Data discovery|0|0%|3|0|尚未考到|—|
+
+---
+## 錯題詳解
+
+### Q1（2.3 Data obfuscation/masking）
+
+**題目：**「哪種資料混淆方法會把原始資料改值/打亂，在不暴露敏感資料的情況下做測試或分析？」
+
+- **正解：Data Masking**
+    
+- **選：Anonymization**
+    
+
+**為什麼正解是 Masking**
+
+- **Masking 的核心目的＝“可用”**：讓資料看起來像真的、仍可測試/分析（格式、分佈、統計特性可保留），但不是真值。
+    
+
+**選的為何錯（陷阱）**
+
+- **Anonymization 的核心目的＝“不可回推個體”**：重點在移除識別性（direct/indirect identifiers），不一定保留可用的真實分佈或格式。
+    
+
+**考場口訣**
+
+- **Masking = 用來「測試/開發/分析」**
+    
+- **Anonymization = 用來「隱私/去識別」**
+    
+
+---
+
+### Q2（2.3 Data masking techniques）
+
+**題目：**「把資料值在 dataset 內重新排列，隱藏模式但保留整體特性（避免重新識別）」
+
+- **正解：Shuffling**
+    
+- **選：Static Substitution**
+    
+
+**為什麼正解是 Shuffling**
+
+- **Shuffling = 重新排列（permutation）**：把同欄位的值打散交換，**保留值集合/分佈**，但破壞個體對應關係（降低 re-identification）。
+    
+
+**Static Substitution 為何不對**
+
+- **Substitution = 替換成別的值（常是“看似真實的假值”）**：重點是換值，不是重新排列原值。
+    
+
+**考場辨識點**
+
+- 看到「reorganize / reorder / rearrange values」＝**Shuffling**
+    
+- 看到「replace with realistic fake values」＝**Substitution**
+    
+
+---
+
+### Q3（2.7 Retention + lifecycle / 2.1 lifecycle cross）
+
+**題目：**「雲端資料生命週期中，哪個 phase 透過 retention policies 來確保合規？」
+
+- **正解：Archive**
+    
+- **選：Store**
+    
+
+**為什麼正解是 Archive**
+
+- **Archive phase = 長期保存/保留**（符合法規保留年限、保留可取回性、通常是低成本冷儲存）。
+    
+- Retention policy 的典型落點就是「何時進 archive、保留多久、何時銷毀」。
+    
+
+**Store 為何不對**
+
+- Store 是把資料寫入/持久化到儲存系統；retention 是**資料管理政策**（保留/歸檔/到期）更貼近 Archive。
+    
+
+**考場口訣**
+
+- **Retention 合規 → Archive**
+    
+- **寫入保存 → Store**
+    
+
+---
+
+### Q4（2.3 Tokenization）
+
+**題目：**「用非敏感替代值取代敏感資料，仍能做某些操作且不暴露真值」
+
+- **正解：Tokenization**
+    
+- **選：Data Masking**
+    
+
+**為什麼正解是 Tokenization**
+
+- Tokenization 用 token 取代敏感值，**可透過 token vault / tokenization system 對回原值**（受控可逆）。
+    
+
+**Masking 為何不對**
+
+- Masking 多數情境是**不可逆或不設計成可回推**，重點是可用性（測試/分析），不是受控映射回真值。
+    
+
+**秒殺辨識法**
+
+- 看到「token / substitute identifier / map back / vault」＝**Tokenization**
+    
+- 看到「test data / altered values / scrambled」＝**Masking**
+    
+
+---
+
+### Q5（2.5 Classification policies / roles cross）
+
+**題目：**「誰決定資料分類等級，並制定保護政策？」
+
+- **正解：Cloud Data Owner**
+    
+- **選：Cloud Data Custodian**
+    
+
+**為什麼正解是 Owner**
+
+- **Owner（或 Controller）= accountable + 定義政策/分類/風險接受**（“決策權”）。
+    
+
+**Custodian 為何不對**
+
+- **Custodian = 技術落地**（備份、存取機制、容量、可用性、restore），不是決策者。
+    
+
+**口訣**
+
+- **Owner 決定（policy/classification）**
+    
+- **Custodian 執行（technical controls）**
+    
+
+---
+
+### Q6（2.1 Lifecycle concepts in cloud-edge）
+
+**題目：**「智慧城市 IoT + cloud-edge 生態下，傳統 data roles 哪個面向需要最大調整來因應新安全挑戰？」
+
+- **正解：Data lifecycle management across distributed environments**
+    
+- **選：Implementation of edge-specific access controls**
+    
+
+**為什麼正解是 lifecycle management**
+
+- cloud-edge 讓資料從 **create → store → use → share → archive → destroy** 分散在裝置、邊緣、雲端、多供應商。
+    
+- 真正難的是：**可視性、治理一致性、保留/刪除落地、資料流向/責任切割**，而不只是 edge 做 RBAC。
+    
+
+**選的為何不夠「最主要」**
+
+- edge access control 是其中一個 control；題目問的是「data roles」在新生態需要最大調整的面向，答案更偏 governance/lifecycle。
+    
+
+**考場提示**
+
+- 看到「IoT / distributed / edge + cloud」且問 “roles adaptation” → 通常指 **governance + lifecycle end-to-end**
+    
+
+---
+
+### Q7（2.6 IRM / access governance）
+
+**題目：**「多雲 + IaaS/PaaS/SaaS，如何一致且可擴展地落實 least privilege？」
+
+- **正解：Centralized IAM with adaptive access controls**
+    
+- **選：每個服務模型各自做 RBAC**
+    
+
+**為什麼 centralized IAM 才是最有效**
+
+- 多雲/多模型若各自 RBAC：政策分裂、審計困難、Joiner/Mover/Leaver 風險上升。
+    
+- **Centralized IAM**（IdP/SSO/政策引擎）才能統一：
+    
+    - 身份生命週期
+        
+    - 權限模型與審計
+        
+    - 動態條件（device posture / location / risk）
+        
+
+**選項的缺點**
+
+- 分散 RBAC = 可行但不可控、不可擴展、難以保證一致 least privilege。
+    
+
+**口訣**
+
+- **Multi-cloud least privilege → Central policy + Central identity**
+    
+
+---
+
+### Q8（2.1 Data roles: stewardship）
+
+**題目：**「跨整個資料生命週期（create 到 delete）監督資料安全責任的是誰？」
+
+- **正解：Data Steward**
+    
+- **選：Data Controller**
+    
+
+**為什麼是 Steward**
+
+- **Steward = governance/quality/compliance 的“日常監督者與協調者”**，確保流程、標準、metadata、使用合規在全生命周期落地。
+    
+
+**Controller 為何不對**
+
+- Controller（GDPR）偏向 **決定處理目的/方式** 的法律角色；不等於負責日常端到端治理與品質/合規營運。
+    
+
+**記憶法**
+
+- **Controller = 決定“為什麼/怎麼處理”**
+    
+- **Steward = 確保“整個生命週期都照規矩跑”**
+    
+
+---
+
+### Q9（2.7 Destroy / sanitization）
+
+**題目：**「Destroy phase 在 shared responsibility 下，最能解決雲端資料銷毀挑戰的方法？」
+
+- **正解：Cryptographic erasure（cryptoshredding）**
+    
+- **選：Regular third-party security audits**
+    
+
+**為什麼是 cryptographic erasure**
+
+- 雲上通常**碰不到實體媒體**，很難用 shred/incinerate。
+    
+- 最可控方式是：**資料先加密**，到期/需銷毀時**安全清除金鑰** → 即使殘留 bit 也不可讀。
+    
+
+**Audit 為何不對**
+
+- Audit 是治理/驗證手段，不是「銷毀機制」。
+    
+
+**秒殺辨識**
+
+- 看到「Destroy phase + cloud + cannot physically destroy」→ **cryptoshredding**
+    
+
+---
+
+### Q10（2.1 Roles + shared responsibility implication）
+
+**題目：**「shared responsibility model 下，誰主要負責實作與管理雲端資料的 access control？」
+
+- **正解：Cloud service customer**
+    
+- **選：Provider & customer 共同負責**
+    
+
+**為什麼正解是 customer**
+
+- 多數雲模型中：
+    
+    - Provider 負責平台/基礎設施安全（底層）
+        
+    - **Customer 負責資料與其存取權限（IAM/ACL/資料面控制）**  
+        題目問的是 **data access controls**，通常落在 customer。
+        
+
+**選的陷阱**
+
+- shared responsibility 不是「每一件事都共同」；要看 control 類型。資料存取控制通常屬於 customer 的責任區。
+    
+
+**口訣**
+
+- **Your data, your access = customer**
+    
+
+---
+
+### Q11（2.1 Roles + governance: Controller vs Processor）
+
+**題目：**「多雲下要清楚劃分 Controller/Processor 並確保 GDPR 合規，最有效策略？」
+
+- **正解：Centralized data governance framework with defined roles/responsibilities**
+    
+- **選：為每個雲服務做一份責任矩陣**
+    
+
+**為什麼 governance framework 比矩陣更“有效”**
+
+- 責任矩陣是產物（artifact），但沒有治理框架就會：
+    
+    - 版本漂移（不同 BU / 不同供應商）
+        
+    - 沒有一致的 RACI、流程、批准機制、例外處理
+        
+    - 很難持續維運
+        
+- **Central governance framework** 才是能長期運作的系統：定義角色、流程、標準、稽核節點、合約/DPAs 的落地方式。
+    
+
+**選項為何不夠**
+
+- matrix 是必要但不足；題目問「most effectively」，答案選能系統化、可維運的治理機制。
+    
+
+**考場口訣**
+
+- 看到「multi-cloud + GDPR + delineate responsibilities」→ **governance framework（含流程+角色+契約落地）**
+    
+
+---
+
+## 接下來的讀書動作（對應 P0/P1，最短路徑）
+
+### P0（先做）
+
+1. **2.1 Roles/責任邊界**：Owner/Controller/Processor/Custodian/Steward + shared responsibility 在 data access 的落點
+    
+2. **2.3 三分法**：Masking vs Tokenization vs Anonymization（加上 shuffling/substitution 的關鍵字辨識）
+    
+
+### P1（接著做）
+
+3. **2.7 Archive/Destroy + cryptoshredding**（雲端刪除必考）
+    
+4. **2.6 Least privilege 的 centralized IAM 模式**
+    
+5. **2.5 classification policy（Owner）**
