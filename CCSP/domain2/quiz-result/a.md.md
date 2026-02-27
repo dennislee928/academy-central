@@ -369,7 +369,7 @@
 
 - **正解：Data Steward**
     
-- **你選：Data Controller**
+- **選：Data Controller**
     
 
 **為什麼是 Steward**
