@@ -1,0 +1,23 @@
+[package]
+name = "sentinel-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Pei Chen Lee (Dennis)"]
+description = "DNS & Identity Gap Checker for Google/Zoho Integration"
+
+[dependencies]
+# 異步執行引擎 (Async runtime)
+tokio = { version = "1.35", features = ["full"] }
+
+# 序列化與 JSON 解析 (Serialization)
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 網路請求 (HTTP Client)
+reqwest = { version = "0.11", features = ["json"] }
+
+# 終端機色彩輸出 (Terminal styling)
+console = "0.15"
+
+# 錯誤處理
+color-eyre = "0.6"
