@@ -98,6 +98,16 @@ export function getAllEntries(): ContentEntry[] {
 }
 
 /**
+ * 用預先掃描的條目依 slug 取得檔案路徑（與 generateStaticParams 同源，build 時必一致）
+ */
+export function getFilePathFromEntries(slug: string[], entries: ContentEntry[]): string | null {
+  if (slug.length === 0) return null;
+  const key = slug.map(toNFC).join('/');
+  const entry = entries.find((e) => e.slug.map(toNFC).join('/') === key);
+  return entry ? entry.filePath : null;
+}
+
+/**
  * 依父目錄實際檔名解析最後一段 slug（避免路徑字串與檔案系統編碼不一致）
  */
 function resolveByParentDir(parentDir: string, lastSegment: string): string | null {
