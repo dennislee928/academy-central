@@ -1,6 +1,6 @@
 ## 錯題的核心集中點
 
-- **2.2 Cloud data storage architectures**：佔你已提供錯題的 **4/6 = 66.7%** → 這次的 **P0**
+- **2.2 Cloud data storage architectures**：佔已提供錯題的 **4/6 = 66.7%** → 這次的 **P0**
     
 - **2.1 Data roles（Data Steward）**：1/6 → **P1**
     
@@ -48,7 +48,7 @@
 - 對比 block/file 通常落在**volume / filesystem / share** 層級更常見。
     
 
-### 你選 Hybrid 為何不對
+### 選 Hybrid 為何不對
 
 - **Hybrid storage**不是一個「天然提供更細加密粒度」的 storage type；它只是組合/部署形態，粒度取決於底層用的 object/file/block。
     
