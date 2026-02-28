@@ -61,6 +61,20 @@ export default async function SlugPage({ params }: Props) {
       label: s,
       href: slugHref(slug.slice(0, i + 1)),
     }));
+    // 若此頁是目錄的 readme，同目錄下其他 .md 也要列出，否則無法從此頁點進其他文章
+    const isDirReadme =
+      slug.length >= 1 &&
+      (filePath.endsWith('readme.md') || filePath.endsWith('README.md') || filePath.endsWith('index.md') || filePath.endsWith('index.mdx'));
+    const siblingDir = isDirReadme ? slug[0] ?? '' : '';
+    const siblings =
+      siblingDir !== ''
+        ? getDirectoryChildren(siblingDir).filter((c) => {
+            const key = c.slug.join('/');
+            const currentKey = slug.join('/');
+            return key !== currentKey; // 不重複列出「本頁」(readme)
+          })
+        : [];
+
     return (
       <div>
         <nav className="mb-8 text-sm text-white/60 flex flex-wrap items-center gap-1">
@@ -75,6 +89,23 @@ export default async function SlugPage({ params }: Props) {
           ))}
         </nav>
         <MarkdownContent content={content} />
+        {siblings.length > 0 && (
+          <section className="mt-12 pt-8 border-t border-white/10">
+            <h2 className="text-xl font-bold tracking-tight mb-4 text-white/90">本目錄其他內容</h2>
+            <ul className="space-y-3">
+              {siblings.map((c) => (
+                <li key={c.slug.join('/')}>
+                  <Link
+                    href={slugHref(c.slug)}
+                    className="block text-lg text-white/90 hover:text-white py-2 border-b border-white/10 hover:border-white/30 transition-colors"
+                  >
+                    {c.type === 'dir' ? `📁 ${c.name}` : c.name.replace(/\.(md|mdx)$/i, '')}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     );
   }
