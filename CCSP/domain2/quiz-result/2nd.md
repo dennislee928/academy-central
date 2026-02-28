@@ -56,3 +56,29 @@
 **考場關鍵字**
 
 - 看到「**individual object / per-object / granular at-rest controls**」→ **Object storage**
+## 2) SDS（Software-Defined Storage）最關鍵的安全風險是什麼？
+
+- **正解：Vulnerability of the control plane to unauthorized access**
+    
+- **你選：Risk of performance degradation due to centralized management**
+    
+
+### 為什麼是 Control Plane
+
+- SDS 的核心是「**控制面**（orchestration/management）」與「資料面」分離。
+    
+- **控制面一旦被入侵**，攻擊者通常能：
+    
+    - 重新掛載/複製 volume、建立 snapshot、調整 replication、改 policy  
+        → 直接擴大成 **全面性資料曝露/破壞**（CIA 都會中）
+        
+
+### 你選的效能退化為何不是「最關鍵」
+
+- 效能是風險，但不一定是**最嚴重的安全風險**；題目問 “most critical security concern” 通常選「被接管後的爆炸半徑最大」那個。
+    
+
+**考場口訣**
+
+- SDS / SDN 這類「software-defined」題：  
+    **Control plane compromise = catastrophe**
