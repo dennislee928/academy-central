@@ -7,6 +7,8 @@ brew install awscli
 export AWS_ACCESS_KEY_ID="R2_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="R2_SECRET_ACCESS_KEY"
 export AWS_DEFAULT_REGION="auto"
+
+
 # 3) 上傳 23GB zip 到你指定的 prefix
 aws s3 cp "europe_gopro.zip" \
   "s3://BIGFILE_PATH" \
