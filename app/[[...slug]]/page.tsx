@@ -14,8 +14,16 @@ import MarkdownContent from '@/components/MarkdownContent';
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
+/** 允許 dev 時造訪未列在 generateStaticParams 的路徑（含編碼字元如 %20），build 仍會為回傳的 params 預渲染 */
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const slugs = getAllSlugsForParams();
+  // #region agent log
+  const fs = await import('fs');
+  const europeSlugs = slugs.filter((s) => s[0] === 'europe-seminar').map((s) => s.join('/'));
+  fs.appendFileSync('/Users/dennis_leedennis_lee/Documents/GitHub/academy-central/.cursor/debug-d33234.log', JSON.stringify({ sessionId: 'd33234', location: 'page.tsx:generateStaticParams', message: 'params for static export', data: { totalSlugs: slugs.length, europeSlugs }, timestamp: Date.now(), hypothesisId: 'params', runId: 'debug1' }) + '\n');
+  // #endregion
   const params = slugs.map((s) => ({ slug: s }));
   params.push({ slug: [] });
   return params;
@@ -28,8 +36,9 @@ function slugHref(segments: string[]) {
 }
 
 export default async function SlugPage({ params }: Props) {
-  const { slug } = await params;
-  if (!slug || slug.length === 0) {
+  const rawSlug = await params.then((p) => p.slug);
+  const slug = rawSlug?.map((s) => decodeURIComponent(s)) ?? [];
+  if (!slug.length) {
     const roots = getContentRoots();
     return (
       <div className="min-h-[60vh] flex flex-col justify-center">
