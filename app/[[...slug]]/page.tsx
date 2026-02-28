@@ -4,6 +4,8 @@ import path from 'path';
 import {
   getContentRoots,
   getFilePath,
+  getFilePathFromEntries,
+  getAllEntries,
   readFileContent,
   getDirectoryChildren,
   getAllSlugsForParams,
@@ -53,7 +55,9 @@ export default async function SlugPage({ params }: Props) {
     );
   }
 
-  const filePath = getFilePath(slug);
+  // 優先依預先條目解析（與 generateStaticParams 同源），避免 build 環境與本機路徑差異
+  const entries = getAllEntries();
+  const filePath = getFilePathFromEntries(slug, entries) ?? getFilePath(slug);
   const relativeDir = path.join(...slug);
 
   if (filePath) {
