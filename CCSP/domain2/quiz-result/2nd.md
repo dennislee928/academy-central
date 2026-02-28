@@ -60,7 +60,7 @@
 
 - **正解：Vulnerability of the control plane to unauthorized access**
     
-- **你選：Risk of performance degradation due to centralized management**
+- **選：Risk of performance degradation due to centralized management**
     
 
 ### 為什麼是 Control Plane
