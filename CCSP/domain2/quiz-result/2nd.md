@@ -88,7 +88,7 @@
 
 - **正解：Object storage supports finer-grained access control**
     
-- **你選：Object storage implements automatic data classification**
+- **選：Object storage implements automatic data classification**
     
 
 ### 為什麼是 finer-grained access control
