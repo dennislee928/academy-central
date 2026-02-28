@@ -170,3 +170,48 @@
 **考場關鍵字**
 
 - 看到「hybrid cloud / diverse data assets / compliant access across lifecycle」→ **ABAC**
+
+---
+## Section 命中對照表（第一次 vs 第二次已知）
+
+| Section                       | 第一次（你上次錯題統計） | 第二次（已知 n=6） | 變化解讀                          |
+| ----------------------------- | ------------ | ----------- | ----------------------------- |
+| **2.2 Storage architectures** | 0            | **4**       | **新弱點浮現（P0）**：storage 題開始大量出現 |
+| **2.1 Data concepts/roles**   | 4            | 1           | **有進步**，但 Steward 仍會混到技術職責    |
+| **2.3 Data security tech**    | 3            | 0           | **在目前提供的錯題中未再出現**（可能是補強有效）    |
+| **2.6 IRM/access models**     | 1            | 1           | 還會被 access model 題卡（ABAC）     |
+| **2.7 Retention/Destroy**     | 2            | 0           | 目前未再撞到（但不代表不考）                |
+
+---
+# 下一步讀書策略（只針對這次暴露的洞）
+
+## P0：2.2 Storage architectures（你這次的主戰場）
+
+建議你用「對照表」去背，不要散背：
+
+- **Object storage**
+    
+    - security：object-level policy/ACL、per-object encryption/keying model、metadata
+        
+    - risk：**global distribution → residency 困難**
+        
+- **Block storage**
+    
+    - security：volume-level encryption、snapshot/backup、attach boundary
+        
+    - risk：mis-attach / snapshot exposure / host compromise
+        
+- **File storage**
+    
+    - security：share/file system level、NFS/SMB permission model
+        
+- **SDS**
+    
+    - **Control plane 是最致命的攻擊面**（身份/權限/網段隔離/審計）
+        
+
+## P1：2.1 + 2.6（保底修正）
+
+- Data Steward vs Custodian/Engineering：把「治理/規則/品質」與「技術控制」切乾淨
+    
+- ABAC：會出在 hybrid/multi、合規、跨資產/跨生命週期的題目
