@@ -9,8 +9,8 @@ export AWS_SECRET_ACCESS_KEY="R2_SECRET_ACCESS_KEY"
 export AWS_DEFAULT_REGION="auto"
 # 3) 上傳 23GB zip 到你指定的 prefix
 aws s3 cp "europe_gopro.zip" \
-  "s3://personal-log-datas/europe_gopro_2026/europe_gopro.zip" \
-  --endpoint-url "https://8dfc8c4994bd0925c72ab9e2eff79b48.r2.cloudflarestorage.com"
+  "s3://BIGFILE_PATH" \
+  --endpoint-url "https://BUCKET_ID.r2.cloudflarestorage.com"
 # 4) 驗證檔案已在桶內
-aws s3 ls "s3://personal-log-datas/europe_gopro_2026/" \
-  --endpoint-url "https://8dfc8c4994bd0925c72ab9e2eff79b48.r2.cloudflarestorage.com"
+aws s3 ls "s3://BIGFILE_PATH" \
+  --endpoint-url "https://BUCKET_ID.r2.cloudflarestorage.com"
