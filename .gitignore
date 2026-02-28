@@ -34,3 +34,5 @@ next-env.d.ts
 
 # Rust
 /target
+.cursor/debug-d33234.log
+/.cursor

@@ -104,6 +104,10 @@ export function getFilePathFromEntries(slug: string[], entries: ContentEntry[]):
   if (slug.length === 0) return null;
   const key = slug.map(toNFC).join('/');
   const entry = entries.find((e) => e.slug.map(toNFC).join('/') === key);
+  // #region agent log
+  const logPayload = { sessionId: 'd33234', location: 'content.ts:getFilePathFromEntries', message: 'entry lookup', data: { key, keyLength: key.length, found: !!entry, filePath: entry ? entry.filePath : null, entriesCount: entries.length }, timestamp: Date.now(), hypothesisId: 'B', runId: 'debug1' };
+  try { require('fs').appendFileSync('/Users/dennis_leedennis_lee/Documents/GitHub/academy-central/.cursor/debug-d33234.log', JSON.stringify(logPayload) + '\n'); } catch (_) {}
+  // #endregion
   return entry ? entry.filePath : null;
 }
 
@@ -136,6 +140,10 @@ export function getFilePath(slug: string[]): string | null {
     const parentDir = path.join(CWD, ...normalizedSlug.slice(0, -1));
     const last = normalizedSlug[normalizedSlug.length - 1];
     const byParent = resolveByParentDir(parentDir, last);
+    // #region agent log
+    const logPayload = { sessionId: 'd33234', location: 'content.ts:getFilePath', message: 'resolveByParentDir', data: { parentDir, last, lastLength: last?.length, byParentResult: byParent }, timestamp: Date.now(), hypothesisId: 'C', runId: 'debug1' };
+    try { require('fs').appendFileSync('/Users/dennis_leedennis_lee/Documents/GitHub/academy-central/.cursor/debug-d33234.log', JSON.stringify(logPayload) + '\n'); } catch (_) {}
+    // #endregion
     if (byParent) return byParent;
   }
 

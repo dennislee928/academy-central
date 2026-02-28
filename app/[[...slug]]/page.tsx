@@ -12,12 +12,28 @@ import {
 } from '@/lib/content';
 import MarkdownContent from '@/components/MarkdownContent';
 
-type Props = { params: Promise<{ slug?: string[] }> };
+type Props = { params: { slug?: string[] } | Promise<{ slug?: string[] }> };
+
+/** 允許 dev 時造訪未列在 generateStaticParams 的路徑（含編碼字元如 %20），build 仍會為回傳的 params 預渲染 */
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const slugs = getAllSlugsForParams();
-  const params = slugs.map((s) => ({ slug: s }));
-  params.push({ slug: [] });
+  // #region agent log
+  const fs = await import('fs');
+  const europeSlugs = slugs.filter((s) => s[0] === 'europe-seminar').map((s) => s.join('/'));
+  fs.appendFileSync('/Users/dennis_leedennis_lee/Documents/GitHub/academy-central/.cursor/debug-d33234.log', JSON.stringify({ sessionId: 'd33234', location: 'page.tsx:generateStaticParams', message: 'params for static export', data: { totalSlugs: slugs.length, europeSlugs }, timestamp: Date.now(), hypothesisId: 'params', runId: 'debug1' }) + '\n');
+  // #endregion
+  // Next.js 在 output: 'export' 下，對 optional catch-all 的參數比對在不同情境可能使用「原字串」或「已編碼字串」。
+  // 這裡同時回傳兩種版本，避免因空白等字元（%20）導致 missing param。
+  const pairs = slugs.flatMap((s) => {
+    const encoded = s.map((seg) => encodeURIComponent(seg));
+    return [s, encoded];
+  });
+  const unique = new Map<string, string[]>();
+  for (const s of pairs) unique.set(s.join('/'), s);
+  unique.set('', []);
+  const params = Array.from(unique.values()).map((s) => ({ slug: s }));
   return params;
 }
 
@@ -28,8 +44,17 @@ function slugHref(segments: string[]) {
 }
 
 export default async function SlugPage({ params }: Props) {
-  const { slug } = await params;
-  if (!slug || slug.length === 0) {
+  const resolvedParams = await Promise.resolve(params as any);
+  const rawSlug: string[] | undefined = resolvedParams?.slug;
+  const slug =
+    rawSlug?.map((s) => {
+      try {
+        return decodeURIComponent(s);
+      } catch {
+        return s;
+      }
+    }) ?? [];
+  if (!slug.length) {
     const roots = getContentRoots();
     return (
       <div className="min-h-[60vh] flex flex-col justify-center">
@@ -56,8 +81,21 @@ export default async function SlugPage({ params }: Props) {
   }
 
   // 優先依預先條目解析（與 generateStaticParams 同源），避免 build 環境與本機路徑差異
+  // #region agent log
+  const slugKey = slug.join('/');
+  fetch('http://127.0.0.1:7621/ingest/3574ea5e-c777-4c2c-9f1e-3acaf8d67884',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d33234'},body:JSON.stringify({sessionId:'d33234',location:'page.tsx:slug',message:'slug for path resolution',data:{slug:slug,slugKey:slugKey,length:slug.length},timestamp:Date.now(),hypothesisId:'A,E',runId:'debug1'})}).catch(()=>{});
+  // #endregion
   const entries = getAllEntries();
-  const filePath = getFilePathFromEntries(slug, entries) ?? getFilePath(slug);
+  // #region agent log
+  const europeKeys = entries.filter((e)=>e.slug.join('/').startsWith('europe-seminar')).map((e)=>e.slug.join('/'));
+  fetch('http://127.0.0.1:7621/ingest/3574ea5e-c777-4c2c-9f1e-3acaf8d67884',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d33234'},body:JSON.stringify({sessionId:'d33234',location:'page.tsx:entries',message:'getAllEntries europe-seminar keys',data:{entriesLength:entries.length,europeSeminarKeys:europeKeys},timestamp:Date.now(),hypothesisId:'A,E',runId:'debug1'})}).catch(()=>{});
+  // #endregion
+  const fromEntries = getFilePathFromEntries(slug, entries);
+  const fromFs = getFilePath(slug);
+  const filePath = fromEntries ?? fromFs;
+  // #region agent log
+  fetch('http://127.0.0.1:7621/ingest/3574ea5e-c777-4c2c-9f1e-3acaf8d67884',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d33234'},body:JSON.stringify({sessionId:'d33234',location:'page.tsx:filePath',message:'path resolution result',data:{fromEntries,fromFs,finalFilePath:filePath,branch:filePath?'content':'no-content'},timestamp:Date.now(),hypothesisId:'A,B,C,D',runId:'debug1'})}).catch(()=>{});
+  // #endregion
   const relativeDir = path.join(...slug);
 
   if (filePath) {
