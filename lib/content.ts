@@ -16,7 +16,7 @@ const ROOT_EXCLUDE = new Set([
   'components',
 ]);
 
-const RECURSE_EXCLUDE = new Set(['node_modules', '.git', 'target', 'src']);
+const RECURSE_EXCLUDE = new Set(['node_modules', '.git', 'target', 'src', 'helper_scripts']);
 
 const MD_EXTENSIONS = ['.md', '.mdx'];
 
