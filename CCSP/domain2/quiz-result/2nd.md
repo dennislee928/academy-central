@@ -106,3 +106,23 @@
 **秒殺辨識**
 
 - 看到「advantage of object storage over block（security）」→ **granular access control / policy at object-level**
+
+## 4) 多國資料主權（data sovereignty）下，哪種 storage 最難滿足 data residency？
+
+- **正解：Object storage with global distribution**
+    
+- **選：你沒選到正解（截圖未拍到你的圈圈選項）**
+    
+
+### 為什麼是 object storage + global distribution 最難
+
+- global distribution 典型會牽涉：
+    
+    - 自動 replication、跨區 caching/edge、地理分散的冗餘
+        
+- 你越「全球化」地分散資料，越難保證 **資料/副本永遠只落在特定司法轄區**，也更難做完整稽核與證明。
+    
+
+**考場關鍵字**
+
+- 看到「multi-country + data sovereignty + replication/geographic distribution」→ 通常選 **global object storage** 為最大挑戰
