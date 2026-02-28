@@ -34,7 +34,7 @@
 
 - **正解：Object storage**
     
-- **你選：Hybrid storage**
+- **選：Hybrid storage**
     
 
 ### 為什麼是 Object storage
