@@ -82,3 +82,27 @@
 
 - SDS / SDN 這類「software-defined」題：  
     **Control plane compromise = catastrophe**
+
+
+## 3) Object storage 相對 Block storage 的主要「資料安全」優勢？
+
+- **正解：Object storage supports finer-grained access control**
+    
+- **你選：Object storage implements automatic data classification**
+    
+
+### 為什麼是 finer-grained access control
+
+- object storage 的存取通常以「object/bucket policy、metadata、ACL」為中心 → **更容易做到物件級權限**、更細的 policy 條件化（概念上）。
+    
+- block storage 多半像磁碟：權限經常綁在「instance/volume attach」與 OS 層檔案權限 → **雲端層面通常沒 object 那麼細**。
+    
+
+### automatic data classification 為何不對
+
+- classification 是資料治理/安全工具能力（DLP、data catalog、DSPM…），**不是 object storage 的“典型內建特性”**。
+    
+
+**秒殺辨識**
+
+- 看到「advantage of object storage over block（security）」→ **granular access control / policy at object-level**
