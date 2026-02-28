@@ -98,11 +98,37 @@ export function getAllEntries(): ContentEntry[] {
 }
 
 /**
+ * 依父目錄實際檔名解析最後一段 slug（避免路徑字串與檔案系統編碼不一致）
+ */
+function resolveByParentDir(parentDir: string, lastSegment: string): string | null {
+  if (!fs.existsSync(parentDir) || !fs.statSync(parentDir).isDirectory()) return null;
+  const lastNFC = toNFC(lastSegment);
+  const dirEntries = fs.readdirSync(parentDir, { withFileTypes: true });
+  for (const e of dirEntries) {
+    if (!e.isFile() || !MD_EXTENSIONS.includes(path.extname(e.name).toLowerCase())) continue;
+    const baseName = e.name.replace(/\.(md|mdx)+$/i, '');
+    if (toNFC(baseName) !== lastNFC) continue;
+    const p = path.join(parentDir, e.name);
+    return path.relative(CWD, p).replace(/\\/g, '/');
+  }
+  return null;
+}
+
+/**
  * 給定 slug，解析出實際檔案路徑。支援 readme、一般 .md，以及 a.md / a.md.md
  */
 export function getFilePath(slug: string[]): string | null {
   if (slug.length === 0) return null;
   const normalizedSlug = slug.map(toNFC);
+
+  // 多段 slug 優先依父目錄實際檔名解析，避免 build/部署環境與本機路徑編碼差異
+  if (normalizedSlug.length >= 2) {
+    const parentDir = path.join(CWD, ...normalizedSlug.slice(0, -1));
+    const last = normalizedSlug[normalizedSlug.length - 1];
+    const byParent = resolveByParentDir(parentDir, last);
+    if (byParent) return byParent;
+  }
+
   const rel = path.join(...normalizedSlug);
   const base = path.join(CWD, rel);
   for (const ext of ['.md', '.mdx']) {
@@ -116,19 +142,11 @@ export function getFilePath(slug: string[]): string | null {
       if (fs.existsSync(p) && fs.statSync(p).isFile()) return path.relative(CWD, p).replace(/\\/g, '/');
     }
   }
-  // 依目錄實際檔名解析（解決 macOS NFD 與 URL NFC 不一致）
   const parentDir = path.join(CWD, ...normalizedSlug.slice(0, -1));
   const last = normalizedSlug[normalizedSlug.length - 1];
-  if (last && fs.existsSync(parentDir) && fs.statSync(parentDir).isDirectory()) {
-    const dirEntries = fs.readdirSync(parentDir, { withFileTypes: true });
-    const lastNFC = toNFC(last);
-    for (const e of dirEntries) {
-      if (!e.isFile() || !MD_EXTENSIONS.includes(path.extname(e.name).toLowerCase())) continue;
-      const baseName = e.name.replace(/\.(md|mdx)+$/i, '');
-      if (toNFC(baseName) !== lastNFC) continue;
-      const p = path.join(parentDir, e.name);
-      return path.relative(CWD, p).replace(/\\/g, '/');
-    }
+  if (last) {
+    const byParent = resolveByParentDir(parentDir, last);
+    if (byParent) return byParent;
   }
   return null;
 }
