@@ -111,7 +111,7 @@
 
 - **正解：Object storage with global distribution**
     
-- **選：你沒選到正解（截圖未拍到你的圈圈選項）**
+- **選：沒選到正解
     
 
 ### 為什麼是 object storage + global distribution 最難
