@@ -1,25 +1,42 @@
+
+# pr installation
 brew install rclone
-#2) 建一個 remote（只做一次）
-rclone config
+export R2_ACCESS_KEY_ID="..."            # 不要貼到聊天室
+export R2_SECRET_ACCESS_KEY="..."        # 不要貼到聊天室
 
-#互動設定建議值（重點欄位）：
 
-#n new remote
+#!/usr/bin/env bash
+set -euo pipefail
 
-#name：r2
+REMOTE_NAME="${REMOTE_NAME:-r2}"
+ACCOUNT_ID="${ACCOUNT_ID:-8dfc8c4994bd0925c72ab9e2eff79b48}"
+ENDPOINT="https://${ACCOUNT_ID}.eu.r2.cloudflarestorage.com"
 
-#storage：s3
+: "${R2_ACCESS_KEY_ID:?Set R2_ACCESS_KEY_ID env var}"
+: "${R2_SECRET_ACCESS_KEY:?Set R2_SECRET_ACCESS_KEY env var}"
 
-#provider：選 Cloudflare
+if ! command -v rclone >/dev/null 2>&1; then
+  echo "[ERROR] rclone not found. Install with: brew install rclone" >&2
+  exit 1
+fi
 
-#access_key_id / secret_access_key：填你的
+echo "[INFO] Creating/Updating rclone remote: ${REMOTE_NAME}"
+rclone config create "${REMOTE_NAME}" s3 \
+  provider Cloudflare \
+  env_auth false \
+  access_key_id "${R2_ACCESS_KEY_ID}" \
+  secret_access_key "${R2_SECRET_ACCESS_KEY}" \
+  region auto \
+  endpoint "${ENDPOINT}" \
+  acl private \
+  no_check_bucket true \
+  --non-interactive
 
-#region：auto
-
-endpoint：
-https://ACCOUNT_ID.r2.cloudflarestorage.com
-
-#3) 上傳（帶進度）
-rclone copy "FILE_PATH" "r2:BIGFILE_PATH" -P
-#4) 檢查
-rclone ls "r2:BIGFILE_PATH"
+echo "[OK] Remote '${REMOTE_NAME}' configured."
+echo "[INFO] Endpoint: ${ENDPOINT}"
+echo
+echo "Next:"
+echo "  rclone lsd ${REMOTE_NAME}:"
+## post execution
+chmod +x rclone.sh
+./rclone.sh
