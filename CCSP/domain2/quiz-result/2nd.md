@@ -26,4 +26,33 @@
 
 ---
 
-C) 每個錯題詳解
+## C) 每個錯題詳解
+
+## 1) 個別 data elements 的最細粒度「靜態加密」選哪種 storage？
+
+**題意**：需要在 storage solution 內，對「個別資料元素/物件」做到更細的 at-rest encryption granularity。
+
+- **正解：Object storage**
+    
+- **你選：Hybrid storage**
+    
+
+### 為什麼是 Object storage
+
+- 典型 object storage（概念層面）支援**物件層級**（per-object）：
+    
+    - 物件層級 policy/ACL
+        
+    - per-object encryption（或至少可做到每個 object 使用不同 key/不同 encryption context 的管理模式）
+        
+- 對比 block/file 通常落在**volume / filesystem / share** 層級更常見。
+    
+
+### 你選 Hybrid 為何不對
+
+- **Hybrid storage**不是一個「天然提供更細加密粒度」的 storage type；它只是組合/部署形態，粒度取決於底層用的 object/file/block。
+    
+
+**考場關鍵字**
+
+- 看到「**individual object / per-object / granular at-rest controls**」→ **Object storage**
