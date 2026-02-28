@@ -183,11 +183,11 @@
 | **2.7 Retention/Destroy**     | 2            | 0           | 目前未再撞到（但不代表不考）                |
 
 ---
-# 下一步讀書策略（只針對這次暴露的洞）
+# 下一步策略
 
-## P0：2.2 Storage architectures（你這次的主戰場）
+## P0：2.2 Storage architectures
 
-建議你用「對照表」去背，不要散背：
+建議用「對照表」去背，不要散背：
 
 - **Object storage**
     
