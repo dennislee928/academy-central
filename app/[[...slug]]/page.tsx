@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import Link from 'next/link';
 import path from 'path';
 import {
