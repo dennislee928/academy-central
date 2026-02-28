@@ -12,7 +12,7 @@ export AWS_DEFAULT_REGION="auto"
 # 3) 上傳 23GB zip 到你指定的 prefix
 aws s3 cp "europe_gopro.zip" \
   "s3://BIGFILE_PATH" \
-  --endpoint-url "https://BUCKET_ID.r2.cloudflarestorage.com"
+  --endpoint-url "https://ACCOUNT_ID.r2.cloudflarestorage.com"
 # 4) 驗證檔案已在桶內
 aws s3 ls "s3://BIGFILE_PATH" \
-  --endpoint-url "https://BUCKET_ID.r2.cloudflarestorage.com"
+  --endpoint-url "https://ACCOUNT_ID.r2.cloudflarestorage.com"
