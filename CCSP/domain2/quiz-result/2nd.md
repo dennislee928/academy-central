@@ -153,7 +153,7 @@
 
 - **正解：ABAC（Attribute-Based Access Control）**
     
-- **你選：你沒選到正解（截圖未拍到你的圈圈選項）**
+- **選：沒選到正解**
     
 
 ### 為什麼 ABAC 適合 hybrid/multi 環境
