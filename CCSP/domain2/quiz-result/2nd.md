@@ -131,7 +131,7 @@
 
 - **正解：Ensuring proper data content, context, and associated business rules**
     
-- **你選：Implementing encryption algorithms for data at rest and in transit**
+- **選：Implementing encryption algorithms for data at rest and in transit**
     
 
 ### 為什麼是內容/脈絡/規則
