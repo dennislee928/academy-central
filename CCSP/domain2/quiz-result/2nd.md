@@ -126,3 +126,25 @@
 **考場關鍵字**
 
 - 看到「multi-country + data sovereignty + replication/geographic distribution」→ 通常選 **global object storage** 為最大挑戰
+
+## 5) Data Steward 的主要責任是什麼？
+
+- **正解：Ensuring proper data content, context, and associated business rules**
+    
+- **你選：Implementing encryption algorithms for data at rest and in transit**
+    
+
+### 為什麼是內容/脈絡/規則
+
+- Data Steward = **治理、品質、合規**的推動者/守門人：
+    
+    - 確保資料定義、metadata、品質、使用規則、分類與合規流程能落地
+        
+- encryption algorithms 屬於**技術控制落地**（更靠近 security engineering / custodian/平台團隊責任）
+    
+
+**口訣**
+
+- **Steward = data governance + quality + business rules**
+    
+- **Custodian/Engineering = encryption / backup / restore / technical controls**
