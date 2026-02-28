@@ -148,3 +148,25 @@
 - **Steward = data governance + quality + business rules**
     
 - **Custodian/Engineering = encryption / backup / restore / technical controls**
+
+## 6) Hybrid cloud 要安全合規地管「全生命週期存取控制」：最適合的方法？
+
+- **正解：ABAC（Attribute-Based Access Control）**
+    
+- **你選：你沒選到正解（截圖未拍到你的圈圈選項）**
+    
+
+### 為什麼 ABAC 適合 hybrid/multi 環境
+
+- hybrid cloud 會遇到：資產多樣、標籤/分類不同、風險條件多（地點、裝置、資料等級、身分風險、用途…）
+    
+- ABAC 可以用「屬性」做動態決策：
+    
+    - user attributes、resource attributes、environment attributes、action
+        
+- 比純 RBAC 更能處理「跨雲 + 多資料類型 + 合規條件」的細粒度限制。
+    
+
+**考場關鍵字**
+
+- 看到「hybrid cloud / diverse data assets / compliant access across lifecycle」→ **ABAC**
