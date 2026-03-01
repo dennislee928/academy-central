@@ -181,3 +181,22 @@
 **秒殺關鍵字**
 
 - “multi-tier storage + regulatory compliance + confidentiality” → **classification + residency enforcement**
+## 最弱：**2.3 Design and apply data security technologies and strategies（P0）**
+
+因為它同時具備：
+
+- 累積錯題高（跨第1、3次都中）
+    
+- 重要度高（5/5）
+    
+- 且錯的不是單一點，而是「概念邊界」：  
+    **confidentiality vs integrity、RBAC vs encryption、client-side keys vs provider controls、流程順序（compress/encrypt）**
+    
+
+**次弱（緊跟）：2.2 Storage architectures（P0）**
+
+|Section|累積錯題命中（已觀測）|重要度加權後風險|解讀|
+|---|--:|--:|---|
+|**2.3**|**高（至少 7 題量級）**|**最高**|你容易在「加密/金鑰/用途」與「保密 vs 完整性」概念上被誘答|
+|**2.2**|**高（至少 7 題量級）**|次高|storage 題開始密集出現後，你的錯題集中度很高|
+|2.1|中|中|roles/shared responsibility 仍需穩定（但第三次暫時沒再撞到）|
