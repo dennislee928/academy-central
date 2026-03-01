@@ -92,11 +92,11 @@
 
   
 
-**1.3 Key Management：你最近最常錯的真正原因**
+**1.3 Key Management：高頻錯誤與對應重點**
 
   
 
-****Key 是權力。**問到 sovereignty / compliance / distributed storage 時，題目其實在問你：「誰持有 key？key 如何輪替？如何吊銷？」**
+****Key 即權力。**考題涉及 sovereignty / compliance / distributed storage 時，核心在：「誰持有 key？key 如何輪替？如何吊銷？」**
 
   
 
@@ -104,9 +104,9 @@
 
 **• Provider-managed keys：方便但控制力較弱**
 
-**• Customer-managed keys（CMK）：你掌握 key policy/rotation，控制更強**
+**• Customer-managed keys（CMK）：組織掌握 key policy/rotation，控制更強**
 
-**• Client-side encryption：CSP 看到的是密文，主權最強（但你要承擔操作成本）**
+**• Client-side encryption：CSP 僅見密文，主權最強（需承擔操作成本）**
 
 **• KMIP：多系統 key 管理互通協定（題庫很愛拿來當關鍵字）**
 
