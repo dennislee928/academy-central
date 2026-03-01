@@ -221,15 +221,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Data Masking**
     
-- **選：Anonymization**
+- **常見誤選：** Anonymization
     
 
-**為什麼正解是 Masking**
+**正解說明：Masking**
 
 - **Masking 的核心目的＝“可用”**：讓資料看起來像真的、仍可測試/分析（格式、分佈、統計特性可保留），但不是真值。
     
 
-**選的為何錯（陷阱）**
+**誤選說明（常見陷阱）**
 
 - **Anonymization 的核心目的＝“不可回推個體”**：重點在移除識別性（direct/indirect identifiers），不一定保留可用的真實分佈或格式。
     
@@ -249,15 +249,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Shuffling**
     
-- **選：Static Substitution**
+- **常見誤選：** Static Substitution
     
 
-**為什麼正解是 Shuffling**
+**正解說明：Shuffling**
 
 - **Shuffling = 重新排列（permutation）**：把同欄位的值打散交換，**保留值集合/分佈**，但破壞個體對應關係（降低 re-identification）。
     
 
-**Static Substitution 為何不對**
+**Static Substitution 誤選說明**
 
 - **Substitution = 替換成別的值（常是“看似真實的假值”）**：重點是換值，不是重新排列原值。
     
@@ -277,17 +277,17 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Archive**
     
-- **選：Store**
+- **常見誤選：** Store
     
 
-**為什麼正解是 Archive**
+**正解說明：Archive**
 
 - **Archive phase = 長期保存/保留**（符合法規保留年限、保留可取回性、通常是低成本冷儲存）。
     
 - Retention policy 的典型落點就是「何時進 archive、保留多久、何時銷毀」。
     
 
-**Store 為何不對**
+**Store 誤選說明**
 
 - Store 是把資料寫入/持久化到儲存系統；retention 是**資料管理政策**（保留/歸檔/到期）更貼近 Archive。
     
@@ -307,15 +307,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Tokenization**
     
-- **選：Data Masking**
+- **常見誤選：** Data Masking
     
 
-**為什麼正解是 Tokenization**
+**正解說明：Tokenization**
 
 - Tokenization 用 token 取代敏感值，**可透過 token vault / tokenization system 對回原值**（受控可逆）。
     
 
-**Masking 為何不對**
+**Masking 誤選說明**
 
 - Masking 多數情境是**不可逆或不設計成可回推**，重點是可用性（測試/分析），不是受控映射回真值。
     
@@ -335,15 +335,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Cloud Data Owner**
     
-- **選：Cloud Data Custodian**
+- **常見誤選：** Cloud Data Custodian
     
 
-**為什麼正解是 Owner**
+**正解說明：Owner**
 
 - **Owner（或 Controller）= accountable + 定義政策/分類/風險接受**（“決策權”）。
     
 
-**Custodian 為何不對**
+**Custodian 誤選說明**
 
 - **Custodian = 技術落地**（備份、存取機制、容量、可用性、restore），不是決策者。
     
@@ -363,17 +363,17 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Data lifecycle management across distributed environments**
     
-- **選：Implementation of edge-specific access controls**
+- **常見誤選：** Implementation of edge-specific access controls
     
 
-**為什麼正解是 lifecycle management**
+**正解說明：lifecycle management**
 
 - cloud-edge 讓資料從 **create → store → use → share → archive → destroy** 分散在裝置、邊緣、雲端、多供應商。
     
 - 真正難的是：**可視性、治理一致性、保留/刪除落地、資料流向/責任切割**，而不只是 edge 做 RBAC。
     
 
-**選的為何不夠「最主要」**
+**誤選說明：為何不夠「最主要」**
 
 - edge access control 是其中一個 control；題目問的是「data roles」在新生態需要最大調整的面向，答案更偏 governance/lifecycle。
     
@@ -391,10 +391,10 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Centralized IAM with adaptive access controls**
     
-- **選：每個服務模型各自做 RBAC**
+- **常見誤選：** 每個服務模型各自做 RBAC
     
 
-**為什麼 centralized IAM 才是最有效**
+**正解說明：centralized IAM**
 
 - 多雲/多模型若各自 RBAC：政策分裂、審計困難、Joiner/Mover/Leaver 風險上升。
     
@@ -407,7 +407,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
     - 動態條件（device posture / location / risk）
         
 
-**選項的缺點**
+**誤選說明**
 
 - 分散 RBAC = 可行但不可控、不可擴展、難以保證一致 least privilege。
     
@@ -425,15 +425,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Data Steward**
     
-- **選：Data Controller**
+- **常見誤選：** Data Controller
     
 
-**為什麼是 Steward**
+**正解說明：Data Steward**
 
 - **Steward = governance/quality/compliance 的“日常監督者與協調者”**，確保流程、標準、metadata、使用合規在全生命周期落地。
     
 
-**Controller 為何不對**
+**Controller 誤選說明**
 
 - Controller（GDPR）偏向 **決定處理目的/方式** 的法律角色；不等於負責日常端到端治理與品質/合規營運。
     
@@ -453,17 +453,17 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Cryptographic erasure（cryptoshredding）**
     
-- **選：Regular third-party security audits**
+- **常見誤選：** Regular third-party security audits
     
 
-**為什麼是 cryptographic erasure**
+**正解說明：cryptographic erasure**
 
 - 雲上通常**碰不到實體媒體**，很難用 shred/incinerate。
     
 - 最可控方式是：**資料先加密**，到期/需銷毀時**安全清除金鑰** → 即使殘留 bit 也不可讀。
     
 
-**Audit 為何不對**
+**Audit 誤選說明**
 
 - Audit 是治理/驗證手段，不是「銷毀機制」。
     
@@ -481,10 +481,10 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Cloud service customer**
     
-- **選：Provider & customer 共同負責**
+- **常見誤選：** Provider & customer 共同負責
     
 
-**為什麼正解是 customer**
+**正解說明：customer**
 
 - 多數雲模型中：
     
