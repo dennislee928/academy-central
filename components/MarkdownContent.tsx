@@ -11,14 +11,16 @@ export default function MarkdownContent({ content }: { content: string }) {
         remarkPlugins={[remarkGfm]}
         components={{
           code({ node, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className ?? '');
+            const rawClass = Array.isArray(className) ? className.join(' ') : (className ?? '');
+            const match = /language-(\w+)/.exec(String(rawClass));
             const value = String(children).replace(/\n$/, '');
-            // 僅 fenced block 會有 language-* className，inline code 不會
-            if (match?.[1] === 'mermaid') {
+            const isMermaidByLang = match?.[1] === 'mermaid';
+            const isMermaidByContent = /^\s*(flowchart|mindmap|graph|sequenceDiagram|erDiagram)\s/mi.test(value);
+            if (isMermaidByLang || isMermaidByContent) {
               return <MermaidBlock code={value} />;
             }
             return (
-              <code className={className ?? ''} {...props}>
+              <code className={rawClass} {...props}>
                 {children}
               </code>
             );
