@@ -129,9 +129,9 @@
 
 **正解說明**
 
-- Sovereignty/合規的痛點常在：你是否能**保證 CSP/跨區複本也無法解密**。
+- Sovereignty/合規的痛點常在：能否**保證 CSP/跨區複本也無法解密**。
     
-- 只有在你掌握金鑰（尤其 client-side encryption）時，資料即使被複製到不期望的區域，也仍然不可讀（至少在密文層面更可控）。
+- 唯有掌握金鑰（尤其 client-side encryption）時，資料即使被複製到不期望的區域仍不可讀（密文層面更可控）。
     
 - RBAC 是 access governance，但不等於“對資料本體的不可讀性”。
     
