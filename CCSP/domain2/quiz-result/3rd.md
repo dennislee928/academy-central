@@ -29,7 +29,7 @@
 
 - **正解**：**End-to-end encryption**
     
-- **你選**：Digital signatures
+- **常見誤選：** Digital signatures
     
 
 **核心概念**
@@ -53,10 +53,10 @@
 
 - **正解**：Synchronous replication 提供更強一致性，但會有 **latency/performance cost**
     
-- **你選**：Asynchronous replication 在大多數情境能平衡 performance 與 integrity
+- **常見誤選：** Asynchronous replication 在大多數情境能平衡 performance 與 integrity
     
 
-**為什麼你選項不對**
+**誤選說明**
 
 - Async replication 的 trade-off 是：**RPO 風險**（可能丟最後一段資料）→ consistency/integrity（以「最新狀態一致性」而言）較弱。
     
@@ -76,10 +76,10 @@
 
 - **正解**：分散式環境下 **加密與金鑰管理複雜度**（key mgmt across distributed data）
     
-- **你選**：未授權的實體存取風險更高
+- **常見誤選：** 未授權的實體存取風險更高
     
 
-**為什麼正解更關鍵**
+**正解說明**
 
 - SDS 把儲存抽象化、節點分散，真正難點是：
     
@@ -103,10 +103,10 @@
 
 - **正解**：**先壓縮再加密**
     
-- **你選**：先加密再壓縮（優先安全）
+- **常見誤選：** 先加密再壓縮（優先安全）
     
 
-**為什麼**
+**正解說明**
 
 - 加密後資料近似隨機，**幾乎不可壓縮**；先加密再壓縮通常只會浪費 CPU。
     
@@ -124,10 +124,10 @@
 
 - **正解**：**Client-side AES-256 encryption + locally managed keys（KMIP）**
     
-- **你選**：Granular RBAC + regular access review
+- **常見誤選：** Granular RBAC + regular access review
     
 
-**為什麼 RBAC 不夠**
+**正解說明**
 
 - Sovereignty/合規的痛點常在：你是否能**保證 CSP/跨區複本也無法解密**。
     
@@ -147,10 +147,10 @@
 
 - **正解**：抽象化提升彈性/擴展，但可能引入 **hypervisor layer vulnerability**
     
-- **你選**：跨租戶 dedup 提升效率但降低 isolation
+- **常見誤選：** 跨租戶 dedup 提升效率但降低 isolation
     
 
-**為什麼 hypervisor 更「最顯著」**
+**正解說明**
 
 - Virtualization 的單點爆炸半徑通常在 **hypervisor/virtualization stack**：一旦被打穿可能是多租戶全面影響。
     
@@ -168,10 +168,10 @@
 
 - **正解**：跨 tier **統一 enforce data classification + residency rules**
     
-- **你選**：RBAC for storage management
+- **常見誤選：** RBAC for storage management
     
 
-**為什麼**
+**正解說明**
 
 - 金融/多層儲存的核心風險是：資料從 hot→warm→cold、跨區、跨雲搬移後，**分類/主權規則被破壞**。
     
@@ -189,14 +189,14 @@
     
 - 重要度高（5/5）
     
-- 且錯的不是單一點，而是「概念邊界」：  
+- 且錯題多屬「概念邊界」混淆：  
     **confidentiality vs integrity、RBAC vs encryption、client-side keys vs provider controls、流程順序（compress/encrypt）**
     
 
-**次弱（緊跟）：2.2 Storage architectures（P0）**
+**次弱：2.2 Storage architectures（P0）**
 
 | Section |     累積錯題命中（已觀測） | 重要度加權後風險 | 解讀                                           |
 | ------- | --------------: | -------: | -------------------------------------------- |
-| **2.3** | **高（至少 7 題量級）** |   **最高** | 你容易在「加密/金鑰/用途」與「保密 vs 完整性」概念上被誘答             |
-| **2.2** | **高（至少 7 題量級）** |       次高 | storage 題開始密集出現後，你的錯題集中度很高                   |
-| 2.1     |               中 |        中 | roles/shared responsibility 仍需穩定（但第三次暫時沒再撞到） |
+| **2.3** | **高（至少 7 題量級）** |   **最高** | 易在「加密/金鑰/用途」與「保密 vs 完整性」概念上誤選             |
+| **2.2** | **高（至少 7 題量級）** |       次高 | Storage 題密集出現時錯題集中度高                   |
+| 2.1     |               中 |        中 | roles/shared responsibility 需穩定（2.3 未再出現） |
