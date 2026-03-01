@@ -30,7 +30,7 @@
 
   
 
-**需求** **你要想的控制** **常見錯選**
+**需求** **對應控制** **常見錯選**
 
 **Confidentiality（保密）** **Encryption（TLS、at-rest、E2E、client-side）** **Digital signature**
 
@@ -48,7 +48,7 @@
 
 **• 「要證明沒被改」＝能偵測變更 → hash/MAC/sign**
 
-**• 「要證明是你做的」＝綁身份 → signature/cert**
+**• 「要證明行為者身份」＝綁身份 → signature/cert**
 
   
 
