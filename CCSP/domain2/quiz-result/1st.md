@@ -166,7 +166,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 ---
 
-## 現在最該補的 3 個「高投報」補強包（照順序）
+## 建議補強順序：高投報三包（依序）
 
 ### P0-1：Data Roles 責任矩陣（背定 + 情境判斷）
 
@@ -494,7 +494,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
         題目問的是 **data access controls**，通常落在 customer。
         
 
-**選的陷阱**
+**誤選說明（常見陷阱）**
 
 - shared responsibility 不是「每一件事都共同」；要看 control 類型。資料存取控制通常屬於 customer 的責任區。
     
@@ -528,7 +528,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 - **Central governance framework** 才是能長期運作的系統：定義角色、流程、標準、稽核節點、合約/DPAs 的落地方式。
     
 
-**選項為何不夠**
+**誤選說明**
 
 - matrix 是必要但不足；題目問「most effectively」，答案選能系統化、可維運的治理機制。
     
@@ -540,19 +540,15 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 ---
 
-## 接下來的讀書動作（對應 P0/P1，最短路徑）
+## 建議複習順序（對應 P0/P1）
 
-### P0（先做）
+### P0（優先）
 
 1. **2.1 Roles/責任邊界**：Owner/Controller/Processor/Custodian/Steward + shared responsibility 在 data access 的落點
-    
-2. **2.3 三分法**：Masking vs Tokenization vs Anonymization（加上 shuffling/substitution 的關鍵字辨識）
-    
+2. **2.3 三分法**：Masking vs Tokenization vs Anonymization（含 shuffling/substitution 關鍵字辨識）
 
-### P1（接著做）
+### P1（次之）
 
-3. **2.7 Archive/Destroy + cryptoshredding**（雲端刪除必考）
-    
+3. **2.7 Archive/Destroy + cryptoshredding**（雲端刪除高頻考點）
 4. **2.6 Least privilege 的 centralized IAM 模式**
-    
 5. **2.5 classification policy（Owner）**
