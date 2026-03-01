@@ -94,11 +94,11 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **Data roles（Owner/Controller/Processor/Custodian/Steward/Subject）**：**P0**
     
-    - 錯在：Owner vs Custodian、Steward vs Controller、Controller/Processor 責任劃分、shared responsibility 下 access control 主責
+    - 易錯點：Owner vs Custodian、Steward vs Controller、Controller/Processor 責任劃分、shared responsibility 下 access control 主責
         
 - **Cloud data life cycle phases（Create/Store/Use/Share/Archive/Destroy）**：**P1**
     
-    - 錯在：**Retention/Archive**概念題、**Destroy phase**對應的作法（cryptographic erasure）
+    - 易錯點：**Retention/Archive**概念題、**Destroy phase**對應的作法（cryptographic erasure）
         
 - CIA triad / Authenticity / Non-repudiation：**尚未考到**
     
@@ -114,11 +114,11 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **Data obfuscation / masking 技術細節（含 shuffling/substitution）**：**P0**
     
-    - 錯在：把「可用於測試的假資料」誤認為 anonymization；把 shuffling 誤認為 substitution
+    - 易錯點：把「可用於測試的假資料」誤認為 anonymization；把 shuffling 誤認為 substitution
         
 - **Tokenization vs Masking 的使用情境與可逆性**：**P0**
     
-    - 錯在：把 tokenization 題選成 masking
+    - 易錯點：把 tokenization 題選成 masking
         
 - DLP（Discovery/Monitoring/Enforcement）與監控點（in-motion/in-use/at-rest）：**尚未考到**
     
@@ -134,7 +134,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **Classification policy 誰決定（Owner）**：**P1**
     
-    - 錯在：「決定分類與政策」的主責角色判斷
+    - 易錯點：「決定分類與政策」的主責角色判斷
         
 - Data labeling / security label vs marking / metadata：**尚未考到**
     
@@ -145,7 +145,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **Provisioning / Access models（least privilege 如何跨 IaaS/PaaS/SaaS 一致落地）**：**P1**
     
-    - 錯在：multi-cloud 下選「各自做 RBAC」而不是「centralized IAM / 統一治理」
+    - 易錯點：multi-cloud 下選「各自做 RBAC」而不是「centralized IAM / 統一治理」
         
 - IRM vs DRM、IP 類型、Certificates in IRM：**尚未考到**
     
@@ -154,7 +154,7 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **Destroy phase / media sanitization / cryptographic erasure（cryptoshredding）**：**P1**
     
-    - 錯在：Destroy phase 的最佳作法選成 audit
+    - 易錯點：Destroy phase 的最佳作法選成 audit
         
 - Retention vs Archive 的定位、Legal hold：**P1（retention/archiving 題已出現）**
     
@@ -512,10 +512,10 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 
 - **正解：Centralized data governance framework with defined roles/responsibilities**
     
-- **選：為每個雲服務做一份責任矩陣**
+- **常見誤選：** 為每個雲服務做一份責任矩陣
     
 
-**為什麼 governance framework 比矩陣更“有效”**
+**正解說明：governance framework**
 
 - 責任矩陣是產物（artifact），但沒有治理框架就會：
     
