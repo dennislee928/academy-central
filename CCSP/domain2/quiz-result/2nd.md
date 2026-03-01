@@ -34,10 +34,10 @@
 
 - **正解：Object storage**
     
-- **選：Hybrid storage**
+- **常見誤選：** Hybrid storage
     
 
-### 為什麼是 Object storage
+### 正解說明：Object storage
 
 - 典型 object storage（概念層面）支援**物件層級**（per-object）：
     
@@ -48,7 +48,7 @@
 - 對比 block/file 通常落在**volume / filesystem / share** 層級更常見。
     
 
-### 選 Hybrid 為何不對
+### 誤選說明：Hybrid
 
 - **Hybrid storage**不是一個「天然提供更細加密粒度」的 storage type；它只是組合/部署形態，粒度取決於底層用的 object/file/block。
     
@@ -60,10 +60,10 @@
 
 - **正解：Vulnerability of the control plane to unauthorized access**
     
-- **選：Risk of performance degradation due to centralized management**
+- **常見誤選：** Risk of performance degradation due to centralized management
     
 
-### 為什麼是 Control Plane
+### 正解說明：Control Plane
 
 - SDS 的核心是「**控制面**（orchestration/management）」與「資料面」分離。
     
@@ -73,7 +73,7 @@
         → 直接擴大成 **全面性資料曝露/破壞**（CIA 都會中）
         
 
-### 選的效能退化為何不是「最關鍵」
+### 誤選說明：效能退化
 
 - 效能是風險，但不一定是**最嚴重的安全風險**；題目問 “most critical security concern” 通常選「被接管後的爆炸半徑最大」那個。
     
@@ -88,17 +88,17 @@
 
 - **正解：Object storage supports finer-grained access control**
     
-- **選：Object storage implements automatic data classification**
+- **常見誤選：** Object storage implements automatic data classification
     
 
-### 為什麼是 finer-grained access control
+### 正解說明：finer-grained access control
 
 - object storage 的存取通常以「object/bucket policy、metadata、ACL」為中心 → **更容易做到物件級權限**、更細的 policy 條件化（概念上）。
     
 - block storage 多半像磁碟：權限經常綁在「instance/volume attach」與 OS 層檔案權限 → **雲端層面通常沒 object 那麼細**。
     
 
-### automatic data classification 為何不對
+### 誤選說明：automatic data classification
 
 - classification 是資料治理/安全工具能力（DLP、data catalog、DSPM…），**不是 object storage 的“典型內建特性”**。
     
@@ -111,10 +111,10 @@
 
 - **正解：Object storage with global distribution**
     
-- **選：沒選到正解
+- **常見誤選：** 其他選項（非 global object storage）
     
 
-### 為什麼是 object storage + global distribution 最難
+### 正解說明：object storage + global distribution
 
 - global distribution 典型會牽涉：
     
@@ -131,10 +131,10 @@
 
 - **正解：Ensuring proper data content, context, and associated business rules**
     
-- **選：Implementing encryption algorithms for data at rest and in transit**
+- **常見誤選：** Implementing encryption algorithms for data at rest and in transit
     
 
-### 為什麼是內容/脈絡/規則
+### 正解說明：內容/脈絡/規則
 
 - Data Steward = **治理、品質、合規**的推動者/守門人：
     
@@ -153,10 +153,10 @@
 
 - **正解：ABAC（Attribute-Based Access Control）**
     
-- **選：沒選到正解**
+- **常見誤選：** 其他存取模型（如純 RBAC）
     
 
-### 為什麼 ABAC 適合 hybrid/multi 環境
+### 正解說明：ABAC
 
 - hybrid cloud 會遇到：資產多樣、標籤/分類不同、風險條件多（地點、裝置、資料等級、身分風險、用途…）
     
@@ -174,20 +174,20 @@
 ---
 ## Section 命中對照表（第一次 vs 第二次已知）
 
-| Section                       | 第一次（你上次錯題統計） | 第二次（已知 n=6） | 變化解讀                          |
+| Section                       | 第一次錯題統計 | 第二次（n=6） | 變化解讀                          |
 | ----------------------------- | ------------ | ----------- | ----------------------------- |
 | **2.2 Storage architectures** | 0            | **4**       | **新弱點浮現（P0）**：storage 題開始大量出現 |
-| **2.1 Data concepts/roles**   | 4            | 1           | **有進步**，但 Steward 仍會混到技術職責    |
-| **2.3 Data security tech**    | 3            | 0           | **在目前提供的錯題中未再出現**（可能是補強有效）    |
-| **2.6 IRM/access models**     | 1            | 1           | 還會被 access model 題卡（ABAC）     |
-| **2.7 Retention/Destroy**     | 2            | 0           | 目前未再撞到（但不代表不考）                |
+| **2.1 Data concepts/roles**   | 4            | 1           | 2.1 錯題下降，Steward 與技術職責仍易混淆    |
+| **2.3 Data security tech**    | 3            | 0           | 本次錯題未再出現（可能補強有效）    |
+| **2.6 IRM/access models**     | 1            | 1           | Access model（ABAC）仍為易錯點     |
+| **2.7 Retention/Destroy**     | 2            | 0           | 本次未再出現（仍可能命題）                |
 
 ---
-# 下一步策略
+# 建議複習策略
 
 ## P0：2.2 Storage architectures
 
-建議用「對照表」去背，不要散背：
+建議以「對照表」系統記憶：
 
 - **Object storage**
     
@@ -210,8 +210,7 @@
     - **Control plane 是最致命的攻擊面**（身份/權限/網段隔離/審計）
         
 
-## P1：2.1 + 2.6（保底修正）
+## P1：2.1 + 2.6
 
-- Data Steward vs Custodian/Engineering：把「治理/規則/品質」與「技術控制」切乾淨
-    
-- ABAC：會出在 hybrid/multi、合規、跨資產/跨生命週期的題目
+- **Data Steward vs Custodian/Engineering**：區分「治理/規則/品質」與「技術控制」
+- **ABAC**：高頻出現於 hybrid/multi、合規、跨資產/跨生命週期題型
