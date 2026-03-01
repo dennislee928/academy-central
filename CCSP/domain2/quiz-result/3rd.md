@@ -8,10 +8,10 @@
 
 - **正解**：Object storage **通常內建 at-rest encryption**（或可視為預設/標準能力）
     
-- **你選**：Object storage 對 unstructured data 有更好的未授權保護
+- **常見誤選：** Object storage 對 unstructured data 有更好的未授權保護
     
 
-**為什麼正解更“主要”**
+**正解說明**
 
 - 這題在考「**storage type 的典型安全控制**」：object storage（S3 類）最常被拿來強調的是 **server-side encryption / at-rest encryption** 的標準化與 policy 化管理。
     
