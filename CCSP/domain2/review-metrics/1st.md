@@ -229,95 +229,50 @@
 
 **3) Mermaid：Domain 2（P0區）心智圖**
 
-  
-
+```mermaid
 mindmap
-
-  root((CCSP D2 P0**講義**))
-
-    2.3 Data Security Tech
-
-      CIA/AAA/NR
-
-        Confidentiality --> Encryption
-
-        Integrity --> Hash/MAC/Signature
-
-        Authenticity --> Cert/Signature/mTLS
-
-        Nonrepudiation --> Digital Signature
-
-      Encryption Models
-
-        In-transit --> TLS/IPsec
-
-        At-rest --> SSE/Volume Encryption
-
-        End-to-end --> E2E
-
-        Client-side --> Customer holds key
-
-      Key Management
-
-        Provider-managed
-
-        Customer-managed (CMK)
-
-        KMIP/HSM/KMS
-
-        Rotation/Revocation/Audit
-
-      Data Movement
-
-        Compress_then_encrypt
-
-        Replication
-
-          Sync --> RPO~0 / latency cost
-
-          Async --> better perf / RPO risk
-
-    2.2 Storage Architectures
-
-      Object Storage
-
-        object-level ACL/policy
-
-        per-object encryption (conceptually)
-
-        global distribution --> residency risk
-
-      Block Storage
-
-        volume encryption
-
-        attach boundary
-
-      File Storage
-
-        share/FS ACL (NFS/SMB)
-
-      SDS
-
-        control plane is crown jewels
-
-        distributed nodes --> key mgmt complexity
-
-      Virtualization
-
-        hypervisor layer vulnerability
-
-    Exam Traps
-
-      Signature != Confidentiality
-
-      RBAC != Data Sovereignty
-
-      Async != best integrity
-
-  
-
-  
+  root((CCSP D2 P0 講義))
+    2.3 Data Security Tech
+      CIA/AAA/NR
+        Confidentiality --> Encryption
+        Integrity --> Hash/MAC/Signature
+        Authenticity --> Cert/Signature/mTLS
+        Nonrepudiation --> Digital Signature
+      Encryption Models
+        In-transit --> TLS/IPsec
+        At-rest --> SSE/Volume Encryption
+        End-to-end --> E2E
+        Client-side --> Customer holds key
+      Key Management
+        Provider-managed
+        Customer-managed CMK
+        KMIP/HSM/KMS
+        Rotation/Revocation/Audit
+      Data Movement
+        Compress_then_encrypt
+        Replication
+          Sync --> RPO~0 / latency cost
+          Async --> better perf / RPO risk
+    2.2 Storage Architectures
+      Object Storage
+        object-level ACL/policy
+        per-object encryption
+        global distribution --> residency risk
+      Block Storage
+        volume encryption
+        attach boundary
+      File Storage
+        share/FS ACL NFS/SMB
+      SDS
+        control plane is crown jewels
+        distributed nodes --> key mgmt complexity
+      Virtualization
+        hypervisor layer vulnerability
+    Exam Traps
+      Signature != Confidentiality
+      RBAC != Data Sovereignty
+      Async != best integrity
+```
 
 ⸻
 
@@ -325,45 +280,23 @@ mindmap
 
 **4) Mermaid：10 秒決策樹（看到題目就走流程）**
 
-  
-
+```mermaid
 flowchart TD
-
-  A[**題目關鍵字**] --> B{**問的是哪種安全屬性**?}
-
-  B -->|Confidentiality| C[Encryption]
-
-  B -->|Integrity| D[Hash/MAC/Signature]
-
-  B -->|Authenticity/Non-repudiation| E[Digital Signature + Cert]
-
-  
-
-  C --> F{**情境**?}
-
-  F -->|in transit| G[TLS/IPsec/E2E]
-
-  F -->|sovereignty/residency| H[Client-side encryption + Customer-managed keys (KMIP/HSM)]
-
-  F -->|at rest granularity| I{storage type?}
-
-  I -->|per-object| J[Object storage]
-
-  I -->|volume| K[Block storage]
-
-  I -->|share/SMB/NFS| L[File storage]
-
-  
-
-  A --> M{SDS/Software-defined?}
-
-  M -->|Yes| N[Control plane compromise = most critical]
-
-  M -->|No| O[**一般** storage/security **控制判斷**]
-
-  
-
-  
+  A[題目關鍵字] --> B{問的是哪種安全屬性?}
+  B -->|Confidentiality| C[Encryption]
+  B -->|Integrity| D[Hash/MAC/Signature]
+  B -->|Authenticity/Non-repudiation| E[Digital Signature + Cert]
+  C --> F{情境?}
+  F -->|in transit| G[TLS/IPsec/E2E]
+  F -->|sovereignty/residency| H[Client-side encryption + Customer-managed keys KMIP/HSM]
+  F -->|at rest granularity| I{storage type?}
+  I -->|per-object| J[Object storage]
+  I -->|volume| K[Block storage]
+  I -->|share/SMB/NFS| L[File storage]
+  A --> M{SDS/Software-defined?}
+  M -->|Yes| N[Control plane compromise = most critical]
+  M -->|No| O[一般 storage/security 控制判斷]
+```
 
 ⸻
 
