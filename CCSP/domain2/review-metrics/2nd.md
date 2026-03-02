@@ -92,7 +92,7 @@
 | **Synchronous** | 強一致性、**RPO≈0** | **Latency / performance cost** | strong consistency / near-zero data loss |  
 | **Asynchronous** | 效能好、距離彈性 | **RPO risk（可能丟最後一段）** | performance / acceptable lag |  
   
-**口訣（你今天自己修正成功）**  
+**口訣（今天修正成功）**  
 - near-zero data loss / RPO≈0 → **sync**  
 - acceptable lag / RPO minutes → **async**  
   
