@@ -164,18 +164,20 @@ flowchart TD
 ```
 ### 9.2 In transit / At rest / In use 快速對應
 ```mermaid 
-mindmap
-  root((Data State))
-    At_rest
-      "Volume/DB/SSE encryption"
-      "Backup/Snapshot controls"
-    In_transit
-      "TLS"
-      "IPsec"
-      "End-to-end encryption"
-    In_use
-      "RBAC / least privilege (who can use)"
-      "Homomorphic encryption (concept)"
+flowchart LR
+  DS[Data State] --> REST[At rest]
+  DS --> TRANSIT[In transit]
+  DS --> USE[In use]
+
+  REST --> R1[Volume / DB / SSE encryption]
+  REST --> R2[Backup and Snapshot controls]
+
+  TRANSIT --> T1[TLS]
+  TRANSIT --> T2[IPsec]
+  TRANSIT --> T3[End to end encryption]
+
+  USE --> U1[RBAC and least privilege]
+  USE --> U2[Homomorphic encryption concept]
 ```
 ### 9.3 Replication 決策（避免選反）
 ```mermaid 
