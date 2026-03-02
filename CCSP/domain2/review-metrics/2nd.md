@@ -164,28 +164,29 @@ flowchart TD
 ```
 ### 9.2 In transit / At rest / In use 快速對應
 ```mermaid 
-mindmap  
-  root((Data State))  
-    At_rest  
-      "Volume/DB/SSE encryption"  
-      "Backup/Snapshot controls"  
-    In_transit  
-      "TLS"  
-      "IPsec"  
-      "End-to-end encryption"  
-    In_use  
-      "RBAC/least privilege (who can use)"  
+mindmap
+  root((Data State))
+    At_rest
+      "Volume/DB/SSE encryption"
+      "Backup/Snapshot controls"
+    In_transit
+      "TLS"
+      "IPsec"
+      "End-to-end encryption"
+    In_use
+      "RBAC / least privilege (who can use)"
       "Homomorphic encryption (concept)"
 ```
 ### 9.3 Replication 決策（避免選反）
 ```mermaid 
-flowchart TD  
-  R[Replication 題] --> K{關鍵字是?}  
-  K -->|near-zero data loss / RPO≈0| SYNC[Synchronous replication]  
-  SYNC --> COST[代價: latency / performance cost ↑]  
-  
-  K -->|acceptable lag / RPO minutes| ASYNC[Asynchronous replication]  
-  ASYNC --> RISK[風險: RPO risk (可能丟最後一段)]
+flowchart TD
+  R[Replication 題] --> K{關鍵字是？}
+
+  K -->|near-zero data loss / RPO≈0| SYNC[Synchronous replication]
+  SYNC --> COST["代價：latency / performance cost ↑"]
+
+  K -->|acceptable lag / RPO minutes| ASYNC[Asynchronous replication]
+  ASYNC --> RISK["風險：RPO risk（可能丟最後一段）"]
 ```
 ### 9.4 2.2 Storage 秒殺分流
 ```mermaid 
