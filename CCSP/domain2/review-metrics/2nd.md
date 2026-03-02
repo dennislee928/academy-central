@@ -161,8 +161,9 @@ flowchart TD
   
   NR -->|Why not MAC?| MACNR[MAC共享密鑰→第三方無法證明作者]
 
+```
 ### 9.2 In transit / At rest / In use 快速對應
-
+```mermaid 
 mindmap  
   root((Data State))  
     At_rest  
@@ -175,9 +176,9 @@ mindmap
     In_use  
       "RBAC/least privilege (who can use)"  
       "Homomorphic encryption (concept)"
-
+```
 ### 9.3 Replication 決策（避免選反）
-
+```mermaid 
 flowchart TD  
   R[Replication 題] --> K{關鍵字是?}  
   K -->|near-zero data loss / RPO≈0| SYNC[Synchronous replication]  
@@ -185,9 +186,9 @@ flowchart TD
   
   K -->|acceptable lag / RPO minutes| ASYNC[Asynchronous replication]  
   ASYNC --> RISK[風險: RPO risk (可能丟最後一段)]
-
+```
 ### 9.4 2.2 Storage 秒殺分流
-
+```mermaid 
 flowchart TD  
   S[Storage 題關鍵字] --> O{per-object / bucket / versioning / WORM?}  
   S --> B{volume / attach?}  
@@ -199,7 +200,7 @@ flowchart TD
   SDS -->|Yes| CP[Control plane is crown jewels]  
   S --> VIRT{Virtualization / hypervisor?}  
   VIRT -->|Yes| HV[Hypervisor isolation risk]
-
+```
 ---
 
 ## 10) 今日「6 條超速記」總結
