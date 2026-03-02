@@ -134,7 +134,7 @@ global replication / caching / edge distribution → 更難保證落地位置
 - **Labeling = machine-readable**（系統可讀，如 metadata 欄位 `classification=confidential`）  
 - **Marking = human-readable**（人可讀，如頁首 “CONFIDENTIAL — Do not email outside company”）  
   
-### 8.2 Classification vs Categorization（你已修正）  
+### 8.2 Classification vs Categorization（已修正）  
 - **Classification**：建立/定義分類制度（例：Public/Internal/Confidential/Secret）  
 - **Categorization**：把某資產套進某一類（例：把 HR 名單標成 Confidential）  
   
