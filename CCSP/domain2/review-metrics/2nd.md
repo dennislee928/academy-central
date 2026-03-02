@@ -1,4 +1,4 @@
-# 今日複習筆記（CCSP D2 + 你模考錯題修正 + CISSP D2 補洞）  
+# 今日複習筆記（CCSP D2 + 模考錯題修正 + CISSP D2 補洞）  
   
 > 核心目標：考場看到關鍵字，**10 秒選對控制**，避開常見誘答。  
   
@@ -130,7 +130,7 @@ global replication / caching / edge distribution → 更難保證落地位置
 ---  
   
 ## 8) 今日額外補強（CISSP D2：Labeling/Marking、Classification/Categorization）  
-### 8.1 Labeling vs Marking（你已掌握）  
+### 8.1 Labeling vs Marking（已掌握）  
 - **Labeling = machine-readable**（系統可讀，如 metadata 欄位 `classification=confidential`）  
 - **Marking = human-readable**（人可讀，如頁首 “CONFIDENTIAL — Do not email outside company”）  
   
