@@ -100,3 +100,16 @@ graph TD
 
 ---
 
+- **Production 依角色顯示** → Dynamic masking + RBAC
+    
+- **Non-prod 測試資料** → Static masking（若要保留統計特性 → Synthetic data）
+    
+- **非結構化文件外部分享** → Redaction + placeholder
+    
+- **格式/長度不變（不改 schema）** → FPE
+    
+- **保留關聯做 join/分析** → Tokenization
+    
+- **DLP 偵測已知清單外流** → EDM/Fingerprinting
+    
+- **衡量去識別效果** → K-anonymity
