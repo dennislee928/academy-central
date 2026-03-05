@@ -30,11 +30,12 @@ export type ContentEntry = { slug: string[]; filePath: string };
 
 /**
  * 取得作為「主 page」的根目錄名稱（第一層目錄，排除非內容目錄）
+ * 排除以 "." 開頭之目錄（如 .vercel、.git 等）
  */
 export function getContentRoots(): string[] {
   const names = fs.readdirSync(CWD, { withFileTypes: true });
   return names
-    .filter((d) => d.isDirectory() && !ROOT_EXCLUDE.has(d.name))
+    .filter((d) => d.isDirectory() && !d.name.startsWith('.') && !ROOT_EXCLUDE.has(d.name))
     .map((d) => d.name)
     .sort();
 }
