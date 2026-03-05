@@ -11,12 +11,10 @@
 - **Data Owner vs Data Custodian（保管員）**：誰「定義分類與政策」vs 誰「技術上管理／落地」
 - **Data Steward（資料治理員） vs Data Controller**：誰「治理／品質／合規協調」vs 誰「決定處理目的與方式」
     
-- **Controller vs Processor（GDPR）**在 multi-cloud 下如何落實責任劃分（需要 governance framework）
-    
-- **Shared Responsibility 下 access control 是誰的責任**（多數情境：**Cloud Customer**負責 IAM/資料存取控制）
-    
+- **Controller vs Processor（GDPR）**：multi-cloud 下如何落實責任劃分（需 governance framework）
+- **Shared Responsibility**：access control 多數情境由 **Cloud Customer** 負責 IAM／資料存取控制
 
-> 這類題目是 Domain 2 的「骨架」。角色一錯，後面 lifecycle、classification、IRM、audit 題都會被帶歪。
+> 本類題目為 Domain 2 的「骨架」；角色判斷錯誤易連帶影響 lifecycle、classification、IRM、audit 等題。
 
 ---
 
