@@ -2,8 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* NThing-UI design system */
+:root {
+  --nothing-bg: #0a0a0a;
+  --nothing-surface: #1b1c1d;
+  --nothing-surface-light: #f1f0f6;
+  --nothing-red: #e2201f;
+  --nothing-text: #ffffff;
+  --nothing-muted: rgba(255, 255, 255, 0.7);
+  --font-nothing: 'Nothing 5x7', ui-monospace, monospace;
+  --font-headline: 'NType 82', 'Nothing 5x7', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Poppins Light', ui-sans-serif, system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'Nothing 5x7';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/academy-central/fonts/nothing_5_7.ttf') format('truetype'), url('/fonts/nothing_5_7.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NType 82';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/academy-central/fonts/ntype82_bold.ttf') format('truetype'), url('/fonts/ntype82_bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins Light';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/academy-central/fonts/popins_light.ttf') format('truetype'), url('/fonts/popins_light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'JND Nothing5';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/academy-central/fonts/jnd_nothing5.ttf') format('truetype'), url('/fonts/jnd_nothing5.ttf') format('truetype');
+}
+
 body {
-  @apply bg-black text-white antialiased;
+  @apply antialiased;
+  background-color: var(--nothing-bg);
+  color: var(--nothing-text);
+  font-family: var(--font-body);
 }
 
 /* Markdown content — dark theme, Nothing-style minimal */
