@@ -94,12 +94,12 @@ export default async function SlugPage({ params }: Props) {
 
     return (
       <div>
-        <nav className="mb-8 text-sm text-white/60 flex flex-wrap items-center gap-1">
-          <Link href="/" className="hover:text-white transition-colors">首頁</Link>
+        <nav className="mb-8 text-sm text-nothing-muted flex flex-wrap items-center gap-1 font-body">
+          <Link href="/" className="hover:text-nothing-red transition-colors">首頁</Link>
           {breadcrumbs.map((b) => (
             <span key={b.href}>
               <span className="mx-1">/</span>
-              <Link href={b.href} className="hover:text-white transition-colors">
+              <Link href={b.href} className="hover:text-nothing-red transition-colors">
                 {b.label}
               </Link>
             </span>
@@ -108,19 +108,18 @@ export default async function SlugPage({ params }: Props) {
         <MarkdownContent content={content} />
         {siblings.length > 0 && (
           <section className="mt-12 pt-8 border-t border-white/10">
-            <h2 className="text-xl font-bold tracking-tight mb-4 text-white/90">本目錄其他內容</h2>
-            <ul className="space-y-3">
+            <h2 className="font-headline text-xl font-bold tracking-tight mb-4 text-nothing-text">
+              本目錄其他內容
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
               {siblings.map((c) => (
-                <li key={c.slug.join('/')}>
-                  <Link
-                    href={slugHref(c.slug)}
-                    className="block text-lg text-white/90 hover:text-white py-2 border-b border-white/10 hover:border-white/30 transition-colors"
-                  >
-                    {c.type === 'dir' ? `📁 ${c.name}` : c.name.replace(/\.(md|mdx)$/i, '')}
-                  </Link>
-                </li>
+                <ArticleCard
+                  key={c.slug.join('/')}
+                  item={c}
+                  href={slugHref(c.slug)}
+                />
               ))}
-            </ul>
+            </div>
           </section>
         )}
       </div>
