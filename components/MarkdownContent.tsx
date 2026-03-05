@@ -3,6 +3,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import MermaidBlock from './MermaidBlock';
+import NothingQuote from './ui/NothingQuote';
 
 export default function MarkdownContent({ content }: { content: string }) {
   return (
@@ -10,6 +11,9 @@ export default function MarkdownContent({ content }: { content: string }) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
+          blockquote({ children }) {
+            return <NothingQuote>{children}</NothingQuote>;
+          },
           code({ node, className, children, ...props }) {
             const rawClass = Array.isArray(className) ? className.join(' ') : (className ?? '');
             const match = /language-(\w+)/.exec(String(rawClass));
