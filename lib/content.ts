@@ -14,6 +14,7 @@ const ROOT_EXCLUDE = new Set([
   '.cursor',
   '.github',
   'components',
+  'NThing-UI-main', // Rainmeter skin assets only, not content
 ]);
 
 const RECURSE_EXCLUDE = new Set(['node_modules', '.git', 'target', 'src', 'helper_scripts']);
