@@ -13,6 +13,7 @@ import {
 import MarkdownContent from '@/components/MarkdownContent';
 import NothingHero from '@/components/ui/NothingHero';
 import RootListCards from '@/components/ui/RootListCards';
+import ArticleCard from '@/components/ui/ArticleCard';
 
 type Props = { params: { slug?: string[] } | Promise<{ slug?: string[] }> };
 
