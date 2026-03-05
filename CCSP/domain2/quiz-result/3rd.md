@@ -1,4 +1,4 @@
-
+# Domain 2 錯題分析講義（第三輪）
 
 ---
 
@@ -6,7 +6,7 @@
 
 **題意**：從 data security 角度，object storage 相比 block storage 的主要優勢？
 
-- **正解**：Object storage **通常內建 at-rest encryption**（或可視為預設/標準能力）
+- **正解**：Object storage **通常內建 at-rest encryption**（可視為預設／標準能力）
     
 - **常見誤選：** Object storage 對 unstructured data 有更好的未授權保護
     
