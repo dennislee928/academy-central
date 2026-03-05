@@ -1,4 +1,4 @@
-# Helper Scripts
+# 歐洲研討會輔助腳本說明
 
 ## R2 / S3 上傳設定
 
@@ -61,7 +61,7 @@ export AWS_DEFAULT_REGION="auto"
 
 ## 驗證
 
-列出 prefix 下的物件：
+列出 prefix 下的儲存物件：
 
 ```bash
 aws s3 ls "s3://personal-log-datas/europe_gopro_2026/" \
