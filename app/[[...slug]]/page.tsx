@@ -145,30 +145,27 @@ export default async function SlugPage({ params }: Props) {
   }));
   return (
     <div>
-      <nav className="mb-8 text-sm text-white/60 flex flex-wrap items-center gap-1">
-        <Link href="/" className="hover:text-white transition-colors">首頁</Link>
-        {breadcrumbs.map((b) => (
-          <span key={b.href}>
-            <span className="mx-1">/</span>
-            <Link href={b.href} className="hover:text-white transition-colors">
-              {b.label}
-            </Link>
-          </span>
-        ))}
-      </nav>
-      <h1 className="text-3xl font-bold tracking-tight mb-8">{slug[slug.length - 1] ?? '目錄'}</h1>
-      <ul className="space-y-3">
+      <nav className="mb-8 text-sm text-nothing-muted flex flex-wrap items-center gap-1 font-body">
+          <Link href="/" className="hover:text-nothing-red transition-colors">首頁</Link>
+          {breadcrumbs.map((b) => (
+            <span key={b.href}>
+              <span className="mx-1">/</span>
+              <Link href={b.href} className="hover:text-nothing-red transition-colors">
+                {b.label}
+              </Link>
+            </span>
+          ))}
+        </nav>
+      <NothingHero title={slug[slug.length - 1] ?? '目錄'} className="mb-8" />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {children.map((c) => (
-          <li key={c.slug.join('/')}>
-            <Link
-              href={slugHref(c.slug)}
-              className="block text-lg text-white/90 hover:text-white py-2 border-b border-white/10 hover:border-white/30 transition-colors"
-            >
-              {c.type === 'dir' ? `📁 ${c.name}` : c.name.replace(/\.(md|mdx)$/i, '')}
-            </Link>
-          </li>
+          <ArticleCard
+            key={c.slug.join('/')}
+            item={c}
+            href={slugHref(c.slug)}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
