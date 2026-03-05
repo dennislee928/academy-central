@@ -1,14 +1,15 @@
-## Domain 2 弱點總結（從錯題反推）
+# Domain 2 弱點總結（從錯題反推）
 
-錯題集中在兩個核心：
+本講義由錯題反推高頻弱點，供複習與考場速查。
 
-### A) **資料角色 / 責任邊界（最主要弱點，P0）**
+錯題集中於兩大核心：
 
-多次混淆：
+### A) **資料角色與責任邊界（最主要弱點，P0）**
 
-- **Data Owner vs Data Custodian（看門人）**（誰「定義分類與政策」vs 誰「技術上管理/落地」）
-    
-- **Data Steward（**管家**） vs Data Controller**（誰「治理/品質/合規協調」vs 誰「決定處理目的/方式」）
+常見混淆包括：
+
+- **Data Owner vs Data Custodian（保管員）**：誰「定義分類與政策」vs 誰「技術上管理／落地」
+- **Data Steward（資料治理員） vs Data Controller**：誰「治理／品質／合規協調」vs 誰「決定處理目的與方式」
     
 - **Controller vs Processor（GDPR）**在 multi-cloud 下如何落實責任劃分（需要 governance framework）
     
