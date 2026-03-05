@@ -1,10 +1,6 @@
-  
+# CCSP Domain 2 講義（P0：2.3 Data Security Tech ＋ 2.2 Storage Architectures）
 
-**本講義針對 CCSP Domain 2 高頻弱點（2.3 Data Security Tech + 2.2 Storage Architectures），採一頁式重點、陷阱對照表、決策樹與考場速記形式。**
-
-⸻
-
-**CCSP Domain 2 講義（P0：2.3 + 2.2）**
+本講義針對 Domain 2 高頻弱點，採一頁式重點、陷阱對照表、決策樹與考場速記形式。
 
 **0) 常見誘答的兩條主軸**
 
