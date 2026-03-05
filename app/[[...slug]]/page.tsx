@@ -130,8 +130,11 @@ export default async function SlugPage({ params }: Props) {
   if (children.length === 0) {
     return (
       <div>
-        <p className="text-white/60 mb-6">此路徑下尚無內容。</p>
-        <Link href="/" className="text-white hover:opacity-80 transition-opacity inline-block">
+        <p className="text-nothing-muted font-body mb-6">此路徑下尚無內容。</p>
+        <Link
+          href="/"
+          className="text-nothing-red hover:opacity-90 transition-opacity font-headline font-bold inline-block"
+        >
           ← 回首頁
         </Link>
       </div>
