@@ -113,3 +113,103 @@ graph TD
 - **DLP 偵測已知清單外流** → EDM/Fingerprinting
     
 - **衡量去識別效果** → K-anonymity
+---
+# CCSP Domain 3 Cloud Data Security 講義
+主題：DLP／Fingerprinting(EDM)／Masking／FPE／Tokenization／Synthetic Data／K-anonymity  
+
+---
+
+## 0) 10 秒選型：先問 3 個問題
+1) **資料型態**：Structured（表格欄位）還是 Unstructured（文件/PDF）？  
+2) **使用環境**：Production（真用戶）還是 Non-prod（Dev/Test）？  
+3) **必須保留的功能**：  
+   - 只要「看不懂」  
+   - 還要 **角色看到不同**  
+   - 還要 **可 Join/關聯分析**  
+   - 還要 **格式不變**（例如 16 位數字不改）
+
+---
+
+## 1) DLP（Data Loss Prevention）
+### 1.1 DLP 在考什麼
+- 不是只考「工具名」：更常考 **偵測方式** + **部署點** + **業務平衡（保護 vs 協作）**
+- 混合雲常見痛點：**分類與標籤不一致** → 規則難一致落地
+
+### 1.2 偵測方式秒選
+- **Pattern / Regex**：抓「格式固定」  
+  例：信用卡格式、SSN
+- **Fingerprinting / EDM（Exact Data Match）**：抓「我有一份已知名單，要找它有沒有外流」  
+  例：病患名單 CSV、客戶名單
+- **Context / ML**：較偏非結構化內容分類（題目若強調語意/上下文才會靠近這個）
+
+**常見誘答**
+- 題目問「已知名單外流」選了 Pattern  
+- 題目問「固定格式」選了 EDM
+
+---
+
+## 2) Data Obfuscation / Protection（最常錯的那坨）
+> 下面每個技術，只要記「最佳場景關鍵字」。
+
+### 2.1 Dynamic Data Masking（動態遮罩）
+- **何時最像最佳解**：Production + **依角色顯示不同**（RBAC）
+- **關鍵字**：Production, role based, different view, do not change source
+- **一句話**：原資料不變，顯示時遮
+
+### 2.2 Static Masking（靜態遮罩）
+- **何時最像最佳解**：Non-prod 測試資料（Dev/Test）  
+- **關鍵字**：test environment, non production, permanent change copy
+- **一句話**：做副本，副本被永久改
+
+### 2.3 Redaction（選擇性遮蓋）
+- **何時最像最佳解**：**非結構化文件**對外分享，只遮某些段落  
+- **關鍵字**：PDF, contract, legal doc, unstructured, share externally, placeholder
+- **一句話**：把文字片段塗黑或用占位符保留可讀性  
+  例：`[REDACTED]`、黑條
+
+### 2.4 Tokenization（代碼化）
+- **何時最像最佳解**：要保護敏感值，但要保留 **關聯性 / 可 Join**（分析可用）  
+- **關鍵字**：analytics, join, relationship, keep linkage, reduce compliance scope
+- **一句話**：用 token 代替原值，分析還能對得起來  
+- **考場陷阱**：題目若強調「格式一定要不變（16 位數字）」→ 先想到 FPE（除非題目明說 token 也是固定格式）
+
+### 2.5 FPE（Format Preserving Encryption）
+- **何時最像最佳解**：**格式/長度不能變**，不想改 DB schema 或驗證規則  
+- **關鍵字**：same format, same length, 16 digits, cannot change schema
+- **一句話**：加密後長度與字符集仍一樣
+
+> 小補充（對剛問的 join）  
+> 若題目需要 join，通常需要 **deterministic（同值同結果）**。FPE 在「同 key 與同設定」下可以做到用等值比對 join（題目若沒提，仍以格式關鍵字優先）。
+
+### 2.6 Synthetic Data（合成資料）
+- **何時最像最佳解**：測試/分析需要「像真的」且要保留 **統計分佈/可用性**  
+- **關鍵字**：statistical distribution, utility, test quality
+- **一句話**：生成新資料，不是直接遮原資料
+
+---
+
+## 3) K-anonymity（隱私度量）
+- **考點**：它是「量化去識別化效果」的指標  
+- **一句話**：每筆紀錄在準識別欄位上至少和 **k-1** 筆看起來一樣 → 不容易被連回個人  
+- **常見題型**：題目問「衡量/指標」而不是「遮罩技術」
+
+---
+
+## 4) 10 秒決策樹（Mermaid，Flowchart 版，較不易報錯）
+
+### 4.1 主要選型：Masking / Redaction / FPE / Token / Synthetic
+```mermaid
+flowchart TD
+  S[Start] --> T{Data type}
+  T -->|Unstructured document| R[Redaction with placeholder]
+  T -->|Structured fields| E{Environment}
+  E -->|Non production| N{Need stats utility}
+  N -->|Yes| Y[Synthetic data]
+  N -->|No| M[Static masking]
+  E -->|Production| P{Role based view}
+  P -->|Yes| D[Dynamic masking plus RBAC]
+  P -->|No| F{Must keep same format}
+  F -->|Yes| FPE[FPE]
+  F -->|No| J{Need join relationship}
+  J -->|Yes| TOK[Tokenization]
+  J -->|No| ENC[Encryption or access control]
