@@ -20,7 +20,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/nothing_5_7.ttf') format('truetype'), url('/academy-central/fonts/nothing_5_7.ttf') format('truetype');
+  src: url('/academy-central/fonts/nothing_5_7.ttf') format('truetype'), url('/fonts/nothing_5_7.ttf') format('truetype');
 }
 
 @font-face {
@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/fonts/ntype82_bold.ttf') format('truetype'), url('/academy-central/fonts/ntype82_bold.ttf') format('truetype');
+  src: url('/academy-central/fonts/ntype82_bold.ttf') format('truetype'), url('/fonts/ntype82_bold.ttf') format('truetype');
 }
 
 @font-face {
@@ -36,7 +36,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('/fonts/popins_light.ttf') format('truetype'), url('/academy-central/fonts/popins_light.ttf') format('truetype');
+  src: url('/academy-central/fonts/popins_light.ttf') format('truetype'), url('/fonts/popins_light.ttf') format('truetype');
 }
 
 @font-face {
@@ -44,7 +44,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/jnd_nothing5.ttf') format('truetype'), url('/academy-central/fonts/jnd_nothing5.ttf') format('truetype');
+  src: url('/academy-central/fonts/jnd_nothing5.ttf') format('truetype'), url('/fonts/jnd_nothing5.ttf') format('truetype');
 }
 
 body {
