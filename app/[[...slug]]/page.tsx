@@ -11,6 +11,8 @@ import {
   getAllSlugsForParams,
 } from '@/lib/content';
 import MarkdownContent from '@/components/MarkdownContent';
+import NothingHero from '@/components/ui/NothingHero';
+import RootListCards from '@/components/ui/RootListCards';
 
 type Props = { params: { slug?: string[] } | Promise<{ slug?: string[] }> };
 
@@ -53,24 +55,11 @@ export default async function SlugPage({ params }: Props) {
     const roots = getContentRoots();
     return (
       <div className="min-h-[60vh] flex flex-col justify-center">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
-          Academy Central
-        </h1>
-        <p className="text-white/60 text-lg mb-12 max-w-xl">
-          依主 page（母 folder）瀏覽內容。
-        </p>
-        <ul className="space-y-4">
-          {roots.map((name) => (
-            <li key={name}>
-              <Link
-                href={slugHref([name])}
-                className="block text-xl text-white hover:text-white/90 transition-colors py-2 border-b border-white/10 hover:border-white/30"
-              >
-                {name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <NothingHero
+          title="Academy Central"
+          subtitle="依主 page（母 folder）瀏覽內容。"
+        />
+        <RootListCards roots={roots} />
       </div>
     );
   }
