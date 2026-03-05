@@ -1,4 +1,6 @@
-## 錯題的核心集中點
+# Domain 2 錯題分析講義（第二輪）
+
+## 錯題核心集中點
 
 - **2.2 Cloud data storage architectures**：佔已提供錯題的 **4/6 = 66.7%** → 這次的 **P0**
     
@@ -30,7 +32,7 @@
 
 ## 1) 個別 data elements 的最細粒度「靜態加密」選哪種 storage？
 
-**題意**：需要在 storage solution 內，對「個別資料元素/物件」做到更細的 at-rest encryption granularity。
+**題意**：在儲存方案中，對「個別資料元素／物件」達成更細的 at-rest 加密粒度時，應選何種儲存類型？
 
 - **正解：Object storage**
     
