@@ -181,6 +181,7 @@ graph TD
 > 小補充（對剛問的 join）  
 > 若題目需要 join，通常需要 **deterministic（同值同結果）**。FPE 在「同 key 與同設定」下可以做到用等值比對 join（題目若沒提，仍以格式關鍵字優先）。
 
+
 ### 2.6 Synthetic Data（合成資料）
 - **何時最像最佳解**：測試/分析需要「像真的」且要保留 **統計分佈/可用性**  
 - **關鍵字**：statistical distribution, utility, test quality
@@ -213,3 +214,35 @@ flowchart TD
   F -->|No| J{Need join relationship}
   J -->|Yes| TOK[Tokenization]
   J -->|No| ENC[Encryption or access control]
+  
+```
+## 4.2 DLP 偵測方式：Pattern vs EDM
+
+```mermaid
+flowchart TD
+  A[Start] --> B{Known dataset list}
+  B -->|Yes| EDM[Fingerprinting EDM]
+  B -->|No| C{Fixed format data}
+  C -->|Yes| PAT[Pattern regex]
+  C -->|No| CTX[Context or ML classify]
+```
+
+## 4.3 K-anonymity 何時上場
+
+```mermaid
+flowchart TD
+  Q[Question asks] --> M{Metric or measurement}
+  M -->|Yes| K[K anonymity]
+  M -->|No| TCH[Pick technique like masking tokenization]
+```
+
+
+#### 三句口訣」（
+
+1. Production 依角色看不同 → **Dynamic masking + RBAC**
+    
+2. 非結構化文件對外分享遮段落 → **Redaction + placeholder**
+    
+3. 已知名單要抓外流 → DLP 用 **Fingerprinting / EDM**  
+    
+4. 格式不變（16 位）→ **FPE**
