@@ -10,10 +10,15 @@ type BrowserInfo = {
   gauge: number;
 };
 
+const PLACEHOLDER: BrowserInfo = {
+  viewport: '—',
+  cores: null,
+  language: '—',
+  gauge: 0,
+};
+
 function getBrowserInfo(): BrowserInfo {
-  if (typeof window === 'undefined') {
-    return { viewport: '—', cores: null, language: '—', gauge: 0 };
-  }
+  if (typeof window === 'undefined') return PLACEHOLDER;
   const w = window.innerWidth;
   const h = window.innerHeight;
   const area = w * h;
@@ -28,7 +33,7 @@ function getBrowserInfo(): BrowserInfo {
 }
 
 export default function NothingMonitor() {
-  const [info, setInfo] = useState<BrowserInfo>(() => getBrowserInfo());
+  const [info, setInfo] = useState<BrowserInfo>(PLACEHOLDER);
 
   useEffect(() => {
     const update = () => setInfo(getBrowserInfo());
