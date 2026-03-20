@@ -159,3 +159,144 @@ npx clawhub@latest install <SKILL_NAME>
 
 ---
 
+# 2026 年自主智能體進階應用：進階技能定義與安全遠端存取規範
+
+---
+
+## 壹、 進階技能配置 (Advanced SKILL.md)：DevSecOps 實務
+
+在 **Agentic Coding** 架構中，`SKILL.md` 是賦予智能體「行為邊界」與「專業知識」的核心配置文件。針對資安開發場景（如 Go/Rust 專案），進階技能應整合靜態分析（SAST）與自動化修復建議。
+
+### 一、 技能定義範例：自動化資安審計與補丁生成
+
+此設定檔導向智能體在偵測到程式碼變更時，自主執行漏洞掃描並於 **Cursor IDE** 中啟動修復程序。
+
+Markdown
+
+```
+# Skill: Cyber-Security-Guard (v2.1)
+
+- **Description**: 專門針對 Go 與 Rust 專案進行深度資安審計，並自動生成修復補丁。
+- **Scope**: `/Users/dennis_leedennis_lee/projects/`
+
+## 觸發條件 (Triggers)
+1. 偵測到 `git commit` 或 `file_save` 事件。
+2. 接收到 IM 指令關鍵字：「審計專案」、「檢查安全」。
+
+## 執行邏輯 (Action Pipeline)
+1. **環境識別**: 識別專案語言（Go: `go.mod`, Rust: `Cargo.toml`）。
+2. **靜態掃描**: 
+   - Go: 執行 `govulncheck ./...`
+   - Rust: 執行 `cargo audit`
+3. **漏洞分析**: 若回傳代碼非 0，讀取輸出結果並過濾 `High` 與 `Critical` 級別漏洞。
+4. **自主修復 (Self-Healing)**:
+   - 檢索最新的穩定版本依賴。
+   - 在專案根目錄生成 `security_patch.diff`。
+   - 通知管理員：「發現漏洞，已生成修復建議，是否在 Cursor 中應用？」
+
+## 輸出規範 (Output Standards)
+- 報告格式：Markdown Table。
+- 嚴禁修改：涉及加密邏輯的核心模組（如 `/crypto/`）僅能提供建議，不得自主變更。
+```
+
+---
+
+## 貳、 Cloudflare Tunnel 配置：零信任遠端存取架構
+
+為實現「免公網 IP」且「安全加密」的遠端編碼體驗，建議採用 **Cloudflare Tunnel (Argo Tunnel)**。此方案能有效穿透 NAT 限制，並透過 Cloudflare 邊緣網路進行身分驗證。
+
+### 一、 技術架構圖
+
+### 二、 部署操作程序
+
+#### 1. 安裝 Cloudflare 守護進程 (cloudflared)
+
+於 macOS 執行以下指令：
+
+Bash
+
+```
+brew install cloudflare/cloudflare/cloudflared
+```
+
+#### 2. 認證與建立隧道
+
+執行身分驗證並建立名為 `lobster-tunnel` 的專屬隧道：
+
+Bash
+
+```
+cloudflared tunnel login
+cloudflared tunnel create lobster-tunnel
+```
+
+系統將生成一個 **Tunnel ID** (UUID 格式)，此為後續配置之核心識別碼。
+
+#### 3. 配置路由與 DNS
+
+將您的自定義域名（如 `agent.dennislee.com`）指向該隧道：
+
+Bash
+
+```
+cloudflared tunnel route dns lobster-tunnel agent.dennislee.com
+```
+
+#### 4. 編輯隧道配置文件 (`~/.cloudflared/config.yml`)
+
+此配置將 Cloudflare 邊緣流量導向 OpenClaw 預設的網關端口 `18789`：
+
+YAML
+
+```
+tunnel: <YOUR_TUNNEL_ID>
+credentials-file: /Users/dennis_leedennis_lee/.cloudflared/<YOUR_TUNNEL_ID>.json
+
+ingress:
+  - hostname: agent.dennislee.com
+    service: http://localhost:18789
+  - service: http_status:404
+```
+
+#### 5. 執行隧道
+
+Bash
+
+```
+cloudflared tunnel run lobster-tunnel
+```
+
+---
+
+## 參、 安全強化與存取控制 (Security Hardening)
+
+### 一、 結合 Cloudflare Access (mTLS)
+
+為確保智能體網關不被第三方掃描或攻擊，建議於 Cloudflare Dashboard 開啟 **Access** 功能：
+
+- **策略設定：** 僅允許特定電子郵件或 GitHub 帳號登入。
+    
+- **二階段驗證 (2FA)：** 強制執行遠端控制指令前的二次身分核驗。
+    
+
+### 二、 OpenClaw 通訊授權更新
+
+當網關透過域名暴露於公網後，必須更新 `openclaw.json` 中的 Webhook 地址，確保 Telegram 或其他 IM 插件能正確回傳回調訊息：
+
+Bash
+
+```
+openclaw config set communication.telegram.webhook "https://agent.dennislee.com/api/v1/webhook/telegram"
+```
+
+---
+
+## 肆、 參考文獻與技術文件 (Technical References)
+
+1. **Cloudflare Zero Trust Documentation (2026):** _Securing Internal Services with Tunnels._
+    
+2. **OpenClaw Developer Guide (v2026.3):** _Advanced Skill Syntax and Event Binding._
+    
+3. **OWASP Top 10 for LLM Applications (2025-2026):** _Mitigating Prompt Injection in Agentic Workflows._
+    
+4. **Go Security Team:** _Integrated Vulnerability Management Best Practices._
