@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
 const CWD = process.cwd();
 
@@ -27,6 +28,25 @@ function toNFC(s: string): string {
 }
 
 export type ContentEntry = { slug: string[]; filePath: string };
+
+function shortHash(input: string): string {
+  return crypto.createHash('sha1').update(input).digest('hex').slice(0, 10);
+}
+
+/**
+ * 將「檔名」轉為短且穩定的 URL segment，避免 output: 'export' 時產物路徑過長（ENAMETOOLONG）。
+ * 僅用於檔名（非目錄名），以維持目錄索引頁仍可對應實體資料夾。
+ */
+function safeFileSlug(fileBaseName: string): string {
+  const raw = toNFC(fileBaseName).trim().replace(/^\*+|\*+$/g, ''); // 移除檔名首尾常見的 markdown 強調符號
+  const ascii = raw
+    .toLowerCase()
+    .replace(/['"]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  const prefix = ascii.slice(0, 48) || 'doc';
+  return `${prefix}-${shortHash(raw)}`;
+}
 
 /**
  * 取得作為「主 page」的根目錄名稱（第一層目錄，排除非內容目錄）
@@ -70,7 +90,13 @@ export function pathToSlug(relativePath: string): string[] {
   if (segments[segments.length - 1]?.toLowerCase() === 'readme') {
     return segments.slice(0, -1);
   }
-  return segments;
+  if (segments.length === 0) return segments;
+  const last = segments[segments.length - 1] ?? '';
+  const safeLast = safeFileSlug(last);
+  // #region agent log
+  fetch('http://127.0.0.1:7621/ingest/eae6f4bd-a35a-4d5f-8987-586828d900ec',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'79be4b'},body:JSON.stringify({sessionId:'79be4b',runId:'pre-fix',hypothesisId:'H2',location:'lib/content.ts:~pathToSlug',message:'pathToSlug last segment sanitized',data:{lastLen:last.length,safeLastLen:safeLast.length,lastPreview:last.slice(0,80),safeLast},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
+  return [...segments.slice(0, -1), safeLast];
 }
 
 /**
@@ -222,7 +248,7 @@ export function getDirectoryChildren(relativeDir: string): { name: string; type:
     } else if (e.isFile() && MD_EXTENSIONS.includes(path.extname(e.name).toLowerCase())) {
       const base = toNFC(e.name.replace(/\.(md|mdx)$/i, ''));
       if (base.toLowerCase() === 'readme') result.push({ name: nameNFC, type: 'file', slug: prefix });
-      else result.push({ name: nameNFC, type: 'file', slug: [...prefix, base] });
+      else result.push({ name: nameNFC, type: 'file', slug: [...prefix, safeFileSlug(base)] });
     }
   }
   return result.sort((a, b) => {

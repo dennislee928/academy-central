@@ -24,6 +24,17 @@ export async function generateStaticParams() {
   const slugs = getAllSlugsForParams();
   // Next.js 在 output: 'export' 下，對 optional catch-all 的參數比對在不同情境可能使用「原字串」或「已編碼字串」。
   // 這裡同時回傳兩種版本，避免因空白等字元（%20）導致 missing param。
+  // #region agent log
+  const longest = slugs.reduce(
+    (acc, s) => {
+      const joined = s.join('/');
+      if (joined.length > acc.len) return { len: joined.length, slug: s };
+      return acc;
+    },
+    { len: 0, slug: [] as string[] }
+  );
+  fetch('http://127.0.0.1:7621/ingest/eae6f4bd-a35a-4d5f-8987-586828d900ec',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'79be4b'},body:JSON.stringify({sessionId:'79be4b',runId:'pre-fix',hypothesisId:'H1',location:'app/[[...slug]]/page.tsx:generateStaticParams',message:'generateStaticParams slugs summary',data:{count:slugs.length,longestLen:longest.len,longestSlug:longest.slug.slice(0,6),longestSlugJoined:longest.slug.join('/').slice(0,200)},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
   const pairs = slugs.flatMap((s) => {
     const encoded = s.map((seg) => encodeURIComponent(seg));
     return [s, encoded];
