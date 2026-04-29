@@ -1,0 +1,1 @@
+**免費 (開源)**雲原生數據目錄 (Catalog)，支援 Iceberg REST 協定。多引擎（Spark, Trino, Flink）共享同一份數據湖數據。在 Snowflake 與自建 Spark 叢集間實現統一的權限管控。[Snowflake/ASF](https://news.apache.org/foundation/entry/the-apache-software-foundation-graduates-two-open-source-projects-from-incubator)
