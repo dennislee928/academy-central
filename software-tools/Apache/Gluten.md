@@ -1,0 +1,1 @@
+免費 (開源) Spark 的外掛插件，將 JVM 計算下推到 native 引擎 (如 Velox)。 解決 Spark 在大量計算時的 JVM GC 壓力與 CPU 瓶頸。 將現有的 Spark ETL 任務效能提升 2-3 倍而不需修改代碼。 Intel/ASF
