@@ -1,0 +1,1 @@
+**免費 (開源)**多智能體 (Multi-Agent) 協作與循環流程框架。構建具有「自我修正」能力的 AI 工作流。建立一組 AI 團隊：一名負責寫測試、一名寫代碼、一名做 Code Review。[LangChain / CrewAI](https://www.langchain.com/langgraph)
