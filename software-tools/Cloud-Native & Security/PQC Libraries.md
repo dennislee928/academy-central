@@ -1,0 +1,1 @@
+**免費 (開源)**抗量子加密演算法庫（如 ML-KEM）。預防「現在截獲，以後破解（Harvest now, decrypt later）」攻擊。在 TLS 握手中整合混合模式的量子安全加密。[NIST / Cloudflare](https://quantumxc.com/blogs-podcasts/quantum-predictions-it-network-infrastructure/)

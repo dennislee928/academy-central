@@ -1,0 +1,1 @@
+**免費 (編譯器)**結合 Python 易用性與 C 性能的 AI 專用語言。編寫高性能的 AI 算子或模型推理內核。在不使用 C++ 的情況下，手寫一個優化版的 Transformer 運算層。[Modular](https://www.modular.com/blog/)

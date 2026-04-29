@@ -1,0 +1,1 @@
+**免費 (標準)**WebAssembly 系統接口，2026 引入原生非同步 I/O。伺服器端與邊緣運算的輕量化執行環境。毫秒級啟動的 Serverless Function，支援全非同步網絡處理。[Wasmtime / W3C](https://progosling.com/en/dev-digest/2026-02/wasi-0-3-wasmtime-37-native-async)
