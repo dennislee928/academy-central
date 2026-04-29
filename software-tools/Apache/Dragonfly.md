@@ -1,0 +1,1 @@
+**免費 (開源)**現代化、多線程的 Redis 替代品。需要極高吞吐量與低延遲的快取場景。單機 400 萬 QPS 的緩存層，省去 Redis Cluster 的運運維複雜度。[DragonflyDB](https://dragonflydb.io/)

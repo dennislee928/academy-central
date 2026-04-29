@@ -1,0 +1,1 @@
+**付費 (硬體)**配備 FP4 精度與 288GB HBM3e 的次世代 GPU。超大規模 LLM 訓練與實時推論。在單台 DGX Station 上運行萬億參數級別的模型推理。[NVIDIA](https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/)
