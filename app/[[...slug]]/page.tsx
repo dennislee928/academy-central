@@ -1,5 +1,4 @@
 /// <reference types="react" />
-import Link from 'next/link';
 import path from 'path';
 import {
   getContentRoots,
@@ -10,10 +9,10 @@ import {
   getDirectoryChildren,
   getAllSlugsForParams,
 } from '@/lib/content';
-import MarkdownContent from '@/components/MarkdownContent';
-import NothingHero from '@/components/ui/NothingHero';
-import RootListCards from '@/components/ui/RootListCards';
-import ArticleCard from '@/components/ui/ArticleCard';
+import HomeSection from '@/components/translated/HomeSection';
+import ArticleMarkdownPage from '@/components/translated/ArticleMarkdownPage';
+import FolderListingPage from '@/components/translated/FolderListingPage';
+import EmptyPathPage from '@/components/translated/EmptyPathPage';
 
 type Props = { params: { slug?: string[] } | Promise<{ slug?: string[] }> };
 
@@ -24,17 +23,6 @@ export async function generateStaticParams() {
   const slugs = getAllSlugsForParams();
   // Next.js 在 output: 'export' 下，對 optional catch-all 的參數比對在不同情境可能使用「原字串」或「已編碼字串」。
   // 這裡同時回傳兩種版本，避免因空白等字元（%20）導致 missing param。
-  // #region agent log
-  const longest = slugs.reduce(
-    (acc, s) => {
-      const joined = s.join('/');
-      if (joined.length > acc.len) return { len: joined.length, slug: s };
-      return acc;
-    },
-    { len: 0, slug: [] as string[] }
-  );
-  fetch('http://127.0.0.1:7621/ingest/eae6f4bd-a35a-4d5f-8987-586828d900ec',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'79be4b'},body:JSON.stringify({sessionId:'79be4b',runId:'pre-fix',hypothesisId:'H1',location:'app/[[...slug]]/page.tsx:generateStaticParams',message:'generateStaticParams slugs summary',data:{count:slugs.length,longestLen:longest.len,longestSlug:longest.slug.slice(0,6),longestSlugJoined:longest.slug.join('/').slice(0,200)},timestamp:Date.now()})}).catch(()=>{});
-  // #endregion
   const pairs = slugs.flatMap((s) => {
     const encoded = s.map((seg) => encodeURIComponent(seg));
     return [s, encoded];
@@ -44,12 +32,6 @@ export async function generateStaticParams() {
   unique.set('', []);
   const params = Array.from(unique.values()).map((s) => ({ slug: s }));
   return params;
-}
-
-function slugHref(segments: string[]) {
-  if (segments.length === 0) return '/';
-  // 與 next.config 的 trailingSlash: true 一致，靜態匯出後路徑為 .../index.html
-  return '/' + segments.map(encodeURIComponent).join('/') + '/';
 }
 
 export default async function SlugPage({ params }: Props) {
@@ -65,15 +47,7 @@ export default async function SlugPage({ params }: Props) {
     }) ?? [];
   if (!slug.length) {
     const roots = getContentRoots();
-    return (
-      <div className="min-h-[60vh] flex flex-col justify-center">
-        <NothingHero
-          title="Academy Central"
-          subtitle="依主 page（母 folder）瀏覽內容。"
-        />
-        <RootListCards roots={roots} />
-      </div>
-    );
+    return <HomeSection roots={roots} />;
   }
 
   // 優先依預先條目解析（與 generateStaticParams 同源），避免 build 環境與本機路徑差異
@@ -85,14 +59,13 @@ export default async function SlugPage({ params }: Props) {
 
   if (filePath) {
     const content = readFileContent(filePath);
-    const breadcrumbs = slug.map((s, i) => ({
-      label: s,
-      href: slugHref(slug.slice(0, i + 1)),
-    }));
     // 若此頁是目錄的 readme，同目錄下其他 .md 也要列出，否則無法從此頁點進其他文章
     const isDirReadme =
       slug.length >= 1 &&
-      (filePath.endsWith('readme.md') || filePath.endsWith('README.md') || filePath.endsWith('index.md') || filePath.endsWith('index.mdx'));
+      (filePath.endsWith('readme.md') ||
+        filePath.endsWith('README.md') ||
+        filePath.endsWith('index.md') ||
+        filePath.endsWith('index.mdx'));
     const siblingDir = isDirReadme ? slug[0] ?? '' : '';
     const siblings =
       siblingDir !== ''
@@ -104,81 +77,14 @@ export default async function SlugPage({ params }: Props) {
         : [];
 
     return (
-      <div>
-        <nav className="mb-8 text-sm text-nothing-muted flex flex-wrap items-center gap-1 font-body">
-          <Link href="/" className="hover:text-nothing-red transition-colors">首頁</Link>
-          {breadcrumbs.map((b) => (
-            <span key={b.href}>
-              <span className="mx-1">/</span>
-              <Link href={b.href} className="hover:text-nothing-red transition-colors">
-                {b.label}
-              </Link>
-            </span>
-          ))}
-        </nav>
-        <MarkdownContent content={content} />
-        {siblings.length > 0 && (
-          <section className="mt-12 pt-8 border-t border-white/10">
-            <h2 className="font-headline text-xl font-bold tracking-tight mb-4 text-nothing-text">
-              本目錄其他內容
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {siblings.map((c) => (
-                <ArticleCard
-                  key={c.slug.join('/')}
-                  item={c}
-                  href={slugHref(c.slug)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
+      <ArticleMarkdownPage slug={slug} content={content} siblings={siblings} />
     );
   }
 
   const children = getDirectoryChildren(relativeDir);
   if (children.length === 0) {
-    return (
-      <div>
-        <p className="text-nothing-muted font-body mb-6">此路徑下尚無內容。</p>
-        <Link
-          href="/"
-          className="text-nothing-red hover:opacity-90 transition-opacity font-headline font-bold inline-block"
-        >
-          ← 回首頁
-        </Link>
-      </div>
-    );
+    return <EmptyPathPage />;
   }
 
-  const breadcrumbs = slug.map((s, i) => ({
-    label: s,
-    href: slugHref(slug.slice(0, i + 1)),
-  }));
-  return (
-    <div>
-      <nav className="mb-8 text-sm text-nothing-muted flex flex-wrap items-center gap-1 font-body">
-          <Link href="/" className="hover:text-nothing-red transition-colors">首頁</Link>
-          {breadcrumbs.map((b) => (
-            <span key={b.href}>
-              <span className="mx-1">/</span>
-              <Link href={b.href} className="hover:text-nothing-red transition-colors">
-                {b.label}
-              </Link>
-            </span>
-          ))}
-        </nav>
-      <NothingHero title={slug[slug.length - 1] ?? '目錄'} className="mb-8" />
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {children.map((c) => (
-          <ArticleCard
-            key={c.slug.join('/')}
-            item={c}
-            href={slugHref(c.slug)}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  return <FolderListingPage slug={slug} childrenItems={children} />;
 }
