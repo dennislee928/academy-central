@@ -1,6 +1,6 @@
 'use client';
 
-import { NothingButton } from '@dennislee928/nothingx-react-components';
+import { NothingButton } from '@dennislee928/nothingx-react-components/tsx/NothingButton';
 import { useTranslation } from '@/components/TranslationProvider';
 import type { UILocale } from '@/lib/ui-locale';
 import { UI_LOCALES } from '@/lib/ui-locale';
