@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run tests
+        run: npm run test
+
       # Avoid ENOENT when build/page code writes to .cursor/debug-*.log (e.g. leftover instrumentation)
       - name: Ensure .cursor exists for build
         run: mkdir -p .cursor
