@@ -3,9 +3,6 @@
 const productionBasePath =
   process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : '/academy-central';
 const nextConfig = {
-  /** 跳過型別檢查：@dennislee928/nothingx-react-components 內部分 widget 的 .tsx 與 strict 型別不相容。 */
-  typescript: { ignoreBuildErrors: true },
-  transpilePackages: ['@dennislee928/nothingx-react-components'],
   // dev 時不設 output: 'export'，避免 /_next/static 等被 catch-all 當成頁面而報 missing param 與 MODULE_NOT_FOUND
   ...(process.env.NODE_ENV === 'production' ? { output: 'export' } : {}),
   basePath: process.env.NODE_ENV === 'production' ? productionBasePath : '',
