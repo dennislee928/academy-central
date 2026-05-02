@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import MarkdownContent from '@/components/MarkdownContent';
 import ArticleCard from '@/components/ui/ArticleCard';
 import { useTranslation } from '@/components/TranslationProvider';
 import { slugHref } from '@/lib/slug-href';
+import { translateMarkdown } from '@/lib/translate-content';
 
 type Sibling = { name: string; type: 'file' | 'dir'; slug: string[] };
 
@@ -19,7 +21,32 @@ export default function ArticleMarkdownPage({
   content,
   siblings,
 }: Props) {
-  const { t } = useTranslation();
+  const { locale, t } = useTranslation();
+  const [displayContent, setDisplayContent] = useState(content);
+  const [isTranslating, setIsTranslating] = useState(false);
+
+  useEffect(() => {
+    setDisplayContent(content);
+  }, [content]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function doTranslate() {
+      setIsTranslating(true);
+      try {
+        const translated = await translateMarkdown(content, locale);
+        if (!cancelled) setDisplayContent(translated);
+      } catch {
+        if (!cancelled) setDisplayContent(content);
+      } finally {
+        if (!cancelled) setIsTranslating(false);
+      }
+    }
+    doTranslate();
+    return () => {
+      cancelled = true;
+    };
+  }, [content, locale]);
 
   const breadcrumbs = slug.map((s, i) => ({
     label: s,
@@ -41,7 +68,12 @@ export default function ArticleMarkdownPage({
           </span>
         ))}
       </nav>
-      <MarkdownContent content={content} />
+      {isTranslating && (
+        <p className="text-nothing-muted text-xs font-body mb-4 animate-pulse">
+          Translating…
+        </p>
+      )}
+      <MarkdownContent content={displayContent} />
       {siblings.length > 0 && (
         <section className="mt-12 pt-8 border-t border-white/10">
           <h2 className="font-headline text-xl font-bold tracking-tight mb-4 text-nothing-text">
