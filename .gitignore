@@ -38,3 +38,4 @@ next-env.d.ts
 /.cursor
 /NThing-UI-main
 /loans
+/.ignore-devdoc
