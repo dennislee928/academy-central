@@ -1,318 +1,867 @@
-## 1. Zeabur (亞太地區 / 台灣新創)
+# 冷門地區 PaaS / Cloud Provider 技術選型筆記
 
-**Zeabur** 是一家源自台灣的新創公司，專為開發者設計的部署平台。其定位非常接近 Choreo，強調「一鍵部署」與自動化 CI/CD。
-
-- **服務特點**：
-    
-    - 原生支援 **Go (Gin)** 與 **Next.js**，並提供 Docker 部署。
-        
-    - 提供免費額度（以點數計費模式，每月重置），適合中小型專案。
-        
-    - 節點分布於亞太地區（如東京、新加坡），對於東南亞使用者延遲極低。
-        
-- **專業評估**：其服務介面簡潔且具備高度專業性，對於熟悉 Cursor 或 GitHub 工作流的開發者非常友善。
-    
-- **資料來源**：[Zeabur Official Documentation](https://zeabur.com/docs)
-    
-
-## 2. Northflank (歐洲 / 英國)
-
-如果您在尋找技術深度與 Choreo 相當的平台，**Northflank** 是東歐及西歐邊界極具競爭力的選擇。
-
-- **服務特點**：
-    
-    - 提供完整的 PaaS 功能，包含微服務、資料庫（Redis, Kafka 支援）及作業調度。
-        
-    - **Free Tier**：提供一個免費專案，包含基礎的資源配額（Build & Deployment）。
-        
-    - 支援多雲部署，其控制台的專業程度被譽為「小型的 Google Cloud」。
-        
-- **專業評估**：適合處理複雜的架構，特別是您專案中涉及的 **Kafka** 與 **Redis** 整合。
-    
-- **資料來源**：[Northflank Pricing & Platform Overview](https://northflank.com/)
-    
-
-## 3. Scaleway (東歐邊界 / 法國)
-
-**Scaleway** 是歐洲的老牌雲端服務商，但在亞洲市場相對冷門。其提供的「Serverless」與「Stardust」實例在預算控制上非常有優勢。
-
-- **服務特點**：
-    
-    - **Always Free Tier**：針對 Serverless Functions 與 Containers 提供每月 760,000 點以上的免費執行時間。
-        
-    - 提供位於波蘭（華沙）的資料中心，符合您對東歐地區的需求。
-        
-    - 具備完善的容器註冊表（Container Registry）支援。
-        
-- **專業評估**：Scaleway 的生態系統非常完整，從基礎 VPS 到託管型 Kubernetes 應有盡有，適合需要從 PaaS 轉向 IaaS 的過渡期。
-    
-- **資料來源**：[Scaleway Cloud Free Tier Details](https://www.google.com/search?q=https://www.scaleway.com/en/docs/faq/free-tier/&authuser=1)
-    
-
-## 4. Oracle Cloud "Always Free" (中東與澳洲節點)
-
-雖然 Oracle 是全球大廠，但其在 **Jeddah (沙烏地阿拉伯)**、**Dubai (阿聯)** 以及 **Sydney/Melbourne (澳洲)** 的節點在免費雲端市場中屬於高效能且相對「冷門」的選擇（相較於 AWS/Azure）。
-
-- **服務特點**：
-    
-    - **ARM Ampere A1 實例**：提供高達 4 個 OCPU 和 24 GB 記憶體的免費額度。
-        
-    - 這可能是全球目前最強大的免費 VPS 資源，足以運行您的 **watchdog.exe** 及其後端架構。
-        
-- **專業評估**：作為五等研發工程師，您會欣賞其提供的企業級網路配置與安全策略（Security Lists），這與您的資安研究背景（EDR/SIEM）高度相關。
-    
-- **資料來源**：[Oracle Cloud Free Tier FAQ](https://gemini.google.com/u/1/app/80b7f38b9419f864?hl=zh-TW&pageId=none)
-    
-
-## 5. Stormkit (歐洲 / 德國)
-
-這是一家專注於現代 JavaScript 框架（如 Next.js）的新創服務商。
-
-- **服務特點**：
-    
-    - 專注於前端與 Full-stack 框架的優化。
-        
-    - 免費方案包含一個應用程式的部署，且無過多的商業限制。
-        
-- **專業評估**：雖然它不像 Choreo 那樣涵蓋廣泛的 API 管理，但在處理 **React/Next.js** 的 SSR/ISR 渲染上表現極佳。
-    
-- **資料來源**：[Stormkit Features and Pricing](https://gemini.google.com/u/1/app/80b7f38b9419f864?hl=zh-TW&pageId=none)
-    
+> **用途定位**：整理適合部署 Go / Gin、Next.js、Docker、Kubernetes、Redis、Kafka、監控工具與邊緣節點服務的非主流或區域型雲端平台。  
+> **English Purpose**: A structured bilingual reference for evaluating lesser-known PaaS, IaaS, edge cloud, and regional cloud providers for Go, Next.js, Docker, Kubernetes, Redis, Kafka, monitoring agents, and distributed infrastructure experiments.
 
 ---
 
-### 服務特性比較表
+## 0. 閱讀說明 / Reading Notes
 
-|**服務名稱**|**主要區域**|**免費類型**|**適合技術棧**|**備註**|
+本筆記將原始資料重新整理為以下結構：
+
+1. **快速選型總覽**：先用表格判斷哪個平台適合哪種部署情境。
+2. **區域分組**：依照亞太、歐洲 / 東歐、俄羅斯 / CIS、中東、大洋洲等區域整理。
+3. **服務商詳解**：每個平台包含中文摘要、英文摘要、技術能力、適合情境與注意事項。
+4. **技術對照表**：統整 K8s、DB、Redis、Kafka、Serverless、Free Tier / Trial 等資訊。
+5. **查證提醒**：免費額度、節點位置、政治 / 合規限制可能變動，需要部署前再次確認官方文件。
+
+> **Verification Note**: Pricing, free-tier quotas, regional availability, sanctions, export-control restrictions, and payment requirements may change. Before production deployment, re-check each provider’s official documentation and terms of service.
+
+---
+
+## 1. Executive Summary / 快速結論
+
+### 1.1 推薦選型
+
+| 使用情境 | 優先考慮平台 | 原因 |
+|---|---|---|
+| Go / Gin + Next.js 快速部署 | Zeabur, Northflank, Liara, Patr | PaaS 友善、支援 Docker / Git-based deploy、上手成本低 |
+| 複雜微服務 / Kafka / Redis | Northflank, Selectel, Servercore, Exoscale | 容器化、代管 DB、Kafka / Redis 支援較完整 |
+| 免費或低成本長期測試 | Oracle Cloud Always Free, Zeabur, Scaleway, Catalyst Cloud | 免費額度或試用金較適合 PoC / Side Project |
+| 東歐 / CIS / 俄羅斯節點研究 | Selectel, VK Cloud, Cloud.ru, Servercore, Amvera | 區域覆蓋與本地化基礎設施較強 |
+| 中東節點 / 區域網路測試 | ArvanCloud, Liara, Oracle Cloud Middle East | 中東區域節點與 PaaS / CDN 能力較突出 |
+| 澳洲 / 紐西蘭 / 大洋洲部署 | Catalyst Cloud, Binary Lane, OrionVM, Oracle Cloud Australia | 大洋洲本地低延遲與資料主權情境較適合 |
+| Edge / CDN / 全球冷門節點 | Gcore, ArvanCloud, Scaleway, Exoscale | Edge Cloud、FaaS、CDN、全球節點覆蓋較佳 |
+
+### 1.2 English Overview
+
+| Scenario | Recommended Providers | Reason |
+|---|---|---|
+| Fast Go / Gin + Next.js deployment | Zeabur, Northflank, Liara, Patr | Developer-friendly PaaS, Docker support, Git-based deployment |
+| Complex microservices with Kafka / Redis | Northflank, Selectel, Servercore, Exoscale | Strong container, managed database, and messaging support |
+| Low-cost or free long-term testing | Oracle Cloud Always Free, Zeabur, Scaleway, Catalyst Cloud | Useful free-tier or trial credits for PoC workloads |
+| Eastern Europe / CIS / Russia research | Selectel, VK Cloud, Cloud.ru, Servercore, Amvera | Regional infrastructure and localized cloud services |
+| Middle East deployment or network testing | ArvanCloud, Liara, Oracle Cloud Middle East | Regional nodes, CDN, and PaaS-oriented offerings |
+| Australia / New Zealand workloads | Catalyst Cloud, Binary Lane, OrionVM, Oracle Cloud Australia | Local latency, sovereignty, and Oceania coverage |
+| Edge / CDN / unusual global regions | Gcore, ArvanCloud, Scaleway, Exoscale | Edge cloud, FaaS, CDN, and broad regional coverage |
+
+---
+
+## 2. Provider Landscape / 服務商總覽
+
+| 類別 | 服務商 | 主要區域 | 服務定位 | 適合技術棧 |
 |---|---|---|---|---|
-|**Zeabur**|台灣/新加坡|點數配額|Go, Next.js, Redis|介面極佳，亞太延遲低|
-|**Northflank**|英國/歐盟|免費專案|Docker, Kafka, Go|功能最接近 Choreo|
-|**Scaleway**|波蘭/法國|Serverless|Container, Go|適合高併發 Serverless|
-|**Oracle Cloud**|中東/澳洲|VPS (ARM)|全技術棧|效能最強，需信用卡驗證|
-|**Stormkit**|德國|特定框架|Next.js, React|
-## 1. Amvera (俄羅斯 - 本地化 PaaS)
-
-**Amvera** 是一家專門針對俄羅斯市場設計的 Cloud PaaS，其運作邏輯幾乎就是「俄羅斯版的 Heroku/Choreo」。
-
-- **區域**：俄羅斯（莫斯科/聖彼得堡）。
-    
-- **技術特性**：
-    
-    - 支援 **Git-push-to-deploy**。
-        
-    - 原生支持 **Go**, Python, Node.js，並提供 Dockerfile 部署模式。
-        
-    - 自動處理 SSL 證書與內網負載平衡。
-        
-- **免費額度**：註冊後通常提供試用金（Bonus），足以讓小型專案（如您的監控工具）在低資源環境下運行數月。
-    
-- **專業評估**：對於需要繞過特定區域網路限制或進行東歐資安研究的專案，這是極少數提供流暢 PaaS 體驗的當地廠商。
-    
-- **資料來源**：[Amvera Cloud Official](https://amvera.ru/)
-    
-
-## 2. ArvanCloud (中東 - 伊朗/全球)
-
-**ArvanCloud** 是中東地區最強大的雲端服務商之一，提供完整的 PaaS、CDN 與實體伺服器。
-
-- **區域**：中東（德黑蘭、杜拜）、歐洲（荷蘭/德國）。
-    
-- **技術特性**：
-    
-    - **PaaS (Containers)**：基於 Kubernetes，但簡化了部署流程。
-        
-    - **Serverless Subsets**：提供類似 Cloudflare Workers 的邊緣計算服務。
-        
-- **免費額度**：其 **PaaS 服務提供 Free Tier**，針對輕量級容器（CPU/RAM 限制內）是免費的，且 CDN 流量額度非常慷慨。
-    
-- **專業評估**：其基礎設施在應對大規模 DDoS 與網路過濾上有其獨特架構，適合進行網路滲透與防禦測試。
-    
-- **資料來源**：[ArvanCloud PaaS Documentation](https://www.arvancloud.ir/en/products/paas)
-    
-
-## 3. Gcore (東歐/盧森堡 - 邊緣計算專家)
-
-**Gcore** 雖然總部位於盧森堡，但其核心優勢在於**獨立國協 (CIS) 與東歐地區**的極高覆蓋率。
-
-- **區域**：波蘭、烏克蘭、格魯吉亞、哈薩克及澳洲（雪梨）。
-    
-- **技術特性**：
-    
-    - **Edge Gateway**：極致的邊緣節點部署，適合您的 Go 應用程序進行低延遲分發。
-        
-    - 提供 **Function-as-a-Service (FaaS)** 與託管容器。
-        
-- **免費額度**：提供 Edge Cloud 的免費方案，包含基礎的運算資源。
-    
-- **專業評估**：其自建節點遍佈全球冷門地區，對於需要分析不同地域 BGP 路徑的資安工程師來說是首選。
-    
-- **資料來源**：[Gcore Edge Computing](https://www.google.com/search?q=https://gcore.com/edge-cloud&authuser=1)
-    
-
-## 4. Patr (東南亞/印度 - 新興 PaaS)
-
-**Patr** 是一家非常年輕的新創，旨在消除雲端部署的複雜性，介面甚至比 Choreo 更直覺。
-
-- **區域**：印度、新加坡（東南亞邊界）。
-    
-- **技術特性**：
-    
-    - 支持 **Managed Redis** 與 **Managed DB**，這對您的微服務架構非常重要。
-        
-    - 支援 Docker Image 直接拉取與部署。
-        
-- **免費額度**：提供「Developer Plan」，內含基礎的運算點數，對於長期運行小型 API 服務（如 Gin 後端）非常友善。
-    
-- **專業評估**：雖然規模較小，但其對 **Horizontal Auto-scaling** 的簡化處理做得非常出色。
-    
-- **資料來源**：[Patr.cloud Overview](https://gemini.google.com/u/1/app/80b7f38b9419f864?hl=zh-TW&pageId=none)
-    
-
-## 5. Binary Lane (澳洲 - IaaS 延伸)
-
-雖然它偏向 VPS，但其 **mCloud** 功能提供了一種類似 PaaS 的自動化部署體驗。
-
-- **區域**：澳洲（雪梨、墨爾本、布里斯本、伯斯）。
-    
-- **技術特性**：
-    
-    - 提供預裝好 Docker 軟體棧的極速實例。
-        
-    - 提供澳洲境內最穩定的網路環境，適合部署需要強大 CPU 單核性能的任務。
-        
-- **免費額度**：通常不提供永久免費，但其新用戶活動常有 $10-$20 AUD 的贈金，對於低配實例可運作半年以上。
-    
-- **專業評估**：若您的專案（如 Life 3.0）需要澳洲本地低延遲或特定的澳洲 IP 屬性，這是最穩定的選擇。
-    
-- **資料來源**：[Binary Lane Cloud](https://gemini.google.com/u/1/app/80b7f38b9419f864?hl=zh-TW&pageId=none)
-    
+| Developer PaaS | Zeabur | 台灣 / 新加坡 / 亞太 | 一鍵部署、開發者友善 PaaS | Go, Next.js, Docker, Redis |
+| Developer PaaS | Northflank | 英國 / 歐盟 | 類 Choreo / Heroku 的進階 PaaS | Docker, Go, Kafka, Redis, DB |
+| Serverless / Cloud | Scaleway | 法國 / 波蘭 | 歐洲雲、Serverless、Containers | Go, Containers, Serverless |
+| Always Free IaaS | Oracle Cloud | 中東 / 澳洲 / 全球 | 高規格免費 ARM VPS | Full stack, Docker, K8s, Agent |
+| Frontend PaaS | Stormkit | 德國 / 歐洲 | 現代 JS / Full-stack Framework 部署 | Next.js, React |
+| Regional PaaS | Amvera | 俄羅斯 | 俄羅斯本地化 Heroku-like PaaS | Go, Python, Node.js, Docker |
+| CDN + PaaS | ArvanCloud | 伊朗 / 中東 / 歐洲 | PaaS、CDN、Edge、DDoS 防護 | Containers, Edge, CDN |
+| Edge Cloud | Gcore | 盧森堡 / 東歐 / CIS / 全球 | Edge Gateway、FaaS、CDN | Go, Edge Functions, Containers |
+| Developer PaaS | Patr | 印度 / 新加坡 | 新興 PaaS、Managed Redis / DB | Next.js, React, Docker, Redis |
+| IaaS / VPS | Binary Lane | 澳洲 | 澳洲 VPS / Docker-friendly IaaS | Docker, Go, Agent |
+| Cloud Native | Servercore | 中亞 / CIS / 東歐 | K8s、DB、Kafka、Redis | K8s, Kafka, Redis, PostgreSQL |
+| Enterprise Cloud | VK Cloud | 俄羅斯 | AWS-like 企業雲、K8s、DBaaS | K8s, API Gateway, Redis, DB |
+| OpenStack Cloud | Catalyst Cloud | 紐西蘭 / 大洋洲 | 開源 OpenStack 主權雲 | K8s, OpenStack, DB |
+| SEA Cloud | Biznet Gio | 印尼 / 東南亞 | 東南亞低延遲雲與 K8s | K8s, DBaaS, Load Balancer |
+| Enterprise Cloud | Cloud.ru | 俄羅斯 | CCE / CSE / 微服務治理 | K8s, Service Mesh, Redis |
+| Technical Cloud | Selectel | 俄羅斯 / CIS | 高度技術導向雲平台 | K8s, Redis, Kafka, ClickHouse |
+| PaaS | Liara | 伊朗 / 中東 | 中東 Heroku-like PaaS | Go, Next.js, Docker, Redis |
+| SEA Cloud | VNG Cloud | 越南 / 東南亞 | 越南雲、vKS、vDB | K8s, DB, Auto-scaling |
+| High-performance IaaS | OrionVM | 澳洲 | 高 I/O、自研虛擬化、微分割網路 | Redis, DB, Go, private cloud |
+| Sovereign Cloud | Exoscale | 瑞士 / 歐洲 | 非美系主權雲、K8s、Aiven DB | K8s, Kafka, Redis, PostgreSQL |
 
 ---
 
-### 技術對照摘要
+# 3. 亞太與東南亞 / APAC & Southeast Asia
 
-| **服務商**         | **推薦部署對象**        | **技術亮點**       | **冷門優勢**    |
-| --------------- | ----------------- | -------------- | ----------- |
-| **Amvera**      | Go / Gin App      | 俄羅斯境內自動化 CI/CD | 避開西歐網路波動    |
-| **ArvanCloud**  | Docker Containers | 整合式 CDN 與安全防護  | 中東地區節點最穩    |
-| **Gcore**       | Edge Functions    | 廣大的 CIS 節點分布   | 極佳的邊緣運算性能   |
-| **Patr**        | Next.js / React   | 現代化 UI 與託管資料庫  | 新創平台，客服回應極快 |
-| **Binary Lane** | Watchdog.exe      | 澳洲本地物理性能優化     | 澳洲市場佔有率高    |
+## 3.1 Zeabur — 台灣 / 新加坡開發者友善 PaaS
 
----
+### 中文摘要
 
+**Zeabur** 是源自台灣的新創部署平台，定位接近 Heroku / Choreo，主打開發者友善的一鍵部署與自動化 CI/CD。對於 Go / Gin、Next.js、Docker、Redis 類型專案，Zeabur 的上手成本低，特別適合快速 PoC、MVP、Side Project 與個人 SaaS 原型。
 
----
+### English Block
 
-## 1. Servercore (中亞 / 獨立國協 / 東歐)
+> **Zeabur is a developer-friendly PaaS from Taiwan, optimized for quick deployment workflows. It is suitable for Go, Next.js, Docker-based services, Redis-backed applications, and small-to-medium SaaS prototypes targeting Asia-Pacific users.**
 
-**Servercore** 是一家近年快速擴張的國際 IT 基礎架構提供商，其核心資料中心位於哈薩克、烏茲別克及東歐邊界，專為需要高合規性與本地化的專案提供現代化雲原生架構。
+### 技術特點
 
-- **區域**：哈薩克 (阿拉木圖)、烏茲別克 (塔什干)、肯亞。
-    
-- **技術支援 (K8s / DB / Microservices)**：
-    
-    - 提供完整的 **Managed Kubernetes** 服務。
-        
-    - 內建代管微服務所需的核心組件，包含代管的 **Kafka** 與 **Redis** 叢集，以及 PostgreSQL。
-        
-- **免費與計費模式**：針對新註冊的開發者與新創專案提供高額度的初始測試贈金（通常等值於數十歐元），足以建立包含 K8s Node 與代管 DB 的完整測試環境數週至數月。
-    
-- **專業評估**：其基礎架構建構非常現代化，API 完整且支援 Terraform。適合用於測試具備高吞吐量需求的分散式系統或非同步事件驅動架構。
-    
-- **資料來源**：[Servercore 官方網站與文件](https://servercore.com/)
-    
+- 支援 **Go / Gin**、**Next.js**、Node.js 與 Docker 部署。
+- 提供 Git-based deployment 與自動化 CI/CD。
+- 免費額度採點數或配額模式，適合小型專案測試。
+- 亞太節點如東京、新加坡，對台灣、東南亞延遲較低。
 
-## 2. VK Cloud (俄羅斯)
+### 適合情境
 
-**VK Cloud**（前身為 Mail.ru Cloud Solutions）是俄羅斯境內企業級的公有雲提供商，其架構深度與 AWS 類似，但受限於地緣政治，在國際市場上較為冷門。
+- Go API + Next.js 前端的快速部署。
+- Cursor / GitHub workflow 導向的個人開發。
+- 不想維護 Kubernetes，但需要比傳統 VPS 更快的部署體驗。
 
-- **區域**：俄羅斯 (莫斯科)。
-    
-- **技術支援 (K8s / DB / Microservices)**：
-    
-    - 提供通過 CNCF 認證的 **Managed Kubernetes (Cloud Containers)**。
-        
-    - 擁有極為強大的 **PaaS 資料庫生態**，支援 ClickHouse、PostgreSQL、Redis，並具備自動備份與高可用性 (HA) 設定。
-        
-    - 支援 Cloud Functions (Serverless) 與 API Gateway。
-        
-- **免費與計費模式**：新用戶註冊並完成驗證後，提供 3,000 盧布的免費額度，可用於部署 K8s 叢集與代管資料庫，為期最長兩個月。
-    
-- **專業評估**：對於資安研究與防禦演練，特別是針對東歐網路環境的端點防護 (EDR) 與日誌分析 (SIEM) 系統建置，VK Cloud 提供了極具價值的真實隔離環境。
-    
-- **資料來源**：[VK Cloud 官方開發者文檔](https://www.google.com/search?q=https://cloud.vk.com/&authuser=1)
-    
+### 注意事項
 
-## 3. Catalyst Cloud (紐西蘭 / 大洋洲)
-
-**Catalyst Cloud** 是紐西蘭本土領先的開源雲端服務商，基於 OpenStack 建構，是澳洲與大洋洲地區重視資料主權與開源技術的冷門首選。
-
-- **區域**：紐西蘭 (威靈頓、漢米爾頓)，地理位置與網路拓樸涵蓋澳洲區域。
-    
-- **技術支援 (K8s / DB / Microservices)**：
-    
-    - 提供 **Kubernetes Engine**，底層基於 OpenStack Magnum 實現自動化叢集生命週期管理。
-        
-    - 提供 **Managed Database Service**，專為微服務資料隔離設計。
-        
-    - 支援原生 Docker 容器註冊表。
-        
-- **免費與計費模式**：提供新用戶 **$300 NZD** 的免費額度，效期達半年，充裕的額度可同時運行多節點 K8s 與資料庫。
-    
-- **專業評估**：完全符合開源標準，無廠商鎖定 (Vendor lock-in) 問題，其 API 與標準 OpenStack 相容，適合進行基礎架構即代碼 (IaC) 的嚴格測試。
-    
-- **資料來源**：[Catalyst Cloud Free Tier 說明](https://www.google.com/search?q=https://catalystcloud.nz/free-trial/&authuser=1)
-    
-
-## 4. Biznet Gio (印尼 / 東南亞)
-
-**Biznet Gio** 是印尼首家獲得多項國際資安認證的本土雲端供應商，專注於東南亞市場的低延遲與高併發處理。
-
-- **區域**：印尼 (雅加達、西爪哇)。
-    
-- **技術支援 (K8s / DB / Microservices)**：
-    
-    - 其核心產品 **NEO Metal / NEO Cloud** 提供一鍵部署的 Managed Kubernetes。
-        
-    - 提供微服務部署友善的平台，包含負載平衡 (Load Balancer) 與 **NEO DBaaS**。
-        
-- **免費與計費模式**：註冊並綁定後，通常提供 14 天的全功能免費試用（包含所有 PaaS 與 K8s 資源），且其後續的計費標準為東南亞地區的極低水準。
-    
-- **專業評估**：在東南亞地區的節點延遲極佳。若您的系統需要模擬龐大終端設備的連線監控與資料回傳，此平台的 I/O 表現相當出色。
-    
-- **資料來源**：[Biznet Gio 官方服務架構](https://www.biznetgio.com/)
-    
-
-## 5. Cloud.ru / Advanced Cloud (俄羅斯 / 亞歐大陸)
-
-**Cloud.ru**（原 SberCloud）的 Advanced 雲端平台具備極深度的微服務治理能力，其技術底層有極高的企業級成熟度。
-
-- **區域**：俄羅斯及週邊邊緣節點。
-    
-- **技術支援 (K8s / DB / Microservices)**：
-    
-    - **Cloud Container Engine (CCE)**：高度最佳化的 K8s 託管服務。
-        
-    - **Cloud Service Engine (CSE)**：專門的微服務治理框架，支援服務註冊、發現、組態管理與熔斷機制（極類似 Choreo 的進階功能）。
-        
-    - 提供高階的分散式訊息佇列與記憶體資料庫 (Redis)。
-        
-- **免費與計費模式**：針對企業與開發者提供 Grant (補助金) 申請制度，通過審核後可獲得一筆額度供長期測試使用。
-    
-- **專業評估**：如果您需要一套包含服務網格 (Service Mesh) 與全鏈路追蹤 (Distributed Tracing) 的成熟 PaaS 環境，Cloud.ru 的 Advanced 模組能提供最接近大型商業平台的使用體驗。
-    
-- **資料來源**：[Cloud.ru Advanced Services](https://www.google.com/search?q=https://cloud.ru/en&authuser=1)
-    
+- 免費額度與計費模式需重新查證。
+- 若涉及高流量、長期背景任務或大量資料庫 I/O，需評估配額成本。
 
 ---
 
-### 技術與配額對照表
+## 3.2 Patr — 印度 / 新加坡新興 PaaS
 
-|**服務商**|**營運區域**|**微服務支援亮點**|**K8s / 容器化**|**免費機制**|
-|---|---|---|---|---|
-|**Servercore**|中亞/東歐|內建 Kafka / Redis|Managed K8s|高額測試贈金|
-|**VK Cloud**|俄羅斯|完善的 API Gateway|CNCF 認證 K8s|3,000 RUB 額度|
-|**Catalyst Cloud**|紐西蘭/澳洲|高度開源，相容性佳|OpenStack Magnum|$300 NZD 額度|
-|**Biznet Gio**|印尼/東南亞|東南亞低延遲路由|NEO Kubernetes|14 天全功能試用|
-|**Cloud.ru**|俄羅斯|具備專用微服務引擎 (CSE)|Cloud Container Engine|開發者補助金專案|
+### 中文摘要
+
+**Patr** 是年輕的新創 PaaS，重點在於降低部署複雜度。平台支援 Docker Image、Managed Redis 與 Managed DB，適合部署 Next.js、React、Gin API 與輕量微服務。
+
+### English Block
+
+> **Patr is an emerging PaaS focused on simplifying cloud deployment. Its support for Docker, managed databases, and Redis makes it suitable for lightweight microservices and modern full-stack applications in India and Southeast Asia.**
+
+### 技術特點
+
+- 支援 Docker Image 直接拉取與部署。
+- 提供 Managed Redis 與 Managed DB。
+- Developer Plan 可能包含基礎運算點數。
+- 簡化 Horizontal Auto-scaling 操作。
+
+### 適合情境
+
+- Next.js / React 前端與 API 後端部署。
+- 需要新加坡 / 印度周邊節點的輕量服務。
+- 小型 API、Side Project、低流量 SaaS。
+
+### 注意事項
+
+- 平台規模較小，需評估穩定性、SLA、社群成熟度。
+- 免費方案與節點位置需再次查證官方文件。
+
+---
+
+## 3.3 Biznet Gio — 印尼 / 東南亞本地雲
+
+### 中文摘要
+
+**Biznet Gio** 是印尼本土雲端供應商，專注東南亞市場的低延遲與高併發場景。其 NEO Cloud / NEO Kubernetes / NEO DBaaS 對微服務部署、負載平衡與資料庫服務相對友善。
+
+### English Block
+
+> **Biznet Gio is an Indonesian cloud provider optimized for Southeast Asian latency and regional workloads. It is useful for testing distributed agents, telemetry ingestion, and services that require local Indonesian or SEA network characteristics.**
+
+### 技術特點
+
+- 提供 **NEO Cloud**、**NEO Kubernetes** 與 **NEO DBaaS**。
+- 支援 Load Balancer 與微服務架構。
+- 可能提供短期全功能試用。
+- 印尼與東南亞路由表現較佳。
+
+### 適合情境
+
+- 模擬大量終端設備連線。
+- 東南亞區域監控工具與資料回傳。
+- 需要印尼本地網路或 IP 屬性的專案。
+
+### 注意事項
+
+- 免費試用通常有期限，不適合假設為長期免費。
+- 生產環境需確認 SLA、備份與支援語言。
+
+---
+
+## 3.4 VNG Cloud — 越南數位化雲平台
+
+### 中文摘要
+
+**VNG Cloud** 依託越南大型網路生態，提供 vServer、vContainer / vKS、vDB 等基礎建設服務。若需要在越南或東南亞部署監控節點、API 服務或低延遲資料回傳系統，VNG Cloud 具備區域優勢。
+
+### English Block
+
+> **VNG Cloud is a Vietnam-based cloud platform backed by a strong local digital ecosystem. It is suitable for Southeast Asian services that require regional latency optimization, Kubernetes, managed databases, and local network presence.**
+
+### 技術特點
+
+- **vKS / vContainer**：Kubernetes 與容器化服務。
+- **vDB**：代管型關聯式資料庫與 NoSQL 服務。
+- 支援 Auto-scaling。
+- 面向越南與東南亞市場優化。
+
+### 適合情境
+
+- watchdog / agent 類工具在東南亞多點部署。
+- 需要越南本地或東南亞跨境流量分析。
+- 需要 K8s + DB 的區域型 SaaS。
+
+### 注意事項
+
+- 免費額度、試用限制與計費需再次確認。
+- 英文文件完整度與國際支援流程需評估。
+
+---
+
+# 4. 歐洲 / 東歐 / 主權雲 / Europe & Sovereign Cloud
+
+## 4.1 Northflank — 英國 / 歐盟進階 PaaS
+
+### 中文摘要
+
+**Northflank** 是技術深度較高的 PaaS，功能接近 Choreo、Heroku 與小型 Google Cloud 的混合體。它支援微服務、資料庫、作業排程、Build Pipeline 與部署流程，適合比單純 Web App 更複雜的架構。
+
+### English Block
+
+> **Northflank is a technically mature PaaS for deploying containerized applications, databases, jobs, and microservices. It is a strong option when a project needs more operational depth than a frontend hosting platform but less overhead than managing Kubernetes directly.**
+
+### 技術特點
+
+- 支援 Docker、Go、Node.js、Next.js 等技術棧。
+- 支援 Redis、Kafka、資料庫與排程任務。
+- 提供 Free Tier / 免費專案機制。
+- 控制台與平台能力較接近完整 PaaS。
+
+### 適合情境
+
+- Go / Gin API + Next.js 前端。
+- Redis / Kafka / Job Worker 型架構。
+- 需要比 Zeabur 更完整的微服務治理與部署抽象。
+
+### 注意事項
+
+- 若長期運行多服務，需計算資源、build minutes、DB 成本。
+- Kafka / Redis 支援細節需以官方 pricing 與 docs 為準。
+
+---
+
+## 4.2 Scaleway — 法國 / 波蘭 Serverless 與歐洲雲
+
+### 中文摘要
+
+**Scaleway** 是歐洲老牌雲端服務商，產品涵蓋 VPS、Serverless Functions、Containers、Container Registry、Kubernetes 與資料庫。對於需要歐洲地區、尤其波蘭 / 法國節點的專案，Scaleway 適合從低成本 Serverless PoC 逐步升級到完整 IaaS / K8s 架構。
+
+### English Block
+
+> **Scaleway is a European cloud provider offering serverless functions, containers, container registry, Kubernetes, compute instances, and managed infrastructure. It is useful for projects that want to start with low-cost serverless workloads and later move toward full cloud-native infrastructure.**
+
+### 技術特點
+
+- Serverless Functions / Containers。
+- Container Registry。
+- Managed Kubernetes 與一般雲端運算資源。
+- 法國與波蘭等歐洲節點。
+
+### 適合情境
+
+- 高併發 Serverless API。
+- Go container / worker 部署。
+- 歐洲主權或資料區域需求。
+
+### 注意事項
+
+- Always Free / 免費執行時間需重新查證。
+- Serverless 冷啟動、執行時間、記憶體限制需針對應用測試。
+
+---
+
+## 4.3 Stormkit — 德國前端與 Full-stack 部署平台
+
+### 中文摘要
+
+**Stormkit** 專注於現代 JavaScript 框架部署，適合 Next.js、React 與 Jamstack / Full-stack frontend workflow。它不是完整微服務平台，但在前端 SSR / ISR 與現代 Web App 部署上較專注。
+
+### English Block
+
+> **Stormkit is a frontend-focused deployment platform for modern JavaScript frameworks such as Next.js and React. It is best suited for web frontends and lightweight full-stack apps rather than complex backend microservice architectures.**
+
+### 技術特點
+
+- 針對 Next.js / React 等現代框架最佳化。
+- 適合前端、SSR、ISR 與靜態資產部署。
+- 免費方案可能支援單一 App。
+
+### 適合情境
+
+- 前端展示頁、管理後台、產品 Landing Page。
+- Next.js SSR / ISR 渲染。
+- 與外部 Go API / Backend Service 分離部署。
+
+### 注意事項
+
+- 不適合重型微服務、Kafka、Redis cluster 或複雜 worker 架構。
+- 免費方案與商業限制需重新確認。
+
+---
+
+## 4.4 Exoscale — 瑞士 / 歐洲主權雲
+
+### 中文摘要
+
+**Exoscale** 是以資料主權、隱私與非美系雲端定位為核心的歐洲雲平台。它提供 SKS Kubernetes、DBaaS、Aiven-powered Kafka / Redis / PostgreSQL，以及優雅的 CLI / API，適合資安與 IaC 導向團隊。
+
+### English Block
+
+> **Exoscale is a European sovereign cloud provider focused on privacy, simplicity, Kubernetes, and managed databases. It is a strong fit for teams that value non-US cloud infrastructure, infrastructure-as-code workflows, and managed Kafka / Redis / PostgreSQL services.**
+
+### 技術特點
+
+- **SKS — Scalable Kubernetes Service**。
+- DBaaS：Redis、Kafka、PostgreSQL、InfluxDB 等。
+- CLI / API 整合性佳。
+- 中歐 / 歐洲節點佈局。
+
+### 適合情境
+
+- 資料主權要求較高的歐洲專案。
+- Kafka / Redis / PostgreSQL 的代管服務。
+- Terraform / GitHub Actions / CI/CD 自動化。
+
+### 注意事項
+
+- 成本通常不是最低，但穩定性與合規性較佳。
+- 免費試用或 credit 需官方確認。
+
+---
+
+# 5. 俄羅斯 / CIS / 中亞 / Russia, CIS & Central Asia
+
+## 5.1 Amvera — 俄羅斯本地化 PaaS
+
+### 中文摘要
+
+**Amvera** 是針對俄羅斯市場設計的 Cloud PaaS，使用體驗接近 Heroku / Choreo。其 Git-push-to-deploy、Dockerfile、Go / Python / Node.js 支援對小型服務部署相當友善。
+
+### English Block
+
+> **Amvera is a Russia-focused PaaS with a Heroku-like deployment model. It is suitable for small Go, Python, Node.js, and Docker applications that require Russian regional hosting or localized PaaS workflows.**
+
+### 技術特點
+
+- Git-push-to-deploy。
+- 支援 Go、Python、Node.js 與 Dockerfile。
+- 自動 SSL 與內部負載平衡。
+- 可能提供註冊 Bonus / 試用金。
+
+### 適合情境
+
+- 小型監控工具、API、Bot、PoC。
+- 東歐 / 俄羅斯網路環境研究。
+- 需要 Heroku-like 體驗但區域位於俄羅斯。
+
+### 注意事項
+
+- 跨境付款、制裁、服務可用性與合規限制需特別查證。
+- 不建議未評估風險即部署敏感生產資料。
+
+---
+
+## 5.2 Servercore — 中亞 / CIS 雲原生基礎設施
+
+### 中文摘要
+
+**Servercore** 是中亞與 CIS 地區快速擴張的基礎設施提供商，資料中心涵蓋哈薩克、烏茲別克等地。它提供 Managed Kubernetes、Kafka、Redis、PostgreSQL 等服務，適合分散式系統與非同步事件驅動架構測試。
+
+### English Block
+
+> **Servercore is a cloud infrastructure provider with strong Central Asia and CIS coverage. Its managed Kubernetes, Kafka, Redis, and PostgreSQL offerings make it suitable for testing distributed systems, event-driven services, and regional infrastructure scenarios.**
+
+### 技術特點
+
+- Managed Kubernetes。
+- Managed Kafka、Redis、PostgreSQL。
+- API 與 Terraform 支援。
+- 可能提供新用戶測試贈金。
+
+### 適合情境
+
+- 高吞吐量事件驅動架構。
+- Kafka / Redis / K8s 實驗環境。
+- 中亞地區節點與區域性合規需求。
+
+### 注意事項
+
+- 測試贈金額度與可用服務需重新查證。
+- 國際網路延遲、付款方式、文件語言需評估。
+
+---
+
+## 5.3 VK Cloud — 俄羅斯企業級公有雲
+
+### 中文摘要
+
+**VK Cloud** 是俄羅斯企業級公有雲，前身與 Mail.ru Cloud Solutions 有關。其架構接近 AWS-like 公有雲，提供 Managed Kubernetes、DBaaS、Cloud Functions、API Gateway、Redis、ClickHouse、PostgreSQL 等能力。
+
+### English Block
+
+> **VK Cloud is an enterprise-grade Russian public cloud with Kubernetes, managed databases, serverless functions, and API Gateway. It is useful for security research, regional testing, and cloud-native workloads that require Russian infrastructure.**
+
+### 技術特點
+
+- CNCF-oriented Managed Kubernetes / Cloud Containers。
+- DBaaS：PostgreSQL、Redis、ClickHouse 等。
+- Cloud Functions 與 API Gateway。
+- 支援備份與高可用設定。
+
+### 適合情境
+
+- EDR / SIEM / 日誌分析測試。
+- 東歐與俄羅斯網路環境研究。
+- API Gateway + Serverless + DB 的企業雲架構。
+
+### 注意事項
+
+- 新用戶 credit、可用地區與付款條件需查證。
+- 政治、制裁、資料處理與出口管制風險不可忽略。
+
+---
+
+## 5.4 Cloud.ru — 俄羅斯 Advanced Cloud 與微服務治理
+
+### 中文摘要
+
+**Cloud.ru**（原 SberCloud）偏向大型企業雲，Advanced 服務具備 CCE、CSE、微服務治理、服務註冊、組態管理、熔斷機制、分散式訊息佇列與 Redis 等能力。若目標是測試接近大型商業平台的微服務治理架構，Cloud.ru 值得列入觀察。
+
+### English Block
+
+> **Cloud.ru is an enterprise-oriented Russian cloud platform with advanced container and microservice governance capabilities. Its CCE and CSE-like services are relevant for service discovery, configuration management, resilience patterns, and distributed tracing scenarios.**
+
+### 技術特點
+
+- Cloud Container Engine / CCE。
+- Cloud Service Engine / CSE 類型的微服務治理。
+- 服務註冊、服務發現、組態管理、熔斷。
+- 分散式訊息佇列與 Redis。
+
+### 適合情境
+
+- Service Mesh / 微服務治理 PoC。
+- 分散式追蹤、熔斷、服務發現測試。
+- 企業級平台能力比較。
+
+### 注意事項
+
+- Grant / 補助金機制需官方確認。
+- 企業雲可能申請門檻較高。
+
+---
+
+## 5.5 Selectel — 俄羅斯 / CIS 技術導向雲平台
+
+### 中文摘要
+
+**Selectel** 是俄羅斯與 CIS 地區技術導向明確的雲平台，支援高度自定義 Managed Kubernetes、代管 Redis、Kafka、PostgreSQL、ClickHouse 以及 L4 / L7 Load Balancer。對於習慣 Terraform、K8s API 與 IaC 的工程團隊很有吸引力。
+
+### English Block
+
+> **Selectel is a technically mature cloud provider in Russia and the CIS region. It is well suited for infrastructure engineers who need Kubernetes, Redis, Kafka, PostgreSQL, ClickHouse, load balancers, and infrastructure-as-code friendly workflows.**
+
+### 技術特點
+
+- Managed Kubernetes，支援自定義節點配置。
+- Cloud Databases：Redis、Kafka、PostgreSQL、ClickHouse。
+- L4 / L7 Load Balancers。
+- 文件與控制台偏工程導向。
+
+### 適合情境
+
+- 日誌分析、監控資料、ClickHouse pipeline。
+- Gin microservices + L7 Load Balancer。
+- Terraform / IaC 導向部署。
+
+### 注意事項
+
+- 若涉及跨境資料與資安研究，需考慮法規與組織風險。
+- 免費額度不應假設存在，需確認官方促銷或 trial。
+
+---
+
+# 6. 中東 / Middle East
+
+## 6.1 ArvanCloud — 中東 CDN / PaaS / Edge 平台
+
+### 中文摘要
+
+**ArvanCloud** 是中東地區具代表性的雲端服務商之一，涵蓋 PaaS、CDN、Edge、DDoS 防護與容器化部署。對於中東節點、CDN、網路過濾環境與 DDoS 防禦研究，它具有特殊價值。
+
+### English Block
+
+> **ArvanCloud is a Middle East-focused cloud provider offering PaaS, CDN, edge services, and DDoS protection. It is relevant for regional deployment, network filtering research, and defensive infrastructure testing in Middle Eastern network environments.**
+
+### 技術特點
+
+- PaaS / Containers，可能基於 Kubernetes 抽象化。
+- CDN 流量與 Edge Services。
+- 類似 Workers 的邊緣運算能力。
+- DDoS 防護與網路安全能力。
+
+### 適合情境
+
+- 中東節點服務部署。
+- CDN / Edge / WAF / DDoS 防禦測試。
+- 容器化 API 與輕量服務。
+
+### 注意事項
+
+- 免費額度、國際可用性、付款與法規限制需重新查證。
+- 敏感研究應明確遵守當地法律與平台 AUP。
+
+---
+
+## 6.2 Liara — 伊朗 / 中東 Heroku-like PaaS
+
+### 中文摘要
+
+**Liara** 是中東技術圈中較冷門但具開發者導向的 PaaS。它支援 Go、Next.js、Docker、Managed MongoDB、PostgreSQL、Redis，並提供基礎 DNS / Storage 整合。對於希望快速部署多技術棧應用的專案，Liara 的抽象層較乾淨。
+
+### English Block
+
+> **Liara is a Middle East-based Heroku-like PaaS supporting Go, Next.js, Docker, and managed databases such as MongoDB, PostgreSQL, and Redis. It is useful for fast deployment of mixed-stack applications in a clean PaaS environment.**
+
+### 技術特點
+
+- One-click deploy / PaaS workflow。
+- 支援 Go、Next.js、Docker。
+- Managed MongoDB、PostgreSQL、Redis。
+- DNS / Storage 整合。
+
+### 適合情境
+
+- Go + Next.js 的全端應用。
+- Life 3.0 / Side Project / MVP。
+- 需要中東區域部署的輕量 API。
+
+### 注意事項
+
+- Free tier、節點位置與資料儲存區域需查證。
+- 國際付款與制裁相關限制需特別注意。
+
+---
+
+## 6.3 Oracle Cloud Middle East — Jeddah / Dubai 等節點
+
+### 中文摘要
+
+**Oracle Cloud Always Free** 雖然不是冷門品牌，但其中東與澳洲節點在免費雲市場中相對特殊。ARM Ampere A1 免費額度可提供高規格 CPU / RAM，足以部署多個小型服務、watchdog agent 後端、Grafana / Prometheus / Loki lab 或 Docker-based stack。
+
+### English Block
+
+> **Oracle Cloud Always Free is not a niche provider, but its Middle East and Australia regions can be valuable for free or low-cost infrastructure experiments. The ARM Ampere A1 quota is one of the strongest free VPS-style offerings for Docker, monitoring, and backend workloads.**
+
+### 技術特點
+
+- ARM Ampere A1 Always Free 額度。
+- 可部署 Docker、Go API、監控 stack、Agent backend。
+- 支援企業級 VCN、Security Lists、IAM。
+- 中東與澳洲節點具區域測試價值。
+
+### 適合情境
+
+- 免費 VPS-like 長期測試。
+- Docker Compose / K3s / monitoring lab。
+- 資安實驗、EDR / SIEM log pipeline lab。
+
+### 注意事項
+
+- Always Free 資源申請常受區域容量影響。
+- 通常需要信用卡驗證。
+- 免費規則與資源回收條件需定期確認。
+
+---
+
+# 7. 澳洲 / 紐西蘭 / 大洋洲 / Oceania
+
+## 7.1 Catalyst Cloud — 紐西蘭 OpenStack 主權雲
+
+### 中文摘要
+
+**Catalyst Cloud** 是紐西蘭本土開源雲端服務商，底層基於 OpenStack，強調資料主權、開放標準與無 vendor lock-in。它支援 Kubernetes Engine、Managed Database Service 與 Docker Registry，適合需要 OpenStack / IaC / 主權雲測試的專案。
+
+### English Block
+
+> **Catalyst Cloud is a New Zealand-based OpenStack cloud focused on sovereignty, open standards, and reduced vendor lock-in. It is suitable for Kubernetes, managed databases, container registry usage, and infrastructure-as-code testing in Oceania.**
+
+### 技術特點
+
+- Kubernetes Engine，基於 OpenStack Magnum 類型能力。
+- Managed Database Service。
+- Docker Container Registry。
+- 可能提供較高額度 trial credit。
+
+### 適合情境
+
+- OpenStack API / Terraform 測試。
+- 紐西蘭 / 澳洲區域部署。
+- 主權雲與資料區域合規需求。
+
+### 注意事項
+
+- 免費 credit 效期與額度需確認。
+- OpenStack 操作模型比純 PaaS 更接近 IaaS，需要較多基礎設施知識。
+
+---
+
+## 7.2 Binary Lane — 澳洲 VPS / IaaS 延伸
+
+### 中文摘要
+
+**Binary Lane** 偏向澳洲本地 VPS / IaaS，但可透過預裝 Docker stack 與自動化部署達到接近 PaaS 的操作體驗。若專案需要澳洲本地 IP、低延遲或 CPU 單核性能，它比全球大廠的澳洲節點更具本地化特色。
+
+### English Block
+
+> **Binary Lane is an Australian VPS / IaaS provider with Docker-friendly deployment options. It is a practical choice when local Australian IP presence, predictable VPS performance, or region-specific latency matters more than managed PaaS abstraction.**
+
+### 技術特點
+
+- 澳洲本地 VPS / Cloud Server。
+- Docker-friendly image / stack。
+- 雪梨、墨爾本、布里斯本、伯斯等區域。
+- 可能提供新用戶 credit。
+
+### 適合情境
+
+- watchdog.exe 後端或 agent controller。
+- 澳洲本地低延遲 API。
+- 單 VM + Docker Compose 型部署。
+
+### 注意事項
+
+- 通常不是永久免費。
+- Managed DB / K8s 抽象不如 PaaS 平台完整。
+
+---
+
+## 7.3 OrionVM — 澳洲高效能 IaaS / 私有雲底座
+
+### 中文摘要
+
+**OrionVM** 是澳洲特殊的高效能 IaaS 供應商，重點在自研虛擬化堆疊、高 I/O 儲存與微分割網路。它更像是企業私有雲或高效能基礎設施方案，而不是一般開發者 PaaS。
+
+### English Block
+
+> **OrionVM is an Australian high-performance IaaS provider with its own virtualization stack, strong I/O characteristics, and micro-segmented networking. It is better suited for infrastructure-heavy workloads than simple PaaS deployments.**
+
+### 技術特點
+
+- 自研虛擬化 stack。
+- High-performance distributed storage。
+- Micro-segmented networking。
+- 適合高 I/O 資料庫或低延遲後端。
+
+### 適合情境
+
+- Redis / DB 高 I/O workload。
+- 微服務網路隔離測試。
+- Go 高併發後端或私有雲架構研究。
+
+### 注意事項
+
+- 不一定有免費方案。
+- 需要更完整的雲端網路與基礎設施管理能力。
+
+---
+
+# 8. Edge / CDN / 全球冷門節點 / Edge & Unusual Regions
+
+## 8.1 Gcore — 東歐 / CIS / 全球 Edge Cloud
+
+### 中文摘要
+
+**Gcore** 總部位於盧森堡，但在 CIS、東歐與全球邊緣節點上具有優勢。它提供 Edge Gateway、FaaS、CDN 與託管容器，適合低延遲分發、BGP 路徑分析與邊緣運算測試。
+
+### English Block
+
+> **Gcore is an edge-focused cloud and CDN provider with strong coverage in Eastern Europe, CIS regions, and global edge locations. It is useful for latency-sensitive services, edge functions, container deployment, and network path analysis.**
+
+### 技術特點
+
+- Edge Gateway。
+- Function-as-a-Service。
+- CDN 與全球冷門節點。
+- 託管容器與 Edge Cloud。
+
+### 適合情境
+
+- Go API edge distribution。
+- BGP / latency / regional routing research。
+- CDN / Edge security testing。
+
+### 注意事項
+
+- 免費方案內容需確認。
+- Edge 與 Cloud Compute 通常是不同計費模型，需分開估算。
+
+---
+
+# 9. 技術能力總表 / Technical Capability Matrix
+
+| 服務商 | PaaS | IaaS / VPS | K8s | Serverless / FaaS | Redis | Kafka | PostgreSQL / DB | Edge / CDN | Free Tier / Trial 備註 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Zeabur | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | ⚠️ | ✅ | ⚠️ | 點數 / 免費額度，需查證 |
+| Northflank | ✅ | ⚠️ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | 免費專案 / Free Tier，需查證 |
+| Scaleway | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ✅ | Serverless / Free Tier，需查證 |
+| Oracle Cloud | ⚠️ | ✅ | ✅ | ✅ | 自管 | 自管 | ✅ | ⚠️ | Always Free，需信用卡與容量確認 |
+| Stormkit | ✅ | ❌ | ❌ | ⚠️ | ❌ | ❌ | ⚠️ | ⚠️ | 前端平台免費方案，需查證 |
+| Amvera | ✅ | ⚠️ | ⚠️ | ❌ | ⚠️ | ❌ | ⚠️ | ❌ | Bonus / 試用金，需查證 |
+| ArvanCloud | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | PaaS / CDN 免費額度需查證 |
+| Gcore | ⚠️ | ✅ | ⚠️ | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | Edge Cloud 免費方案需查證 |
+| Patr | ✅ | ⚠️ | ⚠️ | ❌ | ✅ | ❌ | ✅ | ❌ | Developer Plan，需查證 |
+| Binary Lane | ❌ | ✅ | 自管 | ❌ | 自管 | 自管 | 自管 | ❌ | 通常為 credit / 促銷，非永久免費 |
+| Servercore | ⚠️ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ❌ | 測試贈金需查證 |
+| VK Cloud | ✅ | ✅ | ✅ | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | 新用戶額度需查證 |
+| Catalyst Cloud | ⚠️ | ✅ | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ❌ | Trial credit 需查證 |
+| Biznet Gio | ⚠️ | ✅ | ✅ | ❌ | ⚠️ | ❌ | ✅ | ❌ | 14 天試用需查證 |
+| Cloud.ru | ✅ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | Grant / 補助機制需查證 |
+| Selectel | ⚠️ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | 免費額度需查證 |
+| Liara | ✅ | ⚠️ | ⚠️ | ❌ | ✅ | ❌ | ✅ | ⚠️ | Free tier 需查證 |
+| VNG Cloud | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ | ✅ | ⚠️ | 試用 / credit 需查證 |
+| OrionVM | ❌ | ✅ | 自管 | ❌ | 自管 | 自管 | 自管 | ❌ | 多半非免費 |
+| Exoscale | ⚠️ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | Trial / credit 需查證 |
+
+> Legend:  
+> ✅ = 明確適合 / likely supported  
+> ⚠️ = 可能支援或需依方案確認 / depends on plan or implementation  
+> ❌ = 非主要定位 / not a core offering  
+> 自管 = 可在 VM / K8s 上自行部署 / self-managed
+
+---
+
+# 10. 專案導向建議 / Project-Oriented Recommendations
+
+## 10.1 Go + Next.js SaaS MVP
+
+**建議組合**：
+
+- Frontend / Backend 同平台：Zeabur、Northflank、Liara、Patr。
+- Frontend 獨立部署：Stormkit。
+- Backend 與 Worker：Northflank、Zeabur、Oracle Cloud。
+
+**English Recommendation**:
+
+> For a Go + Next.js SaaS MVP, start with Zeabur or Northflank if fast deployment matters. Use Stormkit only when the frontend is the primary workload. Use Oracle Cloud Always Free when the project needs long-running backend services with minimal cost.
+
+---
+
+## 10.2 Kafka / Redis / Worker-heavy Microservices
+
+**建議組合**：
+
+- 優先：Northflank、Selectel、Servercore、Exoscale。
+- 低成本 Lab：Oracle Cloud 自架 Redis / Kafka / Redpanda。
+- 區域型研究：VK Cloud、Cloud.ru、Servercore。
+
+**English Recommendation**:
+
+> For Kafka, Redis, and worker-heavy microservices, choose providers with managed databases and strong container orchestration. Northflank and Exoscale are safer general-purpose options, while Selectel and Servercore are more suitable for CIS / Eastern Europe regional experiments.
+
+---
+
+## 10.3 Watchdog / Agent Backend / Monitoring Lab
+
+**建議組合**：
+
+- 免費長期測試：Oracle Cloud Always Free。
+- 亞太低延遲：Zeabur。
+- 澳洲節點：Binary Lane、OrionVM、Oracle Cloud Australia。
+- 東南亞節點：VNG Cloud、Biznet Gio、Patr。
+
+**English Recommendation**:
+
+> For watchdog agents, telemetry ingestion, and monitoring labs, Oracle Cloud Always Free is the most cost-efficient starting point. For regional latency experiments, use Zeabur in APAC, VNG Cloud or Biznet Gio in Southeast Asia, and Binary Lane or OrionVM in Australia.
+
+---
+
+## 10.4 Edge / CDN / BGP Path Research
+
+**建議組合**：
+
+- Gcore：Edge / CDN / CIS 與東歐覆蓋。
+- ArvanCloud：中東 CDN / DDoS 防禦研究。
+- Scaleway：歐洲 Serverless / Container / Registry。
+- Exoscale：歐洲主權雲與穩定 CLI workflow。
+
+**English Recommendation**:
+
+> For edge deployment, CDN behavior, and BGP path research, prioritize Gcore and ArvanCloud. Scaleway and Exoscale are better when European data residency, serverless workloads, or sovereign-cloud requirements matter.
+
+---
+
+# 11. 部署前查核清單 / Pre-deployment Checklist
+
+## 11.1 技術查核
+
+- [ ] 是否支援 Dockerfile 或 OCI image？
+- [ ] 是否支援 Go / Gin 與 Next.js？
+- [ ] 是否可跑 background worker？
+- [ ] 是否有 Redis / PostgreSQL / Kafka managed service？
+- [ ] 是否支援自訂網域與自動 TLS？
+- [ ] 是否支援 WebSocket / long-running connection？
+- [ ] 是否支援 log export / metrics / alerts？
+- [ ] 是否支援 Terraform / CLI / API？
+
+## 11.2 成本查核
+
+- [ ] Free tier 是永久免費、試用金，還是限時 trial？
+- [ ] 免費額度是否包含 database / bandwidth / build minutes？
+- [ ] 超額後是否自動收費？
+- [ ] 是否需要信用卡？
+- [ ] 是否有閒置資源回收機制？
+- [ ] 出站流量 egress 是否昂貴？
+
+## 11.3 合規與風險查核
+
+- [ ] 是否涉及資料主權或區域合規？
+- [ ] 是否有制裁、出口管制、付款限制？
+- [ ] 是否允許資安測試、掃描、agent telemetry？
+- [ ] AUP 是否限制 proxy、crawler、monitoring、security research？
+- [ ] 是否適合存放真實客戶資料？
+
+## 11.4 English Checklist
+
+- [ ] Does the platform support Dockerfile or OCI image deployment?
+- [ ] Does it support Go / Gin and Next.js?
+- [ ] Can it run background workers or long-running services?
+- [ ] Are Redis, PostgreSQL, or Kafka available as managed services?
+- [ ] Does it support custom domains and automatic TLS?
+- [ ] Does it support WebSocket or persistent outbound connections?
+- [ ] Can logs, metrics, and alerts be exported?
+- [ ] Does it provide Terraform, CLI, or API access?
+- [ ] Is the free tier permanent, credit-based, or time-limited?
+- [ ] Are there sanctions, export-control, or payment restrictions?
+- [ ] Does the acceptable use policy allow security research and telemetry workloads?
+
+---
+
+# 12. 最終建議 / Final Recommendation
+
+若目標是快速部署一個 **Go + Next.js + Redis / PostgreSQL** 的小型 SaaS 或監控平台，建議採用以下階段式路線：
+
+## Phase 1 — MVP / PoC
+
+- **Zeabur**：亞太低延遲與最快上手。
+- **Northflank**：需要微服務、DB、worker、Kafka / Redis 時更穩。
+- **Oracle Cloud Always Free**：需要長期免費 VM 與可自管 Docker stack。
+
+## Phase 2 — 區域節點實驗
+
+- **VNG Cloud / Biznet Gio / Patr**：東南亞測試。
+- **Gcore / Scaleway / Exoscale**：歐洲、東歐與 Edge 測試。
+- **Catalyst Cloud / Binary Lane / OrionVM**：澳洲與紐西蘭測試。
+
+## Phase 3 — 進階微服務與資安研究
+
+- **Selectel / Servercore / VK Cloud / Cloud.ru**：CIS / 俄羅斯 / 中亞區域研究。
+- **ArvanCloud / Liara**：中東 PaaS / CDN / Edge / regional deployment。
+- **Exoscale**：歐洲主權雲、K8s、Kafka / Redis / PostgreSQL managed service。
+
+### English Final Recommendation
+
+> Start with Zeabur, Northflank, or Oracle Cloud Always Free for an initial MVP. Move to VNG Cloud, Biznet Gio, Gcore, Scaleway, Catalyst Cloud, or Binary Lane when regional latency testing becomes important. For deeper microservice, Kafka, Redis, Kubernetes, or security research scenarios, evaluate Selectel, Servercore, VK Cloud, Cloud.ru, ArvanCloud, Liara, and Exoscale with careful attention to compliance, payment, sanctions, and acceptable-use policies.
+
+---
+
+# 13. 原始資料中的資料來源備註 / Source Link Notes
+
+原始內容中部分資料來源為官方首頁或文件，但也有部分為 Google Search / Gemini conversation link。建議正式採用前，將所有資料來源替換為官方文件頁面，例如：
+
+- Pricing / Free Tier 官方頁
+- Product documentation 官方頁
+- Region availability 官方頁
+- Acceptable Use Policy / Terms of Service
+- SLA / Support plan
+- Data processing agreement / Privacy policy
+
+> **English Note**: Replace search-result URLs or AI-chat URLs with official provider documentation before using this file as a formal technical reference.
