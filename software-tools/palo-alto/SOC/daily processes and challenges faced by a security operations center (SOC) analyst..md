@@ -1,15 +1,6 @@
 
-## A Day in the Life  
-of a SOC Analyst  
-  
 
----
 
-**This course describes the daily processes and challenges faced by a security operations center (SOC) analyst.** 
-
----
-
-  
 
 ## The Challenges
 
