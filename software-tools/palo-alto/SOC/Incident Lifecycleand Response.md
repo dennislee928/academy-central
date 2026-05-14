@@ -53,7 +53,15 @@ Organizations also will restore data on local systems from backups. As a due dil
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/809bddb967435f480778d8376d47bb2dfe603d993efe019ca36ef39c92fcc1c5/course/en/assets/65241b84ab1cd47bacdb9e6f/small.png)
 
-Analysts complete the required alerting and investigation procedures for quality improvement. This step includes tuning, process improvement, capability improvement, and quality view steps.
+Analysts complete the required alerting and investigation procedures for quality improvement. This step includes tuning, process improvement, capability improvement, and quality view steps.This phase involves review of all activities and the steps followed in previous phases.
+
+  
+
+Important topics for discussion include what worked and, more importantly, what did not work. These reviews are important because they may highlight specific tasks and actions that had either a positive or negative impact on the outcome of the incident response. 
+
+  
+
+During this phase of the process a written report is completed. Documentation of all the actions taken during the incident is a crucial record of the facts about what occurred and any evidence related to an incident that may be needed in the event of litigation.
 
 ## Incident Response Lifecycle
 
