@@ -69,9 +69,12 @@ NIST Special Publication 800-61 can help organizations better manage their compu
 Click the cards for more information about NIST recommendations regarding the plan and review process.
 
 - ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1389d725506c37ea5610/original.png)
+- #### Plan
+
+NIST recommends that each incident response plan has a mission statement, strategies and goals, an organizational approach to incident response, metrics for measuring effectiveness, and a built-in process for updating the plan as needed.
     
 - ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd138fd725506c37ea5611/original.png)
-    
+    The guide recommends a review of each incident with post-incident activity so that the organization is prepared for future attacks and can provide stronger protections of systems and data.
 
 ## FedRAMP
 
@@ -145,19 +148,30 @@ Click the tabs for more information about FISMA.
 The Law
 
 ](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-
+This law implements a comprehensive framework to protect information systems used in federal government agencies.
 [
 
 The Requirements
 
 ](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
+The law requires federal agencies to develop, implement, and document an information security and protection program.
 
 [
 
 The Compliance
 
 ](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
+The law covers a compliance framework for federal agencies by defining a series of requirements, as follows: 
 
+  
+
+- Information systems inventory
+- Information and information systems categorization by their risk level
+- Selection of appropriate security controls and assurance requirements
+- Risk assessment
+- System security plan
+- Certification and accreditation 
+- Continuous monitoring
   
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1bbcd725506c37ea564e/original.png)
@@ -179,13 +193,13 @@ Click the tabs for more about the information you can view.
 Attack Groups
 
 ](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-
+You can use the matrix view from this framework and view highlighted attack groups.
 [
 
 Dashboards
 
 ](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-
+Dynamically created dashboards are utilized for planning detection capabilities based on adversaries that organizations anticipate attacks from.
 ### The Tactics
 
 The framework consists of 12 tactics and 332 techniques. Each tactic contains a list of techniques used to achieve attacker objectives.
@@ -204,12 +218,18 @@ Click the tabs for more information about the ISO standards for incident managem
 
 ISO/IEC 27035-1
 
+Principles of incident management
+
 ISO/IEC 27035-2
+Guidelines to plan and prepare for incident response
 
 ISO/IEC 27037
+Guidelines for the identification, collection, acquisition, and preservation of digital evidence
 
 ISO/IEC 27042
+Guidelines for the analysis and interpretation of digital evidence
 
 ISO/IEC 27043
+Incident investigation principles and processes
 
-Principles of incident management
+---
