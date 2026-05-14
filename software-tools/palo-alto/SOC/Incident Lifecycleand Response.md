@@ -27,9 +27,16 @@ The incident lifecycle consists of four main functions:
 
 In this step, analysts process and classify alerts according to their severity. If an analyst suspects that an alert is malicious, they will evaluate the alert as an incident.
 
+
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/809bddb967435f480778d8376d47bb2dfe603d993efe019ca36ef39c92fcc1c5/course/en/assets/65241ce8ab1cd47bace6ee76/small.png)
 
 Analysts investigate the incident for the root cause and its impact. This step helps analysts understand the incident details and determine the best response method, such as quarantine, avoidance, or restoration of the systems.
+
+In this phase, the organization is informed about suspicious and malicious activities. These activities are classified as incidents after the required triage and investigation steps are performed.
+
+  
+
+After an incident has been detected, SOC team members begin the task of collecting evidence from systems such as memory images, log files, network connections, and running software processes. The evidence collection process can be time-consuming.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/809bddb967435f480778d8376d47bb2dfe603d993efe019ca36ef39c92fcc1c5/course/en/assets/65241d04ab1cd47bacf4abc0/small.png)
 
@@ -59,4 +66,3 @@ Click the tabs for more information about each phase of the incident response li
 
 4. Post-Incident Activity
 
-A critical component of this step is the creation of an incident response plan. When an incident response plan is created that includes staffing, all incident response team members should receive training about their duties in the plan. These duties include processes, procedures, and any additional tools necessary for the investigation of an incident. The required analysis software, investigation tools, and forensics hardware should be supplied to the incident response team.
