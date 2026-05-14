@@ -41,6 +41,15 @@ After an incident has been detected, SOC team members begin the task of collecti
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/809bddb967435f480778d8376d47bb2dfe603d993efe019ca36ef39c92fcc1c5/course/en/assets/65241d04ab1cd47bacf4abc0/small.png)
 
 Analysts stop the attack and respond to it. Analysts execute a mitigation function and pre-approved scenarios. Execution includes breach response actions and change control functions.
+after an incident is created and all analysis steps are performed, organizations take actions to prevent adversaries from performing their malicious activities such as exfiltrating organizational information, and then the organization applies containment. Containment strategies can range from blocking ports and IP addresses on a firewall to simply removing the network cable from the back of an infected machine. Each type of incident involves its own containment strategy and response playbook.
+
+  
+
+After a successful containment, the organization removes the adversaries from the impacted network. Depending on the incident type, organizations may use an anti-malware-based response tool, delete, zero, or re-install machine hard drives, and reset or delete affected user accounts. If an organization has identified a vulnerability that was exploited, vendor patches are applied or software updates are made.
+
+  
+
+Organizations also will restore data on local systems from backups. As a due diligence step, organizations also will audit their existing user and administrator accounts to ensure that no accounts have been added to the system by adversaries.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/809bddb967435f480778d8376d47bb2dfe603d993efe019ca36ef39c92fcc1c5/course/en/assets/65241b84ab1cd47bacdb9e6f/small.png)
 
