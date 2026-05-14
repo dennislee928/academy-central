@@ -30,17 +30,31 @@ The Cybersecurity Framework offers a scalable methodologic approach for all size
 
 The NIST Cybersecurity Framework comprises of three main components: Core, Implementation Tiers, and Profiles.
 
-![Core](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0602d725506c37ea554c/original.png)
 
-Core
 
-![Tiers](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0609d725506c37ea554f/original.png)
-
-Tiers
-
-![Profiles](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd060fd725506c37ea5550/original.png)
-
-Profiles
+- ![Core](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0602d725506c37ea554c/original.png)
+    
+    **Core**
+    
+      
+    
+    The Core provides a set of desired activities to be used in a cybersecurity implementation program to meet with the needs of any size organization. Activities are designed to complement the risk management process.
+    
+- ![Tiers](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0609d725506c37ea554f/original.png)
+    
+    **Implementation Tiers**
+    
+      
+    
+    The Implementation Tiers help organizations to provide an organizational view for cybersecurity risk management and to discuss their risk appetite, budget, and priorities.
+    
+- ![Profiles](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd060fd725506c37ea5550/original.png)
+    
+    **Profiles**
+    
+      
+    
+    The Profiles process provides organizations a way to strengthen their existing processes or implement new processes. The Profiles allow a powerful communication within the organization.
 
 ## NIST Special Publication 800-61
 
