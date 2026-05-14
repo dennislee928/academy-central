@@ -23,15 +23,15 @@
 
 ### 1.1 推薦選型
 
-| 使用情境 | 優先考慮平台 | 原因 |
-|---|---|---|
-| Go / Gin + Next.js 快速部署 | Zeabur, Northflank, Liara, Patr | PaaS 友善、支援 Docker / Git-based deploy、上手成本低 |
-| 複雜微服務 / Kafka / Redis | Northflank, Selectel, Servercore, Exoscale | 容器化、代管 DB、Kafka / Redis 支援較完整 |
-| 免費或低成本長期測試 | Oracle Cloud Always Free, Zeabur, Scaleway, Catalyst Cloud | 免費額度或試用金較適合 PoC / Side Project |
-| 東歐 / CIS / 俄羅斯節點研究 | Selectel, VK Cloud, Cloud.ru, Servercore, Amvera | 區域覆蓋與本地化基礎設施較強 |
-| 中東節點 / 區域網路測試 | ArvanCloud, Liara, Oracle Cloud Middle East | 中東區域節點與 PaaS / CDN 能力較突出 |
-| 澳洲 / 紐西蘭 / 大洋洲部署 | Catalyst Cloud, Binary Lane, OrionVM, Oracle Cloud Australia | 大洋洲本地低延遲與資料主權情境較適合 |
-| Edge / CDN / 全球冷門節點 | Gcore, ArvanCloud, Scaleway, Exoscale | Edge Cloud、FaaS、CDN、全球節點覆蓋較佳 |
+| 使用情境                    | 優先考慮平台                                                       | 原因                                         |
+| ----------------------- | ------------------------------------------------------------ | ------------------------------------------ |
+| Go / Gin + Next.js 快速部署 | Zeabur, Northflank, Liara, Patr                              | PaaS 友善、支援 Docker / Git-based deploy、上手成本低 |
+| 複雜微服務 / Kafka / Redis   | Northflank, Selectel, Servercore, Exoscale                   | 容器化、代管 DB、Kafka / Redis 支援較完整              |
+| 免費或低成本長期測試              | Oracle Cloud Always Free, Zeabur, Scaleway, Catalyst Cloud   | 免費額度或試用金較適合 PoC / Side Project             |
+| 東歐 / CIS / 俄羅斯節點研究      | Selectel, VK Cloud, Cloud.ru, Servercore, Amvera             | 區域覆蓋與本地化基礎設施較強                             |
+| 中東節點 / 區域網路測試           | ArvanCloud, Liara, Oracle Cloud Middle East                  | 中東區域節點與 PaaS / CDN 能力較突出                   |
+| 澳洲 / 紐西蘭 / 大洋洲部署        | Catalyst Cloud, Binary Lane, OrionVM, Oracle Cloud Australia | 大洋洲本地低延遲與資料主權情境較適合                         |
+| Edge / CDN / 全球冷門節點     | Gcore, ArvanCloud, Scaleway, Exoscale                        | Edge Cloud、FaaS、CDN、全球節點覆蓋較佳               |
 
 ### 1.2 English Overview
 
