@@ -1,12 +1,14 @@
-
-
 ## Introduction to Frameworks
 
-Frameworks aim to help organizations plan, assess, review and manage their cybersecurity.
-
-There are five cybersecurity frameworks that will be discussed here.
+Frameworks help organizations plan, assess, review, and manage cybersecurity. Five key frameworks are discussed below.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efcf2c4d725506c37ea4b50/extraLarge.png)
+
+## 框架簡介（繁體中文）
+
+框架旨在協助組織規劃、評估、審查及管理網路安全。以下將介紹五個主要安全框架。
+
+---
 
 ## NIST Cybersecurity Framework
 
@@ -14,222 +16,188 @@ There are five cybersecurity frameworks that will be discussed here.
 
 ### Overview
 
-The Cybersecurity Framework, produced by the U.S. NIST, is a policy framework designed to help organizations assess and improve their security posture regarding cyberattacks.
+The NIST Cybersecurity Framework is a U.S. policy framework designed to help organizations assess and improve their security posture against cyberattacks.
 
 ### Purpose
 
-The Cybersecurity Framework is based on existing standards, guidelines, and practices for organizations to better manage and reduce their organizational cybersecurity risk. It also encourages communication between internal and external organizational stakeholders regarding cybersecurity.
-
-  
-
-The Cybersecurity Framework offers a scalable methodologic approach for all sizes of organizations from all sectors. It is extremely versatile and has built-in mechanisms that can be customized. 
+It provides a scalable methodology based on existing standards, guidelines, and practices for managing and reducing cybersecurity risk. It also facilitates communication between internal and external stakeholders.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5f10cba53eef5438bd980aee/original.png)
 
 ### Components
 
-The NIST Cybersecurity Framework comprises of three main components: Core, Implementation Tiers, and Profiles.
+The framework comprises three main components:
 
+- **Core** — A set of desired cybersecurity activities suitable for organizations of any size, designed to complement the risk management process.
+- **Implementation Tiers** — Provide an organizational view of cybersecurity risk management to guide discussions on risk appetite, budget, and priorities.
+- **Profiles** — Enable organizations to strengthen existing processes or implement new ones, facilitating internal communication.
 
+## NIST 網路安全框架（繁體中文）
 
-- ![Core](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0602d725506c37ea554c/original.png)
-    
-    **Core**
-    
-      
-    
-    The Core provides a set of desired activities to be used in a cybersecurity implementation program to meet with the needs of any size organization. Activities are designed to complement the risk management process.
-    
-- ![Tiers](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0609d725506c37ea554f/original.png)
-    
-    **Implementation Tiers**
-    
-      
-    
-    The Implementation Tiers help organizations to provide an organizational view for cybersecurity risk management and to discuss their risk appetite, budget, and priorities.
-    
-- ![Profiles](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd060fd725506c37ea5550/original.png)
-    
-    **Profiles**
-    
-      
-    
-    The Profiles process provides organizations a way to strengthen their existing processes or implement new processes. The Profiles allow a powerful communication within the organization.
+### 概述
+
+NIST 網路安全框架是由美國國家標準暨技術研究院（NIST）制定的政策框架，旨在協助組織評估並提升抵禦網路攻擊的安全態勢。
+
+### 目的
+
+該框架基於現有標準、指南與實務做法，提供可擴展的方法論，協助組織管理並降低網路安全風險，同時促進內外部利害關係人之間的安全溝通。
+
+### 組成要素
+
+框架包含三大組成部分：
+
+- **核心（Core）** — 一套適用於各類組織的網路安全活動，旨在輔助風險管理流程。
+- **實施分級（Implementation Tiers）** — 提供網路安全風險管理的組織視角，協助討論風險偏好、預算與優先事項。
+- **設定檔（Profiles）** — 協助組織強化現有流程或導入新流程，促進內部溝通。
+
+---
 
 ## NIST Special Publication 800-61
 
 ### Overview
 
-NIST Special Publication 800-61 can help organizations better manage their computer security incidents. It includes step-by-step instructions for incident response teams to create an effective incident response policy and plan.
+NIST SP 800-61 provides step-by-step guidance for incident response teams to create effective incident response policies and plans, helping organizations better manage computer security incidents.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd0fd6d725506c37ea55ff/original.png)
 
 ### Recommendations
 
-Click the cards for more information about NIST recommendations regarding the plan and review process.
+NIST recommends that each incident response plan include a mission statement, strategies and goals, an organizational approach to incident response, metrics for measuring effectiveness, and a built-in process for updating the plan. The guide also emphasizes post-incident reviews to strengthen future protections.
 
-- ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1389d725506c37ea5610/original.png)
-- #### Plan
+## NIST SP 800-61（繁體中文）
 
-NIST recommends that each incident response plan has a mission statement, strategies and goals, an organizational approach to incident response, metrics for measuring effectiveness, and a built-in process for updating the plan as needed.
-    
-- ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd138fd725506c37ea5611/original.png)
-    The guide recommends a review of each incident with post-incident activity so that the organization is prepared for future attacks and can provide stronger protections of systems and data.
+### 概述
+
+NIST SP 800-61 為事件應變團隊提供逐步指引，協助制定有效的事件應變政策與計畫，幫助組織更完善地管理電腦安全事件。
+
+### 建議事項
+
+NIST 建議每份事件應變計畫應包含使命宣言、策略與目標、組織應變方法、成效衡量指標，以及內建的計畫更新機制。該指南亦強調應進行事件後檢討，以強化未來防護能力。
+
+---
 
 ## FedRAMP
 
-The Federal Risk and Authorization Management Program (FedRAMP) program’s main goal is to modernize IT through a move away from old and outdated technology. This U.S. government program covers a standard approach to assess security, provides an authorization process, and provides guidance about continuous monitoring for cloud products and services.
+The Federal Risk and Authorization Management Program (FedRAMP) modernizes government IT by providing a standard approach to security assessment, authorization, and continuous monitoring for cloud products and services.
 
-FedRAMP is designed to be efficient and agile. The following are the features of FedRAMP.
+### Effective Cloud Security
 
-### Effective Cloud Security  
-  
+FedRAMP provides a framework for creating repeatable processes to ensure effective cloud security for the government.
 
-FedRAMP provides a framework for creating and managing repeatable processes for an effective cloud security for the government.
+### Marketplace
 
-### Marketplace  
-  
+FedRAMP established a cloud service marketplace enabling collaboration across agencies through use cases, solutions, and lessons learned.
 
-FedRAMP has established a marketplace for cloud services for collaboration across government agencies by use cases, tactical solutions, and lessons learned documentations.
+### Security Baselines
 
-### Security Baselines  
-  
+FedRAMP defines four security baselines:
 
-FedRAMP offers four security baselines:
-
-  
-
-- High with a set of 421 controls 
-- Moderate with a set of 325 controls
-- Low with a set of 125 controls
-- LI SaaS with a set of 36 controls
+- High — 421 controls
+- Moderate — 325 controls
+- Low — 125 controls
+- LI SaaS — 36 controls
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd150ad725506c37ea561e/original.png)
 
 ### Goals
 
-FedRAMP continues to work with other agencies, such as NSA, DoD, NIST, GSA, and OMB, and with experts in private sectors, to achieve the following goals.
+FedRAMP collaborates with agencies including NSA, DoD, NIST, GSA, and OMB to achieve the following:
 
-  
+1. Accelerate the shift to secure cloud solutions through reuse of assessments and authorizations.
+2. Improve confidence in cloud security.
+3. Ensure consistent application of security policies.
+4. Increase automation for near real-time continuous monitoring.
 
-Click the arrows for more information about each goal.
+## FedRAMP（繁體中文）
 
-  
+FedRAMP（聯邦風險與授權管理計畫）透過提供標準化的安全評估、授權及持續監控方法，推動政府 IT 現代化。
 
-- 1.  Accelerate the shift to secure cloud solutions through reuse of assessments and authorizations
-    
-    ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1938d725506c37ea562f/original.png)
-    
-- 2. Improve confidence
-    
-    ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd199ed725506c37ea5631/original.png)
-    
-- 3. Ensure consistent application of existing security policies
-    
-      
-    
-    ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1a1dd725506c37ea5637/original.png)
-    
-- 4. Increase automation for near real-time data with continuous monitoring
-    
-      
-    
-    ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1a4dd725506c37ea563b/original.png)
-    
+### 有效的雲端安全
+
+FedRAMP 提供建立可重複流程的框架，確保政府機構的雲端安全。
+
+### 服務市集
+
+FedRAMP 建立雲端服務市集，促進跨機構協作，共享使用案例、解決方案與經驗教訓。
+
+### 安全基準
+
+FedRAMP 定義四級安全基準：
+
+- 高安全性 — 421 項控制項
+- 中安全性 — 325 項控制項
+- 低安全性 — 125 項控制項
+- LI SaaS — 36 項控制項
+
+### 目標
+
+FedRAMP 與 NSA、DoD、NIST、GSA、OMB 等機構合作，致力實現以下目標：
+
+1. 透過評估與授權的再利用，加速採用安全雲端解決方案。
+2. 提升雲端安全信心。
+3. 確保安全政策的一致性執行。
+4. 透過持續監控提升自動化與即時資料能力。
+
+---
 
 ## FISMA
 
-The Federal Information Systems Management Act (FISMA) is a U.S. federal law passed in 2002 that was known as the Federal Information Security Management Act until 2014, when it was shaped into its final version.
+The Federal Information Security Modernization Act (FISMA) is a U.S. federal law that implements a comprehensive framework to protect information systems used in government agencies. It requires agencies to develop, document, and implement an information security program covering:
 
-Click the tabs for more information about FISMA.
-
-[
-
-The Law
-
-](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-This law implements a comprehensive framework to protect information systems used in federal government agencies.
-[
-
-The Requirements
-
-](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-The law requires federal agencies to develop, implement, and document an information security and protection program.
-
-[
-
-The Compliance
-
-](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-The law covers a compliance framework for federal agencies by defining a series of requirements, as follows: 
-
-  
-
-- Information systems inventory
-- Information and information systems categorization by their risk level
-- Selection of appropriate security controls and assurance requirements
+- Information system inventory
+- Risk-based categorization of information and systems
+- Selection of appropriate security controls
 - Risk assessment
 - System security plan
-- Certification and accreditation 
+- Certification and accreditation
 - Continuous monitoring
-  
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5efd1bbcd725506c37ea564e/original.png)
 
+## FISMA（繁體中文）
+
+FISMA（聯邦資訊安全現代化法案）是美國聯邦法律，建立了一套全面框架以保護政府機構的資訊系統。該法要求各機構制定、記錄並實施資訊安全計畫，內容涵蓋：
+
+- 資訊系統清冊
+- 依風險等級分類資訊與系統
+- 選用適當的安全控制措施
+- 風險評估
+- 系統安全計畫
+- 驗證與認證
+- 持續監控
+
+---
+
 ## MITRE ATT&CK Framework
 
-The ATT&CK framework is a knowledge base of tactics and techniques used by attackers. ATT&CK stands for Adversarial Tactics, Techniques, and Common Knowledge. (Ref: https://attack.mitre.org/)
-
-### Layout
-
-The ATT&CK framework will aggregate data for you to easily view. 
-
-  
-
-Click the tabs for more about the information you can view.
-
-[
-
-Attack Groups
-
-](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-You can use the matrix view from this framework and view highlighted attack groups.
-[
-
-Dashboards
-
-](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/index.html#)
-Dynamically created dashboards are utilized for planning detection capabilities based on adversaries that organizations anticipate attacks from.
-### The Tactics
-
-The framework consists of 12 tactics and 332 techniques. Each tactic contains a list of techniques used to achieve attacker objectives.
-
-  
-
-View the tactics below.
+The ATT&CK (Adversarial Tactics, Techniques, and Common Knowledge) framework is a knowledge base of attacker behaviors. It enables security teams to view attack groups, access dynamically created dashboards for planning detection capabilities, and analyze adversary tactics. The framework consists of 12 tactics and 332 techniques, each containing methods used to achieve attacker objectives.
 
 ![](https://cdn5.dcbstatic.com/files/p/a/paloaltonetworks_docebosaas_com/1778770800/8RK_HUwBtKjYmPcqTTf17A/scorm/73bb42f84c0dee9c48478b0f8320926d1960e567022bf3af09c5f3eabadc2c66/course/en/assets/5eebf4168218d013a7427ba6/small.png)
 
+## MITRE ATT&CK 框架（繁體中文）
+
+MITRE ATT&CK（對抗性戰術、技術與共通知識）框架是一個攻擊者行為的知識庫。安全團隊可藉此檢視攻擊群組、使用動態儀表板規劃偵測能力，並分析攻擊者戰術。該框架包含 12 項戰術與 332 項技術，每項戰術下涵蓋多種攻擊者達成目標的手法。
+
+---
+
 ## ISO Standards
 
-The International Organization for Standardization (ISO) publishes many standards relating to information security, digital evidence, and incident handling and response.
+The International Organization for Standardization (ISO) publishes standards relating to information security, digital evidence, and incident handling:
 
-Click the tabs for more information about the ISO standards for incident management.
+- **ISO/IEC 27035-1** — Principles of incident management
+- **ISO/IEC 27035-2** — Guidelines to plan and prepare for incident response
+- **ISO/IEC 27037** — Guidelines for identification, collection, and preservation of digital evidence
+- **ISO/IEC 27042** — Guidelines for analysis and interpretation of digital evidence
+- **ISO/IEC 27043** — Incident investigation principles and processes
 
-ISO/IEC 27035-1
+## ISO 標準（繁體中文）
 
-Principles of incident management
+國際標準化組織（ISO）發布多項資訊安全、數位證據及事件處理相關標準：
 
-ISO/IEC 27035-2
-Guidelines to plan and prepare for incident response
-
-ISO/IEC 27037
-Guidelines for the identification, collection, acquisition, and preservation of digital evidence
-
-ISO/IEC 27042
-Guidelines for the analysis and interpretation of digital evidence
-
-ISO/IEC 27043
-Incident investigation principles and processes
+- **ISO/IEC 27035-1** — 事件管理原則
+- **ISO/IEC 27035-2** — 事件應變規劃與準備指引
+- **ISO/IEC 27037** — 數位證據識別、蒐集與保存指引
+- **ISO/IEC 27042** — 數位證據分析與解讀指引
+- **ISO/IEC 27043** — 事件調查原則與流程
 
 ---
