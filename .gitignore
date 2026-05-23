@@ -39,3 +39,4 @@ next-env.d.ts
 /NThing-UI-main
 /loans
 /.ignore-devdoc
+scripts/auto_commit.sh
