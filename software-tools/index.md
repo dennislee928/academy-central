@@ -71,3 +71,26 @@ This document provides a comprehensive, categorized summary of all software tool
 
 ## 11. Commerce & Payments / 商務與支付
 *   **Google Universal Commerce Protocol (UCP)**: Open standard for agentic commerce, enabling direct checkout flows inside AI surfaces like Gemini. / 代理式商務的開放標準，支援在 Gemini 等 AI 介面內直接完成結帳。
+
+## 12. Federated Learning / 聯邦學習
+*   **Flower (flwr)**: Open-source framework for building federated AI systems, compatible with any ML framework. / 用於建立聯邦 AI 系統的開源框架，相容於各種機器學習框架。
+*   **NVIDIA FLARE**: SDK for privacy-preserving multi-party collaborative AI training and evaluation. / 用於保護隱私的多方協作 AI 訓練與評估的 SDK。
+
+## 13. Quantum Computing Frameworks / 量子運算框架
+*   **NVIDIA CUDA-Q**: Hybrid quantum-classical programming platform for accelerated quantum supercomputing. / 用於加速量子超級運算的混合量子-經典程式設計平台。
+*   **Qiskit**: IBM's open-source SDK for building, optimizing, and executing quantum circuits. / IBM 推出的開源 SDK，用於建立、最佳化與執行量子電路。
+
+## 14. WebAssembly Runtimes / WebAssembly 執行環境
+*   **Wasmtime**: Fast and secure standalone runtime for WebAssembly and WASI. / 快速且安全的 WebAssembly 與 WASI 獨立執行環境。
+*   **Fermyon Spin**: Framework for building and deploying event-driven WebAssembly microservices. / 用於開發並部署事件驅動型 WebAssembly 微服務的框架。
+
+## 15. Zero-Knowledge Proofs / 零知識證明
+*   **Noir**: Rust-like domain-specific language for writing zero-knowledge programs and circuits. / 類 Rust 的領域特定語言，用於編寫零知識程式與電路。
+*   **RISC Zero**: General-purpose zero-knowledge virtual machine (zkVM) for verifiable computation. / 用於可驗證運算的一般用途零知識虛擬機 (zkVM)。
+
+## 16. Regional Cloud & PaaS Providers / 區域雲端與 PaaS 服務商
+*   **Zeabur**: Developer-friendly PaaS from Taiwan for quick Go and Next.js deployments. / 源自台灣的開發者友善 PaaS，適合快速部署 Go 與 Next.js 專案。
+*   **Northflank**: Advanced PaaS for containers, microservices, and databases with high operational depth. / 進階 PaaS，支援容器、微服務與資料庫，具備深度營運能力。
+*   **Scaleway**: European cloud provider offering VPS, Serverless, and Kubernetes services. / 提供 VPS、Serverless 與 Kubernetes 服務的歐洲雲端供應商。
+*   **Exoscale**: Swiss-based sovereign cloud focused on privacy, Kubernetes, and managed data services. / 總部位於瑞士的主權雲，專注於隱私、Kubernetes 與代管資料服務。
+*   **Regional Providers (APAC/CIS/MENA)**: Specialized providers like VNG Cloud (Vietnam), Selectel (Russia), and ArvanCloud (Middle East) for regional infrastructure needs. / 針對區域基礎設施需求，提供如 VNG Cloud（越南）、Selectel（俄羅斯）與 ArvanCloud（中東）等專業服務商。

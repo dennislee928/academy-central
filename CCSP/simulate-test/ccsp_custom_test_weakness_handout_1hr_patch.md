@@ -681,3 +681,143 @@ Privacy/location constraint often favors private cloud.
 
 > 有進步，但還沒穩。下一步不是追更多 full mock，而是先把 D2 / D6 的 taxonomy 錯誤修掉，再用 20–25 題 mixed mini test 驗證是否回到 75% 以上。
 
+
+
+Domain-wise：
+
+Domain	本次成績	判斷
+D1 Cloud Concepts, Architecture and Design	69%	有改善，但未穩
+D2 Cloud Data Security	54%	P0 弱點
+D3 Cloud Platform & Infrastructure Security	100%	樣本只有 3 題，不過不是問題核心
+D6 Legal, Risk and Compliance	55%	P0 弱點
+
+和前一次 Assessment Test 對照：
+
+Domain	前一次	這次	解讀
+D1	60%	69%	有進步
+D2	50%	54%	小幅改善，但仍弱
+D6	50%	55%	小幅改善，但仍弱
+
+所以不是退步；比較精準的說法是：
+
+題源變了，而且這次 40 題中有 37 題集中打 D1 / D2 / D6。弱域有改善，但還沒足以把 mixed custom test 拉回 70%+。
+
+2. 主要弱點
+P0：D6 Legal / Risk / Compliance
+
+主要錯在：
+
+SSAE 18 vs SOC 1 / SOC 2 / SOC 3
+SOC 2 Type 2 可能需要 NDA
+SOC 3 = public release / public summary
+Forensic reporting ultimate recipient = court
+Forensic copy integrity 要跟 original 比
+
+核心規則：
+
+SSAE 18 = standard
+SOC 1 / SOC 2 / SOC 3 = reports
+SOC 3 = public release
+SOC 2 Type 2 may require NDA
+Forensic reporting ultimately supports the court
+Forensic copy integrity compares against the original
+P0：D2 Cloud Data Security
+
+主要錯在：
+
+DRM persistence
+Real-time analytics vs Big data
+Cloud data destruction difficulty = multitenancy
+Copyright vs patent / trademark / trade secret
+Egress monitoring 不等於 access control
+Classification / labeling 在 Create phase
+
+核心規則：
+
+Persistence = rights follow object
+Real-time analytics = current behavior recommendation
+Cloud data destruction difficulty = multitenancy
+Copyright = tangible expression
+Egress monitoring does not support access control
+Classification and labels are assigned at Create
+P1：D1 Cloud Concepts
+
+主要錯在：
+
+Interoperability vs Portability
+Privacy/location constraint 下 deployment model 判斷
+
+核心規則：
+
+Interoperability = systems work together
+Portability = move systems/data elsewhere
+Privacy/location constraint often favors private cloud
+Hybrid is not the default answer for privacy/location control
+3. 1 小時補弱排程
+0–5 分鐘：錯題分流
+
+只標三類：
+
+D6：SOC / SSAE / forensic / evidence
+D2：DRM / lifecycle / monitoring / IP / destruction
+D1：interoperability / deployment model
+5–20 分鐘：D6 補弱
+
+重點背：
+
+SSAE 18 = standard
+SOC 1 = financial reporting controls
+SOC 2 Type 1 = design at a point in time
+SOC 2 Type 2 = operating effectiveness over time
+SOC 3 = public summary / public release
+SOC 2 Type 2 may require NDA
+Forensic reporting ultimately supports court
+Forensic copy integrity compares against original
+20–38 分鐘：D2 補弱
+
+重點背：
+
+Persistence = rights follow object
+Real-time analytics = current behavior based recommendation
+Cloud data destruction difficulty = multitenancy
+Copyright = tangible expression
+Egress monitoring does not support access control
+Classification and labels are assigned at Create
+38–50 分鐘：D1 補弱
+
+重點背：
+
+Interoperability = systems work together
+Portability = move systems/data elsewhere
+Privacy/location constraint = private cloud often strongest answer
+Hybrid = integration of distinct infrastructures, not default privacy answer
+50–60 分鐘：10 題口頭驗證
+
+能直接答出至少 8 題才算通過：
+
+SSAE 18 是 standard 還是 report？
+哪個 SOC report 可公開發布？
+SOC 2 Type 2 為何可能需要 NDA？
+Forensic copy integrity 要跟什麼比？
+Forensic reporting 的 ultimate legal recipient 是誰？
+DRM rights follow object 叫什麼？
+Egress monitoring 是否提供 access control？
+Data classification 在 lifecycle 哪個階段做？
+Interoperability 和 portability 差在哪？
+Privacy/location constraint 下為何 private cloud 常是更佳答案？
+4. 明確建議
+
+明天不要直接刷完整 Practice Test。先做：
+
+D6 review + drill
+D2 review + drill
+D1 review + drill
+最後做 20–25 題 D1/D2/D6 mixed mini test
+
+Gate：
+
+項目	目標
+D2	≥75%
+D6	≥75%
+D1	≥75–80%
+D1/D2/D6 mixed mini test	≥75%
