@@ -1,4 +1,6 @@
-# CCSP Domain 3 正式講義
+# CCSP Domain 3 核心觀念與架構 / Cloud Platform & Infrastructure Security
+
+> **Domain 3 定位：** 本領域涵蓋雲端平台與基礎設施安全，包括虛擬化、容器、Serverless、網路分段與架構防禦。考題著重於各層控制的正確歸屬與設計原則，而非工具操作細節。
 
 ## 虛擬化、容器、Serverless、分段隔離與架構安全
 

@@ -1,6 +1,6 @@
+# CCSP Domain 6 盲點與錯題分析 / Blindspots & Error Analysis
 
-
-**主題：Legal, Risk, Compliance, Audit, Governance, Privacy 與 Forensics 題型修正**
+> **主題：** Legal, Risk, Compliance, Audit, Governance, Privacy 與 Forensics 題型修正
 
 ---
 

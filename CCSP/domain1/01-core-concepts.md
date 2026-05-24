@@ -1,6 +1,7 @@
-# CCSP Domain 1 專業講義
+# CCSP Domain 1 核心觀念與架構 / Cloud Concepts, Architecture & Design
 
-**主題：根據本次題目分析整理之核心觀念、盲點與高頻考法**
+> **Domain 1 定位：** 本領域聚焦於雲端概念、角色與責任、服務模型、部署模型、治理與可攜性。考題重心不在技術深度，而在責任邊界判斷與最佳解選擇邏輯。  
+> **本講義涵蓋：** 角色責任、服務與部署模型、雲端框架、治理一致性、高頻盲點與解題框架。
 
 ---
 
@@ -10,17 +11,16 @@
 內容聚焦於：
 
 - 雲端角色與責任歸屬
-    
+
 - 雲端服務模型與部署模型
-    
+
 - 共享責任模型
-    
+
 - 雲端治理與可攜性
-    
+
 - 基礎雲端特性對安全與營運的影響
-    
+
 - Domain 1 常見誤判模式
-    
 
 本講義避免使用口語化代名詞，採用較正式、考試導向的表述。
 
@@ -31,15 +31,14 @@
 CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 
 - **雲端概念**
-    
+
 - **角色與責任**
-    
+
 - **服務模型與部署模型**
-    
+
 - **治理、可攜性、風險邊界**
-    
+
 - **雲端特性如何影響安全與營運**
-    
 
 簡化而言，Domain 1 的本質是：
 
@@ -48,13 +47,12 @@ CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 因此，這個 Domain 的題目常見特徵不是「哪個技術最強」，而是：
 
 - 哪個角色應負責
-    
+
 - 哪個模型最適合
-    
+
 - 哪種雲端特性導致某種營運與安全影響
-    
+
 - 哪個選項最符合 shared responsibility 的邏輯
-    
 
 ---
 
@@ -65,68 +63,62 @@ CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 ## 1. 角色與責任
 
 - Data Owner
-    
+
 - Custodian
-    
+
 - Cloud Service Provider
-    
+
 - Cloud Service Partner
-    
+
 - Cloud Administrator
-    
 
 ## 2. 雲端服務模型
 
 - SaaS
-    
+
 - PaaS
-    
+
 - IaaS
-    
 
 ## 3. 雲端部署模型
 
 - Public Cloud
-    
+
 - Private Cloud
-    
+
 - Hybrid Cloud
-    
+
 - Community Cloud
-    
 
 ## 4. 雲端框架與標準
 
 - CSA CCM
-    
+
 - ISO/IEC 27017
-    
+
 - FIPS 140-2
-    
 
 ## 5. 雲端特性
 
 - Broad Network Access
-    
+
 - Rapid Elasticity
-    
+
 - Resource Pooling
-    
 
 ## 6. 治理、可攜性與組織轉型
 
 - Vendor lock-in
-    
+
 - Cloud portability
-    
+
 - Containerization
-    
+
 - Serverless abstraction
-    
+
 - Governance consistency
-    
+
 - Vendor management
-    
 
 ---
 
@@ -139,24 +131,22 @@ CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 本次題目明確指出，對資料安全的要求，例如：
 
 - encryption
-    
+
 - access controls
-    
+
 - retention policies
-    
 
 最終負責定義者是 **Data Owner**。
 
 ### 關鍵原則
 
 - **Owner 定義需求**
-    
+
 - **Custodian 執行與維護**
-    
+
 - **Provider 提供平台或服務能力**
-    
+
 - **Broker / Partner 協助整合、治理或評估**
-    
 
 ### 易錯點
 
@@ -165,13 +155,12 @@ CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 ### 記憶方式
 
 - **Owner = 決定要保護到什麼程度**
-    
+
 - **Custodian = 負責落地與操作**
-    
+
 - **Provider = 提供雲端服務能力**
-    
+
 - **Partner = 提供專業支援與評估**
-    
 
 ---
 
@@ -183,7 +172,6 @@ CCSP Domain 1 並非偏重深層技術實作，而是聚焦於：
 SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 
 - **降低應用更新與維護負擔**
-    
 
 因為更多工作由供應商負責。
 
@@ -196,11 +184,10 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 不是：
 
 - 初始成本最低
-    
+
 - 基礎設施控制最多
-    
+
 - 內部 IT 技術能力最少
-    
 
 雖然這些都重要，但在 CCSP Domain 1 的考法中，**共享責任邊界**是最核心的判斷依據。
 
@@ -209,20 +196,18 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 本次題組對 patching responsibility 的考法非常標準：
 
 - **SaaS**：供應商負責最多
-    
+
 - **PaaS**：雙方分擔
-    
+
 - **IaaS**：供應商負責基礎設施，客戶負責更多上層項目
-    
 
 ### 記憶方式
 
 - **SaaS：最少自管**
-    
+
 - **PaaS：中間分工**
-    
+
 - **IaaS：最多自管**
-    
 
 ---
 
@@ -235,11 +220,10 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 當題目同時出現以下需求時：
 
 - 部分資料須高度控管
-    
+
 - 部分 workloads 可利用公有雲彈性
-    
+
 - 需要兼顧法規與營運敏捷
-    
 
 答案通常偏向 **Hybrid Cloud**。
 
@@ -248,13 +232,12 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 若題目主軸是：
 
 - rapid iteration
-    
+
 - continuous deployment
-    
+
 - scalability
-    
+
 - DevOps agility
-    
 
 答案通常偏向 **Public Cloud**。
 
@@ -263,13 +246,12 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 若題目強調：
 
 - maximum control
-    
+
 - customization
-    
+
 - strict governance
-    
+
 - potentially faster RTO for critical apps
-    
 
 則答案通常偏向 **Private Cloud**。
 
@@ -278,24 +260,22 @@ SaaS 相較於 PaaS、IaaS 的核心優勢之一是：
 Community Cloud 常被誤認為適合：
 
 - 資料主權
-    
+
 - 同產業管制要求
-    
+
 - 特定法域控管
-    
 
 但若題幹明確提到同時還要使用某些 public cloud services，則答案通常不是 Community Cloud，而是 **Hybrid Cloud**。
 
 ### 記憶方式
 
 - **Public = 速度、規模、敏捷**
-    
+
 - **Private = 控制、客製、可預測**
-    
+
 - **Hybrid = 混合需求的標準解**
-    
+
 - **Community = 特定共同需求，不等於所有合規題都選它**
-    
 
 ---
 
@@ -306,11 +286,10 @@ Community Cloud 常被誤認為適合：
 CSA Cloud Controls Matrix 的核心用途是：
 
 - 評估雲端安全態勢
-    
+
 - 做 control mapping
-    
+
 - 對照 ISO、PCI DSS、NIST 等標準
-    
 
 重點在於 **assessment-oriented control matrix**。
 
@@ -319,7 +298,6 @@ CSA Cloud Controls Matrix 的核心用途是：
 ISO/IEC 27017 的核心用途是：
 
 - 提供適用於 cloud computing 的資訊安全控制指引
-    
 
 重點在於 **cloud-specific guidance**。
 
@@ -328,22 +306,20 @@ ISO/IEC 27017 的核心用途是：
 本次題組指出，從 Level 2 升到 Level 3 的關鍵躍升在於：
 
 - 更強的 tamper resistance
-    
+
 - 更強的 unauthorized access protection
-    
 
 ### 易錯點
 
 這類題型常見錯誤是把：
 
 - framework
-    
+
 - guidance
-    
+
 - certification
-    
+
 - baseline control set
-    
 
 混成同一類。
 
@@ -356,31 +332,28 @@ ISO/IEC 27017 的核心用途是：
 題目指出，最佳策略是：
 
 - **cloud-agnostic architectures**
-    
+
 - **standard data formats**
-    
 
 這種考法非常典型。
 
 ### 不應優先選的方向
 
 - provider-specific features
-    
+
 - proprietary-only services
-    
+
 - 過度綁定單一供應商能力
-    
 
 ### 2. Containerization 的正確理解
 
 題目反映的關鍵概念是：
 
 - Containers **提升 portability**
-    
+
 - 也可能 **改善一致性與某些安全性**
-    
+
 - 但前提是 **configuration 要正確**
-    
 
 因此，容器化不是自動安全，也不是單純 portability 工具，而是：
 
@@ -389,11 +362,10 @@ ISO/IEC 27017 的核心用途是：
 ### 記憶方式
 
 - **Portability 靠標準化**
-    
+
 - **安全性靠正確設定**
-    
+
 - **避免 lock-in 靠去專屬化**
-    
 
 ---
 
@@ -404,31 +376,28 @@ ISO/IEC 27017 的核心用途是：
 本次題組中，broad network access 的影響點是：
 
 - diverse client platforms
-    
+
 - endpoint variability
-    
+
 - troubleshooting complexity
-    
 
 也就是說，廣泛網路存取的影響不只是方便，而是會增加：
 
 - 存取情境複雜度
-    
+
 - 平台差異
-    
+
 - 疑難排解困難度
-    
 
 ### 2. Rapid Elasticity
 
 Rapid elasticity 的核心影響在於：
 
 - 應用程式需要更適合自動擴縮
-    
+
 - 架構要偏向 **stateless**
-    
+
 - 元件要偏向 **loosely coupled**
-    
 
 這是雲原生設計的重要基礎。
 
@@ -437,11 +406,10 @@ Rapid elasticity 的核心影響在於：
 不應把 rapid elasticity 理解成：
 
 - 完全不需要 capacity planning
-    
+
 - 必須手動擴充
-    
+
 - 只是資源帳單問題
-    
 
 真正重點在 **architecture readiness for elastic scaling**。
 
@@ -450,7 +418,6 @@ Rapid elasticity 的核心影響在於：
 題目指出，serverless 最大的量化測量障礙之一是：
 
 - **decreased visibility into infrastructure components**
-    
 
 這反映出一個常見考點：
 
@@ -465,34 +432,30 @@ Rapid elasticity 的核心影響在於：
 本次題組中，最能證明 accountability 的文件類型是：
 
 - **system-wide audit trails**
-    
 
 廣受認可的證據不是：
 
 - policy document
-    
+
 - playbook
-    
+
 - high-level process paper
-    
 
 因為 accountability 強調的是：
 
 - 誰做了什麼
-    
+
 - 何時做
-    
+
 - 影響了什麼
-    
+
 - 是否可被追溯
-    
 
 ### 2. Edge + Cloud 的治理重點
 
 在 hybrid cloud-edge architecture 中，Cloud Administrator 最重要的責任不是單一技術點，而是：
 
 - **enforcing consistent governance and compliance policies across environments**
-    
 
 這是 Domain 1 很典型的考法：  
 當環境愈分散，真正困難的通常不是功能整合，而是 **治理一致性**。
@@ -502,13 +465,12 @@ Rapid elasticity 的核心影響在於：
 在 multi-cloud 生態中，Cloud Service Partner 的主要價值通常是：
 
 - 第三方評估
-    
+
 - specialized services
-    
+
 - multi-cloud security support
-    
+
 - assurance / integration support
-    
 
 而不是全面接管所有日常營運責任。
 
@@ -520,16 +482,14 @@ Rapid elasticity 的核心影響在於：
 
 - 由傳統基礎設施維護，轉向  
     **vendor management** 與 **service integration**
-    
 
 ### 這是 Domain 1 非常重要的觀念
 
 導入雲端不代表 IT 消失，而是角色轉型：
 
 - 少做硬體與 OS 維運
-    
+
 - 多做治理、整合、合規、身份管理、供應商管理
-    
 
 ### 關鍵理解
 
@@ -544,20 +504,18 @@ Rapid elasticity 的核心影響在於：
 典型例子：
 
 - Custodian / Provider / Administrator 被誤當成決策責任者
-    
 
 ### 修正原則
 
 先問題目是在問：
 
 - 誰定義需求
-    
+
 - 誰維護系統
-    
+
 - 誰提供平台
-    
+
 - 誰協助整合
-    
 
 ---
 
@@ -566,22 +524,20 @@ Rapid elasticity 的核心影響在於：
 常見錯法：
 
 - 只看 control 多寡
-    
+
 - 只看成本
-    
+
 - 只看技術彈性
-    
 
 ### 修正原則
 
 凡是 SaaS / PaaS / IaaS 題型，先判斷：
 
 - security responsibility 怎麼分
-    
+
 - patching 誰負責
-    
+
 - 哪一層由誰維護
-    
 
 ---
 
@@ -590,11 +546,10 @@ Rapid elasticity 的核心影響在於：
 例如：
 
 - 看到資料主權就先選 Community Cloud
-    
+
 - 看到高控制就先選 Hybrid
-    
+
 - 看到 mixed requirement 卻沒有想到 Hybrid
-    
 
 ### 修正原則
 
@@ -607,37 +562,34 @@ Rapid elasticity 的核心影響在於：
 例如：
 
 - edge-cloud integration 題，容易先想 synchronization 或 zero trust
-    
+
 - 但題目實際在考 governance consistency
-    
 
 ### 修正原則
 
 只要題目出現：
 
 - large enterprise
-    
+
 - multi-cloud
-    
+
 - hybrid
-    
+
 - edge
-    
+
 - compliance
-    
+
 - distributed environment
-    
 
 就必須優先考慮：
 
 - policy consistency
-    
+
 - governance
-    
+
 - compliance alignment
-    
+
 - administrative oversight
-    
 
 ---
 
@@ -646,11 +598,10 @@ Rapid elasticity 的核心影響在於：
 避免 vendor lock-in 的題目不只是容器或工具，而是：
 
 - architecture neutrality
-    
+
 - standardization
-    
+
 - decoupling from provider-specific dependency
-    
 
 ---
 
@@ -659,20 +610,18 @@ Rapid elasticity 的核心影響在於：
 本次有題目顯示：
 
 - 只看到 high availability，就選 regional replication
-    
+
 - 但題目問的是整體 CIA
-    
 
 ### 修正原則
 
 若題目問 CIA triad，答案必須同時涵蓋：
 
 - Confidentiality
-    
+
 - Integrity
-    
+
 - Availability
-    
 
 單一 Availability 控制通常不夠完整。
 
@@ -687,17 +636,16 @@ Rapid elasticity 的核心影響在於：
 題目是在問哪一類？
 
 - 角色責任
-    
+
 - 服務模型
-    
+
 - 部署模型
-    
+
 - 標準與框架
-    
+
 - 雲端特性
-    
+
 - 治理與可攜性
-    
 
 ---
 
@@ -708,13 +656,12 @@ Rapid elasticity 的核心影響在於：
 例如：
 
 - **Owner** 常是定義
-    
+
 - **Custodian** 常是執行
-    
+
 - **Provider** 常是提供能力
-    
+
 - **Partner** 常是輔助或整合
-    
 
 ---
 
@@ -723,24 +670,22 @@ Rapid elasticity 的核心影響在於：
 幾乎所有服務模型題都可以先問：
 
 - 哪些層由供應商負責
-    
+
 - 哪些層由客戶負責
-    
+
 - 這題問的是哪一層
-    
 
 ---
 
 ## 第四步：遇到 Public / Private / Hybrid / Community，先看需求混合程度
 
 - 混合敏感與非敏感 workloads → 常偏 **Hybrid**
-    
+
 - 高度控制與客製 → 常偏 **Private**
-    
+
 - 高敏捷、高彈性、快速 DevOps → 常偏 **Public**
-    
+
 - 共享產業需求 → 才較可能是 **Community**
-    
 
 ---
 
@@ -750,13 +695,12 @@ Rapid elasticity 的核心影響在於：
 治理題通常更偏好：
 
 - consistency
-    
+
 - policy alignment
-    
+
 - auditability
-    
+
 - governance enforcement
-    
 
 ---
 
@@ -765,52 +709,44 @@ Rapid elasticity 的核心影響在於：
 ## 角色
 
 - **Owner 定義，Custodian 執行。**
-    
+
 - **Provider 提供服務，不等於定義業務要求。**
-    
 
 ## 服務模型
 
 - **SaaS 最少自管，IaaS 最多自管。**
-    
+
 - **選服務模型，先看責任切線。**
-    
 
 ## Patch 管理
 
 - **SaaS provider 最多，PaaS 共享，IaaS customer 最多。**
-    
 
 ## 部署模型
 
 - **混合需求先想 Hybrid。**
-    
+
 - **最高控制先想 Private。**
-    
+
 - **最高敏捷先想 Public。**
-    
 
 ## 治理
 
 - **分散環境最怕政策不一致。**
-    
+
 - **可稽核、可治理、可持續，通常比單一技術答案更像正解。**
-    
 
 ## Portability
 
 - **避免 lock-in 靠 cloud-agnostic，不靠 provider-specific。**
-    
 
 ## Rapid Elasticity
 
 - **自動擴縮要靠 stateless + loosely coupled。**
-    
 
 ## Accountability
 
 - **Policy 是宣告，audit trail 才是證據。**
-    
 
 ---
 
@@ -821,35 +757,32 @@ Rapid elasticity 的核心影響在於：
 ## 優先級 A
 
 1. Data Owner / Custodian / Provider / Partner 的角色區分
-    
+
 2. SaaS / PaaS / IaaS 共享責任與 patching
-    
+
 3. Public / Private / Hybrid / Community 的選擇邏輯
-    
+
 4. CSA CCM vs ISO 27017 的差異
-    
 
 ## 優先級 B
 
 1. Vendor lock-in 與 portability
-    
+
 2. Containerization 對 portability 與 security 的影響
-    
+
 3. Broad network access / rapid elasticity 的安全含義
-    
+
 4. Serverless abstraction 對可視性與測量的影響
-    
 
 ## 優先級 C
 
 1. Hybrid edge-cloud governance
-    
+
 2. Cloud service partner 的角色
-    
+
 3. SaaS adoption 對 IT function 的轉型
-    
+
 4. Insider threat 在 shared responsibility 下的跨界協調問題
-    
 
 ---
 
@@ -862,7 +795,7 @@ Rapid elasticity 的核心影響在於：
 若解題時能先從以下三個問題出發，正確率通常會顯著提升：
 
 1. **題目是在問角色、模型，還是雲端特性？**
-    
+
 2. **題目是在問定義責任，還是執行責任？**
-    
+
 3. **題目要的是技術功能，還是治理與責任邊界？**

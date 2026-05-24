@@ -1,4 +1,8 @@
-# CCSP 考試準備講義：學習路徑與 KPI
+# CCSP 考試準備講義：學習路徑與 KPI / Study Guide & KPI Roadmap
+
+> **適用考試 / Exam:** (ISC)² Certified Cloud Security Professional (CCSP)  
+> **講義版本 / Version:** 以 20 週學習週期為基礎，依 domain 配分比重設計優先順序。  
+> **使用方式：** 本文件為學習主控制台，各 domain 詳細內容請參閱 `domainX/` 目錄下的對應講義。
 
 ## 一、最終 KPI（建議考前 2 週達成）
 
@@ -28,7 +32,6 @@
 
 - **錯題本**（每題四欄）：① 考點／控制目標 ② 為何正解 ③ 兩個錯因 ④ 一句話規則
 - **Tutor-me 口試**（每題 60–90 秒）：「題目在問什麼？」→「正解對應哪個原則？」→「為何不是另外兩個？」
-        
 
 ---
 
@@ -64,7 +67,6 @@
 - D3 新題正確率 ≥ **75–80%**
 - D4 新題正確率 ≥ **75–80%**
 - 三核混合（D2＋D3＋D4）≥ **78–82%**
-    
 
 ---
 
@@ -84,7 +86,6 @@
 
 - 全 domain 計時小模考 ≥ **78–82%**
 - 讀題失誤與 best-answer 失誤比例下降（錯題分類可見改善）
-    
 
 ---
 
@@ -113,19 +114,39 @@
 
 ---
 
-## 六、資料夾結構與筆記管理
+## 六、資料夾結構與筆記管理 / Folder Structure & Note Management
 
-為了確保學習資源的可維護性與一致性，所有 Domain 統一採用以下結構：
+為了確保學習資源的可維護性與一致性，所有 Domain 統一採用以下結構。
 
-### 1. 統一資料夾結構
+### 1. 統一資料夾結構 / Unified Folder Structure
+
+所有檔名採用 **`XX-kebab-case-english.md`** 格式（兩位數字前綴＋全英文小寫連字號）。
+
 - `CCSP/domainX/`
-    - `1.核心觀念與架構.md`：主要知識點講義。
-    - `2.錯題分析.md`：記錄錯題、原因分析與修正原則。
-    - `3.快速速查表.md`：考前口訣、秒殺決策表。
-    - `4+.依內容命名.md`：如完整原始講義或專題補充。
-- `CCSP/shared/`：跨 Domain 共用資料（如威脅建模框架、Ransomware 預防）。
+  - `01-core-concepts.md`：主要知識點講義（核心觀念與架構）。
+  - `02-error-analysis.md`：錯題記錄、原因分析與修正原則。
+  - `03-quick-reference.md`：考前口訣、秒殺決策表。
+  - `04-full-notes-[topic].md`：完整原始講義或專題補充（依內容命名）。
+  - Domain 2 具有多輪版本，以 `-r1` / `-r2` / `-r3` 後綴區分。
+- `CCSP/shared/`：跨 Domain 共用資料（如威脅建模框架）。
+  - `threat-models/ransomware-prevention.md`
+- `CCSP/simulate-test/`：模擬考題與弱點分析講義。
+  - `01-assessment-test-review.md`
+  - `02-custom-test-weakness-1hr.md`
+  - `03-learnzapp-test2-weakness.md`
+  - `04-practice-test1-weakness.md`
 
-### 2. 開發與備份（.ignore-devdoc）
+### 2. 檔名規範說明 / Naming Convention
+
+| 規則 | 說明 |
+|------|------|
+| 前綴數字 | 兩位數字 `01`、`02`…，決定閱讀順序 |
+| 連字號分隔 | 一律使用 `-`，不使用底線或空格 |
+| 全小寫英文 | 英文描述詞全小寫，確保跨平台相容 |
+| 副檔名 | 一律 `.md`（小寫），禁止 `.MD` 或 `.md.md` |
+| 多輪迭代版本 | 使用 `-r1`、`-r2`、`-r3` 後綴 |
+
+### 3. 開發與備份（.ignore-devdoc）
 - `templates/`：包含 `domain-notes`、`error-analysis`、`quick-review` 標準模板。
 - `archive/`：存放已整合或棄用的舊版筆記。
 - `meta/`：存放結構設計與重整計畫。

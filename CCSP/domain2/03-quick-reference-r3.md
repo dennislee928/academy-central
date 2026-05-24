@@ -1,8 +1,4 @@
-
-
----
-
-# CCSP Domain 2：雲端資料安全專題講義
+# CCSP Domain 2 快速速查表（第三輪）/ Quick Reference Round 3 — Cloud Data Security
 
 ## 1. 核心決策邏輯：該選擇哪種保護技術？
 
@@ -32,25 +28,22 @@ graph TD
 ### A. 格式保留加密 (Format-Preserving Encryption, FPE)
 
 - **技術定義**：加密後的密文與明文具有相同的格式與長度（例如：信用卡號加密後仍為 16 位數字）。
-    
+
 - **關鍵考點 (FFX 模式)**：這是 FPE 的標準模式。當題目提到「不希望更改現有應用程式/資料庫結構」且「需要維持分析功能」時，FFX 是最佳解。
-    
 
 ### B. 代碼化 (Tokenization)
 
 - **技術定義**：用非敏感的「代碼 (Token)」取代敏感數據，原始數據存存在安全的 Token Vault 中。
-    
+
 - **應用場景**：最適合雲端分析平台。它能隱藏數據值，但**保留數據間的關聯性 (Relationship)**。
-    
 
 ### C. 遮罩技術 (Data Masking)
 
 - **靜態遮罩 (Static)**：永久更改數據，主要用於**開發/測試環境 (Non-production)**。
-    
+
 - **動態遮罩 (Dynamic)**：在存取時即時遮蔽，通常結合 **RBAC (角色存取控制)**，最適合生產環境。
-    
+
 - **品質驗證**：必須使用「統計分佈測試」來確保遮罩後的數據仍具有分析價值。
-    
 
 ---
 
@@ -86,32 +79,31 @@ graph TD
 建議採取以下步驟加強 Domain 2：
 
 1. **複習 2.1 數據生命週期**：截圖中未出現這部分，但它是 Domain 2 的基礎（Create -> Store -> Use -> Share -> Archive -> Destroy）。
-    
+
 2. **熟記「場景關鍵字」**：
-    
+
     - 看到「測試/非生產環境」 -> 聯想 **Static Masking**。
-        
+
     - 看到「不更改資料庫結構/格式」 -> 聯想 **FPE/FFX**。
-        
+
     - 看到「法律合約/非結構化」 -> 聯想 **Redaction**。
-        
+
 3. **實務連結**：利用軟體開發（Go, React）的經驗，想像這些技術如何在 Next.js 應用的後端 API 中實作。
-    
 
 ---
 
 - **Production 依角色顯示** → Dynamic masking + RBAC
-    
+
 - **Non-prod 測試資料** → Static masking（若要保留統計特性 → Synthetic data）
-    
+
 - **非結構化文件外部分享** → Redaction + placeholder
-    
+
 - **格式/長度不變（不改 schema）** → FPE
-    
+
 - **保留關聯做 join/分析** → Tokenization
-    
+
 - **DLP 偵測已知清單外流** → EDM/Fingerprinting
-    
+
 - **衡量去識別效果** → K-anonymity
 ---
 # CCSP Domain 3 Cloud Data Security 講義
@@ -181,7 +173,6 @@ graph TD
 > 小補充（對剛問的 join）  
 > 若題目需要 join，通常需要 **deterministic（同值同結果）**。FPE 在「同 key 與同設定」下可以做到用等值比對 join（題目若沒提，仍以格式關鍵字優先）。
 
-
 ### 2.6 Synthetic Data（合成資料）
 - **何時最像最佳解**：測試/分析需要「像真的」且要保留 **統計分佈/可用性**  
 - **關鍵字**：statistical distribution, utility, test quality
@@ -214,7 +205,7 @@ flowchart TD
   F -->|No| J{Need join relationship}
   J -->|Yes| TOK[Tokenization]
   J -->|No| ENC[Encryption or access control]
-  
+
 ```
 ## 4.2 DLP 偵測方式：Pattern vs EDM
 
@@ -236,13 +227,12 @@ flowchart TD
   M -->|No| TCH[Pick technique like masking tokenization]
 ```
 
-
 #### 三句口訣」（
 
 1. Production 依角色看不同 → **Dynamic masking + RBAC**
-    
+
 2. 非結構化文件對外分享遮段落 → **Redaction + placeholder**
-    
+
 3. 已知名單要抓外流 → DLP 用 **Fingerprinting / EDM**  
-    
+
 4. 格式不變（16 位）→ **FPE**

@@ -1,3 +1,5 @@
+# CCSP Domain 1 完整講義 / Full Notes — Cloud Concepts, Architecture & Design
+
 > 本講義整理自 Domain 1 錯題檢視與互動式分析，重點聚焦於 CCSP Domain 1 常見考點、錯題陷阱、名詞辨析、情境判斷與考前速記。
 
 ---
@@ -5,49 +7,48 @@
 ## 目錄
 
 1. Domain 1 核心定位
-    
+
 2. Domain 1 常見考題思路
-    
+
 3. 雲端部署模型：Public、Private、Community、Hybrid
-    
+
 4. 雲端服務模型：IaaS、PaaS、SaaS
-    
+
 5. NIST 五大雲端基本特性
-    
+
 6. Shared Responsibility Model
-    
+
 7. Cloud Roles：Consumer、Provider、Auditor、Carrier、Broker
-    
+
 8. Cloud Governance 雲端治理
-    
+
 9. Cloud Sprawl 與 Shadow IT
-    
+
 10. Vendor Lock-in 供應商鎖定
-    
+
 11. Containerization 容器化
-    
+
 12. Serverless 無伺服器架構
-    
+
 13. Rapid Elasticity 與 Capacity Planning
-    
+
 14. Cloud Migration Strategies：Rehost、Replatform、Refactor、Repurchase、Retire、Retain
-    
+
 15. Infrastructure as Code 與 Configuration Drift
-    
+
 16. SaaS 使用後 IT 角色變化
-    
+
 17. CSA CCM 與 ISO/IEC 27017
-    
+
 18. Domain 1 高頻錯題主軸
-    
+
 19. 互動式題目完整解析
-    
+
 20. 易混淆比較總表
-    
+
 21. 考前速記表
-    
+
 22. 考試答題策略
-    
 
 ---
 
@@ -60,40 +61,38 @@ CCSP Domain 1 的主題是：
 也就是：
 
 - 雲端基本概念
-    
+
 - 雲端架構設計
-    
+
 - 雲端部署模型
-    
+
 - 雲端服務模型
-    
+
 - 雲端角色與責任
-    
+
 - 雲端治理
-    
+
 - 雲端風險與設計取捨
-    
+
 - 雲端架構最佳實務
-    
 
 Domain 1 不是只考定義背誦。考題常見形式是給出一個情境，要求判斷最合適的雲端模型、架構策略或治理方式。
 
 常見題型包括：
 
 - 哪一種 cloud deployment model 最符合需求？
-    
+
 - 哪一種 cloud service model 的責任分工最正確？
-    
+
 - 題目是在考可用性、可攜性、可見性，還是治理？
-    
+
 - 哪個雲端特性符合 NIST 定義？
-    
+
 - 哪個選項最能降低 vendor lock-in？
-    
+
 - 哪個選項最能改善 cloud sprawl 或 shadow IT？
-    
+
 - 哪種 migration strategy 最符合題目描述？
-    
 
 ---
 
@@ -123,25 +122,24 @@ Domain 1 的考試核心不是「看到雲端就選技術名詞」，而是先�
 ## 2.2 Domain 1 答題原則
 
 1. 先找關鍵字，不急著看答案。
-    
+
 2. 分辨題目是在考「模型」、「責任」、「治理」還是「架構特性」。
-    
+
 3. 看到 maximum / highest control，通常優先考慮 Private cloud 或 IaaS。
-    
+
 4. 看到 public + private 同時出現，通常優先考慮 Hybrid cloud。
-    
+
 5. 看到 multiple organizations + shared mission / shared compliance，通常考 Community cloud。
-    
+
 6. 看到 CSP manages application，通常是 SaaS。
-    
+
 7. 看到 customer manages OS，通常是 IaaS。
-    
+
 8. 看到 customer writes code but does not manage OS/runtime，通常是 PaaS。
-    
+
 9. 看到 proprietary APIs / proprietary databases，通常是 Vendor lock-in。
-    
+
 10. 看到 idle resources / no tags / cost overrun，通常是 Cloud sprawl。
-    
 
 ---
 
@@ -152,13 +150,12 @@ Cloud deployment model 是指雲端環境如何被部署、擁有、使用與共
 CCSP Domain 1 常考四種主要部署模型：
 
 - Public cloud
-    
+
 - Private cloud
-    
+
 - Community cloud
-    
+
 - Hybrid cloud
-    
 
 ---
 
@@ -171,47 +168,44 @@ Public cloud 是由雲端服務商提供給一般大眾或多個客戶使用的�
 ### 特色
 
 - 多租戶架構
-    
+
 - 高擴展性
-    
+
 - 低前期成本
-    
+
 - 快速佈建
-    
+
 - Pay-as-you-go
-    
+
 - CSP 管理底層基礎設施
-    
 
 ### 適合情境
 
 - 非敏感工作負載
-    
+
 - 快速開發與測試
-    
+
 - 網站服務
-    
+
 - 彈性流量需求
-    
+
 - 初期成本需要降低的場景
-    
 
 ### 常見關鍵字
 
 - public cloud
-    
+
 - scalable
-    
+
 - elastic
-    
+
 - low upfront cost
-    
+
 - pay-as-you-go
-    
+
 - commodity workloads
-    
+
 - non-sensitive workloads
-    
 
 ### 注意事項
 
@@ -228,49 +222,46 @@ Private cloud 是專供單一組織使用的雲端環境，可由組織自行管
 ### 特色
 
 - 單一組織專用
-    
+
 - 控制程度較高
-    
+
 - 可自訂安全控制
-    
+
 - 可滿足嚴格合規要求
-    
+
 - 可能需要較高前期投資
-    
+
 - 可支援特定 RTO / RPO 設計
-    
 
 ### 適合情境
 
 - 高敏感資料
-    
+
 - 需要最高資料控制
-    
+
 - 嚴格合規環境
-    
+
 - 關鍵業務應用
-    
+
 - 對安全設定、網路、隔離與資料位置有高度要求
-    
 
 ### 常見關鍵字
 
 - highest control
-    
+
 - maximum control
-    
+
 - dedicated environment
-    
+
 - single organization
-    
+
 - strict security requirements
-    
+
 - critical business applications
-    
+
 - higher upfront investment
-    
+
 - self-managed security settings
-    
 
 ### 考試重點
 
@@ -291,41 +282,38 @@ Community cloud 是由多個具有共同需求、共同任務、共同安全要�
 ### 特色
 
 - 多個相似組織共享
-    
+
 - 共同任務或共同法規需求
-    
+
 - 成本可分攤
-    
+
 - 控制與合規可共同設計
-    
+
 - 常見於政府、醫療、研究、金融同業場景
-    
 
 ### 適合情境
 
 - 多家醫院共同使用雲端平台
-    
+
 - 多個政府機關共享合規雲
-    
+
 - 多所研究機構共享研究平台
-    
+
 - 多個金融機構使用共同安全標準的環境
-    
 
 ### 常見關鍵字
 
 - multiple organizations
-    
+
 - shared mission
-    
+
 - shared compliance requirements
-    
+
 - common regulatory requirements
-    
+
 - same industry
-    
+
 - community of organizations
-    
 
 ### 考試重點
 
@@ -344,43 +332,40 @@ Hybrid cloud 是由兩種或更多種不同部署模型組成的雲端架構，�
 ### 特色
 
 - 結合 private 與 public 的優點
-    
+
 - 敏感資料可留在 private/on-prem
-    
+
 - 非敏感或彈性需求可使用 public cloud
-    
+
 - 可平衡控制、成本與擴展性
-    
+
 - 需要整合網路、身分、資料與管理流程
-    
 
 ### 適合情境
 
 - 敏感資料留在本國資料中心
-    
+
 - 非敏感工作負載放 public cloud
-    
+
 - 企業保留部分 legacy 系統，同時使用 public cloud
-    
+
 - 災難復原與 burst capacity
-    
+
 - 法規資料留在受控環境，一般網站服務上 public cloud
-    
 
 ### 常見關鍵字
 
 - private cloud + public cloud
-    
+
 - on-prem + public cloud
-    
+
 - sensitive workloads stay private
-    
+
 - non-sensitive workloads use public cloud
-    
+
 - integrated environments
-    
+
 - balance control and scalability
-    
 
 ### 考試重點
 
@@ -408,11 +393,10 @@ Cloud service model 是指 CSP 與客戶各自管理哪些層級。
 CCSP Domain 1 常考三大服務模型：
 
 - IaaS
-    
+
 - PaaS
-    
+
 - SaaS
-    
 
 核心判斷方式：
 
@@ -429,55 +413,52 @@ IaaS 是 CSP 提供底層基礎設施，例如運算、儲存、網路與虛擬�
 ### CSP 通常負責
 
 - Physical data center
-    
+
 - Physical servers
-    
+
 - Storage hardware
-    
+
 - Network hardware
-    
+
 - Virtualization layer
-    
+
 - Basic infrastructure availability
-    
 
 ### 客戶通常負責
 
 - Operating system
-    
+
 - OS patching
-    
+
 - Runtime
-    
+
 - Middleware
-    
+
 - Application
-    
+
 - Application security
-    
+
 - Data
-    
+
 - Identity and access management
-    
+
 - Security configuration
-    
 
 ### 常見關鍵字
 
 - customer manages OS
-    
+
 - OS patching
-    
+
 - virtual machines
-    
+
 - compute instances
-    
+
 - maximum flexibility
-    
+
 - install middleware
-    
+
 - configure operating system
-    
 
 ### 考試記法
 
@@ -502,49 +483,46 @@ PaaS 是 CSP 提供應用程式開發與執行的平台，包括底層基礎設�
 ### CSP 通常負責
 
 - Infrastructure
-    
+
 - Operating system
-    
+
 - OS patching
-    
+
 - Runtime
-    
+
 - Middleware
-    
+
 - Platform services
-    
+
 - Managed database platform 的底層服務
-    
 
 ### 客戶通常負責
 
 - Application code
-    
+
 - Application logic
-    
+
 - Application data
-    
+
 - Application configuration
-    
+
 - User access
-    
+
 - Secure coding
-    
 
 ### 常見關鍵字
 
 - developers focus on code
-    
+
 - no OS patching
-    
+
 - runtime managed by CSP
-    
+
 - middleware managed by CSP
-    
+
 - application development platform
-    
+
 - managed platform
-    
 
 ### 考試記法
 
@@ -569,57 +547,54 @@ SaaS 是 CSP 提供完整可使用的應用程式。客戶通常不管理底層�
 ### CSP 通常負責
 
 - Application
-    
+
 - Runtime
-    
+
 - Middleware
-    
+
 - OS
-    
+
 - Infrastructure
-    
+
 - Application maintenance
-    
+
 - Application patching
-    
 
 ### 客戶通常負責
 
 - Users
-    
+
 - Data
-    
+
 - Permissions
-    
+
 - SaaS configuration
-    
+
 - Identity integration
-    
+
 - Compliance requirements
-    
+
 - Data sharing settings
-    
+
 - Audit logs usage
-    
 
 ### 常見關鍵字
 
 - ready-to-use application
-    
+
 - Microsoft 365
-    
+
 - Google Workspace
-    
+
 - Salesforce
-    
+
 - ServiceNow
-    
+
 - HR system
-    
+
 - email service
-    
+
 - no application development
-    
 
 ### 考試記法
 
@@ -651,11 +626,10 @@ SaaS 是 CSP 提供完整可使用的應用程式。客戶通常不管理底層�
 ## 4.5 最短記法
 
 - **SaaS = 用軟體**
-    
+
 - **PaaS = 寫程式**
-    
+
 - **IaaS = 管系統**
-    
 
 ---
 
@@ -664,15 +638,14 @@ SaaS 是 CSP 提供完整可使用的應用程式。客戶通常不管理底層�
 NIST 定義雲端運算的五大 essential characteristics：
 
 1. On-demand self-service
-    
+
 2. Broad network access
-    
+
 3. Resource pooling
-    
+
 4. Rapid elasticity
-    
+
 5. Measured service
-    
 
 ---
 
@@ -685,26 +658,24 @@ NIST 定義雲端運算的五大 essential characteristics：
 ### 常見例子
 
 - 自己開 VM
-    
+
 - 自己建立 storage bucket
-    
+
 - 自己建立 database
-    
+
 - 自己調整資源大小
-    
+
 - 自助開通服務
-    
 
 ### 常見關鍵字
 
 - no human interaction with provider
-    
+
 - self-provisioning
-    
+
 - user can provision resources
-    
+
 - automatically provisioned
-    
 
 ### 考試記法
 
@@ -721,28 +692,26 @@ NIST 定義雲端運算的五大 essential characteristics：
 ### 常見例子
 
 - 手機存取雲服務
-    
+
 - 筆電存取雲服務
-    
+
 - 平板存取雲服務
-    
+
 - 瀏覽器或 API client 存取雲服務
-    
 
 ### 常見關鍵字
 
 - network access
-    
+
 - mobile phones
-    
+
 - tablets
-    
+
 - laptops
-    
+
 - standard mechanisms
-    
+
 - heterogeneous client platforms
-    
 
 ### 考試記法
 
@@ -759,24 +728,22 @@ CSP 將運算、儲存、網路等資源集中成資源池，並以多租戶模�
 ### 常見例子
 
 - 多個客戶共享同一組底層資源
-    
+
 - 每個客戶資料邏輯隔離
-    
+
 - 資源依需求動態分配
-    
 
 ### 常見關鍵字
 
 - multi-tenant
-    
+
 - pooled resources
-    
+
 - dynamically assigned
-    
+
 - shared infrastructure
-    
+
 - location independence
-    
 
 ### 考試記法
 
@@ -793,26 +760,24 @@ CSP 將運算、儲存、網路等資源集中成資源池，並以多租戶模�
 ### 常見例子
 
 - 流量增加時自動擴 VM
-    
+
 - 高峰期自動增加 container replicas
-    
+
 - 流量下降時自動縮減資源
-    
 
 ### 常見關鍵字
 
 - scale out
-    
+
 - scale in
-    
+
 - auto scaling
-    
+
 - elastic
-    
+
 - rapid provisioning
-    
+
 - dynamic scaling
-    
 
 ### 考試記法
 
@@ -823,17 +788,16 @@ CSP 將運算、儲存、網路等資源集中成資源池，並以多租戶模�
 Rapid elasticity 不代表完全不需要 capacity planning。雲端仍需要規劃，只是規劃方式變成：
 
 - Auto-scaling rules
-    
+
 - Monitoring
-    
+
 - Resource limits
-    
+
 - Budget controls
-    
+
 - Peak demand planning
-    
+
 - Cost governance
-    
 
 ---
 
@@ -846,28 +810,26 @@ CSP 會計量、監控、報告資源使用量，並通常用於依用量計費�
 ### 常見例子
 
 - 依 VM 使用時間計費
-    
+
 - 依 storage 容量計費
-    
+
 - 依 API calls 計費
-    
+
 - 產生 usage report
-    
+
 - Pay-as-you-go billing
-    
 
 ### 常見關鍵字
 
 - metering
-    
+
 - usage measured
-    
+
 - pay-as-you-go
-    
+
 - usage report
-    
+
 - billing based on consumption
-    
 
 ### 考試記法
 
@@ -906,42 +868,40 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 ### CSP 通常負責
 
 - Physical data center
-    
+
 - Physical security
-    
+
 - Physical servers
-    
+
 - Network hardware
-    
+
 - Storage hardware
-    
+
 - Virtualization layer
-    
+
 - Cloud infrastructure availability
-    
 
 ### 客戶通常負責
 
 - OS configuration
-    
+
 - OS patching
-    
+
 - Runtime
-    
+
 - Middleware
-    
+
 - Application
-    
+
 - Application security
-    
+
 - Data protection
-    
+
 - Identity and access management
-    
+
 - Security groups / firewall rules
-    
+
 - Logging configuration
-    
 
 ---
 
@@ -950,30 +910,28 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 ### CSP 通常負責
 
 - Infrastructure
-    
+
 - OS
-    
+
 - Runtime
-    
+
 - Middleware
-    
+
 - Platform patching
-    
 
 ### 客戶通常負責
 
 - Application code
-    
+
 - Data
-    
+
 - Secure development
-    
+
 - Configuration
-    
+
 - Identity and access
-    
+
 - Application-level logging
-    
 
 ---
 
@@ -982,34 +940,32 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 ### CSP 通常負責
 
 - Full application stack
-    
+
 - Application patching
-    
+
 - Runtime
-    
+
 - OS
-    
+
 - Infrastructure
-    
 
 ### 客戶通常負責
 
 - Users
-    
+
 - Data
-    
+
 - Access permissions
-    
+
 - SaaS configuration
-    
+
 - Data classification
-    
+
 - Compliance requirements
-    
+
 - Vendor risk review
-    
+
 - Data retention and export
-    
 
 ---
 
@@ -1030,13 +986,12 @@ Domain 1 錯題中特別出現 insider threat 與 shared responsibility 的情�
 原因：
 
 - 使用者行為可能分散於客戶端、CSP 端、SaaS 端與管理平面。
-    
+
 - CSP 與客戶的日誌範圍不同。
-    
+
 - Insider threat 需要跨邊界監控、關聯分析與證據整合。
-    
+
 - 可見性與責任邊界會造成調查困難。
-    
 
 ### 考試記法
 
@@ -1059,20 +1014,18 @@ Cloud consumer 是使用雲端服務的一方。
 ### 例子
 
 - 使用 AWS / Azure / GCP 的企業
-    
+
 - 使用 Microsoft 365 的公司
-    
+
 - 使用 Salesforce 的業務部門
-    
 
 ### 關鍵字
 
 - uses cloud services
-    
+
 - customer
-    
+
 - tenant
-    
 
 ---
 
@@ -1085,24 +1038,22 @@ Cloud provider 是提供雲端服務的一方。
 ### 例子
 
 - AWS
-    
+
 - Microsoft Azure
-    
+
 - Google Cloud
-    
+
 - Salesforce
-    
+
 - ServiceNow
-    
 
 ### 關鍵字
 
 - provides cloud services
-    
+
 - CSP
-    
+
 - service provider
-    
 
 ---
 
@@ -1115,22 +1066,20 @@ Cloud auditor 是對雲端服務、控制、合規或安全性進行獨立評估
 ### 例子
 
 - 第三方稽核公司
-    
+
 - SOC 2 auditor
-    
+
 - ISO 27001 certification body
-    
 
 ### 關鍵字
 
 - independent assessment
-    
+
 - audit
-    
+
 - compliance review
-    
+
 - control verification
-    
 
 ---
 
@@ -1143,20 +1092,18 @@ Cloud carrier 是提供 cloud consumer 與 cloud provider 之間連線與傳輸�
 ### 例子
 
 - ISP
-    
+
 - Telecom provider
-    
+
 - Network carrier
-    
 
 ### 關鍵字
 
 - network connectivity
-    
+
 - transport
-    
+
 - connection between consumer and provider
-    
 
 ---
 
@@ -1169,24 +1116,22 @@ Cloud broker 是管理、仲介、整合或協調不同雲端服務的一方。
 ### 常見功能
 
 - Service intermediation
-    
+
 - Service aggregation
-    
+
 - Service arbitrage
-    
+
 - Multi-cloud service management
-    
 
 ### 關鍵字
 
 - broker
-    
+
 - intermediary
-    
+
 - aggregate services
-    
+
 - manage multiple cloud providers
-    
 
 ---
 
@@ -1211,46 +1156,44 @@ Cloud governance 是透過政策、標準、流程、控制、標籤、成本管
 ### 核心目標
 
 - 資源可追蹤
-    
+
 - 成本可管理
-    
+
 - 權限可控管
-    
+
 - 安全基準可落實
-    
+
 - 合規要求可證明
-    
+
 - 變更可審核
-    
+
 - 環境可維持一致
-    
 
 ---
 
 ## 8.2 Cloud Governance 常見內容
 
 - Naming convention
-    
+
 - Tagging policy
-    
+
 - Cost center mapping
-    
+
 - Budget alerts
-    
+
 - Approval workflow
-    
+
 - Security baseline
-    
+
 - Identity governance
-    
+
 - Policy enforcement
-    
+
 - Logging and monitoring standards
-    
+
 - Compliance controls
-    
+
 - Resource lifecycle management
-    
 
 ---
 
@@ -1263,32 +1206,30 @@ Tagging policy 是要求雲端資源必須附上標籤，以利成本管理、�
 ### 常見標籤
 
 - owner
-    
+
 - cost center
-    
+
 - environment：dev / test / prod
-    
+
 - application
-    
+
 - data classification
-    
+
 - business unit
-    
+
 - compliance scope
-    
 
 ### 題目關鍵字
 
 - no owner
-    
+
 - no cost center
-    
+
 - cannot identify dev/test/prod
-    
+
 - untagged resources
-    
+
 - cost allocation issue
-    
 
 ### 考試判斷
 
@@ -1327,36 +1268,34 @@ Cloud sprawl 是雲端資源缺乏治理，導致資源過度建立、閒置、�
 ### 常見例子
 
 - VM 開了沒有關
-    
+
 - Storage bucket 沒有 owner 標籤
-    
+
 - 測試環境一直保留
-    
+
 - 不同部門重複建立相同環境
-    
+
 - 成本暴增
-    
+
 - 未使用資源持續計費
-    
+
 - 權限設定無人管理
-    
 
 ### 關鍵字
 
 - idle VMs
-    
+
 - untagged storage
-    
+
 - duplicate test environments
-    
+
 - cost explosion
-    
+
 - unmanaged resources
-    
+
 - lack of ownership
-    
+
 - uncontrolled resource growth
-    
 
 ### 記法
 
@@ -1365,19 +1304,18 @@ Cloud sprawl 是雲端資源缺乏治理，導致資源過度建立、閒置、�
 ### 改善方式
 
 - Cloud governance
-    
+
 - Tagging policy
-    
+
 - Budget alerts
-    
+
 - Approval workflow
-    
+
 - Resource lifecycle management
-    
+
 - Automated cleanup
-    
+
 - Regular inventory review
-    
 
 ---
 
@@ -1386,9 +1324,8 @@ Cloud sprawl 是雲端資源缺乏治理，導致資源過度建立、閒置、�
 Sprawl 不是 sparrow。
 
 - **sparrow** = 麻雀
-    
+
 - **sprawl** = 蔓延、無序擴張、亂長一片
-    
 
 在雲端語境中：
 
@@ -1405,43 +1342,40 @@ Shadow IT 是部門或員工在未通知 IT、未經安全審查或未獲核准�
 ### 常見例子
 
 - 行銷部自行註冊 SaaS 平台
-    
+
 - 業務部自行使用未核准的雲端檔案分享工具
-    
+
 - 團隊用個人信用卡購買雲端服務
-    
+
 - 未經安全審查的 AI 工具被用於處理公司資料
-    
 
 ### 關鍵字
 
 - departments use SaaS without IT approval
-    
+
 - no security review
-    
+
 - IT unaware
-    
+
 - unauthorized cloud services
-    
+
 - unsanctioned applications
-    
 
 ### 改善方式
 
 - 正式 SaaS 採購流程
-    
+
 - Security review
-    
+
 - Approved tools catalog
-    
+
 - Usage monitoring
-    
+
 - CASB / SaaS discovery
-    
+
 - User education
-    
+
 - Clear governance policy
-    
 
 ---
 
@@ -1467,55 +1401,52 @@ Vendor lock-in 是指組織過度依賴某雲端服務商的專有技術、API�
 ## 10.2 常見造成原因
 
 - 使用 provider-specific APIs
-    
+
 - 使用專有資料庫
-    
+
 - 使用專有監控工具
-    
+
 - 使用專有身份整合方式
-    
+
 - 使用非標準資料格式
-    
+
 - 應用與某 CSP 平台深度耦合
-    
 
 ---
 
 ## 10.3 題目關鍵字
 
 - proprietary APIs
-    
+
 - proprietary database
-    
+
 - difficult to migrate
-    
+
 - high rewrite cost
-    
+
 - dependence on one CSP
-    
+
 - hard to move to another provider
-    
 
 ---
 
 ## 10.4 降低 Vendor Lock-in 的方法
 
 - Cloud-agnostic architecture
-    
+
 - Standard data formats
-    
+
 - Open standards
-    
+
 - Portable container images
-    
+
 - Avoid excessive use of proprietary APIs
-    
+
 - Data export planning
-    
+
 - Multi-cloud strategy when justified
-    
+
 - Abstraction layers
-    
 
 ---
 
@@ -1538,36 +1469,34 @@ Containerization 是將應用程式與其相依套件打包成容器映像檔，
 常見工具：
 
 - Docker
-    
+
 - Kubernetes
-    
+
 - containerd
-    
+
 - ECS
-    
+
 - AKS
-    
+
 - EKS
-    
+
 - GKE
-    
 
 ---
 
 ## 11.2 容器的優點
 
 - Portability
-    
+
 - Consistent runtime environment
-    
+
 - Faster deployment
-    
+
 - Easier scaling
-    
+
 - Better resource efficiency compared with full VMs
-    
+
 - Supports microservices architecture
-    
 
 ---
 
@@ -1578,51 +1507,46 @@ Containerization 是將應用程式與其相依套件打包成容器映像檔，
 ### Image security
 
 - Base image 是否有漏洞
-    
+
 - 是否使用可信來源映像
-    
+
 - 是否定期掃描 vulnerabilities
-    
+
 - 是否移除不必要工具
-    
 
 ### Runtime security
 
 - 是否使用最小權限
-    
+
 - 是否避免 privileged containers
-    
+
 - 是否限制 capabilities
-    
+
 - 是否限制 hostPath mounts
-    
 
 ### Secrets management
 
 - 不應將密碼、token、API key 寫入 image
-    
+
 - 使用 secrets manager 或 Kubernetes secrets 等機制
-    
 
 ### Orchestration security
 
 - Kubernetes RBAC
-    
+
 - Network policies
-    
+
 - Pod security settings
-    
+
 - Admission controls
-    
+
 - Secure cluster configuration
-    
 
 ### Patching
 
 - Base image 需定期更新
-    
+
 - 重新 build 與部署映像
-    
 
 ---
 
@@ -1648,26 +1572,24 @@ Serverless 是一種雲端運算模式，CSP 負責管理底層基礎設施，�
 常見例子：
 
 - AWS Lambda
-    
+
 - Azure Functions
-    
+
 - Google Cloud Functions
-    
 
 ---
 
 ## 12.2 Serverless 優點
 
 - 減少基礎設施管理
-    
+
 - 自動擴展
-    
+
 - 事件驅動
-    
+
 - 依執行次數或時間計費
-    
+
 - 快速部署小型功能
-    
 
 ---
 
@@ -1692,21 +1614,20 @@ Serverless 是一種雲端運算模式，CSP 負責管理底層基礎設施，�
 Serverless 並不代表完全無法控制。客戶仍可管理：
 
 - Function code
-    
+
 - IAM permissions
-    
+
 - Event triggers
-    
+
 - Logging settings
-    
+
 - Secrets handling
-    
+
 - Timeout settings
-    
+
 - Memory settings
-    
+
 - Dependency security
-    
 
 ---
 
@@ -1723,15 +1644,14 @@ Serverless 並不代表完全無法控制。客戶仍可管理：
 Rapid elasticity 最適合：
 
 - Stateless applications
-    
+
 - Loosely coupled applications
-    
+
 - Horizontally scalable architectures
-    
+
 - Microservices
-    
+
 - Event-driven workloads
-    
 
 ---
 
@@ -1742,13 +1662,12 @@ Stateless 表示應用不依賴某一台特定伺服器保存狀態。狀態可�
 ### 優點
 
 - 容易水平擴展
-    
+
 - 容易替換 instance
-    
+
 - 容易 auto-scale
-    
+
 - 故障恢復較容易
-    
 
 ---
 
@@ -1759,13 +1678,12 @@ Loosely coupled 表示系統元件之間依賴較少，元件可較獨立地部�
 ### 優點
 
 - 擴展特定元件較容易
-    
+
 - 單點變更影響較小
-    
+
 - 容易支援分散式架構
-    
+
 - 適合 cloud-native design
-    
 
 ---
 
@@ -1779,38 +1697,36 @@ Loosely coupled 表示系統元件之間依賴較少，元件可較獨立地部�
 ## 13.5 雲端 Capacity Planning 包含
 
 - Auto-scaling rules
-    
+
 - Resource quotas
-    
+
 - Budget alerts
-    
+
 - Monitoring thresholds
-    
+
 - Peak demand forecasts
-    
+
 - Performance testing
-    
+
 - Cost optimization
-    
+
 - Limit planning
-    
+
 - Reserved capacity / savings plans when appropriate
-    
 
 ---
 
 ## 13.6 常見工具概念
 
 - Kubernetes HPA / VPA / Cluster Autoscaler
-    
+
 - Prometheus monitoring
-    
+
 - Terraform IaC
-    
+
 - Automation scripts
-    
+
 - Cloud-native monitoring services
-    
 
 ---
 
@@ -1819,17 +1735,16 @@ Loosely coupled 表示系統元件之間依賴較少，元件可較獨立地部�
 雲端遷移策略常見六種：
 
 - Rehost
-    
+
 - Replatform
-    
+
 - Refactor
-    
+
 - Repurchase
-    
+
 - Retire
-    
+
 - Retain
-    
 
 有些框架也稱為 6Rs。
 
@@ -1848,13 +1763,12 @@ Lift and shift
 ### 常見關鍵字
 
 - move existing VM to IaaS
-    
+
 - minimal changes
-    
+
 - no major code changes
-    
+
 - lift and shift
-    
 
 ### 記法
 
@@ -1879,15 +1793,14 @@ Lift, tinker, and shift
 ### 常見關鍵字
 
 - minor modifications
-    
+
 - use managed database
-    
+
 - small changes
-    
+
 - no full rewrite
-    
+
 - optimize for cloud platform
-    
 
 ### 記法
 
@@ -1908,17 +1821,16 @@ Refactor 是重新設計應用架構，使其更 cloud-native。
 ### 常見關鍵字
 
 - redesign architecture
-    
+
 - microservices
-    
+
 - cloud-native
-    
+
 - major code changes
-    
+
 - re-architect
-    
+
 - managed services
-    
 
 ### 記法
 
@@ -1943,13 +1855,12 @@ Drop and shop
 ### 常見關鍵字
 
 - replace with SaaS
-    
+
 - buy new cloud product
-    
+
 - switch to Salesforce
-    
+
 - SaaS CRM
-    
 
 ### 記法
 
@@ -1970,13 +1881,12 @@ Retire 是關閉不再需要的系統，不搬到雲端。
 ### 常見關鍵字
 
 - no longer used
-    
+
 - decommission
-    
+
 - shut down
-    
+
 - not migrate
-    
 
 ### 記法
 
@@ -1993,15 +1903,14 @@ Retain 是因法規、相依性、技術或成本因素，暫時保留系統在�
 ### 常見關鍵字
 
 - keep in current environment
-    
+
 - not migrate yet
-    
+
 - regulatory reason
-    
+
 - dependency issue
-    
+
 - remain on-prem
-    
 
 ### 記法
 
@@ -2033,28 +1942,26 @@ Infrastructure as Code 是用程式碼或宣告式設定檔管理基礎設施，
 ### 常見工具
 
 - Terraform
-    
+
 - CloudFormation
-    
+
 - Azure ARM / Bicep
-    
+
 - Pulumi
-    
+
 - Ansible
-    
 
 ### 常見關鍵字
 
 - manage infrastructure through code
-    
+
 - automate resource creation
-    
+
 - API-based provisioning
-    
+
 - version-controlled infrastructure
-    
+
 - repeatable deployment
-    
 
 ### 記法
 
@@ -2065,17 +1972,16 @@ Infrastructure as Code 是用程式碼或宣告式設定檔管理基礎設施，
 ## 15.2 IaC 優點
 
 - 可重複部署
-    
+
 - 可版本控制
-    
+
 - 減少手動錯誤
-    
+
 - 支援審核流程
-    
+
 - 改善一致性
-    
+
 - 支援自動化合規檢查
-    
 
 ---
 
@@ -2088,28 +1994,26 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 ### 常見原因
 
 - 有人直接在 cloud console 手動修改設定
-    
+
 - 緊急 hotfix 沒有回寫 IaC
-    
+
 - 多個團隊各自改設定
-    
+
 - 自動化 pipeline 沒有同步
-    
+
 - 手動例外設定未被追蹤
-    
 
 ### 常見關鍵字
 
 - actual environment differs from code
-    
+
 - manual console changes
-    
+
 - configuration mismatch
-    
+
 - drift detection
-    
+
 - IaC definition not matching deployed resources
-    
 
 ### 記法
 
@@ -2120,21 +2024,20 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 ## 15.4 避免 Configuration Drift 的方法
 
 - IaC pipeline
-    
+
 - Change review
-    
+
 - Version control
-    
+
 - Pull request approval
-    
+
 - Regular drift detection
-    
+
 - Disable or restrict manual console changes
-    
+
 - Policy as Code
-    
+
 - Automated compliance checks
-    
 
 ---
 
@@ -2152,17 +2055,16 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 通常不直接管理：
 
 - Backend infrastructure
-    
+
 - Database engine
-    
+
 - OS patching
-    
+
 - Runtime patching
-    
+
 - Provider-side infrastructure IaC
-    
+
 - SaaS application core code
-    
 
 ---
 
@@ -2171,33 +2073,32 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 仍需管理或監控：
 
 - Identity and access management
-    
+
 - SSO integration
-    
+
 - MFA enforcement
-    
+
 - User lifecycle
-    
+
 - Role and permission review
-    
+
 - SaaS security settings
-    
+
 - Data classification
-    
+
 - Data sharing controls
-    
+
 - API integrations
-    
+
 - Vendor risk management
-    
+
 - Compliance evidence
-    
+
 - Audit logs
-    
+
 - Backup/export strategy
-    
+
 - Data retention settings
-    
 
 ---
 
@@ -2226,13 +2127,12 @@ CSA CCM 是雲端安全控制矩陣，用來評估雲端安全姿態、對照安
 ### 用途
 
 - 評估 cloud security posture
-    
+
 - 對照安全控制
-    
+
 - 支援雲端風險評估
-    
+
 - 對應 ISO/IEC 27001、PCI DSS、NIST 等框架
-    
 
 ### 記法
 
@@ -2249,11 +2149,10 @@ ISO/IEC 27017 是針對雲端服務的安全控制指引，補充 ISO/IEC 27002�
 ### 用途
 
 - 雲端安全控制指引
-    
+
 - 協助雲端服務商與雲端客戶理解責任
-    
+
 - 提供 cloud-specific implementation guidance
-    
 
 ### 記法
 
@@ -2276,13 +2175,12 @@ ISO/IEC 27017 是針對雲端服務的安全控制指引，補充 ISO/IEC 27002�
 本輪檢視中，錯題主軸集中於以下四類：
 
 1. Hybrid cloud vs Community cloud
-    
+
 2. Private cloud vs Hybrid cloud
-    
+
 3. Shared responsibility 下的 insider threat monitoring
-    
+
 4. CIA triad 整體策略 vs 只強化 availability
-    
 
 ---
 
@@ -2305,9 +2203,8 @@ Hybrid cloud。
 題目關鍵是同時使用 private/on-prem 與 public cloud：
 
 - 敏感資料留在本國或受控環境
-    
+
 - 非敏感工作負載使用 public cloud
-    
 
 這代表多種部署模型整合，因此是 Hybrid cloud。
 
@@ -2374,11 +2271,10 @@ RBAC、least privilege、regular access reviews。
 多區域複寫主要強化 availability，但 CIA triad 包含：
 
 - Confidentiality
-    
+
 - Integrity
-    
+
 - Availability
-    
 
 RBAC、least privilege 與 regular access reviews 更能同時支援 confidentiality 與 integrity，也能降低濫權或錯誤配置造成的風險。
 
@@ -2397,9 +2293,8 @@ RBAC、least privilege 與 regular access reviews 更能同時支援 confidentia
 一家公司有兩類工作負載：
 
 - 敏感資料必須留在本國資料中心，符合法規與 data residency 要求
-    
+
 - 非敏感的網站服務希望放到 public cloud，取得彈性擴展能力
-    
 
 這最像哪一種 cloud deployment model？
 
@@ -2419,11 +2314,10 @@ D. Hybrid cloud
 ### 錯誤選項解析
 
 - Public cloud：沒有處理敏感資料保留在本國資料中心的需求。
-    
+
 - Private cloud：沒有處理非敏感服務使用 public cloud 的需求。
-    
+
 - Community cloud：題目沒有多個組織共享共同雲環境。
-    
 
 ---
 
@@ -2457,13 +2351,12 @@ C. Community cloud
 一家公司有 critical business applications，最重視：
 
 - 最高資料控制
-    
+
 - 自主管理安全設定
-    
+
 - 可能需要較快 RTO
-    
+
 - 願意投入較高前期 DR 成本
-    
 
 這最像哪一種 cloud deployment model？
 
@@ -2527,9 +2420,8 @@ B. Use RBAC, least privilege, and regular access reviews
 Regular access reviews 是 authorization governance，不是 authentication。
 
 - Authentication：確認身分
-    
+
 - Authorization：確認權限
-    
 
 ---
 
@@ -3082,13 +2974,12 @@ A. IaaS
 公司要選 cloud model。需求是：
 
 - 快速開發 application
-    
+
 - 不想管理 OS patching
-    
+
 - 想讓 CSP 管 runtime 和 middleware
-    
+
 - 開發團隊只想專注 code
-    
 
 這比較像哪一種？
 
@@ -3114,13 +3005,12 @@ B. PaaS
 公司想用雲端服務，但希望：
 
 - 自己控制 OS
-    
+
 - 自己安裝 security patches
-    
+
 - 自己設定 middleware
-    
+
 - 需要最高彈性來調整系統環境
-    
 
 這比較像哪一種？
 
@@ -3236,13 +3126,12 @@ B. 使用 IaC pipeline、變更審核、定期 drift detection
 公司想用雲端快速建立資源，但也要確保所有資源都有：
 
 - owner 標籤
-    
+
 - cost center 標籤
-    
+
 - environment 標籤，例如 dev / test / prod
-    
+
 - 自動套用安全政策
-    
 
 這最像哪個概念？
 
@@ -3455,21 +3344,20 @@ Regular access reviews 屬於 authorization governance，不是 authentication�
 CCSP Domain 1 題目通常會藏關鍵字。答題時先看：
 
 - 題目是否強調最高控制？
-    
+
 - 是否同時提到 private 與 public？
-    
+
 - 是否提到多個組織共同需求？
-    
+
 - 是否提到 CSP 管 application？
-    
+
 - 是否提到 customer manages OS？
-    
+
 - 是否提到 proprietary API 或難以遷移？
-    
+
 - 是否提到資源未標籤、成本暴增？
-    
+
 - 是否提到未經 IT 核准使用 SaaS？
-    
 
 ---
 
@@ -3478,11 +3366,10 @@ CCSP Domain 1 題目通常會藏關鍵字。答題時先看：
 例如題目出現「CSP 管理 infrastructure」不一定就是 IaaS。必須看 CSP 管到哪一層。
 
 - 只管 infrastructure：IaaS
-    
+
 - 管 infrastructure + OS + runtime：PaaS
-    
+
 - 管 application + platform + OS + infrastructure：SaaS
-    
 
 ---
 
@@ -3491,15 +3378,14 @@ CCSP Domain 1 題目通常會藏關鍵字。答題時先看：
 CCSP 很常用最高級字眼引導答案：
 
 - highest control
-    
+
 - maximum control
-    
+
 - most visibility
-    
+
 - best way
-    
+
 - most appropriate
-    
 
 當題目問最高資料控制，通常偏向 Private cloud。
 
@@ -3510,9 +3396,8 @@ CCSP 很常用最高級字眼引導答案：
 若題目問 CIA triad 整體，不要只選強化 availability 的答案。
 
 - 多區域複寫：主要是 availability
-    
+
 - RBAC + least privilege + access review：更能支援 confidentiality 與 integrity
-    
 
 ---
 
@@ -3521,17 +3406,16 @@ CCSP 很常用最高級字眼引導答案：
 Cloud governance 題目常出現成本、標籤、命名、安全基準、合規要求。此時答案通常是：
 
 - policy
-    
+
 - governance
-    
+
 - tagging
-    
+
 - budget alerts
-    
+
 - approval workflow
-    
+
 - monitoring
-    
 
 而不是純技術選項。
 
@@ -3542,48 +3426,46 @@ Cloud governance 題目常出現成本、標籤、命名、安全基準、合規
 Domain 1 的核心可用以下幾句話掌握：
 
 1. **Private cloud = 最高控制。**
-    
+
 2. **Hybrid cloud = private/on-prem 與 public cloud 整合。**
-    
+
 3. **Community cloud = 多個相似組織共享共同需求。**
-    
+
 4. **SaaS = 用現成軟體；PaaS = 寫程式；IaaS = 管系統。**
-    
+
 5. **Customer manages OS = IaaS。**
-    
+
 6. **CSP manages application = SaaS。**
-    
+
 7. **Cloud sprawl = 雲端資源亂長失控。**
-    
+
 8. **Shadow IT = 未經 IT 核准使用工具或服務。**
-    
+
 9. **Vendor lock-in = 被專有 API、專有資料庫或平台能力綁住。**
-    
+
 10. **IaC = 用 code 管 infra；configuration drift = 實際環境偏離 code。**
-    
+
 11. **Container 提升 portability，但不自動安全。**
-    
+
 12. **Serverless 少管底層，也少了底層 visibility。**
-    
+
 13. **Rapid elasticity 需要 stateless、loosely coupled 架構，也仍需要 capacity planning。**
-    
+
 14. **Shared responsibility 中，insider threat 最難的是跨組織監控與證據整合。**
-    
 
 ---
 
 # 24. 建議複習順序
 
 1. 先背第 21 節「考前速記表」。
-    
+
 2. 再讀第 20 節「易混淆比較總表」。
-    
+
 3. 回到第 18 節重新看錯題主軸。
-    
+
 4. 最後用第 19 節互動題重新自測。
-    
+
 5. 每次答題時強迫先圈關鍵字，再看選項。
-    
 
 ---
 
@@ -3774,15 +3656,14 @@ Domain 1 最常輸在「題目看太快」。許多題目不是考名詞定義�
 建議答題流程：
 
 1. 先判斷題目類型：deployment model、service model、governance、migration、NIST 特性或責任分工。
-    
+
 2. 圈出關鍵字：highest control、public + private、customer manages OS、CSP manages application、proprietary API、untagged resources。
-    
+
 3. 排除純技術干擾項。
-    
+
 4. 確認答案是否符合整個情境，而不只是符合其中一個詞。
-    
+
 5. 對於 best / most appropriate 題目，優先選擇治理、責任分工、可攜性、標準化與風險導向的答案。
-    
 
 ---
 
@@ -3791,72 +3672,66 @@ Domain 1 最常輸在「題目看太快」。許多題目不是考名詞定義�
 ## Deployment Models
 
 - Public：多客戶共享，彈性高，低前期成本。
-    
+
 - Private：單一組織專用，控制最高。
-    
+
 - Community：多個相似組織共享共同需求。
-    
+
 - Hybrid：private/on-prem + public 整合。
-    
 
 ## Service Models
 
 - IaaS：CSP 管 infra，客戶管 OS 以上。
-    
+
 - PaaS：CSP 管 runtime/platform，客戶寫 code。
-    
+
 - SaaS：CSP 管 application，客戶管 users/data/settings。
-    
 
 ## NIST Characteristics
 
 - On-demand：自助開資源。
-    
+
 - Broad network：網路多裝置存取。
-    
+
 - Resource pooling：多租戶資源池。
-    
+
 - Rapid elasticity：快速擴縮。
-    
+
 - Measured service：用量計量。
-    
 
 ## Governance
 
 - Cloud governance：政策、標籤、成本、安全、合規。
-    
+
 - Cloud sprawl：資源亂長、成本失控。
-    
+
 - Shadow IT：未經 IT 核准使用服務。
-    
+
 - Configuration drift：實際環境偏離 IaC。
-    
 
 ## Migration
 
 - Rehost：搬家不裝修。
-    
+
 - Replatform：小改再搬。
-    
+
 - Refactor：重寫成 cloud-native。
-    
+
 - Repurchase：換 SaaS。
-    
+
 - Retire：關閉不用。
-    
+
 - Retain：先不搬。
-    
 
 ## Architecture
 
 - Vendor lock-in：專有 API / DB 導致難搬。
-    
+
 - Container：提升 portability，不自動安全。
-    
+
 - Serverless：少管底層，也少 visibility。
-    
+
 - Rapid elasticity：適合 stateless + loosely coupled。
-    
 
 ---
 

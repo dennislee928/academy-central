@@ -1,4 +1,4 @@
-# CCSP Domain 1 錯題分析 (Q21-Q24)
+# CCSP Domain 1 錯題分析 / Error Analysis (Q21–Q24)
 
 ## 一、錯題主軸 1：Hybrid vs Community vs Private
 

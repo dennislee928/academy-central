@@ -1,3 +1,8 @@
+# CCSP Domain 4 核心觀念與架構 / Cloud Application Security
+
+> **Domain 4 定位：** 本領域涵蓋雲端應用程式安全設計、威脅建模、軟體開發生命週期（SDLC）與 API 安全。考題重點在於安全設計原則與應用層控制，而非底層基礎設施。
+
+---
 
 ## 1. Threat Modeling：STRIDE / DREAD / PASTA 詳解
 

@@ -1,4 +1,8 @@
+# CCSP Domain 6 完整講義 / Legal, Risk & Compliance — Full Notes
 
+> **Domain 6 定位：** 本講義為完整知識點匯整，涵蓋法律層級、隱私框架、風險管理、合規標準、稽核機制與合約條款。適合系統性複習使用，與 `01-core-concepts.md` 速查表搭配使用效果最佳。
+
+---
 
 ## 一、Domain 6 核心定位
 
@@ -7,17 +11,16 @@ CCSP Domain 6 的主軸是 **法律、風險、合規、稽核、隱私、合約
 常見考題方向包括：
 
 - 雲端服務責任是否能完全外包
-    
+
 - 資料所在地與法律管轄權的差異
-    
+
 - 發生訴訟或調查時資料是否能刪除
-    
+
 - 雲端服務商是否具備第三方安全驗證
-    
+
 - 合約中是否明確規定 breach notification、right to audit、SLA 等要求
-    
+
 - 個人資料、醫療資料、財務資料分別受到哪些要求約束
-    
 
 考試判斷原則：
 
@@ -34,24 +37,22 @@ CCSP Domain 6 的主軸是 **法律、風險、合規、稽核、隱私、合約
 常見例子：
 
 - SOX
-    
+
 - HIPAA
-    
+
 - GDPR
-    
 
 判斷關鍵字：
 
 - government
-    
+
 - legal requirement
-    
+
 - mandatory
-    
+
 - penalty
-    
+
 - statute
-    
 
 ---
 
@@ -62,13 +63,12 @@ CCSP Domain 6 的主軸是 **法律、風險、合規、稽核、隱私、合約
 判斷關鍵字：
 
 - regulator
-    
+
 - compliance requirement
-    
+
 - government agency
-    
+
 - enforcement
-    
 
 ---
 
@@ -79,24 +79,22 @@ CCSP Domain 6 的主軸是 **法律、風險、合規、稽核、隱私、合約
 常見例子：
 
 - ISO 27001
-    
+
 - NIST
-    
+
 - CSA CCM
-    
 
 判斷關鍵字：
 
 - framework
-    
+
 - best practice
-    
+
 - control set
-    
+
 - certification
-    
+
 - baseline
-    
 
 ---
 
@@ -107,22 +105,20 @@ CCSP Domain 6 的主軸是 **法律、風險、合規、稽核、隱私、合約
 常見例子：
 
 - 資料保留政策
-    
+
 - 密碼政策
-    
+
 - 存取控制政策
-    
+
 - 資料分類政策
-    
 
 判斷關鍵字：
 
 - internal rule
-    
+
 - organizational requirement
-    
+
 - approved by management
-    
 
 ---
 
@@ -137,15 +133,14 @@ SOX 是美國法律，主要規範上市公司的財務報告、內部控制與�
 CCSP 考點：
 
 - 財務資料
-    
+
 - 上市公司
-    
+
 - 內部控制
-    
+
 - 稽核證據
-    
+
 - 財務報表正確性
-    
 
 雲端情境：
 
@@ -167,30 +162,28 @@ CSA CCM 是雲端安全控制矩陣，可視為雲端安全控制框架或安全
 用途：
 
 - 評估雲端服務商安全控制
-    
+
 - 對照雲端安全要求
-    
+
 - 建立雲端控制基準
-    
+
 - 支援雲端風險評估與合規檢查
-    
 
 常見控制領域：
 
 - 存取控制
-    
+
 - 加密
-    
+
 - 日誌與監控
-    
+
 - 供應商風險
-    
+
 - 資料治理
-    
+
 - 事件回應
-    
+
 - 業務連續性
-    
 
 記憶方式：
 
@@ -207,13 +200,12 @@ CSA STAR 是 Cloud Security Alliance 提供的雲端安全保證與透明度計�
 用途：
 
 - 查詢 CSP 安全保證資訊
-    
+
 - 提供客戶信任依據
-    
+
 - 展示雲端服務商安全透明度
-    
+
 - 支援第三方驗證與安全成熟度評估
-    
 
 記憶方式：
 
@@ -231,9 +223,8 @@ CSA STAR 是 Cloud Security Alliance 提供的雲端安全保證與透明度計�
 判斷重點：
 
 - 題目提到「安全控制框架」、「控制矩陣」、「control checklist」：CSA CCM
-    
+
 - 題目提到「安全保證」、「信任」、「公開登錄」、「第三方驗證資訊」：CSA STAR
-    
 
 ---
 
@@ -254,47 +245,44 @@ CSA STAR 是 Cloud Security Alliance 提供的雲端安全保證與透明度計�
 #### CSP 常見責任
 
 - 實體資料中心安全
-    
+
 - 底層硬體
-    
+
 - 網路基礎設施
-    
+
 - 雲端平台基礎服務
-    
+
 - 實體環境監控
-    
 
 #### 雲端客戶常見責任
 
 - 資料分類
-    
+
 - 資料保護要求
-    
+
 - 使用者存取權限
-    
+
 - 身分與權限管理
-    
+
 - 合規要求確認
-    
+
 - 合約審查
-    
+
 - 日誌需求設定
-    
+
 - 資料保存與刪除決策
-    
 
 #### 共同責任
 
 - 加密設計與金鑰管理
-    
+
 - 日誌與監控
-    
+
 - 事件回應
-    
+
 - 合規證明
-    
+
 - 安全控制驗證
-    
 
 ---
 
@@ -323,17 +311,16 @@ PII 是可識別個人的資料。
 例子：
 
 - 姓名
-    
+
 - 身分證號
-    
+
 - 電話號碼
-    
+
 - 電子郵件地址
-    
+
 - 地址
-    
+
 - 可識別個人的帳號資訊
-    
 
 ---
 
@@ -346,15 +333,14 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 例子：
 
 - 病歷
-    
+
 - 診斷資料
-    
+
 - 醫療紀錄
-    
+
 - 醫療保險資訊
-    
+
 - 病患健康相關資料
-    
 
 常見錯誤：
 
@@ -385,13 +371,12 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - 決定為何收集資料
-    
+
 - 決定資料用途
-    
+
 - 決定保存多久
-    
+
 - 決定處理方式
-    
 
 例子：
 
@@ -410,15 +395,14 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - 依照客戶指示
-    
+
 - 儲存資料
-    
+
 - 處理資料
-    
+
 - 備份資料
-    
+
 - 不決定資料用途
-    
 
 例子：
 
@@ -437,11 +421,10 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - CSP 又找另一家公司協助處理資料
-    
+
 - processor 委外給第三方處理
-    
+
 - 第三方協助儲存、備份、分析或支援資料處理
-    
 
 例子：
 
@@ -469,17 +452,16 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - data location
-    
+
 - stored in
-    
+
 - region
-    
+
 - country
-    
+
 - data center location
-    
+
 - where data resides
-    
 
 例子：
 
@@ -498,15 +480,14 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - government access
-    
+
 - legal authority
-    
+
 - national law
-    
+
 - government request
-    
+
 - law applies to data
-    
 
 例子：
 
@@ -525,17 +506,16 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - court
-    
+
 - legal authority
-    
+
 - dispute
-    
+
 - legal proceeding
-    
+
 - multiple countries
-    
+
 - government authority
-    
 
 例子：
 
@@ -558,11 +538,10 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 常見錯點：
 
 - 題目強調「資料實際存放地點」：Data residency
-    
+
 - 題目強調「政府依法律要求存取資料」：Data sovereignty
-    
+
 - 題目強調「多國法律、法院、政府機關誰有權管」：Jurisdiction
-    
 
 ---
 
@@ -577,11 +556,10 @@ PHI 是受保護的健康資訊，常與 HIPAA 相關。
 判斷關鍵字：
 
 - request deletion
-    
+
 - erase personal data
-    
+
 - no longer wants company to retain data
-    
 
 ---
 
@@ -604,28 +582,26 @@ Right to be forgotten 不是絕對權利。若存在法律保存義務、調查�
 判斷關鍵字：
 
 - EU personal data
-    
+
 - transfer to non-EU country
-    
+
 - cross-border
-    
+
 - international data transfer
-    
+
 - GDPR safeguards
-    
 
 重點：
 
 - 法律是否允許傳輸
-    
+
 - 是否需要適當保護措施
-    
+
 - 合約條款是否足夠
-    
+
 - 是否涉及 subprocessor
-    
+
 - 是否需通知或取得授權
-    
 
 ---
 
@@ -640,17 +616,16 @@ Right to be forgotten 不是絕對權利。若存在法律保存義務、調查�
 判斷關鍵字：
 
 - litigation
-    
+
 - investigation
-    
+
 - preserve data
-    
+
 - suspend deletion
-    
+
 - cannot delete
-    
+
 - evidence preservation
-    
 
 考試重點：
 
@@ -671,28 +646,26 @@ eDiscovery 是法律程序中尋找、保存、蒐集、審查與提交電子資
 常見資料類型：
 
 - 電子郵件
-    
+
 - 雲端檔案
-    
+
 - 系統日誌
-    
+
 - 即時通訊紀錄
-    
+
 - 備份資料
-    
+
 - 資料庫紀錄
-    
 
 判斷關鍵字：
 
 - legal discovery
-    
+
 - electronic evidence
-    
+
 - litigation support
-    
+
 - search and produce records
-    
 
 ---
 
@@ -705,13 +678,12 @@ Forensics 用於調查安全事件、資料外洩或法律案件，目標是以�
 重點：
 
 - 不破壞原始證據
-    
+
 - 維持證據完整性
-    
+
 - 記錄調查過程
-    
+
 - 確保證據可在法律程序中使用
-    
 
 ---
 
@@ -724,34 +696,32 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 必須記錄：
 
 - 誰取得證據
-    
+
 - 何時取得證據
-    
+
 - 從哪裡取得證據
-    
+
 - 如何保存證據
-    
+
 - 誰曾接觸證據
-    
+
 - 是否進行複製、分析或移交
-    
+
 - 證據完整性如何驗證
-    
 
 判斷關鍵字：
 
 - who collected
-    
+
 - when collected
-    
+
 - how preserved
-    
+
 - evidence integrity
-    
+
 - tamper proof
-    
+
 - admissible evidence
-    
 
 記憶方式：
 
@@ -770,26 +740,24 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 正確方向：
 
 - 啟動 incident response plan
-    
+
 - 保存證據
-    
+
 - 避免破壞日誌與鑑識資料
-    
+
 - 通知適當內部角色
-    
+
 - 依法律與合約判斷通知義務
-    
 
 錯誤方向：
 
 - 立即刪除可疑資料
-    
+
 - 未記錄原因就關閉所有系統
-    
+
 - 未確認事實即對外公開
-    
+
 - 交由 CSP 自行決定所有處置
-    
 
 ---
 
@@ -802,32 +770,30 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 合約中應明確規定：
 
 - CSP 通知客戶的時限
-    
+
 - 通知內容
-    
+
 - 通知流程
-    
+
 - 聯絡窗口
-    
+
 - 配合調查方式
-    
+
 - 日誌與證據提供方式
-    
+
 - 下游 subprocessor 通知責任
-    
 
 判斷關鍵字：
 
 - breach
-    
+
 - notification timeframe
-    
+
 - notify regulator
-    
+
 - notify affected individuals
-    
+
 - incident reporting
-    
 
 考試重點：
 
@@ -868,11 +834,10 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 判斷關鍵字：
 
 - before controls
-    
+
 - no safeguards
-    
+
 - original risk
-    
 
 記憶方式：
 
@@ -889,11 +854,10 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 判斷關鍵字：
 
 - after controls
-    
+
 - remaining risk
-    
+
 - risk left after mitigation
-    
 
 記憶方式：
 
@@ -917,48 +881,44 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 #### Risk avoidance
 
 - do not use
-    
+
 - stop activity
-    
+
 - avoid service
-    
+
 - discontinue
-    
 
 #### Risk mitigation
 
 - reduce risk
-    
+
 - implement control
-    
+
 - MFA
-    
+
 - encryption
-    
+
 - backup
-    
+
 - monitoring
-    
 
 #### Risk transfer
 
 - insurance
-    
+
 - transfer financial impact
-    
+
 - outsourcing some risk cost
-    
 
 #### Risk acceptance
 
 - documented
-    
+
 - management approval
-    
+
 - cost exceeds benefit
-    
+
 - accept low risk
-    
 
 ---
 
@@ -973,26 +933,24 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 常見報告或認證：
 
 - SOC 1
-    
+
 - SOC 2
-    
+
 - ISO 27001
-    
+
 - CSA STAR
-    
 
 判斷關鍵字：
 
 - third-party audit report
-    
+
 - independent verification
-    
+
 - assurance
-    
+
 - control effectiveness
-    
+
 - compliance evidence
-    
 
 ---
 
@@ -1010,11 +968,10 @@ Chain of custody 用於證明證據從收集、保存、移交到提交的過程
 錯誤觀念：
 
 - SOC 2 不保證 CSP 永遠不會被攻擊。
-    
+
 - SOC 2 不取代客戶所有法律責任。
-    
+
 - SOC 2 不決定資料必須存在哪個國家。
-    
 
 ---
 
@@ -1025,13 +982,12 @@ ISO 27001 是資訊安全管理系統標準，用於建立、維護與持續改�
 考試方向：
 
 - 安全管理制度
-    
+
 - 第三方認證
-    
+
 - 控制框架
-    
+
 - 合規證據
-    
 
 ---
 
@@ -1046,17 +1002,16 @@ SLA 是服務等級協議，用於定義服務可用性、回應時間、支援�
 常見內容：
 
 - uptime 99.9%
-    
+
 - 服務可用性
-    
+
 - 支援回應時間
-    
+
 - 事件回復時間
-    
+
 - service credit
-    
+
 - 違約補償
-    
 
 常見錯誤：
 
@@ -1065,15 +1020,14 @@ SLA 是服務等級協議，用於定義服務可用性、回應時間、支援�
 判斷關鍵字：
 
 - uptime
-    
+
 - availability
-    
+
 - response time
-    
+
 - service credit
-    
+
 - performance commitment
-    
 
 ---
 
@@ -1086,19 +1040,18 @@ MSA 是主服務合約，用於定義整體服務條款與商業法律框架。
 常見內容：
 
 - 整體服務條款
-    
+
 - 責任分配
-    
+
 - 付款條件
-    
+
 - 終止條件
-    
+
 - 法律責任
-    
+
 - 爭議處理
-    
+
 - 保密條款
-    
 
 常見錯誤：
 
@@ -1107,15 +1060,14 @@ MSA 是主服務合約，用於定義整體服務條款與商業法律框架。
 判斷關鍵字：
 
 - master agreement
-    
+
 - overall terms
-    
+
 - payment
-    
+
 - termination
-    
+
 - liability
-    
 
 ---
 
@@ -1128,28 +1080,26 @@ BAA 是 HIPAA 下常見的商業夥伴協議。當醫療機構使用雲端服務
 常見情境：
 
 - 醫療機構
-    
+
 - 病患資料
-    
+
 - PHI
-    
+
 - HIPAA
-    
+
 - 雲端服務商協助處理健康資訊
-    
 
 判斷關鍵字：
 
 - HIPAA
-    
+
 - PHI
-    
+
 - healthcare
-    
+
 - business associate
-    
+
 - protected health information
-    
 
 記憶方式：
 
@@ -1166,19 +1116,18 @@ DPA 是資料處理協議，常見於 GDPR 場景，用於規定 controller 與 
 常見內容：
 
 - CSP 如何處理個人資料
-    
+
 - 處理目的與範圍
-    
+
 - 資料安全控制
-    
+
 - breach notification
-    
+
 - subprocessor 使用條件
-    
+
 - 資料刪除或返還
-    
+
 - 稽核權利
-    
 
 常見錯誤：
 
@@ -1187,15 +1136,14 @@ DPA 是資料處理協議，常見於 GDPR 場景，用於規定 controller 與 
 判斷關鍵字：
 
 - GDPR
-    
+
 - personal data
-    
+
 - processor
-    
+
 - data processing
-    
+
 - subprocessors
-    
 
 記憶方式：
 
@@ -1212,26 +1160,24 @@ Right to audit 是合約條款，用於保留檢查雲端服務商是否遵守�
 常見內容：
 
 - 查閱稽核報告
-    
+
 - 要求安全證明
-    
+
 - 檢查控制有效性
-    
+
 - 確認合規要求
-    
+
 - 審查第三方與 subprocessor 控制
-    
 
 判斷關鍵字：
 
 - audit right
-    
+
 - verify compliance
-    
+
 - inspect controls
-    
+
 - review CSP security
-    
 
 ---
 
@@ -1258,15 +1204,14 @@ Right to audit 是合約條款，用於保留檢查雲端服務商是否遵守�
 常見考點：
 
 - 法律保存要求
-    
+
 - 合約要求
-    
+
 - 業務需求
-    
+
 - 日誌保存期限
-    
+
 - 備份資料保存期限
-    
 
 ---
 
@@ -1279,37 +1224,34 @@ Right to audit 是合約條款，用於保留檢查雲端服務商是否遵守�
 常見方法：
 
 - 加密刪除
-    
+
 - 銷毀加密金鑰
-    
+
 - 覆寫
-    
+
 - 符合標準的清除流程
-    
+
 - 實體媒體銷毀
-    
+
 - 取得銷毀證明
-    
 
 判斷關鍵字：
 
 - cannot be recovered
-    
+
 - secure deletion
-    
+
 - data destruction
-    
+
 - crypto shredding
-    
+
 - destroy encryption keys
-    
 
 考試陷阱：
 
 - 一般刪除不等於安全銷毀。
-    
+
 - 資料到期可刪除，但遇到 legal hold 必須暫停刪除。
-    
 
 ---
 
@@ -1365,9 +1307,8 @@ Right to audit 是合約條款，用於保留檢查雲端服務商是否遵守�
 考試版定義：
 
 - Data sovereignty：資料受哪個國家的法律管。
-    
+
 - Jurisdiction：哪個國家、法院或政府機關有權處理這件事。
-    
 
 ---
 
@@ -1429,29 +1370,28 @@ Right to audit 是合約條款，用於保留檢查雲端服務商是否遵守�
 CCSP Domain 6 題目常透過關鍵字引導答案。答題時可先圈出以下線索：
 
 - 財務、上市公司、內部控制：SOX
-    
+
 - HIPAA、PHI、醫療：BAA
-    
+
 - GDPR、個資、processor：DPA
-    
+
 - uptime、99.9%、補償：SLA
-    
+
 - 整體條款、付款、終止：MSA
-    
+
 - 稽核權、檢查 CSP：Right to audit
-    
+
 - 第三方稽核、SOC 2、ISO 27001：Audit assurance
-    
+
 - 資料存放地點：Data residency
-    
+
 - 政府依法要求存取：Data sovereignty
-    
+
 - 法院、政府機關、多國爭議：Jurisdiction
-    
+
 - 暫停刪除：Legal hold
-    
+
 - 誰取得證據、何時取得：Chain of custody
-    
 
 ---
 
@@ -1460,15 +1400,14 @@ CCSP Domain 6 題目常透過關鍵字引導答案。答題時可先圈出以下
 Domain 6 題目常出現技術選項作為干擾，例如：
 
 - Load balancing
-    
+
 - Auto scaling
-    
+
 - Data compression
-    
+
 - VM CPU 型號
-    
+
 - Container orchestration
-    
 
 若題目在問法律、合規、風險、證據或合約，通常應選治理、法律或合約相關選項，而非純技術選項。
 
@@ -1479,17 +1418,16 @@ Domain 6 題目常出現技術選項作為干擾，例如：
 當題目問最佳做法時，通常應優先選擇：
 
 - 符合法律與合規要求
-    
+
 - 保留證據
-    
+
 - 啟動正式流程
-    
+
 - 查看合約與責任分工
-    
+
 - 使用第三方稽核或正式驗證
-    
+
 - 避免未授權刪除或未記錄操作
-    
 
 ---
 
@@ -1976,48 +1914,46 @@ D. Load balancing
 ## 十九、考前口訣
 
 1. **資料在哪裡 = Residency**
-    
+
 2. **資料受誰法律管 = Sovereignty**
-    
+
 3. **誰有權處理案件 = Jurisdiction**
-    
+
 4. **訴訟來了先別刪 = Legal hold**
-    
+
 5. **證據可信靠保管鏈 = Chain of custody**
-    
+
 6. **財務內控找 SOX**
-    
+
 7. **雲端控制找 CSA CCM**
-    
+
 8. **雲端信任保證找 CSA STAR**
-    
+
 9. **服務等級找 SLA**
-    
+
 10. **主合約找 MSA**
-    
+
 11. **醫療 PHI 找 BAA**
-    
+
 12. **GDPR 個資處理找 DPA**
-    
+
 13. **控制前是 inherent，控制後是 residual**
-    
+
 14. **保險是 transfer，控制是 mitigation，不做是 avoidance，記錄接受是 acceptance**
-    
 
 ---
 
 ## 二十、建議複習方式
 
 1. 先背「最終速記表」。
-    
+
 2. 再練「常見情境題判斷表」。
-    
+
 3. 遇到題目時先圈關鍵字，不急著看選項。
-    
+
 4. 遇到技術選項時，先確認題目是否其實在問法律、合規、證據或合約。
-    
+
 5. 對易混淆詞進行對照記憶，例如 residency / sovereignty / jurisdiction，SLA / MSA，DPA / BAA。
-    
 
 ---
 

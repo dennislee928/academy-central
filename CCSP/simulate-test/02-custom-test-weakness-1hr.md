@@ -1,4 +1,4 @@
-# CCSP LearnZApp Custom Test 弱點分析與 1 小時補弱講義
+# CCSP Custom Test 弱點分析與補強 / Weakness Analysis & 1-Hour Patch Plan
 
 **測驗來源**：ISC2 LearnZApp Custom Test  
 **測驗類型**：Custom Test，非前一回 Standalone 題庫進度  
@@ -680,8 +680,6 @@ Privacy/location constraint often favors private cloud.
 ### 最短結論
 
 > 有進步，但還沒穩。下一步不是追更多 full mock，而是先把 D2 / D6 的 taxonomy 錯誤修掉，再用 20–25 題 mixed mini test 驗證是否回到 75% 以上。
-
-
 
 Domain-wise：
 

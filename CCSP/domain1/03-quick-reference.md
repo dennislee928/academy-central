@@ -1,4 +1,4 @@
-# CCSP Domain 1 快速速查表 (秒殺筆記)
+# CCSP Domain 1 快速速查表 / Quick Reference
 
 ## 1. Domain 1 在考什麼
 

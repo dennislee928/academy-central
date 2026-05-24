@@ -1,4 +1,4 @@
-# CCSP LearnZApp Practice Test 1：弱點分析、補強策略與加權優先順序
+# CCSP Practice Test 1 弱點分析 / Weighted Weakness Analysis & Priority Strategy
 
 > 測驗來源：`isc2.learnzapp.com/practicetest` Practice Test 1  
 > 測驗型態：全局 Practice Test，非只打弱點的 Custom Test  
