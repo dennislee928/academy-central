@@ -664,3 +664,12 @@ D1/D2/D6 mixed mini-test >= 75%
 ```
 
 Only after that should full Practice Tests resume.
+---
+|Priority|Domain|Score|Weight|Weighted Risk|結論|
+|---|---|---|---|---|---|
+|**P0**|**D3**|54%|17%|**最高**|第一優先補|
+|**P1**|**D1**|61%|17%|高|第二優先|
+|**P1**|**D5**|60%|16%|高|第二優先|
+|**P2**|**D6**|67%|13%|中|第三優先|
+|Maintain|D2|82%|20%|低|維持即可|
+|Maintain|D4|86%|17%|低|維持即可|
