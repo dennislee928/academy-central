@@ -723,3 +723,40 @@ Only after that should full Practice Tests resume.
 ans ** B.** 柴油 (Diesel) / 在發電機啟動並穩定供電前的這段「空窗期」提供短期電力。
 
 **柴油（Diesel）最容易產生質變（degrade）**，因此需要定期維護與循環測試；而 **UPS 的首要任務確實就是「爭取時間」**，彌補發電機啟動前的電力空窗期，而不是當作長期的電力來源。
+
+---
+CCSP 非常喜歡考這四個等級的「關鍵字對應」。你可以把它想像成資料中心的「裝甲等級」，等級越高、砸的錢越多，系統就越不容易因為單一故障或例行維護而斷線。
+
+| **等級**       | **核心概念 (Exam Keyword)**               | **備援架構** | **電力與冷卻迴路** | **停機維護影響**                  |
+| ------------ | ------------------------------------- | -------- | ----------- | --------------------------- |
+| **Tier I**   | Basic Capacity (基本容量)                 | N (無備援)  | 單一迴路        | 遇到維護或故障，**一定會斷線**。          |
+| **Tier II**  | Redundant Components (備援元件)           | N+1      | 單一迴路        | 設備有備胎，但迴路只有一條。維護時**仍可能斷線**。 |
+| **Tier III** | **Concurrently Maintainable** (可並行維護) | N+1      | 多條迴路 (一條活躍) | **可以在不中斷系統的情況下進行維護**。       |
+| **Tier IV**  | **Fault Tolerant** (完全容錯)             | 2(N+1)   | 多條迴路 (同時活躍) |                             |
+考題最常考的辨識點是：只要題目提到 **"maintenance without downtime" (維護不停機)**，答案就是 **Tier III**；如果提到 **"survive a single failure" (承受單一故障)** 或 **"Fault Tolerant"**，答案就是 **Tier IV**。
+
+**情境測驗 2：** 您的企業正在規劃將部分關鍵業務遷移至某雲端服務供應商 (CSP)。業務單位的要求（Business Requirement）是：「我們必須能夠在進行任何例行性的基礎設施維護（如更換冷卻系統或進行電力迴路保養）時，系統依然保持在線且不中斷服務。然而，我們的預算有限，無法負擔防禦『任何單一不可預期之嚴重設備故障』的最高級別架構。」
+
+**問題：** 根據上述業務要求與預算限制，您應該在服務層級協議 (SLA) 中要求該 CSP 至少達到 Uptime Institute 的哪一個等級？
+
+- **A.** Tier I (Basic Capacity)
+    
+- **B.** Tier II (Redundant Components)
+    
+- **C.** Tier III (Concurrently Maintainable)
+    
+- **D.** Tier IV (Fault Tolerant)
+    
+
+請提供您的解答，並簡述您的判斷邏輯。
+
+C. Tier III (Concurrently Maintainable) - 
+1.能夠在進行任何例行性的基礎設施維護
+2.系統依然保持在線且不中斷服務(比單純n+1B. Tier II (Redundant Components)更符合）
+3.法負擔防禦『任何單一不可預期之嚴重設備故障』的最高級別架構->無法負擔2(n+1) D. Tier IV (Fault Tolerant)
+
+考題設計的陷阱：
+
+1. **Tier III 的靈魂**就是「Concurrently Maintainable（可並行維護）」，也就是維護不停機。
+    
+2. 你也沒有被騙去選最高級的 Tier IV，因為題目明確限制了預算，且不需要「容錯 (Fault Tolerant，防禦單一突發故障)」。 這種「根據業務需求 (Business Requirements) 選擇最適當的控制措施 (Controls)，而不是盲目選擇最貴的」，正是 CCSP 考試最核心的考點精神！
