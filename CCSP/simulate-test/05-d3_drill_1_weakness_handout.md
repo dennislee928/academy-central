@@ -40,17 +40,17 @@ D3：54% → 64%
 
 ## 2. 本次錯題總表
 
-| 題號 | 題目核心 | 選錯 | 正解 | 弱點分類 |
-|---:|---|---|---|---|
-| Q2 | 何種控制會影響 egress monitoring solution 功能 | Firewall | Encryption | encryption 對監控可視性的影響 |
-| Q4 | 哪個不是 enhanced authentication 常見手段 | Dynamic end-user knowledge | Variable keystrokes | authentication factor / biometric 行為特徵 |
-| Q6 | Public cloud data center control governance 由誰制定 | Regulator(s) | Cloud provider | provider governance / responsibility boundary |
-| Q7 | VM configuration management tool 應包含什麼 | Anti-tampering mechanisms | Log file generation | CM / logging / incident response |
-| Q10 | Cloud data center campus physical access point 應包含哪些，except | Badging procedure | Mantrap structures | physical entrance vs sensitive-area control |
-| Q13 | 哪組 control 可互相增強保護 | Asset inventories/personnel training | Data dispersion/encryption | layered defense / control synergy |
-| Q17 | Cloud penetration test 為何不是最佳攻擊模擬 | Regulator involvement changes attack surface | Advanced notice removes surprise | cloud pentest authorization reality |
-| Q20 | BC/DR plan/policy 應包含哪些，except | Tasking responsible office | Copies of laws/regulations/standards | BC/DR policy content vs referenced governance docs |
-| Q24 | Data center redundancy effort 中最大 human safety threat | Emergency egress | Generators | facility redundancy / generator fuel safety |
+|  題號 | 題目核心                                                        | 選錯                                           | 正解                                   | 弱點分類                                               |
+| --: | ----------------------------------------------------------- | -------------------------------------------- | ------------------------------------ | -------------------------------------------------- |
+|  Q2 | 何種控制會影響 egress monitoring solution 功能                       | Firewall                                     | Encryption                           | encryption 對監控可視性的影響                               |
+|  Q4 | 哪個不是 enhanced authentication 常見手段                           | Dynamic end-user knowledge                   | Variable keystrokes(變動的擊鍵)           | authentication factor / biometric 行為特徵             |
+|  Q6 | Public cloud data center control governance 由誰制定            | Regulator(s)                                 | Cloud provider                       | provider governance / responsibility boundary      |
+|  Q7 | VM configuration management tool 應包含什麼                      | Anti-tampering mechanisms                    | Log file generation                  | CM / logging / incident response                   |
+| Q10 | Cloud data center campus physical access point 應包含哪些，except | Badging procedure                            | Mantrap structures                   | physical entrance vs sensitive-area control        |
+| Q13 | 哪組 control 可互相增強保護                                          | Asset inventories/personnel training         | Data dispersion/encryption           | layered defense / control synergy                  |
+| Q17 | Cloud penetration test 為何不是最佳攻擊模擬                           | Regulator involvement changes attack surface | Advanced notice removes surprise     | cloud pentest authorization reality                |
+| Q20 | BC/DR plan/policy 應包含哪些，except                              | Tasking responsible office                   | Copies of laws/regulations/standards | BC/DR policy content vs referenced governance docs |
+| Q24 | Data center redundancy effort 中最大 human safety threat       | Emergency egress                             | Generators                           | facility redundancy / generator fuel safety        |
 
 ---
 
