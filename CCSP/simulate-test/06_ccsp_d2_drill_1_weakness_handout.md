@@ -441,3 +441,78 @@ Progress = mixed
 Readiness = slightly improved
 Next action = targeted patch, then another D2 drill
 ```
+---
+# CCSP Domain 2 (Cloud Data Security) 觀念急救特訓講義
+
+> **Date:** 2026-05-30
+> **Target:** 突破 D2 瓶頸，目標滿血通關 (≥75%)
+> **Focus:** 資料生命週期、加密邊界、資料遮罩、法規分類與 EXCEPT 題型
+
+---
+
+## 🎯 主題一：資料生命週期與雲端銷毀 (Data Lifecycle & Sanitization)
+
+### 1. 核心定義：Archive vs. Backup
+* **Backup (備份):** 為了「復原 (Restoration / Recoverability)」而存在（如：救回不小心刪除的檔案）。
+* **Archive (封存):** 為了「留存 (Retention)」、「法規遵循 (Compliance)」與支援 BC/DR。**不是**為了保護智慧財產權 (IP protection)。
+
+### 2. 雲端資料銷毀 (Cloud Destruction)
+* **Overwriting (覆寫):** 在雲端**極度不可靠**。因為虛擬化與資料分散技術，導致「資料的邏輯位置難以確定 (Logical data location is hard to determine)」。
+* **最佳實務:** 雲端最安全可行的銷毀方式是 **密碼抹除 (Crypto-erasure / Crypto shredding)**，銷毀金鑰即可讓資料變為亂碼。
+
+### 3. PII 處理 (Processing) 的嚴格定義
+* **主動處理:** Storing (儲存)、Printing (列印)、Destroying (銷毀)、Using (使用) 皆屬於 Processing。
+* **被動例外:** 單純的 **Viewing (檢視)** 屬於被動行為，在考題中通常「最不被視為 (NOT normally considered)」處理。
+
+### 4. 虛擬化 (Virtualization) 的影響
+* 虛擬化會改變資料的型態與位置（如：變成快照、映像檔），這會直接影響企業的 **資料分類 (Data Classification)** 策略。
+
+---
+
+## 🛡️ 主題二：加密分層、金鑰管理與資料遮罩 (Encryption & Key Management)
+
+### 1. 加密引擎在哪裡？(Encryption Layers)
+* **Application-level Encryption (應用層加密):** 加密引擎位於「存取資料庫的應用程式 (Application accessing DB)」中。
+* **TDE (透明資料庫加密):** 加密引擎位於「資料庫/DBMS 層級 (Database / DBMS layer)」。保護儲存層 (Data at Rest)。
+
+### 2. 金鑰管理與職責分離
+* **KMS (Key Management System):** 管理金鑰的生命週期。**注意：KMS 本身不應該被當作處理大量應用程式資料的加密引擎。**
+* **HSM (Hardware Security Module):** 用於保護金鑰的實體硬體設備，提供強大的密碼學運算。
+* **Separation of Duties (職責分離):** 管理金鑰的權限，必須與存取加密資料的權限分開。（例如：DBA 只能管資料庫，絕不能擁有明文存取權或金鑰）。
+
+### 3. 資料遮罩 (Data Masking) 最佳實務
+* **核心精神:** 適用於只需要「部分驗證 (Partial value)」，而不需要完整數值的情境。
+* **最佳情境:** 客服人員 (Customer Service) 核對客戶身分時，只顯示 SSN 或信用卡末四碼。
+* **避坑指南:**
+  * 自動扣款 (Billing) 或 PCI-DSS 降低範圍，通常使用 **Tokenization (代碼化)** 而不是 Masking。
+  * Masking 是「展示層」防護，不能用來取代 TDE 等「儲存層」加密機制。
+
+---
+
+## ⚖️ 主題三：法規框架與陷阱題破解 (Legal Taxonomy)
+
+### 1. 必考法規與框架對應
+| 法規 / 框架 | 核心關鍵字 / 適用領域 |
+| :--- | :--- |
+| **CSA CCM** | 雲端資安與隱私控制措施對應 (Maps cloud security/privacy controls) |
+| **HIPAA** | 醫療保健隱私與安全 (Healthcare privacy/security) |
+| **FERPA** | 學生教育紀錄隱私 (Education records privacy) |
+| **PIPEDA** | 加拿大個人隱私保護法 (Canadian privacy) |
+| **DMCA** | **[陷阱]** 著作權與智慧財產權 (Copyright / IP) ➡️ **與隱私/資安控制無關！** |
+
+### 2. 資料發掘 (Data Discovery) 的內容分析
+* **屬於內容分析 (Content analysis):** Keywords (關鍵字)、Pattern matching (特徵比對)、Frequency (頻率)。
+* **不屬於內容分析:** Inheritance (繼承) 只是 metadata/物件關係的屬性。
+
+### 3. DLP (資料外洩防護) 的法律界線
+* DLP **可以**：協助證據收集 (Evidence collection) / 電子蒐證 (eDiscovery)。
+* DLP **不可以**：提供法庭證詞 (Testimony)、進行刑事起訴 (Prosecution) 或直接執行智慧財產權保護。
+
+---
+
+## 💡 考場超強防呆機制：EXCEPT / NOT 題型
+
+當題目出現 `EXCEPT`, `NOT`, `LEAST`, `BEST`, `PRIMARY` 時：
+1. **強制停頓 2 秒鐘！**
+2. **切換大腦模式：** 告訴自己「我要找的是那個『不合群 / 錯誤』的選項」。
+3. **刪去法：** 先找出符合該類別（或正確）的敘述並刪除，剩下的就是答案。
