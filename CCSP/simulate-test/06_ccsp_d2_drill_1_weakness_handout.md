@@ -516,3 +516,121 @@ Next action = targeted patch, then another D2 drill
 1. **強制停頓 2 秒鐘！**
 2. **切換大腦模式：** 告訴自己「我要找的是那個『不合群 / 錯誤』的選項」。
 3. **刪去法：** 先找出符合該類別（或正確）的敘述並刪除，剩下的就是答案。
+
+### Summary Table)
+
+| **名詞**                   | **它是什麼？**        | **解決什麼問題？**            | **CCSP 關鍵字 (Key Phrases)**                     |
+| ------------------------ | ---------------- | ---------------------- | ---------------------------------------------- |
+| **FC**                   | 儲存專屬網路           | 提供極致的儲存效能與穩定度。         | Dedicated storage network, lossless, expensive |
+| **iSCSI**                | 跑在 TCP/IP 上的儲存協定 | 用最便宜的方式建立儲存網路。         | Storage over TCP/IP, cost-effective            |
+| **FCoE**                 | 把 FC 封裝在乙太網路裡    | 讓 FC 能跑在一般網路上，不需專屬線路。  | Encapsulates FC over Ethernet                  |
+| **Converged Networking** | 一種實體架構模型         | 減少機房實體線路，合併 LAN 與 SAN。 | Combined storage and IP, unified fabric        |
+| **SDN**                  | 一種網路管理模型         | 集中管理網路路由，提升敏捷性與自動化。    | Decouple control and data plane, APIs          |
+
+# data center Tier 1 ~ 4
+
+#### **Tier I (Tier 1)：基本容量 (Basic Capacity)**
+
+- **供水比喻：** 城市只有「一台幫浦」配上「一條主水管」。
+    
+- **運作現實：** 如果幫浦壞了，或是水管需要維修，整個城市就停水。完全沒有備用方案。
+    
+- **CCSP 考試關鍵字：** `Single path` (單一路徑)、`No redundancy` (無冗餘/無備援)、`Basic capacity` (基本容量)。
+    
+- **商業情境 (Use Case)：** 小微企業、非關鍵的後勤系統、或是純粹作為冷封存 (Cold Archive) 的資料中心。**（容許預期與非預期的停機）**
+    
+
+#### **Tier II (Tier 2)：冗餘組件 (Redundant Capacity Components)**
+
+- **供水比喻：** 城市升級了！現在有「兩台幫浦（一台備用）」，但還是只有「一條主水管」。
+    
+- **運作現實：** 如果一台幫浦壞了，備用幫浦可以頂上（硬體冗餘）。但是，如果那唯一的一條「水管」破了，或是需要清洗水管，城市依然會停水。
+    
+- **CCSP 考試關鍵字：** `Redundant components` (冗餘設備如 UPS、發電機)、`Single path` (依然是單一配送路徑)。
+    
+- **商業情境 (Use Case)：** 中小企業，可以忍受偶爾的年度歲修停機，但希望減少設備意外損壞帶來的衝擊。
+    
+
+#### **Tier III (Tier 3)：可並行維護 (Concurrently Maintainable) 🌟 企業黃金標準**
+
+- **供水比喻：** 城市有「多台幫浦」以及「多條主水管」（一條使用中，一條備用）。
+    
+- **運作現實：** 今天工程師想要保養任何一台幫浦、或是抽換任何一條水管，都可以在「完全不停水」**的情況下完成，因為可以隨時切換到備用線路。但是，如果是遇到**無預警的重大災難（例如挖土機突然挖斷運作中的水管），在系統切換的瞬間，還是可能會經歷短暫的停水（斷線）。
+    
+- **CCSP 考試關鍵字：** `Concurrently maintainable` (可並行維護)、`Multiple paths, only one active` (多路徑，單一活化)、`No shutdowns for maintenance` (維護不需停機)。
+    
+- **商業情境 (Use Case)：** **金融服務業、大型電商、多數的 24/7 企業生產環境 (Production)。** （兼顧極高可用性與成本效益）
+    
+
+#### **Tier IV (Tier 4)：完全容錯 (Fault Tolerant) 🚀 頂級猛獸**
+
+- **供水比喻：** 城市有「多台幫浦」和「多條主水管」，而且**全部都在同時運作 (Active-Active)**，並且互相實體隔離。
+    
+- **運作現實：** 不僅可以隨時維護，就算今天挖土機無預警挖斷了一條管線，系統也能「自動感知、自動隔離」，水流完全不會有任何一秒鐘的減少或中斷。它能承受任何單一設備或線路的**無預警實體破壞**。
+    
+- **CCSP 考試關鍵字：** `Fault tolerant` (完全容錯)、`Multiple active paths` (多路徑且皆活化)、`Compartmentalized` (實體隔離/分區)、`Autonomous response` (自主反應)。
+    
+- **商業情境 (Use Case)：** **攸關人命 (Life-critical)** 或絕對不能有任何一秒中斷的極端環境。例如：機場航管系統、醫院急診與維生系統的後台、國家級軍事網路。
+    
+
+### 📊 考前秒殺對照表 (CCSP Cheat Sheet)
+
+|**分級**|**核心概念 (Concept)**|**路徑 (Paths) & 設備 (Components)**|**容忍「維護」停機？**|**容忍「無預警」當機？**|**CCSP 常考商業情境**|
+|---|---|---|---|---|---|
+|**Tier 1**|基本 (Basic)|單一路徑 / 無備援|❌ 會停機|❌ 會當機|小型企業、非關鍵系統|
+|**Tier 2**|組件備援 (Redundant)|單一路徑 / 有備援設備|❌ 會停機 (因單一路徑)|⚠️ 部分容忍|中型企業、可接受歲修|
+|**Tier 3**|並行維護 (Maintainable)|多路徑 (主動/被動) / 有備援|✅ **不停機**|❌ 仍可能短暫當機|**金融業**、標準生產環境|
+|**Tier 4**|完全容錯 (Fault Tolerant)|多路徑 (全主動) / 有備援|✅ **不停機**|
+
+
+---
+# CCSP Domain 3 (Cloud Platform & Infrastructure) 衝刺特訓講義
+
+> **Date:** 2026-05-30
+> **Target:** 突破 D3 瓶頸，目標滿血放行 (≥75%)
+> **Focus:** BC/DR 指標、儲存與網路底層架構、Uptime Tiers、雲端遷移新風險
+
+---
+
+## 🚨 主題一：BC/DR 核心指標與風險治理 (BC/DR & Risk Governance)
+
+### 1. 核心指標 (Metrics)
+* **RTO (Recovery Time Objective):** 復原時間目標。系統可以當機多久？(Time to restore)
+* **RPO (Recovery Point Objective):** 復原點目標。你能容忍流失多少資料？(Acceptable data loss) **注意：不是商業價值的流失。**
+
+### 2. BC/DR 演練風險
+* 兵棋推演 (Tabletop) 最安全；但 **完整測試 (Full testing of the plan)** 本身就伴隨著極高的「營運中斷風險 (Disruptive)」。
+
+### 3. 雲端 DR 的阿基里斯腱
+* 雲端 BC/DR 最大的弱點與依賴是 **ISP 網路連線 (ISP connectivity)**。連不上雲端，DR 計畫就宣告失敗。
+
+### 4. 風險治理權責 (Governance Ownership)
+* **Risk Appetite (風險胃納量):** 決定公司能承受多少風險，永遠由 **高階管理層 / 董事會 (Senior management / Board)** 決定。
+* **Risk Assessment (風險評估):** 由資安/風險團隊執行。
+
+---
+
+## 🧱 主題二：基礎設施名詞大解密 (Infrastructure Terminology)
+
+### 1. 儲存協定 vs. 磁碟備援
+* **儲存協定 (Storage Protocols):** iSCSI (便宜/跑在 IP 上)、Fibre Channel (FC, 昂貴/專屬高速)、FCoE (將 FC 封裝在乙太網路)。
+* **磁碟備援 (Disk Redundancy):** **RAID** 是實體硬碟的容錯配置機制，**不是**網路儲存協定！
+
+### 2. 網路架構模型 (Networking Models)
+* **Converged Networking (融合網路):** 解決實體線路太多的問題。將「底層儲存流量 (Storage)」與「一般 IP 流量 (IP network)」**合併 (Combined)**。
+* **SDN (軟體定義網路):** 解決管理缺乏彈性的問題。將網路的「控制層 (Control plane)」與「資料轉發層 (Data plane)」**分離 (Separation)**，實現 API 動態集中控制。
+
+---
+
+## 🏢 主題三：資料中心分級與雲端新風險 (Facility Tiers & Migration Risks)
+
+### 1. Uptime Institute Tiers (資料中心分級)
+* **Tier 1 (Basic):** 單一路徑，無備援。維護會停機，意外會當機。
+* **Tier 2 (Redundant):** 單一路徑，設備有備援。維護會停機，部分防禦意外。
+* **Tier 3 (Concurrently Maintainable / 可並行維護):** 多路徑 (主/被動)。**維護不停機**，但無預警災難可能短暫斷線。**[金融業/一般生產環境黃金標準]**
+* **Tier 4 (Fault Tolerant / 完全容錯):** 多路徑 (全主動)。**維護不停機，無預警災難也不斷線**。**[攸關人命/航管/急診室專用]**
+
+### 2. 雲端遷移的「新」風險 (New Risks)
+* 當題目問「遷移至公有雲 SaaS 的新風險」時：
+  * **❌ 既有業務風險 (Existing business risk):** 如 PCI-DSS、信用卡處理合規。（因為在地端時就已經存在了）。
+  * **✅ 雲端專屬新風險:** **多租戶環境下的邏輯隔離不足 (Multitenancy / Insufficient resource isolation)** 導致的資料外洩。
