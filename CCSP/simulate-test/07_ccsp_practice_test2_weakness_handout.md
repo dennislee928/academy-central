@@ -633,3 +633,74 @@ D3 / D6 的前期補強有效，D2 也在 full mock 中回穩。
 ```
 
 如果 Practice Test 3 能穩在 78–80% 以上，考試準備會進入相對安全區。
+
+
+---
+# CCSP D4 (Cloud Application Security) 衝刺特訓講義 - Day 1
+
+> **Date:** 2026-06-01
+> **Target:** 擊破 D4 應用程式安全魔王，目標滿血通關 (PT3 ≥ 78%)
+> **Focus:** 軟體安全測試、API Gateway vs Firewall、Secure SDLC 威脅建模、OWASP 與雲端旁道攻擊
+
+---
+
+## 👾 主題一：軟體測試的「四大神獸」 (SAST, DAST, IAST, RASP)
+
+### 1. 核心定義與適用時機
+* **SAST (靜態應用程式安全測試):** * **白箱 (White-box)**。
+  * 程式「未執行」，直接掃描 **原始碼 (Source Code)**。
+  * 抓取語法錯誤、Hardcode 密碼、未過濾的變數。
+* **DAST (動態應用程式安全測試):** * **黑箱 (Black-box)**。
+  * 程式「運行中 (Running)」，從外部狂打 **Payload / 模擬攻擊**。
+  * 觀察系統崩潰、錯誤訊息外洩、發現執行路徑 (Execution paths)。
+* **IAST (互動式安全測試):** * **灰箱 (Gray-box)**。
+  * 程式「運行中」，但在應用程式內部植入探測器 (Instrumentation)，能精準定位漏洞對應的程式碼行數。
+* **RASP (執行期自我防護):** * 部署於正式環境 (Production)。
+  * 程式「運行中」，具備自我監控與主動阻擋惡意連線的能力。
+
+### 💡 考場超強防呆機制：兩步靈魂拷問法
+遇到測試分類題，立刻問自己兩個問題：
+1. **「程式跑起來了嗎？」** (未執行 ➡️ SAST；執行中 ➡️ DAST/IAST/RASP)
+2. **「看得到原始碼嗎？」** (看得到 ➡️ SAST/白箱；看不到 ➡️ DAST/黑箱)
+
+---
+
+## 🛡️ 主題二：應用程式的「守門員」 (API Gateway vs. Firewall)
+
+### 1. 階層與能力差異
+* **Firewall (防火牆):** * 運作於 **OSI Layer 3/4 (網路層/傳輸層)**。
+  * 只能看懂 IP 位址與 Port 號。負責大範圍的 IP 網段阻擋 (Block IP ranges)。
+* **API Gateway / WAF:** * 運作於 **OSI Layer 7 (應用層)**。
+  * 能看懂 HTTP 協定與 JSON/XML 內容。
+  * **專屬技能:** 流量限制 (Rate Limiting)、檢查 JWT Token、API 路由解析、防禦應用層攻擊。
+
+### 2. 業界黃金標準 (Zero Trust 縱深防禦)
+* 邊緣防禦：**WAF** 攔截 L7 惡意特徵。
+* 基礎網路防禦：**Local Firewall** 進行 L3/L4 阻擋。
+* 應用服務入口：**API Gateway (如 Nginx)** 處理路由、負載平衡與 TLS 卸載。
+* 內部微服務防護：**Service Mesh** 負責東西向流量的加密與動態控制。
+
+---
+
+## 🧬 主題三：把安全融入基因 (Secure SDLC & Threat Modeling)
+
+### 1. 安全左移 (Shift Left)
+* 安全不能留到最後才做。在 CI/CD 與開發流程的最前端，就必須導入安全規範。
+
+### 2. 威脅建模 (Threat Modeling)
+* **黃金時機:** 發生在 **「設計階段 (Design Phase)」** (寫第一行程式碼之前)。
+* **核心目的:** 對著架構圖分析資料流 (Data Flow)，找出系統架構層級的潛在漏洞（如 Spoofing 偽冒、Tampering 竄改）。
+* **考試對照:** 只要題目說「對著架構圖分析、提前規劃防禦機制」，答案就是 Threat Modeling；如果是對著程式碼找，那是 SAST。
+
+---
+
+## 🏢 主題四：雲端獨有風險與權威指南 (Cloud Risks & OWASP)
+
+### 1. OWASP Top 10 (武林秘笈)
+* **定位:** 業界最權威的 **Web 應用程式安全最佳實務指南 (Best practice catalog)**。
+* **注意:** 它是指南與框架，**不是**一套可以直接拿來掃描的單一工具軟體。
+
+### 2. 旁道攻擊 (Side-channel Attacks)
+* **發動條件:** 雲端公有雲的 **「多租戶與共享資源 (Multi-tenancy / Co-tenancy / Shared resources)」** 環境。
+* **攻擊手法:** 駭客在同一個實體主機的另一個 VM 中，透過監控 CPU 快取 (Cache) 延遲、耗電量等「物理側信道」，反推並竊取其他租戶的加密金鑰。
+* **防禦關鍵:** 強制實體硬體隔離 (Dedicated Hosts / HSM)。
