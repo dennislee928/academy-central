@@ -4,6 +4,30 @@
 
 ---
 
+### 核心資料保護技術對照表
+
+| **技術 (Technology)** | **核心定義 (Core Definition)**                     | **運作機制 (Mechanism)**                             | **預設還原性**     | **CCSP 最佳適用場景 (Best Use Case)**                |
+| ------------------- | ---------------------------------------------- | ------------------------------------------------ | ------------- | ---------------------------------------------- |
+| **Data Masking**    | 產生相似但不真實的資料集 (Similar but inauthentic dataset) | 替換或混淆欄位內容，保留原始資料格式（如字元長度、信箱格式）                   | 不可逆 (靜態)      | **測試環境 (Testing)**、模型訓練、系統展示                   |
+| **Tokenization**    | 以無意義的代碼 (Token) 替代敏感資料                         | 將真實資料集中存放在受保護的 Token Vault 中，以對應表 (Mapping) 方式運作 | 可逆 (需經 Vault) | **PCI DSS**、信用卡號碼 (Cardholder data) 保護         |
+| **Encryption**      | 使用密碼學演算法與金鑰轉換資料                                | 將明文轉換為密文，缺乏對應的 Key 絕對無法還原                        | 可逆 (需具備 Key)  | 資料機密性 (Confidentiality)、Data at Rest / Transit |
+| **Redaction**       | 移除或塗黑文件中的敏感資訊                                  | 直接刪除或遮蔽非結構化文件中的特定字串或影像段落                         | 不可逆           |                                                |
+
+#### 1. Data Masking 的「最佳定義」
+
+在測驗中看到 Data Masking 時，直覺往往會聯想到「隱藏個人機密資訊 (Hide PII)」。**這是一個嚴重的誘答陷阱。**
+
+隱藏 PII 只是 Masking 達成的一種「效果」，但從安全管理的最高框架來看，其最佳定義 (Best definition) 是「提供用於測試或訓練的相似但不真實的資料集」。這就像是在 Staging 環境倒 Production 資料前，透過腳本把真實的姓名和 Email 洗掉，換成符合格式的假字串。目的是讓 SDLC 中的測試階段能順利進行，而不會引發真實個資外洩的風險。
+
+#### 2. Tokenization 與 PCI DSS 合規架構
+
+在 CCSP 框架下，Tokenization 幾乎與 PCI DSS (支付卡產業資料安全標準) 完全綁定。您必須釐清以下兩個絕對觀念：
+
+- **機制本質：** Tokenization **絕對不是** Encryption。它不涉及複雜的數學演算法，也沒有金鑰 (Key)。從後端系統架構來看，它更像是一個高度安全的 Key-Value 對應機制，類似於實作 Redis 查表：Token 是 Key，真實信用卡號是 Value，兩者的對應關係嚴格儲存在一個獨立的 Token Vault 中。
+    
+- **合規責任邊界：** 企業常會將 Tokenization 交由第三方服務商代管。這樣做能有效**縮減商家自身的合規範圍 (Reduce merchant compliance scope)**，因為真實卡號不再流經商家的內部系統。然而，這**並不能完全免除商家的最終責任**。身為資料擁有者 (Data Owner)，商家仍需為整體業務架構與第三方供應商的風險管理負起最終責任。
+
+---
 ## 1. Threat Modeling：STRIDE / DREAD / PASTA 詳解
 
 [跨 Domain 威脅建模框架 (STRIDE/DREAD)](../shared/threat-models/)
