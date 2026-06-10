@@ -542,3 +542,65 @@ Legal/non-tech = noticeably weak in this review, especially taxonomy and role ma
 Next gate = D3/D4/D6 mixed mini-test ≥75%.
 ```
 
+
+---
+### 🚀 Day 1（週四）：D3 + D6 核心合擊（攻堅最大破口）
+
+- **作答放慢校準演練**：
+    
+    今日作答時，凡是遇到關鍵字如 `EXCEPT`、`NOT`、`LEAST`、`MOST LIKELY`、`PRIMARY`，或是選項中出現 `Customer vs Provider` 的二分法，一律強制停頓 5 秒，先判斷題目是在問**最高層治理原則**還是**基層技術實作**。
+    
+- **補強重點與秒殺規則內化 (55 分鐘)**：
+    
+    - **D3 基礎架構 (30 分鐘)**：熟記 `RAID` 是冗餘配置，**不是**協定（`iSCSI/FC/FCoE` 才是儲存協定）。`Containerization` 共享 Host Kernel 且**沒有硬體模擬**。VM 維護疏散就是 `Live migration`。
+        
+    - **D6 法律合規 (25 分鐘)**：分清 `Data Subject`（自然人）、`Data Controller`（決定目的與手段的法人）、`Data Custodian`（IT日常維護者）。對客戶的約束叫 `Service suspension`，對供應商 SLA 的約束叫 `Financial penalties`。
+        
+- **今日檢驗行動**：
+    
+    - 執行 **D3 targeted drill 25 題**（Gate 門檻：$\ge 75\%$）。
+        
+    - 執行 **D6 targeted drill 20 題**（Gate 門檻：$\ge 75\%$）。
+        
+
+### 💻 Day 2（週五）：D4 雲端應用安全專項（穩固技術邊界）
+
+- **補強重點與秒殺規則內化 (70 分鐘)**：
+    
+    - **Web Service 與驗證 (25 分鐘)**：`REST` 使用 URI 存取資源；`SOAP` 使用 XML 訊息傳遞，預設並不輕量，其主要目的是跨 Internet 取代舊有的 binary messaging。
+        
+    - **軟體測試與安全 (25 分鐘)**：`Fuzz testing` 代表畸形或隨機資料輸入。為了維持測試獨立性，必須排除開發人員（Exclude developers）的直接干預。
+        
+    - **架構與需求 (20 分鐘)**：在非安全軟體中要求安全特性，屬於`非功能性需求（Nonfunctional requirement）`。`PaaS` 是進行應用程式跨平台/Runtime 測試的最佳服務模型。
+        
+- **今日檢驗行動**：
+    
+    - 執行 **D4 targeted drill 30 題**（Gate 門檻：$\ge 75\%$）。
+        
+
+### 🧪 Day 3（週六）：三域綜合驗收（Mixed Validation）
+
+- **今日任務**：不再單獨刷單一 Domain，改為混合高壓測試，模擬在真實考試中大腦頻繁切換技術與非技術思維的狀態。
+    
+- **今日檢驗行動**：
+    
+    - 從題庫中抽選出 **D3 + D4 + D6 混合模擬題共 50 題**。
+        
+    - **週日上場前 Gate Check 門檻**：
+        
+        - 混合測驗總分 $\ge 75\%$。
+            
+        - D3、D4、D6 的單項子分數**皆不得低於 70%**。
+            
+        - _備註：若達到此門檻，代表 PT2 的 77% 已成功穩定轉化，明天可安心進入 Full Mock Test；若總分未達 70%，週日建議改為將這三天錯題徹底依照標準模板洗一遍，暫緩全域模考。_
+            
+
+### 📝 Day 4（週日）：全域模考驗收（Full Mock Test）
+
+- **今日任務**：執行一輪完整的 125 題 Full Practice Test（如 Practice Test 3）。
+    
+- **作答心法紀律**：
+    
+    - **時間管控**：上一回您平均每題僅花 31 秒，衝刺過快容易看漏細節。今天請將平均作答時間拉長至 **45-50 秒/題**，多出來的 15 秒用來雙重確認題幹是問 `Customer` 還是 `Provider`，以及要求的是 `BEST`、`FIRST` 還是 `EXCEPT`。
+        
+    - 目標總分：穩定複製並超越 **$\ge 77\%$**。
