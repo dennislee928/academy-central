@@ -685,3 +685,470 @@ EOF
 chmod +x run_gcelab_safe.sh
 bash run_gcelab_safe.sh 2>&1 | tee run_gcelab_safe.log
 ```
+
+## 13. Troubleshooting 筆記
+
+### 13.1 `Regional Access Boundary HTTP request failed`
+
+常見訊息：
+
+```
+Regional Access Boundary HTTP request failed after retriesAccount not found for email ...
+```
+
+判斷方式：
+
+|狀況|解讀|
+|---|---|
+|後面仍出現 `Updated property`|設定成功，可忽略 warning|
+|後面仍出現 `Created [...]`|資源成功建立|
+|後面出現 `ERROR`|需要處理錯誤|
+|`gcloud compute instances list` 有資源|代表 VM 存在|
+
+本 lab 中這個 warning 多次出現，但不影響最終成功。
+
+---
+
+### 13.2 `PERMISSION_DENIED: Permission denied to enable service`
+
+範例：
+
+```
+ERROR: (gcloud.services.enable) PERMISSION_DENIEDPermission denied to enable service [compute.googleapis.com]
+```
+
+原因：
+
+```
+Qwiklabs student account 沒有 serviceusage.services.enable 權限。
+```
+
+處理：
+
+如果 Compute Engine API 已經啟用，可以忽略。
+
+檢查：
+
+```
+gcloud services list --enabled | grep compute
+```
+
+若看到：
+
+```
+compute.googleapis.com
+```
+
+代表已啟用。
+
+---
+
+### 13.3 `constraints/gcp.resourceLocations`
+
+範例：
+
+```
+Location ZONE:xxx violates constraint constraints/gcp.resourceLocations
+```
+
+意思：
+
+```
+組織政策限制了可以建立資源的地區。
+```
+
+查詢有效政策：
+
+```
+PROJECT_ID="$(gcloud config get-value project)"gcloud resource-manager org-policies describe constraints/gcp.resourceLocations \  --project="$PROJECT_ID" \  --effective
+```
+
+本 lab 最終可用：
+
+```
+us-west1us-west1-aus-west1-bus-west1-c
+```
+
+---
+
+### 13.4 `No default subnetwork was found`
+
+範例：
+
+```
+No default subnetwork was found in the region of the instance.
+```
+
+原因：
+
+```
+所選 region 沒有 default VPC subnet。
+```
+
+查詢 subnet：
+
+```
+gcloud compute networks subnets list
+```
+
+或指定查詢：
+
+```
+gcloud compute networks subnets list \  --filter="network:default AND region:us-west1"
+```
+
+---
+
+### 13.5 `us-west8-a` 不存在
+
+有些 lab 顯示的 zone 可能和實際可用政策不同。  
+本次最終成功使用：
+
+```
+us-west1-a
+```
+
+而不是：
+
+```
+us-west8-a
+```
+
+原因可能是：
+
+- lab 指示或動態參數顯示異常
+- Qwiklabs project org policy 限制
+- 某些 zone 對該 temporary project 不可用
+
+---
+
+### 13.6 `set -e` 導致腳本閃退
+
+原始腳本如果使用：
+
+```
+set -e
+```
+
+代表任何指令失敗都會讓整個 script 結束。
+
+在 Qwiklabs 中不建議使用，因為以下指令可能短暫失敗：
+
+```
+gcloud services enable compute.googleapis.comgcloud compute ssh ...curl ...
+```
+
+建議改用：
+
+```
+set +e
+```
+
+並用 `|| true` 或 warning message 處理非關鍵錯誤。
+
+---
+
+## 14. gcloud 指令速查表
+
+### 14.1 帳號與 Project
+
+```
+gcloud auth listgcloud config list projectgcloud config get-value projectgcloud config set project PROJECT_ID
+```
+
+---
+
+### 14.2 Region / Zone
+
+```
+gcloud config set compute/region us-west1gcloud config set compute/zone us-west1-agcloud config get-value compute/regiongcloud config get-value compute/zoneexport REGION=us-west1export ZONE=us-west1-a
+```
+
+---
+
+### 14.3 Compute Engine API
+
+```
+gcloud services list --enabled | grep computegcloud services enable compute.googleapis.com
+```
+
+---
+
+### 14.4 VM 建立與查詢
+
+```
+gcloud compute instances create gcelab \  --zone=us-west1-a \  --machine-type=e2-medium \  --image-family=debian-12 \  --image-project=debian-cloud \  --boot-disk-size=10GB \  --boot-disk-type=pd-balanced \  --tags=http-server
+```
+
+```
+gcloud compute instances create gcelab2 \  --machine-type=e2-medium \  --zone=us-west1-a
+```
+
+```
+gcloud compute instances list
+```
+
+```
+gcloud compute instances describe gcelab --zone=us-west1-a
+```
+
+---
+
+### 14.5 Firewall
+
+```
+gcloud compute firewall-rules create default-allow-http \  --network=default \  --allow=tcp:80 \  --target-tags=http-server \  --source-ranges=0.0.0.0/0
+```
+
+```
+gcloud compute firewall-rules list
+```
+
+```
+gcloud compute firewall-rules describe default-allow-http
+```
+
+---
+
+### 14.6 SSH
+
+```
+gcloud compute ssh gcelab --zone=us-west1-a
+```
+
+```
+gcloud compute ssh gcelab2 --zone=us-west1-a
+```
+
+---
+
+### 14.7 NGINX
+
+在 VM 內執行：
+
+```
+sudo apt-get updatesudo apt-get install -y nginxps auwx | grep nginx
+```
+
+或：
+
+```
+sudo systemctl status nginx
+```
+
+---
+
+### 14.8 External IP
+
+```
+gcloud compute instances describe gcelab \  --zone=us-west1-a \  --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
+```
+
+---
+
+### 14.9 HTTP 測試
+
+```
+curl -I http://EXTERNAL_IP/
+```
+
+成功：
+
+```
+HTTP/1.1 200 OKServer: nginx/1.22.1
+```
+
+---
+
+## 15. Lab Assessment 對應
+
+|Task|驗證項目|成功條件|
+|---|---|---|
+|Task 1|建立 `gcelab`|VM 在指定 zone 建立成功|
+|Task 2|安裝 NGINX|NGINX process running，HTTP 可連|
+|Task 3|建立 `gcelab2`|VM `gcelab2` 建立成功|
+|Task 4|Quiz|選擇 Cloud Console 和 gcloud CLI|
+
+---
+
+## 16. Quiz 答案筆記
+
+問題：
+
+```
+Through which of the following ways can you create a VM instance in Compute Engine?
+```
+
+正確答案：
+
+- The Cloud console
+- The gcloud command line tool
+
+說明：
+
+Compute Engine VM 可以透過多種方式建立：
+
+|方法|說明|
+|---|---|
+|Cloud Console|圖形化介面，適合初學者|
+|gcloud CLI|指令列方式，適合自動化|
+|REST API|適合程式化控制|
+|Terraform|適合 IaC / DevOps|
+|Client Libraries|適合整合到應用程式|
+
+---
+
+## 17. 實務延伸：為什麼這個 Lab 重要？
+
+這個 lab 是 Google Cloud compute 基礎中的核心入門，因為 VM 是很多基礎架構的共同單位。
+
+後續常見延伸主題：
+
+1. Load Balancer
+2. Managed Instance Group
+3. Autoscaling
+4. Startup Script
+5. Custom Image
+6. Snapshot
+7. Persistent Disk
+8. VPC Firewall
+9. Cloud NAT
+10. Cloud Monitoring
+11. Cloud Logging
+12. OS Login
+13. IAM Service Account
+14. Instance Template
+15. Infrastructure as Code
+
+---
+
+## 18. DevOps / Security 角度補充
+
+### 18.1 最小權限
+
+在正式環境中，不應讓 VM 使用過高權限的 service account。
+
+應避免：
+
+```
+Editor roleOwner role
+```
+
+建議：
+
+```
+Least PrivilegeService-specific IAM Role
+```
+
+---
+
+### 18.2 Firewall 安全
+
+本 lab 開放：
+
+```
+0.0.0.0/0 → tcp:80
+```
+
+這代表所有來源都可以連進 VM 的 80 port。
+
+正式環境應評估：
+
+- 是否需要 public IP
+- 是否限制來源 IP
+- 是否放在 Load Balancer 後方
+- 是否使用 Cloud Armor
+- 是否只開 HTTPS 443
+- 是否關閉未使用 port
+
+---
+
+### 18.3 SSH 安全
+
+正式環境中應考慮：
+
+- OS Login
+- IAM-based SSH
+- IAP TCP forwarding
+- 不直接開放 port 22 到全世界
+- 管理 SSH key lifecycle
+
+---
+
+### 18.4 Startup Script
+
+本 lab 使用 startup script 安裝 NGINX：
+
+```
+--metadata=startup-script='#!/bin/bashapt-get updateapt-get install -y nginxsystemctl enable nginxsystemctl restart nginx'
+```
+
+Startup script 適合：
+
+- 自動安裝 agent
+- 初始部署 web server
+- 安裝監控工具
+- 寫入 bootstrap config
+
+但正式環境更常搭配：
+
+- Image baking
+- Terraform
+- Ansible
+- Packer
+- Instance Template
+- Managed Instance Group
+
+---
+
+## 19. 本次完成證據摘要
+
+本次實際完成狀態：
+
+|項目|結果|
+|---|---|
+|Lab Score|`100 / 100`|
+|Project|`qwiklabs-gcp-04-a0db85792917`|
+|Region|`us-west1`|
+|Zone|`us-west1-a`|
+|VM 1|`gcelab`|
+|VM 2|`gcelab2`|
+|Firewall|`default-allow-http`|
+|NGINX|Running|
+|HTTP Test|`HTTP/1.1 200 OK`|
+|Assessment|Completed|
+
+---
+
+## 20. 最終記憶版流程
+
+最短記憶版：
+
+```
+export REGION=us-west1export ZONE=us-west1-agcloud config set compute/region $REGIONgcloud config set compute/zone $ZONEgcloud compute instances create gcelab \  --zone=$ZONE \  --machine-type=e2-medium \  --image-family=debian-12 \  --image-project=debian-cloud \  --boot-disk-size=10GB \  --boot-disk-type=pd-balanced \  --tags=http-servergcloud compute firewall-rules create default-allow-http \  --network=default \  --allow=tcp:80 \  --target-tags=http-server \  --source-ranges=0.0.0.0/0gcloud compute ssh gcelab --zone=$ZONE
+```
+
+在 VM 內：
+
+```
+sudo apt-get updatesudo apt-get install -y nginxps auwx | grep nginxexit
+```
+
+建立第二台 VM：
+
+```
+gcloud compute instances create gcelab2 \  --machine-type=e2-medium \  --zone=$ZONE
+```
+
+確認：
+
+```
+gcloud compute instances list
+```
+
+---
+
+## 21. 一句話總結
+
+本 lab 的核心是：  
+**使用 Compute Engine 建立 VM，透過 firewall rule 開放 HTTP，SSH 進入 Debian VM 安裝 NGINX，最後再用 gcloud 建立第二台 VM，理解 Cloud Console 與 CLI 都能管理 Google Cloud Compute 資源。**
