@@ -794,3 +794,265 @@ asia-south1asia-south1-locations
 4. lab session 配置錯誤。
 
 處理：
+
+
+處理：
+
+```
+gcloud resource-manager org-policies describe constraints/gcp.resourceLocations \  --project="$PROJECT_ID" \  --effectivegcloud functions regions list --gen2gcloud run regions list
+```
+
+---
+
+## 19.5 `serviceAccountTokenCreator` prompt
+
+Lab 提醒：
+
+```
+如果出現 serviceAccountTokenCreator 通知，請按 n。
+```
+
+這是 IAM delegation / service account impersonation 相關提示。  
+在 lab 中照指示按：
+
+```
+n
+```
+
+---
+
+## 19.6 Function 沒有馬上出現 logs
+
+原因：
+
+```
+Cloud Logging ingestion delayEventarc trigger delayPub/Sub message delivery delay
+```
+
+處理：
+
+```
+gcloud functions logs read nodejs-pubsub-function \  --region=asia-south1 \  --limit=20
+```
+
+或等 1–10 分鐘再查。
+
+---
+
+## 19.7 Function 狀態不是 ACTIVE
+
+查詢：
+
+```
+gcloud functions describe nodejs-pubsub-function \  --gen2 \  --region=asia-south1 \  --format='yaml(state,buildConfig,eventTrigger,serviceConfig)'
+```
+
+常見狀態：
+
+|State|意義|
+|---|---|
+|`ACTIVE`|正常可用|
+|`DEPLOYING`|部署中|
+|`FAILED`|部署失敗|
+|`UNKNOWN`|查詢不到或權限/API 問題|
+
+---
+
+# 20. gcloud 指令速查表
+
+## 20.1 帳號 / Project
+
+```
+gcloud auth listgcloud config get-value projectgcloud config set project PROJECT_ID
+```
+
+## 20.2 Region
+
+```
+gcloud config set run/region asia-south1gcloud config set functions/region asia-south1gcloud config set compute/region asia-south1
+```
+
+## 20.3 Org Policy
+
+```
+gcloud resource-manager org-policies describe constraints/gcp.resourceLocations \  --project="$PROJECT_ID" \  --effective
+```
+
+## 20.4 APIs
+
+```
+gcloud services list --enabledgcloud services enable cloudfunctions.googleapis.comgcloud services enable run.googleapis.comgcloud services enable eventarc.googleapis.comgcloud services enable pubsub.googleapis.comgcloud services enable cloudbuild.googleapis.com
+```
+
+## 20.5 Pub/Sub
+
+```
+gcloud pubsub topics create cf-demogcloud pubsub topics describe cf-demogcloud pubsub topics publish cf-demo --message="Cloud Function Gen2"
+```
+
+## 20.6 Cloud Functions Gen2
+
+```
+gcloud functions deploy nodejs-pubsub-function \  --gen2 \  --runtime=nodejs20 \  --region=asia-south1 \  --source=. \  --entry-point=helloPubSub \  --trigger-topic cf-demo
+```
+
+```
+gcloud functions describe nodejs-pubsub-function \  --gen2 \  --region=asia-south1
+```
+
+```
+gcloud functions logs read nodejs-pubsub-function \  --region=asia-south1
+```
+
+## 20.7 Cloud Logging
+
+```
+gcloud logging read \  "resource.type=\"cloud_run_revision\" AND resource.labels.service_name=\"nodejs-pubsub-function\"" \  --limit=20 \  --format='table(timestamp,textPayload)'
+```
+
+---
+
+# 21. Quiz 筆記
+
+## 21.1 Cloud Run functions 何時執行？
+
+答案概念：
+
+```
+事件發生時才執行。
+```
+
+適合：
+
+```
+HTTP requestPub/Sub messageCloud Storage uploadFirestore update
+```
+
+---
+
+## 21.2 本 lab 使用哪種 trigger？
+
+答案：
+
+```
+Pub/Sub topic trigger
+```
+
+具體 topic：
+
+```
+cf-demo
+```
+
+---
+
+## 21.3 如何確認 function 成功執行？
+
+答案：
+
+```
+查看 Cloud Logging / gcloud functions logs read
+```
+
+預期 log：
+
+```
+Hello, Cloud Function Gen2!
+```
+
+---
+
+# 22. DevOps / Security 補充
+
+## 22.1 最小權限 Service Account
+
+正式環境不應使用過大權限，例如：
+
+```
+OwnerEditor
+```
+
+應建立專用 runtime service account，例如：
+
+```
+cloudfunctionsa@PROJECT_ID.iam.gserviceaccount.com
+```
+
+並只授予必要角色：
+
+```
+roles/logging.logWriterroles/pubsub.subscriberroles/eventarc.eventReceiver
+```
+
+實際需要權限依 trigger 類型與應用邏輯調整。
+
+---
+
+## 22.2 Event-driven architecture
+
+本 lab 是典型事件驅動架構：
+
+```
+Producer → Pub/Sub Topic → Function → Logs / downstream processing
+```
+
+優點：
+
+|優點|說明|
+|---|---|
+|解耦|Producer 不需要知道 consumer|
+|可擴展|Pub/Sub 與 functions 可自動處理流量|
+|非同步|不阻塞原始流程|
+|適合微服務|每個事件可觸發不同 function|
+
+---
+
+## 22.3 Cloud Run functions vs Compute Engine
+
+|項目|Cloud Run functions|Compute Engine|
+|---|---|---|
+|管理伺服器|不需要|需要|
+|觸發方式|事件 / HTTP|長時間運行服務|
+|Scaling|自動|需自行設計|
+|適合|短任務、事件處理|長時間 process、完整 VM 控制|
+|成本模型|按使用量|VM 開機即計費|
+
+---
+
+## 22.4 Cloud Run functions vs Cloud Run
+
+|項目|Cloud Run functions|Cloud Run|
+|---|---|---|
+|部署單位|Function source code|Container image / source|
+|開發模型|Function entry point|Web server / container|
+|適合|單一事件處理邏輯|完整服務、API、Web app|
+|Trigger|Eventarc / Pub/Sub / HTTP|HTTP / Eventarc|
+|彈性|較簡化|較高|
+
+---
+
+# 23. 本 Lab 的核心學習總結
+
+本 lab 的主線：
+
+```
+Create Node.js function source→ Install functions framework→ Create Pub/Sub topic→ Deploy Gen2 Cloud Function→ Publish Pub/Sub message→ Read logs→ Confirm "Hello, Cloud Function Gen2!"
+```
+
+最重要的概念：
+
+1. **Cloud Run functions 是事件驅動 serverless function。**
+2. **Gen2 functions 使用 Cloud Run / Eventarc 作為底層。**
+3. **Pub/Sub topic 可以作為 function trigger。**
+   4. **Pub/Sub message data 會以 Base64 傳入 CloudEvent。**
+5. **Function 透過 `console.log()` 寫入 Cloud Logging。**
+6. **`gcloud functions deploy --gen2` 是部署 Gen2 function 的核心指令。**
+7. **Qwiklabs 要先檢查 `constraints/gcp.resourceLocations`，再選具體 region。**
+8. **不要把 `US`、`us`、`asia` 這種 broad value 當作具體 region 可用證明。**
+9. **本次成功 region 是 `asia-south1`，最終分數 100 / 100。**
+
+---
+
+# 24. 一句話版本
+
+**GSP080 教你用 Cloud Shell 建立 Node.js Cloud Run function，透過 Pub/Sub topic `cf-demo` 觸發 `helloPubSub`，將訊息 `Cloud Function Gen2` 解碼後寫入 Cloud Logging，並學會在 Qwiklabs 中先依 `constraints/gcp.resourceLocations` 選擇可用 region。**
