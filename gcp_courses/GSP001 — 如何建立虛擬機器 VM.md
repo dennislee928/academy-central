@@ -539,6 +539,7 @@ exit
 - 安裝 NGINX
 - 測試 HTTP
 - 建立 `gcelab2`
+- 顯示VM清單
 
 ```bash
 cat > run_gcelab.sh <<'EOF'
