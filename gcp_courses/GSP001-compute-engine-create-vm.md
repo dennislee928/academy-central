@@ -17,15 +17,15 @@
 
 完成後應能 / Upon completion, you should be able to:
 
-1. 如何登入 Google Cloud Console。
-2. 如何啟動 Cloud Shell。
-3. 如何設定 `gcloud` 的 project、region、zone。
-4. 如何透過 Cloud Console 建立 Compute Engine VM。
-5. 如何透過 `gcloud` CLI 建立 Compute Engine VM。
-6. 如何 SSH 進入 VM。
-7. 如何在 Debian VM 上安裝 NGINX。
-8. 如何開放 HTTP 防火牆規則。
-9. 如何透過外部 IP 驗證 Web Server 是否可用。
+1. Sign in to Google Cloud Console / 登入 Google Cloud Console
+2. Launch Cloud Shell / 啟動 Cloud Shell
+3. Configure `gcloud` project, region, and zone / 設定 `gcloud` 的 project、region、zone
+4. Create a Compute Engine VM via Console / 透過 Console 建立 VM
+5. Create a Compute Engine VM via `gcloud` CLI / 透過 CLI 建立 VM
+6. SSH into a VM / SSH 進入 VM
+7. Install NGINX on Debian / 在 Debian VM 上安裝 NGINX
+8. Open HTTP firewall rules / 開放 HTTP 防火牆規則
+9. Verify the web server via external IP / 透過外部 IP 驗證 Web Server
 
 ---
 
@@ -49,9 +49,9 @@
 
 **English:** Compute Engine is Google Cloud's **IaaS (Infrastructure as a Service)** offering — virtual machines on Google's infrastructure.
 
-**繁體中文：** **Compute Engine** 是 Google Cloud 的 IaaS 服務，也就是 Infrastructure as a Service。
+**繁體中文：** **Compute Engine** 是 Google Cloud 的 IaaS 服務（Infrastructure as a Service），讓使用者在 Google Cloud 基礎架構上建立 VM，執行不同作業系統，例如：
 
-它可以讓使用者在 Google Cloud 基礎架構上建立 VM，執行不同作業系統，例如：
+Supported OS / 支援的作業系統：
 
 - Debian
 - Ubuntu
