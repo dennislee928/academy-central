@@ -1,510 +1,234 @@
-**Effective identity governance is essential for maintaining security, ensuring compliance, and managing risk across your SaaS ecosystem.**
+# Identity Governance and Compliance
+# 身分治理與法規遵循
 
-#### 🔑 **Key Concept**  
+## Overview | 概述
 
-Identity governance encompasses the **policies, processes,** and **technologies** that ensure **_the right users have the right access to the right resources for the right reasons._**
+Effective identity governance ensures the **right users** have the **right access** to the **right resources** for the **right reasons**. Falcon Shield strengthens identity governance by providing visibility across 180+ SaaS applications through consolidated inventories.
 
+有效的身分治理確保**適當的使用者**出於**適當的理由**存取**適當的資源**。Falcon Shield 透過整合清單提供對 180+ SaaS 應用程式的可見性，強化身分治理。
 
-## 
+```mermaid
+flowchart TD
+    subgraph Governance["Identity Governance Framework 身分治理框架"]
+        A["Users Inventory\n使用者清單"]
+        B["Permissions Inventory\n權限清單"]
+        C["Privileged Access Governance\n特權存取治理"]
+        D["External Identity Monitoring\n外部身分監控"]
+        E["Device-Identity Correlation\n裝置-身分關聯"]
+        F["Custom Security Checks\n自訂安全檢查"]
+    end
+    A --> G["Comprehensive\nVisibility\n全面可見性"]
+    B --> G
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+    G --> H["Risk Reduction\n風險降低"]
+    H --> I["Compliance\n法規遵循"]
+```
 
-Key principles
+---
 
-What are the key principles of identity governance? Flip the cards below to learn more.
+## Key Principles | 關鍵原則
 
-1. Click to flip
-    
-    **Least privilege**
-    
-2. Click to flip
-    
-    **Segregation of duties**
-    
-3. Click to flip
-    
-    **Access certification**
-    
-4. Click to flip
-    
-    **Centralized policy management**
-    
-5. Click to flip
-    
-    **Comprehensive auditing**
-1. Click to flip
-    
-    Users should have only the minimum access rights necessary to perform their job functions.
-    
-2. Click to flip
-    
-    Critical functions should be divided among different users to prevent fraud.
-    
-3. Click to flip
-    
-    Regular reviews of access rights ensure they remain appropriate.
-    
-4. Click to flip
-    
-    Consistent application of access policies across systems is essential.
-    
-5. Click to flip
-    
-    Detailed records of access changes and policy exceptions are maintained.
-## 
+| Principle | Description | 原則 | 說明 |
+|-----------|-------------|------|------|
+| **Least Privilege** | Users have only the minimum access needed | **最小權限** | 使用者僅拥有所需的最低存取權 |
+| **Segregation of Duties** | Critical functions divided among users | **職責分離** | 關鍵功能由不同使用者分工 |
+| **Access Certification** | Regular reviews of access rights | **存取認證** | 定期審查存取權限 |
+| **Centralized Policy Management** | Consistent policy application across systems | **集中化策略管理** | 跨系統一致的策略應用 |
+| **Comprehensive Auditing** | Detailed records of changes and exceptions | **全面稽核** | 變更和例外的詳細記錄 |
 
-**Identity governance and risk management**
+---
 
-Falcon Shield strengthens identity governance by providing unprecedented visibility across 180+ SaaS applications through its consolidated inventories. Review how Falcon Shield helps strengthen identity governance in each tab below.
+## Falcon Shield Governance Capabilities | Falcon Shield 治理能力
 
-Users Inventory
+### Users Inventory | 使用者清單
 
-Permissions Inventory
+Provides a consolidated view of all identities with risk scoring to identify potential vulnerabilities.
 
-Privileged Access Governance (PAG)
+提供所有身分的整合視圖和風險評分，以識別潛在漏洞。
 
-External Identity Monitoring
+### Permissions Inventory | 權限清單
 
-Device-to-Identity Correlation
+Maps all permissions and roles across applications to prevent unauthorized access.
 
-Custom Security Checks
+跨應用程式映射所有權限和角色，以防止未授權存取。
 
-The **Users Inventory** provides a consolidated view of all identities within the organization. It includes risk scoring to help identify and address potential vulnerabilities.
+### Privileged Access Governance (PAG) | 特權存取治理
 
-🔑This feature **ensures a comprehensive understanding of user identities**, enabling better governance and security.
+Monitors sensitive permissions and enforces separation of duties to reduce misuse risk.
 
-The **Permissions Inventory** maps all permissions and roles across various applications. This allows for a clear understanding of access levels and helps prevent unauthorized access.
+監控敏感權限並強制職責分離，以降低濫用風險。
 
-🔑By organizing permissions effectively, organizations can **maintain robust identity governance**.
+### External Identity Monitoring | 外部身分監控
 
-**Privileged Access Governance (PAG)** monitors sensitive permissions and enforces separation of duties. This reduces the risk of misuse of privileged accounts.
+Tracks third-party access to ensure adherence to security policies.
 
-🔑PAG is essential for maintaining control over critical access points within the organization.
+追蹤第三方存取以確保遵守安全策略。
 
-External identity monitoring tracks third-party access to corporate resources. This ensures that external users adhere to the organization's security policies.
+### Device-to-Identity Correlation | 裝置-身分關聯
 
-🔑It provides visibility into third-party activities, enhancing overall security.
+Ensures users access SaaS only from secure devices.
 
-Device-to-identity correlation ensures that users access SaaS applications only from secure devices. This minimizes the risk of unauthorized access from compromised devices.
+確保使用者僅從安全裝置存取 SaaS。
 
-🔑By linking devices to user identities, organizations can enforce stricter security measures.
+### Custom Security Checks | 自訂安全檢查
 
-Custom security checks align with your organization's specific identity policies. These checks provide tailored solutions to meet unique security requirements.
+Aligns with your organization's specific identity policies.
 
-🔑They help organizations maintain compliance and strengthen their identity governance framework.
+與您組織的特定身分政策保持一致。
 
-# 
+---
 
-Manage access rights
+## Managing Access Rights | 管理存取權限
 
-![](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/c2b0557ccfd9b824fa1f6e0e4d637f49f80a64592a20c6ad51f31bd01b134129/scormcontent/assets/ckmWEg/d5e6bd7d-72c0-4a3d-887d-22671f7069d5.jpg)
+### Permissions Inventory Features | 權限清單功能
 
-**The Permissions Inventory is a powerful tool for understanding and managing access rights across your SaaS applications.**
+| Feature | Description | 功能 | 說明 |
+|---------|-------------|------|------|
+| Unified Permissions View | Consolidated overview across all apps | 統一權限視圖 | 跨所有應用程式的整合概覽 |
+| Role Details | Insights into each role and assigned users | 角色詳情 | 每個角色和已分配使用者的洞察 |
+| Permission Usage Analysis | How often specific permissions are used | 權限使用分析 | 特定權限的使用頻率 |
+| Custom Filtering | Focus on specific apps, types, or groups | 自訂篩選 | 關注特定應用程式、類型或群組 |
+| Historical Tracking | Permission changes over time | 歷史追蹤 | 隨時間變化的權限變更 |
 
-## 
+---
 
-**Permissions Inventory**
+## Compliance Monitoring and Reporting | 法規遵循監控與報告
 
-The Permissions Inventory provides detailed visibility into **roles, permissions**, and **access patterns**, enabling effective implementation of least privilege principles.
+### Framework Mapping | 框架映射
 
-Key features of the Permissions Inventory include:
+Security checks are aligned with major compliance frameworks:
+
+安全檢查與主要法規遵循框架保持一致：
 
-## 
+```mermaid
+flowchart LR
+    A["Security Checks\n安全檢查"] --> B["SOC 2"]
+    A --> C["ISO 27001"]
+    A --> D["NIST"]
+    A --> E["CIS"]
+    B --> F["Compliance\nReporting\n法規遵循報告"]
+    C --> F
+    D --> F
+    E --> F
+```
 
-Unified permissions view
+### Compliance Features | 法規遵循功能
+
+| Feature | Description | 功能 | 說明 |
+|---------|-------------|------|------|
+| Compliance Dashboards | Visual compliance status across frameworks | 法規遵循儀表板 | 跨框架的視覺化遵循狀態 |
+| Control Evidence | Documentation of control implementation | 控制證據 | 控制措施實施的文件記錄 |
+| Compliance Reporting | Automated reports for auditors and stakeholders | 法規遵循報告 | 為稽核者和利害關係人自動化報告 |
 
-The unified permissions view **provides a consolidated overview of permissions across all applications.** It normalizes data into a consistent format, making it easier to understand and manage. This ensures that administrators can quickly identify and address any discrepancies in permissions.
+---
 
-_By streamlining the presentation of permissions, this feature enhances clarity and reduces the complexity of managing access rights across multiple platforms._
+## Privileged Access Governance (PAG) | 特權存取治理
 
-## 
+PAG focuses on managing and securing privileged access — the highest-risk accounts.
 
-Role details
+PAG 專注於管理和保護特權存取 — 最高風險的帳戶。
 
-Role details offer **comprehensive insights into each role within the system**. This includes information about assigned permissions and the users associated with each role. Administrators can easily review and modify roles to ensure proper access control.
-
-_With detailed role information, you can maintain a clear structure and prevent unauthorized access by ensuring roles are accurately defined and managed._
-
-## 
-
-Permission usage analysis
-
-Permission usage analysis **provides valuable insights into how often specific permissions are utilized.** This helps administrators identify underused or redundant permissions, optimizing the overall access control strategy.
-
-_By understanding permission usage patterns, you can streamline your systems and ensure that permissions align with actual user needs and activities._
-
-## 
-
-Custom filtering
-
-Custom filtering capabilities **allow users to focus on specific applications, permission types, or user groups**. This powerful feature enables administrators to quickly locate and address specific access issues.
-
-_With advanced filtering options, managing permissions becomes more efficient, saving time and improving the accuracy of access control decisions._
-
-## 
-
-Historical tracking
-
-Historical tracking **provides visibility into permission changes over time**. This feature allows administrators to review past modifications, ensuring accountability and transparency in access management.
-
-_By maintaining a record of changes, you can identify trends, address potential security risks, and maintain compliance with regulatory requirem_ents.
-
-## 
-
-**Compliance monitoring and reporting**
-
-Falcon Shield provides comprehensive compliance monitoring and reporting capabilities, helping you demonstrate adherence to regulatory requirements and security frameworks.
-
-Key compliance features include:
-
-## 
-
-Framework mapping
-
-**Security checks** **are aligned with widely recognized compliance frameworks**, including SOC2, ISO 27001, NIST, and CIS. This mapping ensures that organizations can **easily identify and address specific compliance requirements**. By leveraging these frameworks, businesses can streamline their compliance efforts and maintain industry standards.
-
-**Why use framework mapping?** Regular updates to these mappings help you stay current with evolving regulatory requirements and best practices.
-
-## 
-
-Compliance dashboards
-
-**Compliance dashboards provide visual representations of an organization’s compliance status across multiple frameworks.** These dashboards offer a clear and concise overview, enabling stakeholders to quickly identify areas of strength and potential gaps. By centralizing compliance data, dashboards simplify monitoring and reporting processes.
-
-**Why use compliance dashboards?** Interactive features allow you to drill down into specific metrics for a more detailed analysis of compliance performance.
-
-## 
-
-Control evidence
-
-**Control evidence includes detailed information about the implementation and effectiveness of specific controls.** This documentation is essential for demonstrating compliance to auditors and stakeholders. By maintaining comprehensive evidence, organizations can ensure transparency and accountability in their compliance efforts.
-
-**Why utilize control evidence?** Regularly updating and organizing control evidence helps you streamline audit processes and reduces the risk of non-compliance.
-
-## 
-
-Compliance reporting
-
-**Automated compliance reports are designed to meet the needs of auditors and stakeholders.** These reports provide a structured summary of compliance activities, making it easier to communicate progress and address inquiries. Automation reduces the time and effort required to generate accurate and consistent reports.
-
-**Why do compliance reporting?** Customizable reporting options allow you to tailor reports to specific frameworks or stakeholder requirements.
-
-## 
-
-**Privileged Access Governance (PAG)**
-
-Privileged Access Governance (PAG) focuses specifically on **managing and securing privileged access across your environment.** Privileged accounts represent a particularly high risk, as they have elevated permissions that could cause significant damage if compromised.
-
-Continued
-
-Flip each card below to explore how Falcon Shield provides specialized capabilities for PAG.
-
-1. Click to flip
-    
-    **Privileged role identification**
-    
-2. Click to flip
-    
-    **Privileged user monitoring**
-    
-3. Click to flip
-    
-    **Privileged access patterns**
-    
-4. Click to flip
-    
-    **Separation of duties analysis**
-    
-5. Click to flip
-    
-    **Privileged access alerts**
-
-
-6. Click to flip
-    
-    Automatically identifies privileged roles across applications to ensure secure and efficient identity governance.
-    
-7. Click to flip
-    
-    Tracks users with privileged access to detect and prevent unauthorized activities or potential security breaches.
-    
-8. Click to flip
-    
-    Analyzes how privileged access is being used to identify unusual or risky behavior patterns.
-    
-9. Click to flip
-    
-    Identifies potential conflicts in privileged role assignments to maintain compliance and reduce risks.
-    
-10. Click to flip
-    
-    Notifies security teams of changes to privileged access, enabling quick responses to potential threats.
-Review each tab below to explore some key PAG use cases supported by Falcon Shield.
-
-Salesforce PAG
-
-NetSuite PAG
-
-Office 365 PAG
-
-Google Workspace PAG
-
-Workday PAG
-
-Monitor sensitive permissions such as **View All Data,** **Modify All Data**, and administrative capabilities.
-
-These permissions are critical for ensuring secure access and maintaining control over sensitive data within Salesforce environments.
-
-Track financial control permissions and administrative access.
-
-This process helps safeguard financial data and ensures that only authorized personnel can access or modify critical financial information.
-
-Monitor Exchange, Azure AD, and Office 365 administrative roles.
-
-Effective oversight of these roles is essential for managing user access and protecting sensitive organizational data within the Office 365 ecosystem.
-
-Track super admin access and sensitive API permissions.
-
-This ensures that administrative privileges and API integrations are securely managed to prevent unauthorized access or data breaches.
-
-Monitor access to HR data, financial information, and system configurations.
-
-Proper governance of these access points is vital for protecting sensitive employee and organizational information.
-
-## **To implement effective PAG:**  
-
-  
-
-**1**  
-
-Identify all privileged roles across your applications  
-
-**2**  
-
-Limit privileged access to only those users who require it  
-
-**3**  
-
-Implement time-limited privileged access where possible  
-
-**4**  
-
-Regularly review privileged access assignments  
-
-**5**  
-
-Monitor privileged user activities for suspicious behavior
-
-## 
-
-**Custom security checks for identity governance**
-
-Custom security checks allow you to **t****ailor Falcon Shield's governance capabilities to your specific requirements**. By creating checks that align with your organization's policies and compliance needs, you can ensure consistent enforcement of identity governance principles.
-
-Open the tabs below by clicking on the **+** icon to review some common identity governance checks.
-
-## 
-
-External users with privileged roles
-
-External collaborators with administrative access can pose significant security risks if not properly managed. It is crucial to identify these users and ensure their access aligns with organizational policies. **Regular audits can help verify that external users only have the permissions necessary for their roles.**
-
-🔑Implementing strict access controls and monitoring activities can mitigate potential threats from external users with privileged roles.
-
-## 
-
-Segregation of duties violations
-
-Segregation of duties violations **occur when users are assigned conflicting roles,** which can lead to unauthorized actions or fraud. Identifying these violations is essential to maintaining a secure and compliant environment. Automated tools can help detect and flag such conflicts efficiently.
-
-🔑By addressing these violations promptly, you can reduce risks and ensure proper checks and balances within their processes.
-
-## 
-
-Dormant privileged accounts
-
-Dormant accounts with elevated permissions are a common security vulnerability. These accounts, if left unmanaged, **can be exploited by malicious actors**. Regularly reviewing and deactivating unused accounts is a critical step in reducing this risk.
-
-🔑You should implement policies to automatically disable accounts that remain inactive for extended periods.
-
-## 
-
-Excessive permission accumulation
-
-Users with an unusually high number of permissions can inadvertently create security gaps. **Excessive permissions often result from role changes or improper access management.** Conducting periodic reviews of user permissions can help you identify and address these issues.
-
-🔑Streamlining permissions ensures that users have access only to the resources necessary for their responsibilities.
-
-## 
-
-Unmanaged accounts with sensitive access
-
-Accounts not managed by your identity provider (IdP) but with access to sensitive data present a significant security risk. These unmanaged accounts **can bypass centralized controls, making them harder to monitor and secure**. Identifying and integrating these accounts into your IdP is essential for comprehensive access management.
-
-🔑Establishing strict policies for account management and regularly auditing access can help mitigate the risks associated with unmanaged accounts.
-
-## 
-
-**Best practices**
-
-Falcon Shield allows you to go beyond out-of-the-box security checks by creating custom security checks tailored to your organization’s specific needs. These checks are not part of the default configuration and are manually created by users to address use cases that standard checks may not cover.
-
-1. Click to flip
-    
-    **Use clear naming conventions**
-    
-2. Click to flip
-    
-    **Organize with tags or groups**
-    
-3. Click to flip
-    
-    **Document custom check logic**
-    
-4. Click to flip
-    
-    **Review checks regularly**
-1. Click to flip
-    
-    Consistent naming ensures clarity, improves searchability, reduces confusion, and enhances collaboration, streamlining identity governance processes effectively.
-    
-2. Click to flip
-    
-    Tags and groups categorize checks, simplify reporting, and align with goals, improving usability and documentation for governance efforts.
-    
-3. Click to flip
-    
-    Detailed documentation ensures transparency, aids troubleshooting, and keeps checks relevant, even as teams or priorities evolve.
-    
-4. Click to flip
-    
-    Periodic reviews ensure checks remain accurate, address outdated logic, and align governance processes with evolving compliance needs.
-## 
-
-Be clear with naming
-
-Using consistent naming conventions is essential for maintaining clarity and organization. This approach ensures that custom checks are easily searchable and reportable, saving time and effort. Clear naming also reduces confusion and enhances collaboration across teams.
-
-By adhering to a standardized naming system, you can streamline processes and improve the overall efficiency of your identity governance efforts.
-
-## 
-
-Tag or group them
-
-Organizing custom checks with tags or groups can significantly enhance their usability. Tags allow you to categorize checks by team, compliance framework, or purpose, making them easier to locate and manage. This method fosters better alignment with organizational goals.
-
-Grouping checks also simplifies reporting and auditing processes, ensuring that all relevant checks are accounted for and properly documented.
-
-## 
-
-Document logic
-
-Providing detailed descriptions for custom checks is crucial for future reference and audits. Clear documentation ensures that the logic behind each check is understood, even as team members or priorities change over time. This practice supports transparency and accountability.
-
-Well-documented logic also aids in troubleshooting and updating checks, ensuring they remain effective and relevant.
-
-## 
-
-Review periodically
-
-Regularly revisiting custom checks is vital to maintaining their relevance and accuracy. As your SaaS environment evolves, certain checks may become outdated or require adjustments. Periodic reviews help identify and address these issues proactively.
-
-This practice ensures that your identity governance processes remain robust and aligned with current needs and compliance requirements.
-
-## 
-
-**Extending identity governance with Falcon Shield APIs**
-
-Falcon Shield APIs help monitor and protect SaaS applications from unauthorized access and data breaches. The Falcon Shield API enables programmatic access to identity data and governance capabilities, allowing organizations to:
-
-1. Click to flip
-    
-    **Monitor security checks**
-    
-2. Click to flip
-    
-    **Respond to security alerts**
-    
-3. Click to flip
-    
-    **Monitor inventories**
-    
-4. Click to flip
-    
-    **Manage SaaS integrations**
-    
-5. Click to flip
-    
-    **Access compliance information**
-    
-6. Click to flip
-    
-    **Monitor system logs**
-1. Click to flip
-    
-    Regularly manage and monitor security checks across SaaS applications to ensure system integrity and prevent vulnerabilities.
-    
-2. Click to flip
-    
-    Track and respond promptly to security alerts to mitigate risks and maintain a secure SaaS environment.
-    
-3. Click to flip
-    
-    Monitor user and device inventory to maintain visibility and control over access to your SaaS applications.
-    
-4. Click to flip
-    
-    Effectively manage SaaS integrations to ensure seamless operation and secure data exchange between connected systems.
-    
-5. Click to flip
-    
-    Access compliance information to verify adherence to regulatory standards and maintain organizational accountability.
-    
-6. Click to flip
-    
-    View system logs and activity monitoring to track system performance and detect any unauthorized activities.
-To use the SaaS Security APIs, ensure you have:.
-
-- 1
-    
-    Valid API credentials with appropriate scopes
-    
-- 2
-    
-    Access to the CrowdStrike Falcon platform
-    
-- 3
-    
-    Proper network access to the API endpoints
-API clients are managed through the Falcon console under **Support and Resources > API Clients and Keys.**
-
-Review some of the key API capabilities for SaaS applications by flipping each card below:
-
-1. Click to flip
-    
-    **Identity data access**
-    
-2. Click to flip
-    
-    **Security check management**
-    
-3. Click to flip
-    
-    **Compliance reporting**
-    
-4. Click to flip
-    
-    **Alert management**
-1. Click to flip
-    
-    Retrieve user, permission, and device data to ensure accurate identity governance and streamlined access management.
-    
-2. Click to flip
-    
-    Access security check results and manage dismissals to maintain compliance and address potential vulnerabilities effectively.
-    
-3. Click to flip
-    
-    Generate compliance reports programmatically to meet regulatory requirements and streamline audit processes efficiently.
-    
-4. Click to flip
-    
-    Retrieve and manage alerts to monitor system activities and respond to potential security incidents promptly.
+### PAG Capabilities | PAG 能力
+
+```mermaid
+flowchart TD
+    A["PAG Capabilities\nPAG 能力"] --> B["Privileged Role Identification\n特權角色識別"]
+    A --> C["Privileged User Monitoring\n特權使用者監控"]
+    A --> D["Privileged Access Patterns\n特權存取模式"]
+    A --> E["Separation of Duties Analysis\n職責分離分析"]
+    A --> F["Privileged Access Alerts\n特權存取警報"]
+    B --> G["Reduced Risk\n風險降低"]
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+```
+
+### PAG Implementation Steps | PAG 實施步驟
+
+1. **Identify** all privileged roles across applications
+2. **Limit** privileged access to only those who require it
+3. **Implement** time-limited privileged access where possible
+4. **Review** privileged access assignments regularly
+5. **Monitor** privileged user activities for suspicious behavior
+
+1. **識別**跨應用程式的所有特權角色
+2. **限制**特權存取僅限需要的使用者
+3. **盡可能實施**限時特權存取
+4. **定期審查**特權存取分配
+5. **監控**特權使用者活動以偵測可疑行為
+
+### PAG Use Cases by Application | 各應用程式的 PAG 使用情境
+
+| Application | Monitored Permissions | 應用程式 | 監控的權限 |
+|-------------|----------------------|----------|------------|
+| Salesforce | View All Data, Modify All Data, admin capabilities | Salesforce | 檢視所有資料、修改所有資料、管理功能 |
+| NetSuite | Financial control permissions, administrative access | NetSuite | 財務控制權限、管理存取 |
+| Office 365 | Exchange, Azure AD, O365 admin roles | Office 365 | Exchange、Azure AD、O365 管理角色 |
+| Google Workspace | Super admin access, sensitive API permissions | Google Workspace | 超級管理員存取、敏感 API 權限 |
+| Workday | HR data, financial info, system configurations | Workday | HR 資料、財務資訊、系統設定 |
+
+---
+
+## Custom Security Checks for Identity Governance | 身分治理的自訂安全檢查
+
+| Check | Description | 檢查 | 說明 |
+|-------|-------------|------|------|
+| External users with privileged roles | External collaborators with admin access pose security risks | 擁有特權角色的外部使用者 | 擁有管理存取權的外部合作者帶來安全風險 |
+| Segregation of duties violations | Users assigned conflicting roles | 職責分離違規 | 被分配衝突角色的使用者 |
+| Dormant privileged accounts | Inactive accounts with elevated permissions | 閒置特權帳戶 | 具提升權限的非活動帳戶 |
+| Excessive permission accumulation | Users with unusually high number of permissions | 過度權限累積 | 擁有異常多權限的使用者 |
+| Unmanaged accounts with sensitive access | Accounts not managed by IdP with sensitive data access | 未管理的敏感存取帳戶 | 未由 IdP 管理但有敏感資料存取權的帳戶 |
+
+### Best Practices for Custom Checks | 自訂檢查的最佳實踐
+
+1. **Use clear naming conventions** — Ensure clarity and searchability
+2. **Organize with tags or groups** — Categorize by team or framework
+3. **Document custom check logic** — Maintain transparency for audits
+4. **Review checks periodically** — Keep checks relevant as environment evolves
+
+1. **使用清晰的命名規則** — 確保清晰度和可搜尋性
+2. **使用標籤或群組組織** — 按團隊或框架分類
+3. **記錄自訂檢查邏輯** — 維護稽核的透明度
+4. **定期審查檢查** — 隨環境演進保持檢查的相關性
+
+---
+
+## Extending Governance with APIs | 透過 API 擴展治理
+
+Falcon Shield APIs enable programmatic access to identity data and governance capabilities:
+
+Falcon Shield API 提供對身分資料和治理能力的程式化存取：
+
+| API Capability | Description | API 能力 | 說明 |
+|----------------|-------------|----------|------|
+| Monitor Security Checks | Manage checks across SaaS apps | 監控安全檢查 | 跨 SaaS 應用程式管理檢查 |
+| Respond to Alerts | Track and respond to security alerts | 回應警報 | 追蹤並回應安全警報 |
+| Monitor Inventories | Access user and device data | 監控清單 | 存取使用者和裝置資料 |
+| Manage Integrations | Ensure secure data exchange | 管理整合 | 確保安全的資料交換 |
+| Access Compliance Info | Verify regulatory adherence | 存取法規資訊 | 驗證法規遵循 |
+| Monitor System Logs | Track activity and detect anomalies | 監控系統日誌 | 追蹤活動並偵測異常 |
+
+**Prerequisites | 前置條件：**
+
+1. Valid API credentials with appropriate scopes
+2. Access to the CrowdStrike Falcon platform
+3. Proper network access to API endpoints
+
+1. 具有適當範圍的有效 API 憑證
+2. 存取 CrowdStrike Falcon 平台
+3. 對 API 端點的正確網路存取
+
+---
+
+## Related Modules | 相關模組
+
+| Module | Description | 關聯模組 | 說明 |
+|--------|-------------|----------|------|
+| [User Inventory](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | Identity visibility and risk assessment | [使用者清單](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | 身分可見性與風險評估 |
+| [Permissions Governance](SaaS%20Permissions%20Governance.md) | Enforce least privilege | [權限治理](SaaS%20Permissions%20Governance.md) | 實施最小權限 |
+| [ITDR](ITD%20-%20Identity%20Threat%20Detection%20and%20Response.md) | Detect identity-based threats | [ITDR](ITD%20-%20Identity%20Threat%20Detection%20and%20Response.md) | 偵測身分型威脅 |
+| [Devices Inventory](Monitoring%20SaaS-Connected%20Devices.md) | Device-identity correlation | [裝置清單](Monitoring%20SaaS-Connected%20Devices.md) | 裝置-身分關聯 |
