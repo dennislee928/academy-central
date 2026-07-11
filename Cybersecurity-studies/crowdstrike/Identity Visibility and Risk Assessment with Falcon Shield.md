@@ -1,369 +1,219 @@
-#### 🔑 **Key Concept**  
+# Identity Visibility and Risk Assessment with Falcon Shield
+# Falcon Shield 身分可見性與風險評估
 
-Falcon Shield's powerful **identity visibility** and **risk assessment capabilities** enable you to understand who has access to what, identify risky permissions, and prioritize your security efforts effectively
+## Overview | 概述
 
-In this module, we'll explore how **Falcon Shield's User Inventory** provides comprehensive visibility into identities across your SaaS ecosystem and helps you assess identity-related risks. We will also briefly look into the correlation between devices and users.
+Falcon Shield's **User Inventory** provides comprehensive visibility into identities across your SaaS ecosystem. It helps you understand who has access to what, identify risky permissions, and prioritize security efforts.
 
-## 
+Falcon Shield 的**使用者清單**提供對 SaaS 生態系統中身分的全面可見性。協助瞭解誰有權存取什麼、識別高風險權限，並優先處理安全工作。
 
-User Inventory
+```mermaid
+flowchart TD
+    A["User Inventory\n使用者清單"] --> B{"Identity Risks\n身分風險"}
+    B --> C["Privileged Access\n特權存取"]
+    B --> D["Security Check Failures\n安全檢查失敗"]
+    B --> E["External Users\n外部使用者"]
+    B --> F["Dormant Accounts\n閒置帳戶"]
+    B --> G["Authentication Issues\n驗證問題"]
+    B --> H["Device Security\n裝置安全"]
+    C --> I["Risk Score\n風險評分"]
+    D --> I
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J["Remediation\nPriority\n修復優先級"]
+```
 
-The User Inventory is the cornerstone of Falcon Shield's identity visibility capabilities. It provides a consolidated view of all user identities across your connected SaaS applications, enabling you to:
+---
 
-## 
+## User Inventory Capabilities | 使用者清單能力
 
-See all applications a user has access to
+### See All Applications a User Has Access To | 查看使用者可存取的所有應用程式
 
-Gain a comprehensive view of all the applications a user can access within your organization. This visibility helps ensure that users have appropriate access levels and reduces the risk of unauthorized access.
+Gain a comprehensive view of all applications a user can access within your organization. This visibility helps ensure appropriate access levels.
 
-By identifying these applications, you can streamline user management and enhance security protocols.
+全面檢視使用者可在組織內存取的所有應用程式。此可見性有助於確保存取層級適當。
 
-_In this example, the user has integrations with Snowflake, Slack, Asana, Data Dog, etc. Click on the image to see all the integrations._
+> **Example | 範例：** A user has integrations with Snowflake, Slack, Asana, Data Dog, and more. Click to see all integrations.
 
-![User inventory with integrations highlighted.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/applications.png)
+### Identify Users with Privileged Roles | 識別擁有特權角色的使用者
 
-## 
+Quickly determine which users hold privileged roles. Privileged roles often come with elevated permissions, making monitoring crucial.
 
-Identify which users have privileged roles
+快速判斷哪些使用者持有特權角色。特權角色通常伴隨提升的權限，使得監控至關重要。
 
-Quickly determine which users hold privileged roles within your system. Privileged roles often come with elevated permissions, making it crucial to monitor and manage them effectively.
+> **Example | 範例：** A user has 24 privileged roles, including Admin and Super Admin level. Determine if this access is needed.
 
-Regularly reviewing these roles helps mitigate security risks and ensures compliance with organizational policies.
+### Detect Security Check Failures | 偵測安全檢查失敗
 
-_In this example, the user has 24 privileged roles, some of them being Admin and Super Admin level. Determine if this level of access is needed for each of the integrations._
+Identify users who have failed critical security checks (MFA, password compliance). These failures indicate potential vulnerabilities.
 
-![Users inventory with the privileged roles tab open and highlighted](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/priveleged%20roles.png)
+識別未通過關鍵安全檢查（MFA、密碼合規）的使用者。這些失敗表示潛在漏洞。
 
-## 
+### Find External Users | 發現外部使用者
 
-Detect users with security check failures
+Discover external users with access to your applications. External access poses unique security challenges.
 
-Identify users who have failed critical security checks, such as multi-factor authentication or password compliance. These failures can indicate potential vulnerabilities in your system.
+發現有權存取您應用程式的外部使用者。外部存取帶來獨特的安全挑戰。
 
-Addressing these issues promptly helps maintain a secure environment and protects sensitive data from unauthorized access.
+> **Tip | 技巧：** Filter by **Domain Type > Not available and Unverified** to find external users.
 
-_In this example, you see a list of failed, high-impact security checks, along with the integration, security domain, and number of affected users ._
+### Discover Dormant Accounts | 發現閒置帳戶
 
-![Security checks dashboard](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/secuirtuy.png)
+Locate accounts that have been inactive for extended periods. Dormant accounts become security liabilities.
 
-## 
+定位長期不活躍的帳戶。閒置帳戶成為安全隱患。
 
-Find external users with access to your applications
+---
 
-Discover external users who have been granted access to your organization's applications. External access can pose unique security challenges if not properly managed.
+## Key User Inventory Attributes | 關鍵使用者清單屬性
 
-Regularly auditing these users ensures that only authorized individuals retain access, reducing potential risks.
+| Attribute | Description | 屬性 | 說明 |
+|-----------|-------------|------|------|
+| Email | Primary user identifier | 電子郵件 | 主要使用者識別碼 |
+| Name | User's full name | 名稱 | 使用者全名 |
+| Department | Organizational unit | 部門 | 組織單位 |
+| Company | Organization affiliation | 公司 | 組織所屬 |
+| Domain | Email domain | 網域 | 電子郵件網域 |
+| Enabled/Disabled Status | Account active or inactive | 啟用/停用狀態 | 帳戶活動或非活動 |
+| Last Seen | Most recent activity | 最後活動 | 最近活動時間 |
+| Creation Time | Account creation date | 建立時間 | 帳戶建立日期 |
+| Failed Security Checks | Number of failures | 安全檢查失敗 | 失敗次數 |
+| Privileged Roles | Assigned elevated roles | 特權角色 | 已分配的提升角色 |
+| Reported By | Source applications | 回報者 | 來源應用程式 |
 
-_The example below shows how to filter the Users Inventory for external users by selecting Domain Type > Not available and Unverified._
+---
 
-![Filter the Users Inventory for external users.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/external%20users.png)
+## Risk Factors | 風險因素
 
-## 
+Falcon Shield aggregates multiple risk factors to create a comprehensive risk assessment for each user.
 
-Discover inactive or dormant accounts
+Falcon Shield 聚合多個風險因素，為每位使用者建立全面的風險評估。
 
-Locate accounts that have been inactive or dormant for an extended period. These accounts can become security liabilities if left unchecked.
+### Privileged Access | 特權存取
 
-By identifying and addressing these accounts, you can reduce the attack surface and improve overall system hygiene.
+Users with administrative or privileged roles are prime targets for malicious actors. Regularly review and limit privileged access.
 
-_The example below shows the User accounts labeled as dormant._
+擁有管理或特權角色的使用者是惡意行為者的主要目標。定期審查和限制特權存取。
 
-![The Users inventory with several accounts tagged as dormant.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/dormant.png)
-The **User Inventory aggregates data from all connected applications,** creating a unified identity profile for each user. This consolidation is based primarily on email address matching, though Falcon Shield also uses other attributes to correlate identities when email addresses differ
+### Security Check Failures | 安全檢查失敗
 
+Users affected by failed security checks may indicate vulnerabilities. Ensure security checks are consistently applied.
 
+受安全檢查失敗影響的使用者可能表示漏洞。確保安全檢查一致應用。
 
-## 
+### External Status | 外部狀態
 
-**Key User Inventory attributes**
+Users from outside managed domains pose unique challenges. Establish clear guidelines for external user activities.
 
-Before we get started, let's review some elements of the **User Inventory**.
+來自管理網域外部的使用者帶來獨特挑戰。為外部使用者活動建立明確指南。
 
-**Note:** If you have already completed _SAAS 152: Managing SaaS Application Inventories with Falcon Shield_, you can review this section or skip to the next.
+### Authentication Methods | 驗證方法
 
-1. Click to flip
-    
-    **Email**
-    
-2. Click to flip
-    
-    **Name**
-    
-3. Click to flip
-    
-    **Department**
-    
-4. Click to flip
-    
-    **Company**
-    
-5. Click to flip
-    
-    **Domain**
-    
-6. Click to flip
-    
-    **Enabled/Disabled Status**
-    
-7. Click to flip
-    
-    **Last Seen**
-    
-8. Click to flip
-    
-    **Creation Time**
-    
-9. Click to flip
-    
-    **Failed Security Checks**
-    
-10. Click to flip
-    
-    **Privileged Roles**
-    
-11. Click to flip
-    
-    **Reported By**
-
-1. The primary identifier for the user, typically used to uniquely distinguish accounts within a system.
-    
-2. Click to flip
-    
-    The user's full name as recorded in the system, often used for identification and personalization.
-    
-3. Click to flip
-    
-    The user's department, if available, indicating their organizational unit within the company.
-    
-4. Click to flip
-    
-    The user's company affiliation, representing the organization they are associated with.
-    
-5. Click to flip
-    
-    The email domain of the user, often used to identify the organization or service provider.
-    
-6. Click to flip
-    
-    Indicates whether the user account is currently active or inactive in the system.
-    
-7. Click to flip
-    
-    The most recent time the user was active within the system or application.
-    
-8. Click to flip
-    
-    The timestamp indicating when the user account was initially created in the system.
-    
-9. Click to flip
-    
-    The number of security check failures associated with the user, highlighting potential risks.
-    
-10. Click to flip
-    
-    A list of special roles assigned to the user, granting elevated permissions or access.
-    
-11. Click to flip
-    
-    The applications or systems that have reported this user, providing additional context
-## 
+Users without proper authentication controls (e.g., MFA) are more susceptible to compromise. Implement strong authentication protocols.
 
-**Risk factors**
+沒有適當驗證控制（如 MFA）的使用者更容易被入侵。實施強驗證協定。
 
-Falcon Shield takes a comprehensive approach to identity protection that addresses **the full spectrum of identity security challenges.** The platform aggregates these various risk factors to create a comprehensive risk assessment for each user, helping organizations identify and respond to potential security threats.
+### Device Security | 裝置安全
 
-The threat detection capabilities are enhanced by cross-application visibility, allowing for more accurate identification of truly risky behavior versus false positives. Open each section below to learn more about the risk factors:
+Users accessing applications from unmanaged or non-compliant devices introduce security risks. Enforce device compliance policies.
 
-## 
+從未管理或不合規的裝置存取應用程式的使用者帶來安全風險。強制裝置合規策略。
 
-Privileged access
+### Unusual Activity | 異常活動
 
-**Users with administrative or other privileged roles often have elevated access to critical systems and data.** This makes them a prime target for malicious actors seeking to exploit their permissions. Regularly reviewing and limiting privileged access can help mitigate potential risks.
+Users exhibiting suspicious behaviors (odd hours, unauthorized actions) may indicate threats. Monitor and analyze these activities.
 
-Implementing strict access controls and monitoring activities of privileged users is essential to maintaining security.
+表現出可疑行為（異常時間、未授權操作）的使用者可能表示威脅。監控和分析這些活動。
 
-![Users inventory with the filters open and privileged roles selected.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/privleged%20roles%20filter.png)
+---
 
-## 
+## Monitor Privileged Access | 監控特權存取
 
-Security check failures
+```mermaid
+flowchart TD
+    A["Monitor Privileged Access\n監控特權存取"] --> B["Cross-Application\nPrivilege Mapping\n跨應用程式權限映射"]
+    A --> C["Identity Protection\nRisk\n身分保護風險"]
+    A --> D["Privilege Change\nMonitoring\n權限變更監控"]
+    A --> E["Privilege Usage\nAnalysis\n權限使用分析"]
+    B --> F["Comprehensive\nView\n全面視圖"]
+    C --> F
+    D --> F
+    E --> F
+```
 
-**Users affected by failed security checks may indicate potential vulnerabilities or misconfigurations.** These failures can expose your organization to unauthorized access or data breaches. Identifying and addressing these issues promptly is critical.
+### Step-by-Step | 逐步操作
 
-Ensure that security checks are robust and consistently applied to all users to minimize risks.
+| Step | Action | 步驟 | 操作 |
+|------|--------|------|------|
+| 1 | Use User Inventory filter for Privileged Roles | 1 | 使用使用者清單篩選特權角色 |
+| 2 | Create custom presets (e.g., all Salesforce admins) | 2 | 建立自訂預設（如所有 Salesforce 管理員） |
+| 3 | Create custom security checks for new privileged role grants | 3 | 為新的特權角色授予建立自訂安全檢查 |
+| 4 | Conduct regular reviews of privileged access | 4 | 定期審查特權存取 |
 
-![Security checks page with the templated filters displayed.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/secuirty%20checks.png)
+---
 
-## 
+## Common Use Cases | 常見使用情境
 
-External status
+### Partially Deprovisioned Users | 部分停用的使用者
 
-**Users from outside your organization's managed domains can pose unique security challenges.** These external users may not adhere to your internal security policies, increasing the risk of unauthorized access.
+**Problem | 問題：** Users disabled in IdP but still active in certain applications.
 
-Establishing clear guidelines and monitoring external user activities can help safeguard your organization's resources.
+**問題：** 在 IdP 中被停用但在某些應用程式中仍然活動的使用者。
 
-![The filter in the users inventory is set to Domain type + not available and unverified](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/xCoMLj/external%20users.png)
+**Solution | 解決方案：** Implement automated checks and deprovision workflows.
 
-## 
+**解決方案：** 實施自動化檢查和停用工作流程。
 
-Authentication methods
+### Critical SaaS Admins with Security Issues | 有安全問題的關鍵 SaaS 管理員
 
-**Users without proper authentication controls, such as multi-factor authentication (MFA), are more susceptible to account compromise.** Weak or outdated authentication methods can be exploited by attackers to gain unauthorized access.
+**Problem | 問題：** Admins responsible for essential applications have security check failures.
 
-Implementing strong authentication protocols is a fundamental step in securing user accounts and protecting sensitive data.
+**Problem | 問題：** 負責關鍵應用程式的管理員有安全檢查失敗。
 
-![The threat center filters open and set to Type = Authentication settings and Authentication settings enforcement.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/authentication.png)
+**Solution | 解決方案：** Conduct regular audits and enforce strict security protocols for admin accounts.
 
-## 
+**解決方案：** 定期稽核並對管理員帳戶實施嚴格安全協定。
 
-Device security
+### External Users with Privileged Roles | 擁有特權角色的外部使用者
 
-**Users accessing applications from unmanaged or non-compliant devices can introduce significant security risks.** These devices may lack necessary updates or security configurations, making them vulnerable to attacks.
+**Problem | 問題：** External collaborators with administrative access can introduce threats.
 
-Enforcing device compliance policies and restricting access from insecure devices can help protect your organization's systems.
+**問題：** 擁有管理存取權的外部合作者可能帶來威脅。
 
-![Devices inventory Apply filters > integrations. Then it shows the available templates for integrations including privileged users with non-compliant devices, stale devices, devices with critical vulnerabilities, and non-encrypted devices.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/devices.png)
+**Solution | 解決方案：** Review and adjust permissions regularly, limiting access to what is strictly necessary.
 
-## 
+**解決方案：** 定期審查和調整權限，將存取限制在嚴格必要的範圍內。
 
-Unusual activity
+### Users Not Managed by IdP | 未由 IdP 管理的使用者
 
-**Users exhibiting suspicious behaviors, such as accessing systems at odd hours or attempting unauthorized actions, may indicate potential security threats.** Monitoring and analyzing these activities can help detect and prevent malicious actions.
+**Problem | 問題：** Users in SaaS apps but not managed by central IdP create security gaps.
 
-Proactively addressing unusual activity is crucial to maintaining a secure environment and mitigating risks.
+**Problem | 問題：** 在 SaaS 應用程式中但未由中央 IdP 管理的使用者造成安全缺口。
 
-![The side panel open in the threat center for unfamiliar features.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/unuaual.png)
+**Solution | 解決方案:** Integrate all accounts into IdP and conduct regular audits.
 
-## 
+**解決方案：** 將所有帳戶整合到 IdP 並定期稽核。
 
-**Monitor privileged access**
+---
 
-Privileged users represent a particularly high risk, as their elevated permissions could cause significant damage if compromised. Falcon Shield provides comprehensive visibility into privileged access across your SaaS ecosystem:
+## Device-Identity Correlation Use Cases | 裝置-身分關聯使用情境
 
-Cross-Application Privilege Mapping
+| Use Case | Description | 使用情境 | 說明 |
+|----------|-------------|----------|------|
+| Critical Vulnerabilities | Admins using devices with critical security issues | 嚴重漏洞 | 管理員使用有嚴重安全問題的裝置 |
+| Non-Compliant Devices | Admins using devices that fail compliance requirements | 不合規裝置 | 管理員使用不符合要求的裝置 |
+| Unmanaged Devices | Admins using personal or unmanaged devices | 未管理裝置 | 管理員使用個人或未管理的裝置 |
 
-Identity Protection Risk
+---
 
-Privilege Change Monitoring
+## Related Modules | 相關模組
 
-Privilege Usage Analysis
-
-Gain a **comprehensive view of all privileged roles** a user holds across various applications. This insight helps identify potential risks associated with excessive or unnecessary privileges.
-
-By mapping privileges across applications, organizations can better understand the scope of user access and take steps to mitigate security vulnerabilities.
-
-Detect users who possess privileges across multiple applications, which could indicate a **higher level of risk**. Aggregated privileges can create opportunities for misuse or unauthorized access.
-
-Identifying these users allows for targeted reviews and the implementation of stricter access controls to reduce potential threats.
-
-Track when users are granted or removed from privileged roles to maintain a secure and up-to-date access control system. Monitoring these changes ensures that privileges are only assigned when necessary.
-
-Regularly reviewing privilege changes helps prevent unauthorized access and ensures compliance with security policies.
-
-Analyze how often privileged capabilities are actually used by users. This data provides valuable insights into whether certain privileges are necessary or if they can be revoked.
-
-Understanding privilege usage patterns helps optimize access management and reduces the risk of privilege misuse
-
-- ## Step 1
-    
-    ### Identify privileged users
-    
-    Use the **User Inventory** filter for **Privileged Roles** to view all users with privileged access.
-    
-    ![User inventory filtered to admin roles for Active Directory.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/filter%20privel.png)
-    
-- ## Step 2
-    
-    ### Customize monitoring
-    
-    Create custom presets to monitor specific types of privileged users, such as all Salesforce admins.
-    
-    ![Users inventory filtered to all Salesforce admins.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/salesforce.jpg)
-    
-- ## Step 3
-    
-    ### Set up monitoring
-    
-    Create a custom security check using the save button to monitor when new users are granted privileged roles.
-    
-    ![The side panel from creating a custom security check highlighting the save button.](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/6da9dcadeb9e0e426bc68d0e13ae963c2e97b84376929fa039f4a60aeb2a021e/scormcontent/assets/create%20cehc.png)
-    
-- ## Step 4
-    
-    ### Review access regularly
-    
-    Conduct regular reviews of privileged access to ensure it aligns with business requirements.
-## 
-
-**Common use cases**
-
-Below are some common use cases for using Security checks in Falcon Shield to monitor identity.
-
-## 
-
-Partially deprovisioned users
-
-Partially deprovisioned users are **individuals who have been disabled in your identity provider (IdP) but still maintain active accounts in certain applications**. This can pose a security risk as these accounts may still have access to sensitive data or systems. Regularly identifying and addressing these accounts ensures that access is properly revoked.
-
-**Solution:** Implement automated checks and deprovision workflows to help mitigate this issue and maintain compliance with security policies.
-
-## 
-
-Critical SaaS admins with security issues
-
-Critical SaaS admins are **responsible for managing essential applications**, but security issues among these admins can lead to significant vulnerabilities. Identifying admins with security check failures is crucial to safeguarding your organization's data and systems. These failures may include weak passwords, lack of multi-factor authentication, or outdated permissions.
-
-**Solution:** Conduct regular audits and enforce strict security protocols for admin accounts to help minimize risks and ensure the integrity of critical applications.
-
-## 
-
-External users with privileged roles
-
-External collaborators with administrative access **can introduce potential security threats if their roles are not carefully managed.** These users may have been granted elevated permissions to perform specific tasks, but improper oversight can lead to misuse or unauthorized access.
-
-**Solution:** Regularly review and adjust the permissions of external users, ensuring that access is limited to what is strictly necessary for their roles.
-
-## 
-
-Users with multiple compliance violations
-
-Users who violate multiple compliance requirements **can create significant risks for your organization**. These violations may include accessing restricted data, failing to adhere to security protocols, or bypassing established workflows. Identifying such users is essential to maintaining compliance and avoiding potential penalties.
-
-**Solution:** Implement monitoring tools and provide regular training on compliance standards to help reduce these violations and promote a culture of accountability.
-
-## 
-
-Users not managed by IdP
-
-Users who exist in SaaS applications but are not managed by your central identity provider (IdP) **can create gaps in your security framework**. These unmanaged accounts may bypass centralized controls, making it difficult to enforce consistent security policies or track activity.
-
-**Solution:** To mitigate this risk, organizations should integrate all user accounts into the IdP and conduct regular audits to identify and address any unmanaged users.
-
-## 
-
-**Use cases**
-
-Device inventory helps you identify and remediate risks from misconfigurations and privilege issues. When integrated with endpoint protection, it provides comprehensive visibility into users and devices accessing your SaaS applications. Flip the cards below to review 3 common use cases:
-
-1. Click to flip
-    
-    Find administrators using devices that have critical security issues, posing significant risks to organizational security.
-    
-2. Click to flip
-    
-    Identify administrators using devices that fail to meet established compliance requirements, potentially jeopardizing security protocols.
-    
-3. Click to flip
-    
-    Detect administrators using personal or unmanaged devices, which may lack proper security controls and monitoring.
-1. Click to flip
-    
-    **Critical vulnerabilities**
-    
-2. Click to flip
-    
-    **Non-compliant devices**
-    
-3. Click to flip
-    
-    **Unmanaged devices**
+| Module | Description | 關聯模組 | 說明 |
+|--------|-------------|----------|------|
+| [Identity Governance](Identity%20governance%20and%20compliance.md) | Governance framework and policies | [身分治理](Identity%20governance%20and%20compliance.md) | 治理框架與策略 |
+| [Permissions Governance](SaaS%20Permissions%20Governance.md) | Enforce least privilege | [權限治理](SaaS%20Permissions%20Governance.md) | 實施最小權限 |
+| [Devices Inventory](Monitoring%20SaaS-Connected%20Devices.md) | Device hygiene and compliance | [裝置清單](Monitoring%20SaaS-Connected%20Devices.md) | 裝置健全度與合規 |
+| [ITDR](ITD%20-%20Identity%20Threat%20Detection%20and%20Response.md) | Detect identity threats | [ITDR](ITD%20-%20Identity%20Threat%20Detection%20and%20Response.md) | 偵測身分威脅 |
+| [Applications Inventory](managing-saas-inventories.md) | Track connected apps | [應用程式清單](managing-saas-inventories.md) | 追蹤連線的應用程式 |
