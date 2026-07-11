@@ -1,376 +1,161 @@
+# Managing Sensitive Data in SaaS Environments
+# 管理 SaaS 環境中的敏感資料
 
-1. [
-    
-    Data Inventory
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/index.html#/lessons/roj96pPgvioI-rsjpnrf_mT_2Z9LjaUJ)
-    
-2. [
-    
-    Assess the risk exposure of sensitive data
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/index.html#/lessons/SDS0wMEeD1kqNbpAAvzOFzLzrgqicuks)
-    
-3. [
-    
-    Knowledge Check
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/index.html#/lessons/kQZ_ypWMm93XSXmrvzIHMUEbpyX8Eoyf)
-    
-4. [
-    
-    Module Summary
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/index.html#/lessons/WdDIKqBEnw71lBse8u3CulwQpxSWl-_V)
-  
-  
-**The rise of SaaS and GenAI has amplified the risks of unintentional data exposure.**
-
-#### 🔑 **Key Concept**  
-
-This module guides you through detecting publicly shared documents, preventing unauthorized data transfers to AI tools, and enforcing policies that limit sensitive data movement.
-
-1. Click to flip
-    
-    **Detect sensitive data**
-    
-2. Click to flip
-    
-    **Prevent data exposure**
-    
-3. Click to flip
-    
-    **Monitor sharing patterns**
-    
-4. Click to flip
-    
-    **Track external collaboration**
-    
-5. Click to flip
-    
-    **Remove public access**
-    
-6. Click to flip
-    
-    **Clean up sharing**
-    
-7. Click to flip
-    
-    **Support collaboration**
-    
-8. Click to flip
-    
-    **Scale SaaS adoption**
-
-1. Click to flip
-    
-    Security teams can instantly detect and remediate exposed sensitive data to prevent unauthorized access and data breaches.
-    
-2. Click to flip
-    
-    Prevent unauthorized data exposure by proactively managing and securing sensitive information shared externally.
-    
-3. Click to flip
-    
-    Operational control allows monitoring of sharing patterns across departments to identify and address potential risks.
-    
-4. Click to flip
-    
-    Track external collaboration by domain to ensure secure interactions and prevent unauthorized data sharing.
-    
-5. Click to flip
-    
-    Remove unnecessary public access to sensitive data to prevent unauthorized exposure and maintain security.
-    
-6. Click to flip
-    
-    Clean up outdated external sharing to reduce risks associated with unnecessary or forgotten data access.
-    
-7. Click to flip
-    
-    Enable secure external collaboration to support business partnerships while maintaining data protection and compliance.
-    
-8. Click to flip
-    
-    Scale SaaS adoption without increasing risk by managing external sharing securely and efficiently.
-## 
-
-**Understanding the Data Inventory**
-
-The Data Inventory only collects data from SaaS Integrations which support this feature. To see if the integration supports Data Inventory, look for the following symbol in the integration page:
-
-![](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/assets/supported.jpg)
+## Overview | 概述
 
-![](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/assets/inventory.png)
+The rise of SaaS and generative AI has amplified the risks of unintentional data exposure. Falcon Shield's **Data Inventory** helps you detect publicly shared documents, prevent unauthorized data transfers to AI tools, and enforce policies that limit sensitive data movement.
 
-Each row in the Data Inventory represents an item which has been **externally** or **publicly shared**. _If the item has not been shared externally or publicly, it will not show up on the list._
-Most SaaS applications allow setting default sharing permissions to disable external sharing or limit access to users only. If these settings are activated, they usually override the file-specific sharing setting, preventing it from being shared with unauthorized parties. In this case, data for the integration will not show up in the Data Inventory because the inventory only lists public and/or externally shared data.
+SaaS 和生成式 AI 的興起放大了非故意資料外洩的風險。Falcon Shield 的**資料清單**協助偵測公開分享的文件、防止未授權的資料傳輸至 AI 工具，並執行限制敏感資料移動的策略。
 
-**To confirm your file sharing policy status,** look for the corresponding security check in the Security Checks page. For example, this is the control for Onedrive (set through the SharePoint+OneDrive integration).
+```mermaid
+flowchart TD
+    A["Data Inventory\n資料清單"] --> B{"Sharing Type\n分享類型"}
+    B -->|"Public"| C["Anyone with link\nanyone can access\n任何有連結的人可存取"]
+    B -->|"External"| D["Shared with\nunverified domains\n與未驗證網域分享"]
+    B -->|"Internal"| E["Org-only access\n僅組織內存取"]
+    C --> F["Highest Risk\n最高風險"]
+    D --> G["High Risk\n高風險"]
+    E --> H["Low Risk\n低風險"]
+    F --> I["Immediate\nremediation\n立即修復"]
+    G --> J["Review &\nrestrict\n審查與限制"]
+    H --> K["Monitor\nmonitoring\n持續監控"]
+```
 
-![](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/9f40bf82edf10a486bf68219e893020d791b226167ad4cf71dd7aad589af508f/scormcontent/assets/side.png)
+---
 
-Clicking each row opens a side bar with full item details, including a link to the item itself (for quick viewing and evaluation).
+## Public vs. External Sharing | 公開 vs. 外部分享
 
-## 
+| Type | Description | 風險等級 | 說明 |
+|------|-------------|----------|------|
+| **Public** | Anyone with the sharing link can access the file. URLs can be guessed or shared by mistake. | **Critical** | 任何有分享連結的人可存取檔案。URL 可能被猜中或誤分享。 |
+| **External** | Shared with unverified domains not approved by the organization. Corporate IP could be exposed. | **High** | 與組織未批准的未驗證網域分享。企業智慧財產可能被暴露。 |
 
-**Public or External? What does it mean?**
+> To view unverified domains, go to **Settings > Domains** in Falcon Shield (owner access required).
 
-Open the sections below by clicking on the + symbol to learn more.
+> 要檢視未驗證網域，請前往 Falcon Shield 的 **Settings > Domains**（需要擁有者權限）。
 
-## 
+---
 
-Public
+## Data Inventory Fields | 資料清單欄位
 
-A public file is a file which anyone with the sharing link can access. While this is the most convenient method of sharing information, it has the highest risk, as some URLs can be guessed or shared by mistake with the wrong individual.
+### Main Columns | 主要欄位
 
-## 
+| Column | Description | 欄位 | 說明 |
+|--------|-------------|------|------|
+| Name | File or resource name | 名稱 | 檔案或資源名稱 |
+| Type | Calendar, File, Document, PDF, Repository | 類型 | 日曆、檔案、文件、PDF、儲存庫 |
+| Integration | Source SaaS app | 整合 | 來源 SaaS 應用程式 |
+| Owner | User who shared the resource | 擁有者 | 分享資源的使用者 |
+| Access Level | Public or External | 存取層級 | 公開或外部 |
+| Last Accessed | Most recent access date | 最後存取 | 最近存取日期 |
+| Password Protected | Whether file is password-protected | 密碼保護 | 檔案是否受密碼保護 |
+| Owner Department | Owner's department | 擁有者部門 | 擁有者的部門 |
 
-External
+### Data Side Bar | 資料側邊欄
 
-An externally shared file is a file that has been shared with domains which have not been approved by the organization. The sharing of corporate IP with external entities could result in sensitive company information being exposed.
+Clicking any row opens a side bar with:
 
-## 
+點擊任何一列會開啟側邊欄，顯示：
 
-What is an external domain?
+- **User Enabled** — The user who shared the resource
+- **Resource ID** — Unique identifier
+- **Link(s)** — Internal and/or external sharing links
+- **Times Viewed** — Exposure gauge for unauthorized sharing
+- **Shared users** — Grouped by domain
 
-A domain which has been classified as “Unverified” in Falcon Shield.
+- **使用者** — 分享資源的使用者
+- **資源 ID** — 唯一識別碼
+- **連結** — 內部和/或外部分享連結
+- **檢視次數** — 未授權分享的暴露指標
+- **已分享使用者** — 按網域分組
 
-To view a list of unverified domains, go to **Settings> Domains** and look up the domain in question (only available for owner users).
+---
 
-Available Columns
+## Filters | 篩選器
 
-Data Side Bar
+| Filter | Purpose | 篩選器 | 用途 |
+|--------|---------|--------|------|
+| Integration | Narrow to specific SaaS app | 整合 | 篩選至特定 SaaS 應用程式 |
+| Owner | Find files by specific user | 擁有者 | 按特定使用者尋找檔案 |
+| Access Level | Separate public from external | 存取層級 | 區分公開與外部 |
+| Owner Department | Identify risky departments | 擁有者部門 | 識別高風險部門 |
+| Unmanaged Domain | Find external shares to unknown orgs | 未管理網域 | 發現與未知組織的外部分享 |
 
-Filters
+---
 
-Grouping
+## Grouping | 分組
 
-The Data Inventory includes several columns to organize and manage information effectively:
+Group results by **Owner** or **Owner Department** to detect users or departments with higher numbers of mismanaged files.
 
-- **Name**
-    
-- **Type:** Calendar, File, Document, PDF, Repository
-    
-- **Integration**
-    
-- **Owner**
-    
-- **Created On**
-    
-- **Access Level**
-    
-- **Last Accessed**
-    
-- **Last Modified**
-    
-- **Password Protected**
-    
-- **Owner Department**
-    
-- **Expiration Date**
-Clicking any row in the inventory opens the data side bar, which provides additional insights about the shared file. The side bar includes the following tabs:
+依**擁有者**或**擁有者部門**分組結果，以發現有較多管理不當檔案的使用者或部門。
 
-- **User Enabled:** The user who shared the resource
-    
-- **Resource ID**
-    
-- **Link**: This could include more than one link, such as one internal and one externally shared link
-    
-- **Password Protected**
-    
-- **Last Accessed**
-    
-- **Created Date**
-    
-- **Last Modified**
-    
-- **Times Viewed**: Tracks how many times the item has been viewed, helping to gauge exposure in case of unauthorized sharing
-    
+```mermaid
+flowchart LR
+    A["Data Inventory\n資料清單"] --> B["Group by Owner\n依擁有者分組"]
+    A --> C["Group by Department\n依部門分組"]
+    B --> D["Identify users with\nexcessive sharing\n識別過度分享的使用者"]
+    C --> E["Identify departments\nneeding training\n識別需要培訓的部門"]
+    D --> F["Targeted\nremediation\n針對性修復"]
+    E --> F
+```
 
-Additionally, it lists users with whom the resource has been shared. The list is grouped by domain for easier viewing.
+---
 
-The Data Inventory includes various filter options to refine your search and manage data effectively:
+## Key Risk Use Cases | 關鍵風險使用情境
 
-- **Integration**
-    
-- **Last Accessed**
-    
-- **Owner**
-    
-- **Access Level**
-    
-- **Last Modified**
-    
-- **Owner Department**
-    
-- **Owner Enabled**
-    
-- **Password Protected**
-    
-- **Type**
-    
-- **Unmanaged Domain**
-    
+### Abandoned Files | 遺棄檔案
 
-The options available for each filter depend on the SaaS integrations you create.
+**Problem | 問題：** Documents left accessible after their owners' accounts are disabled. Without an active owner, these files remain in circulation with no oversight.
 
-The Data Inventory supports grouping results based on specific criteria:
+**問題：** 擁有者帳戶被停用後，文件仍然可存取。沒有活動的擁有者，這些檔案會在無監督的情況下持續流通。
 
-- **Owner**
-    
-- **Owner Department**
-    
+**Solution | 解決方案：**
 
-Grouping is a powerful tool for reviewing large quantities of data. It helps detect users or departments with higher numbers of mismanaged files. This level of visibility aids in managing resources and highlights potential training gaps in data security and corporate file management standards.
+1. Use Data Inventory to identify files owned by disabled users
+2. Reassign ownership or delete the files
+3. Implement policies to audit file ownership when accounts are disabled
 
-## 
+**解決方案：**
 
-**Mitigating risk**
+1. 使用資料清單識別由停用使用者擁有的檔案
+2. 重新分配所有權或刪除檔案
+3. 實施帳戶停用時稽核檔案所有權的策略
 
-Organizations frequently share files and resources externally through SaaS applications for legitimate business purposes. However, without proper visibility and control, this **sharing creates significant security risks** including **data leakage, unauthorized access**, and **regulatory compliance violations**. Many organizations lack visibility into what data is being shared externally, with whom it's being shared, and whether those shares are still necessary—creating blind spots that attackers can exploit.
+### High-Sharing Users/Departments | 高分享使用者/部門
 
-Learn below how Falcon Shield’s Data Inventory can assist in mitigating this risk by clicking on the + icons below.
+**Problem | 問題：** Some users or departments consistently create public links without passwords or expiration dates.
 
-## 
+**問題：** 某些使用者或部門持續建立無密碼或無到期日的公開連結。
 
-Who are your users?
+**Solution | 解決方案：** Group by Owner or Department, identify outliers, and provide targeted training on secure file-sharing practices.
 
-Understanding who your users are is critical to assessing risk exposure. Employees often share corporate files with external collaborators, which can lead to unintended data exposure. Departments like Marketing, Sales, and R&D frequently engage in extensive external collaboration, increasing the likelihood of sensitive data being shared.
+**解決方案：** 按擁有者或部門分組，識別異常者，並針對安全檔案分享實踐提供針對性培訓。
 
-Former employees may leave shared files accessible externally, posing a significant risk. Additionally, external partners, vendors, and customers who have been granted access to internal resources can inadvertently misuse or mishandle sensitive data.
+---
 
-## 
+## Mitigation Checklist | 緩解清單
 
-What access and permissions do they have?
+- [ ] Review Data Inventory weekly for new public/external shares
+- [ ] Verify file sharing policy status via Security Checks page
+- [ ] Group by department to identify training gaps
+- [ ] Implement expiration dates on external shares
+- [ ] Audit abandoned files when employees leave
+- [ ] Monitor for sensitive data being shared to AI tools
 
-Users often have access to create public sharing links that anyone can use, which can bypass proper security controls. They may also have permissions to share resources with specific external domains, allowing for targeted collaboration. However, these permissions can be misused if not carefully monitored.
+- [ ] 每週審查資料清單中的新公開/外部分享
+- [ ] 透過安全檢查頁面驗證檔案分享策略狀態
+- [ ] 按部門分組以識別培訓缺口
+- [ ] 對外部分享實施到期日
+- [ ] 員工離職時稽核遺棄檔案
+- [ ] 監控敏感資料是否被分享至 AI 工具
 
-Another common capability is the ability to share content without expiration dates or access limitations. This lack of restrictions can lead to sensitive data being accessible indefinitely, increasing the risk of unauthorized access.
+---
 
-## 
+## Related Modules | 相關模組
 
-How are they using these capabilities?
-
-Many users create public sharing links for quick collaboration, often without implementing proper security measures. While sharing resources with external partners may serve legitimate business purposes, outdated sharing practices can exceed current business requirements and introduce unnecessary risks.
-
-Unintentional exposure of sensitive data is a frequent issue, often caused by misconfigured sharing settings. These practices highlight the importance of regularly reviewing and updating sharing policies to align with organizational security standards.
-
-Mistakenly believing setting a file’s sharing settings to **Available via link** keeps the file limited within their organization.
-
-In the following sections, we will learn about several use cases in which users expose data to outsiders, and how to use Falcon Shield to detect them and prevent them.
-
-## 
-
-**Abandoned Files**
-
-Open the sections below by clicking on the + icon to learn more about the risk of abandoned files.
-
-## 
-
-What are abandoned files?
-
-Abandoned files are documents or data left accessible after their original owners' accounts have been disabled. These files often lack proper oversight, making them difficult to track and manage effectively.
-
-Without an active owner, these files can remain in circulation, posing a significant security risk due to potential unauthorized sharing or misuse.
-
-## 
-
-Why do abandoned files pose a risk?
-
-Abandoned files are a security concern because they may contain sensitive information that remains accessible without proper controls. The absence of ownership increases the likelihood of these files being shared inappropriately or falling into the wrong hands.
-
-Additionally, the lack of accountability makes it challenging to ensure these files are updated, archived, or deleted as needed, further exacerbating the risk.
-
-## 
-
-How can organizations address this issue?
-
-Organizations can mitigate the risks associated with abandoned files by implementing policies to regularly audit and manage file ownership. Ensuring that files are reassigned or securely deleted when an account is disabled is a critical step.
-
-Using automated tools to track file activity and enforce access controls can also help reduce the likelihood of sensitive data being exposed through abandoned files.
-
-Understanding and mitigating the risks associated with abandoned or ownerless files is crucial for maintaining data security. This process will guide you through identifying and addressing such risks using Falcon Shield. Click or tab through the steps below to learn more.
-
-- 1
-- 2
-- 3
-- 4
-- 5
-
-1 of 7
-
-## 
-
-Risk: Abandoned or ownerless files are left accessible after their owners’ accounts have been disabled.
-
-Abandoned files are hard to track and manage, posing a security risk due to potential continuous sharing and lack of ownership on the information included in them.
-
-
-## 
-
-**Grouping**
-
-Seeing a lot of results? No problem! Use the Inventory’s **Grouping** tool. Using the grouping tool can assist in finding problematic departments, who can then be required to repeat data security training, asked to review their files, and even revoked file sharing capabilities. You can group results by:
-
-## 
-
-Owner
-
-Identifying specific users who frequently share files without a password or expiration date is crucial for maintaining data security. These users may unknowingly expose sensitive information to unauthorized access. By monitoring these behaviors, organizations can implement targeted interventions to improve file-sharing practices.
-
-Encouraging responsible file-sharing habits among users helps mitigate risks and ensures compliance with data protection policies.
-
-## 
-
-Owner Department
-
-Discovering departments within your organization with unhealthy file-sharing habits is essential for reducing risk exposure. These departments may have patterns of sharing files insecurely, which can lead to data breaches or compliance issues. Addressing these habits at the departmental level fosters a culture of accountability and security.
-
-Providing training and resources to these departments can help them adopt safer file-sharing practices and align with organizational standards.
-
-## 
-
-**Key points**
-
-Review the key points below by clicking on the + icon to open each panel.
-
-## 
-
-Visibility into externally shared content
-
-Falcon Shield's Data Inventory provides a comprehensive view of content shared externally across multiple SaaS platforms. This feature ensures that both public links and specific external sharing instances are identified, offering a clear understanding of data exposure.
-
-By tracking these sharing activities, organizations can better manage and secure their sensitive information, reducing the risk of unauthorized access.
-
-## 
-
-Tracking metadata for enhanced oversight
-
-Important metadata such as file ownership and modification dates are meticulously tracked within the Data Inventory. This information helps organizations maintain control over their data by providing detailed insights into file activity.
-
-With this level of oversight, users can quickly identify potential risks and take appropriate actions to safeguard their sensitive information.
-
-## 
-
-Data population and syncing process
-
-The data population process may take time depending on the size of the environment. Initial population can span several days to weeks, as the system fetches files and folders across all users to ensure complete visibility.
-
-Continuous syncing guarantees that the inventory remains up-to-date, providing comprehensive coverage of all shared content within the organization.
-
-With these capabilities, your organization is better equipped to maintain data privacy, regulatory compliance, and SaaS usage accountability.
-
-You should now be able to:
-
-- •
-    
-    Assess the severity of data exposure incidents to understand potential impacts.
-    
-- •
-    
-    Evaluate the effectiveness of current policies in mitigating SaaS data risks.
-    
-- •
-    
-    Formulate actionable responses to address and reduce SaaS data vulnerabilities.
+| Module | Description | 關聯模組 | 說明 |
+|--------|-------------|----------|------|
+| [Applications Inventory](managing-saas-inventories.md) | Track apps with data access | [應用程式清單](managing-saas-inventories.md) | 追蹤有資料存取權的應用程式 |
+| [User Inventory](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | Identify users sharing data | [使用者清單](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | 識別分享資料的使用者 |
+| [Identity Governance](Identity%20governance%20and%20compliance.md) | Enforce data access policies | [身分治理](Identity%20governance%20and%20compliance.md) | 執行資料存取策略 |
+| [Permissions Governance](SaaS%20Permissions%20Governance.md) | Control sharing permissions | [權限治理](SaaS%20Permissions%20Governance.md) | 控制分享權限 |

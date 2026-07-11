@@ -1,294 +1,150 @@
-1. [
-    
-    Devices Inventory
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/ef504a54f8e54bf2d4bd28ea591701153990c40b68772e02b48e9bd6a518c623/scormcontent/index.html#/lessons/qpkt5nRdKHMb4M-1yFEiwm1jZ7YHYuot)
-    
-2. [
-    
-    Manage permissions and access
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/ef504a54f8e54bf2d4bd28ea591701153990c40b68772e02b48e9bd6a518c623/scormcontent/index.html#/lessons/TVDU-9EilY5WrCwv6uDxu_rNZdpPkj5Q)
-    
-3. [
-    
-    Knowledge check
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/ef504a54f8e54bf2d4bd28ea591701153990c40b68772e02b48e9bd6a518c623/scormcontent/index.html#/lessons/nrQ8z58dya7m_ZE4HTYclPR9Dg10H1Hx)
-    
-4. [
-    
-    Module summary
-    
-    ](https://university.crowdstrike.com/files/c/r/crowdstrike_docebosaas_com/scorm/ef504a54f8e54bf2d4bd28ea591701153990c40b68772e02b48e9bd6a518c623/scormcontent/index.html#/lessons/b6dyyzftbhP-EhejgQFmX-q49MJxReWD)
-This module explores how Falcon Shield evaluates device hygiene and management status, correlates it with user privileges, and enforces access policies based on endpoint trust.
+# Monitoring SaaS-Connected Devices
+# 監控 SaaS 連線裝置
 
-## 
+## Overview | 概述
 
-**Let's review**
+Devices are the gateway to your SaaS data. The **Devices Inventory** in Falcon Shield connects the dots between **devices**, **users**, and **SaaS access** — turning fragmented device data into actionable security intelligence.
 
-The **Devices Inventory** delivers a comprehensive view by **connecting the critical dots between devices**, **users**, and **SaaS access**. This unified view transforms fragmented device data into **actionable security intelligence**, enabling organizations to identify and address risks before they become breaches. Read each tab below to review concepts from the video.
+裝置是存取 SaaS 資料的入口。Falcon Shield 中的**裝置清單**串連了**裝置**、**使用者**和**SaaS 存取權**之間的關聯，將零散的裝置資料轉化為可操作的安全情報。
 
-Immediate Security Impact
+```mermaid
+flowchart TD
+    subgraph Devices["Devices Inventory 裝置清單"]
+        A["Laptops\n筆電"]
+        B["Desktops\n桌上型電腦"]
+        C["Mobile Devices\n行動裝置"]
+    end
+    A --> D{"Risk Correlation\n風險關聯"}
+    B --> D
+    C --> D
+    D --> E["User Privilege\n使用者權限"]
+    D --> F["Device Hygiene\n裝置健全度"]
+    D --> G["Compliance Status\n法規遵循狀態"]
+    E --> H{"High-Risk\nScenario?"]
+    F --> H
+    G --> H
+    H -->|"Yes"| I["Enforce Policy\n/ Restrict Access\n執行策略 / 限制存取"]
+    H -->|"No"| J["Continue\nMonitoring\n持續監控"]
+```
 
-Operational Excellence
+---
 
-Risk-Based Approach
+## Why Device Visibility Matters | 為什麼裝置可見性很重要
 
-Strategic Value
+| Benefit | Description | 好處 | 說明 |
+|---------|-------------|------|------|
+| Immediate Security Impact | Identify privileged users on compromised devices | 即時安全影響 | 發現特權使用者使用被入侵的裝置 |
+| Operational Excellence | Map device-to-user relationships in seconds | 營運卓越 | 幾秒內建立裝置與使用者的關聯 |
+| Risk-Based Approach | Prioritize device risks based on user privileges | 基於風險的方法 | 依使用者權限優先處理裝置風險 |
+| Strategic Value | Support secure hybrid work at scale | 策略價值 | 大規模支援安全的混合辦公 |
 
-Security teams can **instantly identify high-risk scenarios** that were previously undetectable:
+---
 
-• **Privileged users** accessing sensitive data from compromised devices
+## Device Identification & Merging | 裝置識別與合併
 
-• **Devices with poor security hygiene** accessing critical applications
+Falcon Shield merges devices based on:
 
-• **Unauthorized devices** with elevated access rights
+Falcon Shield 根據以下條件合併裝置：
 
-• **Non-compliant devices** with sensitive data access
+- **User email address** (reported by the SaaS app)
+- **Device ID / Serial Number**
+- **Device type** (mobile, laptop, desktop)
+- **Device name**
 
-What once required complex correlation across multiple systems now takes seconds.
+- **使用者電子郵件地址**（由 SaaS 應用程式回報）
+- **裝置 ID / 序號**
+- **裝置類型**（行動裝置、筆電、桌上型電腦）
+- **裝置名稱**
 
-Security teams can:
+> If the same device is reported for two different email addresses, it appears as two separate rows — preventing devices from being lost during user migrations.
 
-• Instantly **map device-to-user relationships**
+> 如果同一裝置以兩個不同的電子郵件地址回報，它會顯示為兩筆獨立的紀錄 — 避免裝置在使用者遷移過程中遺失。
 
-• **Monitor device security posture** in real-time
+---
 
-• Enforce device **compliance policies**
+## Available Columns | 可用欄位
 
-• **Respond rapidly** to security incidents
+| Column | Description | 欄位 | 說明 |
+|--------|-------------|------|------|
+| Name | Device name | 名稱 | 裝置名稱 |
+| User | Associated user | 使用者 | 關聯的使用者 |
+| Platform | Device platform | 平台 | 裝置平台 |
+| OS | Operating system | 作業系統 | 作業系統 |
+| OS Version | OS version number | 作業系統版本 | 作業系統版本編號 |
+| Managed | Organization-managed? | 受管理 | 是否由組織管理 |
+| Compliant | Meets compliance policies? | 合規 | 是否符合法規要求 |
+| Ownership | Org-owned or personal? | 所有權 | 組織所有或個人所有 |
+| Last Seen | Most recent activity date | 最後活動 | 最近活動日期 |
+| Integrations | Reporting SaaS apps | 整合 | 回報的 SaaS 應用程式 |
+| Device Checks | Security check results | 裝置檢查 | 安全檢查結果 |
+| Vulnerabilities | Known CVEs | 漏洞 | 已知 CVE |
 
-The solution enables **intelligent**, **context-aware security decisions** by:
+---
 
-• **Prioritizing device risks** based on user privileges
+## Filters and Grouping | 篩選與分組
 
-• **Enforcing stricter controls** for devices accessing sensitive data
+### Key Filters | 關鍵篩選器
 
-• **Identifying security gaps** in critical user devices
+| Filter | Use Case | 篩選器 | 使用情境 |
+|--------|----------|--------|----------|
+| Privileged Roles | Find admin users on risky devices | 特權角色 | 發現高風險裝置上的管理員使用者 |
+| Vulnerabilities | Identify devices with known CVEs | 漏洞 | 發現有已知 CVE 的裝置 |
+| Encrypted | Check encryption status across apps | 加密 | 跨應用程式檢查加密狀態 |
+| Managed | Distinguish org-owned vs. personal | 受管理 | 區分組織所有與個人裝置 |
+| Compliant | Filter non-compliant devices | 合規 | 篩選不符合規範的裝置 |
 
-• Maintaining **continuous device security monitoring**
+### Grouping | 分組
 
-Beyond immediate security benefits, the **Device Inventory enables organizations to:**
+Group results by **Platform**, **OS**, or **OS Version** to identify patterns across your device fleet.
 
-• Support **secure hybrid work** environments
+依**平台**、**作業系統**或**作業系統版本**分組結果，以識別裝置群組中的模式。
 
-• **Scale device management** efficiently
+> Multiple filters within the same filter = OR logic. Filters across different filter types = AND logic.
 
-• **Strengthen compliance posture**
+> 同一篩選器內的多個篩選條件 = OR 邏輯。不同篩選器類型之間 = AND 邏輯。
 
-• **Enable business growth** while maintaining security
+---
 
-The Devices Inventory **transforms** device security from a blind spot into a **strategic asset** for protecting your SaaS environment.
+## Device Inventory Templates | 裝置清單範本
 
-The Devices Inventory **revolutionizes security** by providing **a unified view of devices,** **users**, and **SaaS access**. It empowers organizations to _transform fragmented data into actionable intelligence,_ enabling rapid identification of risks and seamless enforcement of compliance. Protect your SaaS environment with a solution that turns device security into a strategic advantage.
+### Privileged Users with Non-Compliant Devices | 特權使用者使用不合规裝置
 
-## 
+```mermaid
+flowchart LR
+    A["Admin user\n管理員使用者"] --> B["Uses non-compliant\ndevice\n使用不合規裝置"]
+    B --> C["High-risk scenario:\nElevated access + poor hygiene\n高風險情境：高存取權 + 低健全度"]
+    C --> D["Action: Enforce compliance\nor restrict access\n行動：強制合規或限制存取"]
+```
 
-**Understanding the Devices Inventory**
+**Why it matters | 為什麼重要：** Privileged users accessing SaaS from devices with critical vulnerabilities create a dangerous attack surface. These users have elevated permissions that could be exploited if their device is compromised.
 
-Each row in the Devices Inventory represents **a device reported by one or more SaaS Integrations**. Devices include **mobile devices, laptops** and **desktops** (both workstations and servers).
+**說明：** 特權使用者從有嚴重漏洞的裝置存取 SaaS 會造成危險的攻擊面。如果他們的裝置被入侵，這些使用者的高權限可能被利用。
 
-### 
+### Stale Devices | 閒置裝置
 
-**Identifying and merging devices**
+**Description | 說明：** Devices that appear functional but may be compromised in ways that don't trigger alerts. Attackers design malware to operate stealthily on such systems.
 
-Devices are identified and merged based on the associated user (user email address reported for the device), the device ID/serial number, device type, and the device name. If one of these details is identical, the devices will be merged into one row in the devices inventory.
+**說明：** 外觀正常但可能已被入侵且未觸發警報的裝置。攻擊者設計惡意軟體在此類系統上隱密運作。
 
+### Devices with Critical Vulnerabilities | 有嚴重漏洞的裝置
 
-## 
+**Description | 說明：** High-severity flaws that can be exploited to gain unauthorized access, elevate privileges, or execute malicious code. Unpatched vulnerabilities create entry points for attackers.
 
+**說明：** 可被利用來取得未授權存取、提升權限或執行惡意程式碼的嚴重漏洞。未修補的漏洞為攻擊者創造入口。
 
-For example, if a mobile device is reported being associated to the same user email by several SaaS apps, the Falcon Shield SaaS Devices Inventory will automatically detect and merge it into a single row. However, if the same device is reported for two different emails, it will be detected as two separate devices and shown as 2 separate rows in the inventory. This is to avoid devices getting lost in the data when being migrated between users.
-
-**Devices Inventory**
-
-For each row, the Inventory includes data gathered from across the system. The data is organized into columns to allow easy viewing, including associated user, platform, operating system, and more.
-
-
-
-**Available columns**
-
-- **Name**
-    
-- **User**
-    
-- **Platform**
-    
-- **OS**
-    
-- **OS Version**
-    
-- **Managed**
-    
-- **Compliant**
-    
-- **Ownership**
-    
-- **Last Seen**
-    
-- **Integrations**
-    
-- **Device Checks**
-    
-- **Vulnerabilities**
-With the exception of **Name** and **User,** columns can be added, removed, and arranged to match your preferences.
-
-## 
-
-**Filters and grouping**
-
-The Devices Inventory includes the following filter and group options:
-
-## 
-
-Filtering
-
-- **Integrations**
-    
-- **Privileged Roles:** Filter for devices based on the role of the user associated with them.
-    
-- **Vulnerabilities**
-    
-- **Agent Version**
-    
-- **Applications**
-    
-- **Compliant**
-    
-- **Device Checks**
-    
-- **Device CVEs**
-    
-- **Encrypted:** Encryption status as reported by different apps. A device can be encrypted using one technology, but missing important compensating encryption provided by a different app.
-    
-- **IP Address**
-    
-- **Last Seen:** Some SaaS integrations report last seen dates for devices. Data availability depends on availability in SaaS.
-    
-- **Mac Address**
-    
-- **Managed:** Is the device managed by the organization
-    
-- **OS**
-    
-- **OS Version**
-    
-- **Ownership**: Is the device owned by the organization
-    
-- **Platform**
-    
-- **Score:** Filter for score values as reported by different apps. Score availability depends on the SaaS selected
-    
-- **Serial Number**: Look up devices based on specific serial numbers. Can be set to “Contains” or “Equal to”.
-    
-- **User Associated:** Include or exclude unassociated devices from results
-    
-- **User Number**
-    
+### Unencrypted Devices | 未加密裝置
 
+**Description | 說明：** Devices lacking data protection mechanisms. In the event of loss or theft, all stored data becomes readily accessible, violating many compliance requirements.
 
-## 
+**說明：** 缺乏資料保護機制的裝置。在裝置遺失或被竊時，所有儲存的資料將變得容易存取，違反許多法規要求。
 
-Grouping
+---
 
-The Devices Inventory supports grouping results based on the following criteria:
+## Related Modules | 相關模組
 
-- **Platform**
-    
-- **OS**
-    
-- **OS Version**
-    
-
-
-
-The options available for each filter are based on the SaaS integrations you create.
-
-## 
-
-**Privileged Role filtering- Why is it important?**
-
-- 1
-    
-    Most devices in organizations are linked to a specific user. The device is the user’s gateway into the company and its assets: trusting the user with a device meaning trusting them with information.
-    
-- 2
-    
-    The device owner is a SaaS user, and by associating it to a device. You get full visibility and control over the privileges and access that can be made in your SaaS environment through the device.
-    
-- 3
-    
-    Using the full context In the Devices Inventory can enable powerful queries, such as cross-referencing between a device with a low hygiene score and a device that is owned by a privileged (admin) user in your SaaS applications.
-    
-- 4
-    
-    The user data available here is also linked to the user inventory- remember that you can always click on the user to review its full profile, and to use the user inventory tools to look into similar-risk users!
-    
-
-**Remember:** _Adding multiple filters can lead to an "Or" or an "And" condition between them_. Multiple filters selection within a filter will return entities that match any of the selected criteria (OR). Multiple filters selection **Between** different filters will return entities who apply for all the selected filters (AND).
-
-## 
-
-**Devices Inventory templates**
-
-Devices Inventory templates can assist you with the first steps in seeing and managing the vulnerabilities and risks that stem from SaaS apps, your users and their associated devices, for cleaner end-point hygiene.
-
-
-
-
-
-Open each section below to learn more about the Devices Inventory templates.
-
-## 
-
-Privileged users with non-compliant devices
-
-Organizations face significant risks when **privileged users access SaaS applications from devices with critical vulnerabilities**. These devices, combined with elevated access rights, create a **dangerous attack surface** that could lead to severe security breaches. Ensuring compliance and securing these endpoints is critical to reducing organizational risk.
-
-Implementing strict access controls and regular device compliance checks can help mitigate these risks. Organizations must prioritize securing privileged accounts to prevent exploitation by threat actors.
-
-## 
-
-Stale devices
-
-Stale devices, which **appear to be functioning normally,** often pose hidden security risks. These devices may be compromised in ways that do not trigger obvious alerts or performance issues, creating a false sense of security. Attackers design malware to operate stealthily on such systems, conducting malicious activities in the background.
-
-Organizations should **regularly monitor and assess all devices**, even those that seem stable, to detect and address potential threats. Proactive measures can help uncover hidden vulnerabilities and ensure a robust security posture.
-
-## 
-
-Devices with critical vulnerabilities
-
-Devices with critical vulnerabilities represent significant security risks to organizations. These **high-severity flaws can be exploited by threat actors** **to gain unauthorized access, elevate privileges,** or **execute malicious code**. When left unpatched, these vulnerabilities create entry points for attackers to establish persistence and move laterally within networks.
-
-Organizations must prioritize patch management and vulnerability remediation to address these risks. Regular updates and security assessments are essential to protect sensitive data and maintain compliance with security standards.
-
-## 
-
-Unencrypted devices
-
-Unencrypted devices **lack fundamental data protection mechanisms**, leaving sensitive corporate information vulnerable to unauthorized access. In the event of device loss or theft, all stored data becomes readily accessible, potentially compromising credentials and corporate resources. This absence of encryption also violates many compliance requirements and security frameworks.
-
-To mitigate these risks, organizations should enforce encryption policies for all devices, particularly mobile devices and laptops. Encryption ensures that data remains secure, even if physical security cannot be guaranteed.
-
-
-  
-
-#### 🔑 **Key Concept**  
-
-Using Falcon Shield, you can enforce device-based access controls, monitor high-risk endpoints, and integrate device context into broader security decisions across your SaaS environment.  
-
-should now be able to:
-
-- •
-    
-    Analyze device-user relationships to identify potential risks and security conditions.
-    
-- •
-    
-    Leverage the Falcon SaaS Devices inventory to gain insights into the device security landscape.
-    
-- •
-    
-    **Evaluate and manage device risks associated with SaaS usage effectively.**
+| Module | Description | 關聯模組 | 說明 |
+|--------|-------------|----------|------|
+| [User Inventory](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | Correlate device data with user identity | [使用者清單](Identity%20Visibility%20and%20Risk%20Assessment%20with%20Falcon%20Shield.md) | 將裝置資料與使用者身分關聯 |
+| [Applications Inventory](managing-saas-inventories.md) | Track apps connected to your SaaS | [應用程式清單](managing-saas-inventories.md) | 追蹤連接到 SaaS 的應用程式 |
+| [Identity Governance](Identity%20governance%20and%20compliance.md) | Enforce access policies based on device trust | [身分治理](Identity%20governance%20and%20compliance.md) | 根據裝置信任度執行存取策略 |
+| [DCU Matrix](the%20%22DCU%22%20matrix.md) | Prioritize risk based on device context | [DCU 矩陣](the%20%22DCU%22%20matrix.md) | 根據裝置情境優先處理風險 |
