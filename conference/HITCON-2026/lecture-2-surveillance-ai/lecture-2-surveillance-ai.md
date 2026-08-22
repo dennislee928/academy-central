@@ -3,6 +3,11 @@
 
 ---
 
+> **Note / 校訂：** These notes originally attributed a specific tool chain — OpenAI Codex + a custom Model Context Protocol (MCP) server + IDA Pro + Playwright — to the speaker's own workflow. **No public source connects Philippe Laulheret to those specific tools.** The Cisco Talos post on LLM-assisted reverse engineering is authored by Guilherme Venere, and `ida-pro-mcp` / `playwright-mcp` are unrelated third-party projects. Passages below that describe such a pipeline are retained as *room notes*, explicitly marked as unverified, and the named tools are listed in Further Reading as **related community tooling, not the speaker's attested stack**.
+> 本文原稿將「OpenAI Codex ＋ 自製 MCP 伺服器 ＋ IDA Pro ＋ Playwright」這一整套工具鏈歸屬於講者本人的工作流程。**目前沒有任何公開來源可佐證 Philippe Laulheret 使用上述特定工具。** Cisco Talos 談 LLM 輔助逆向工程的文章作者為 Guilherme Venere；`ida-pro-mcp` 與 `playwright-mcp` 皆為第三方獨立專案。以下相關段落一律保留為「現場筆記」並標註為未經查證，所提及的工具則移至「延伸閱讀」，標示為**社群相關工具，而非講者已證實使用的工具組**。
+
+---
+
 ## 1. Speaker Information & Topic / 講者資訊與演講主題
 
 ### English
@@ -24,14 +29,36 @@
 ## 2. Quick Summary / 內容簡要
 
 ### English
-This lecture details Philippe Laulheret's vulnerability research into the security ecosystem of **GeoVision**, a major video surveillance manufacturer. He explores four distinct attack surfaces across GeoVision's product line: firmware-level vulnerabilities in the **GV-LPC2211** license plate capture camera, cryptographic failures in the **GV-IP Device Utility**, critical stack-based buffer overflows in the **GV-VMS** (Video Management Software) server running with `SYSTEM` privileges, and logical bypasses in the **Web Player** browser plugin. Beyond standard vulnerability analysis, Philippe demonstrates how cutting-edge AI (specifically OpenAI Codex) can be integrated into the security workflow. By building a custom **Model Context Protocol (MCP)** server, he automates the de-compilation of binary code via IDA Pro, identifies dangerous endpoints, synthesizes exploit payloads, drives automated browser testing using Playwright, and generates packet captures (PCAP) for defensive teams, turning manual reverse engineering into an automated pipeline.
+This lecture details Philippe Laulheret's vulnerability research into the security ecosystem of **GeoVision**, a major video surveillance manufacturer. He explores four distinct attack surfaces across GeoVision's product line: firmware-level vulnerabilities in the **GV-LPC2211** license plate capture camera, cryptographic failures in the **GV-IP Device Utility**, critical stack-based buffer overflows in the **GV-VMS** (Video Management Software) server running with `SYSTEM` privileges, and logical bypasses in the **Web Player** browser plugin. Beyond standard vulnerability analysis, the talk closes on how LLM assistance is changing this kind of research: pushing decompiler output through a language model to triage dangerous endpoints, generating proof-of-concept pages, driving them in a headless browser, and collecting crash evidence and packet captures for defensive teams. *(Room note, unverified: these notes recorded a specific stack of OpenAI Codex, a custom **Model Context Protocol (MCP)** server bridging IDA Pro, and Playwright. See the correction callout at the top — no public source ties those specific tools to the speaker, so treat the pipeline below as the general pattern rather than an attested workflow.)*
 
 ### 繁體中文
-本演講詳細記錄了 Philippe Laulheret 對知名監控設備廠商 **GeoVision** 安全生態系統的深入漏洞研究。講者揭示了 GeoVision 產品線中四個不同的攻擊面：**GV-LPC2211** 車牌辨識相機的韌體級漏洞、**GV-IP Device Utility** 配置工具的密碼學實作缺陷、在 `SYSTEM` 高權限下運行的 **GV-VMS**（影像管理軟體）伺服器的堆疊緩衝區溢位漏洞，以及 **Web Player** 瀏覽器插件的邏輯設計缺陷。除了傳統的安全漏洞分析外，Philippe 還展示了如何將尖端 AI（特別是 OpenAI Codex）無縫整合至安全研究的工作流程中。藉由開發客製化的 **Model Context Protocol (MCP)** 伺服器，他實現了自動化調用 IDA Pro 進行二進位代碼反編譯、定位危險端點、合成漏洞利用 Payload、利用 Playwright 進行瀏覽器自動化測試，並為防禦團隊生成網路封包擷取檔案（PCAP），將原本繁瑣的手動逆向分析轉化為高度自動化的流水線。
+本演講詳細記錄了 Philippe Laulheret 對知名監控設備廠商 **GeoVision** 安全生態系統的深入漏洞研究。講者揭示了 GeoVision 產品線中四個不同的攻擊面：**GV-LPC2211** 車牌辨識相機的韌體級漏洞、**GV-IP Device Utility** 配置工具的密碼學實作缺陷、在 `SYSTEM` 高權限下運行的 **GV-VMS**（影像管理軟體）伺服器的堆疊緩衝區溢位漏洞，以及 **Web Player** 瀏覽器插件的邏輯設計缺陷。除了傳統的安全漏洞分析外，演講後半段談到 LLM 如何改變這類研究工作：將反編譯輸出交由語言模型初步篩選危險端點、生成 PoC 測試頁、以無頭瀏覽器自動觸發，並為防禦團隊收集崩潰證據與封包擷取檔（PCAP）。*（現場筆記，未經查證：本文原稿記錄的具體工具組為 OpenAI Codex、自製 **Model Context Protocol (MCP)** 伺服器橋接 IDA Pro，以及 Playwright。詳見文首校訂說明——目前無公開來源可將這些特定工具與講者連結，故以下流程請視為業界通則，而非講者已證實的工作流程。）*
 
 ---
 
 ## 3. Structured Lecture Context (Extremely Detailed) / 結構化演講內容（極致詳細）
+
+### 3.0 Map of the Four Attack Surfaces / 四個攻擊面總覽
+
+```mermaid
+flowchart TB
+  GV["GeoVision surveillance ecosystem"]
+  GV --> A["GV-LPC2211 (embedded Linux camera)"]
+  GV --> B["GV-IP Device Utility (admin desktop tool)"]
+  GV --> C["GV-VMS Webcam Server (Windows, runs as SYSTEM)"]
+  GV --> D["Web Player (local WebSocket helper app)"]
+  A --> A1["Unencrypted firmware<br/>Unsanitised DDNS config write"]
+  B --> B1["Credentials broadcast over UDP<br/>Key shipped inside the same packet"]
+  C --> C1["Unauthenticated stack overflow<br/>in HTTP Basic auth parsing"]
+  D --> D1["No Origin check<br/>Out-of-bounds indices, screen capture API"]
+  A1 --> R1["Authenticated RCE on the camera"]
+  B1 --> R2["Admin credential disclosure on the LAN"]
+  C1 --> R3["Pre-auth SYSTEM code execution"]
+  D1 --> R4["Drive-by crash and desktop screenshot theft"]
+```
+
+*The four product lines the research covers, and the class of outcome each surface yields.*
+*本研究涵蓋的四條產品線，以及每個攻擊面所導致的後果類型。*
 
 ### 3.1 Attack Surface 1: GV-LPC2211 Camera Firmware Exploitation / 攻擊面一：GV-LPC2211 車牌攝影機韌體漏洞利用
 
@@ -39,11 +66,11 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 * **Target Identification:** The target of this research is the **GeoVision GV-LPC2211**, an embedded license plate capture (LPC) camera.
 * **Firmware Extraction:** The firmware is downloadable directly from the GeoVision website. A simple hex-editor analysis reveals unencrypted bootloader headers (`U-Boot`) and kernel identifiers (`camera`). This lack of encryption allows immediate extraction using **Binwalk**, yielding the camera's full Linux root filesystem.
 * **Service Reconnaissance:** Reversing the system binaries reveals multiple custom network management protocols and CGI endpoints.
-* **Dynamic DNS (DDNS) Parameter Vulnerability:** 
+* **Dynamic DNS (DDNS) Parameter Vulnerability:**
   * The camera utilizes an off-the-shelf dynamic DNS client named **Easy IP Update** (`easyipupdate`).
   * When a user configures DDNS settings through the camera's web interface, parameters (such as host name, username, and password) are written directly into a configuration file (`easyipupdate.conf`) without sanitization.
   * An attacker can inject **line breaks** (`\n`) into these input fields to inject arbitrary configuration parameters into the config file.
-* **Command Injection via Configuration Abuse:** 
+* **Command Injection via Configuration Abuse:**
   * The `easyipupdate` configuration format natively supports an `execute command` parameter, designed to execute a shell command upon successful IP binding.
   * By injecting `execute command = [payload]` into the parameters, the attacker forces the system to run arbitrary shell commands.
 * **Exploit Chain & RCE:**
@@ -83,8 +110,8 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 * **Deobfuscating Blowfish with AI Emulation:**
   * Inspection of the packet captures in Wireshark showed the cleartext key and the encrypted credential payload.
   * Reversing the cryptographic function suggested it was related to the **Blowfish** cipher (revealed by Blowfish's signature S-box constants). However, decrypting the payload using standard, off-the-shelf Blowfish libraries failed.
-  * Philippe leveraged **OpenAI Codex** to resolve this discrepancy. He provided Codex with the disassembled binary logic and asked it to write a **Unicorn engine emulation script** to run the binary's actual cryptographic instructions.
-  * Codex successfully generated the Unicorn script. The emulation revealed that the algorithm was indeed standard Blowfish, but it was processing bytes in **little-endian memory order** (byte-swapped), which caused standard decryptors to fail.
+  * The resolution came from **emulating the binary's own cryptographic routine** with the **Unicorn engine**, rather than trying to match it against a library implementation. *(Room note, unverified: these notes recorded that an LLM — OpenAI Codex — was asked to write the Unicorn harness. See the correction callout at the top; that attribution is not corroborated by any public source. The emulation result itself stands on its own.)*
+  * The emulation revealed that the algorithm was indeed standard Blowfish, but it was processing bytes in **little-endian memory order** (byte-swapped), which caused standard decryptors to fail.
   * By reversing the endianness, the researcher could immediately decrypt any GV-IP Device Utility broadcast packet, sniffing administrative usernames and passwords from the local network segment.
 
 #### 繁體中文
@@ -97,8 +124,8 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 * **利用 AI 模擬逆向解密 Blowfish 演算法：**
   * 在 Wireshark 中觀察捕獲的廣播封包，可以清晰看到明文金鑰與密文憑證。
   * 逆向工程分析該加密函數，發現其特徵值（S-Box 常數）指向經典的 **Blowfish** 加密演算法。然而，嘗試使用標準的開源 Blowfish 程式庫進行解密時卻宣告失敗。
-  * Philippe 巧妙地利用 **OpenAI Codex** 來打破這一僵局。他將反彙編出的二進位加密代碼輸入給 Codex，並指示其編寫一個 **Unicorn 模擬引擎腳本**，以直接運行該二進位檔案的底層指令。
-  * Codex 成功生成了可運行的 Unicorn 模擬腳本。經由模擬代碼運行，Philippe 發現該加密實作在本質上確實是標準的 Blowfish，但在儲存和運算過程中採用了**小端序 (Little-Endian) 記憶體排列順序**（位元組顛倒），導致常規解密軟體無法正確處理。
+  * 突破口在於改用 **Unicorn 模擬引擎直接執行該二進位檔本身的加密常式**，而非硬要比對函式庫實作。*（現場筆記，未經查證：本文原稿記錄由 LLM（OpenAI Codex）代寫該 Unicorn 腳本。詳見文首校訂說明，此歸屬並無公開來源佐證；但模擬所得的結論本身不受影響。）*
+  * 經由模擬執行，可確認該加密實作在本質上確實是標準的 Blowfish，但在儲存和運算過程中採用了**小端序 (Little-Endian) 記憶體排列順序**（位元組顛倒），導致常規解密軟體無法正確處理。
   * 在修正了端序問題後，研究員得以瞬間解密區域網路上捕獲的任何 GV-IP Device Utility 廣播數據包，完美還原管理員的明文帳號與密碼。
 
 ---
@@ -136,6 +163,24 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
   * 當程式執行該虛擬函數呼叫時，控制流瞬間被劫持。攻擊者在 Stack Cookie 驗證機制被觸發前，便成功跳轉至 `ShellExecuteA` 執行任意系統命令。
 * **高容錯率：** 即使攻擊者在利用漏洞時導致進程崩潰，Windows 系統也會在 10 秒內自動重啟該 Webcam Server 服務。這使攻擊者能夠進行無限制的暴力嘗試。演講現場展示了在未經授權的情況下，成功奪取 **`SYSTEM` 權限反彈 Shell** 的震撼過程。
 
+#### Conceptual Exploit Chain / 漏洞利用鏈概念圖
+
+```mermaid
+sequenceDiagram
+  participant Attacker
+  participant WebcamServer
+  participant StackFrame
+  Attacker->>WebcamServer: HTTP request with oversized Basic auth header
+  WebcamServer->>StackFrame: Base64 decode into a 256 byte buffer with no bounds check
+  StackFrame-->>WebcamServer: adjacent C++ server app object pointer is overwritten
+  WebcamServer->>WebcamServer: dereference that pointer and resolve its vtable
+  Note over WebcamServer: this happens before the /GS stack cookie is validated
+  WebcamServer->>Attacker: control flow reaches ShellExecuteA with SYSTEM privileges
+```
+
+*Why the stack cookie never fires — the hijacked vtable call happens earlier in the function than the cookie check, and the missing ASLR makes the fake vtable address predictable.*
+*Stack Cookie 之所以失效的原因——被劫持的虛擬函數呼叫發生在函數中的 Cookie 檢驗之前；再加上未啟用 ASLR，偽造 vtable 的位址得以事先預測。*
+
 ---
 
 ### 3.4 Attack Surface 4: Web Player WebSocket Plugin Logic Gaps / 攻擊面四：Web Player WebSocket 插件邏輯缺陷
@@ -149,12 +194,10 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 * **Out-of-Bounds Index Bugs:**
   * Reversing the WebSocket command dispatcher revealed over 12 endpoints suffering from an **out-of-bounds array index** vulnerability.
   * For instance, commands directing the plugin to connect to a camera specify a camera index (e.g., `camera_index = 5`). The plugin reads this parameter and accesses internal memory structures without performing upper or lower bound validation, enabling out-of-bounds memory reads and write crashes.
-* **Automated AI Bug Hunting & Exploit Generation (MCP & Playwright):**
-  * To accelerate the painful process of reverse engineering 12 identical bugs, Philippe built an automated pipeline using **OpenAI Codex** and **Model Context Protocol (MCP)**.
-  * **MCP Bridge:** He wrote an MCP server that connected IDA Pro's decompiler (via IDA Python) directly to Codex.
-  * Codex read the decompiled code, automatically detected the array indexing vulnerabilities, and cataloged all 12 vulnerable commands.
-  * **PoC Generation:** Codex was then tasked with generating a single HTML page containing exploit payloads designed to target each vulnerable WebSocket endpoint.
-  * **Dynamic Validation:** The pipeline used **Playwright** (headless browser testing) to automatically visit the malicious HTML page, trigger the WebSocket commands, monitor the local plugin's process ID (PID) to confirm crashes, and run a localized Wireshark daemon to auto-generate PCAP files for the defense analysts.
+* **Scaling the write-up across 12 near-identical bugs (room note, unverified attribution):**
+  * Documenting a dozen structurally identical out-of-bounds bugs by hand is the tedious part of this kind of research, and the talk closed on automating it.
+  * *These notes recorded a specific pipeline — an **OpenAI Codex** model driving IDA Pro's decompiler through a custom **Model Context Protocol (MCP)** server, generating a single HTML page carrying a payload per vulnerable WebSocket endpoint, then **Playwright** visiting that page, watching the plugin's process ID (PID) for crashes, and capturing PCAPs for defensive analysts.*
+  * ***Correction:*** *no public source connects Philippe Laulheret to Codex, MCP, `ida-pro-mcp`, or Playwright. See the callout at the top of this file. The diagram below is presented as the **general Talos/community pattern** for LLM-assisted reverse engineering, not as the speaker's attested workflow.*
 * **Desktop Espionage via Logic Abuse ("Watching the Watchers"):**
   * While exploring commands, Philippe discovered an undocumented API endpoint: `get_screen_capture`.
   * This API takes a window title parameter (supporting wildcards like `*`), searches for active window handles on the system, takes screenshots of those windows, and returns them to the caller as Base64-encoded PNG strings.
@@ -170,17 +213,53 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 * **索引值越界漏洞 (Out-of-Bounds Index)：**
   * 逆向工程分析該 WebSocket 指令分發器，發現有高達 12 個 API 端點存在**陣列索引值越界**漏洞。
   * 例如，在指定連線至特定監視器時（如設定 `camera_index = 5`），程式碼會直接將此索引值用於內部結構指標的運算，而**完全不進行邊界與大小檢查**。輸入極大或極小的越界值會直接導致本機記憶體越界讀寫與程式崩潰。
-* **利用 AI 自動化尋找漏洞與 PoC 生成（MCP 與 Playwright）：**
-  * 面對 12 個結構相似的越界漏洞，手動編寫報告與漏洞驗證極其耗時。Philippe 藉由 **OpenAI Codex** 和 **Model Context Protocol (MCP)** 搭建了一套全自動化流水線：
-    * **MCP 架橋：** 他編寫了一個客製化的 MCP 伺服器，將 IDA Pro 的反編譯引擎（透過 IDA Python 腳本）直接連接至 Codex 語言模型。
-    * Codex 自動讀取反編譯代碼，識別出陣列索引未做防護的缺陷，並自動歸納出所有 12 個受漏洞影響的指令。
-    * **PoC 自動生成：** 接著，Codex 被指派編寫一個整合型的 HTML 漏洞測試網頁，能依序發送這 12 個越界指令。
-    * **動態自動驗證：** 流水線隨後調用 **Playwright** 自動化瀏覽器工具訪問該測試頁面，背景觸發 WebSocket 通訊，並透過監視本機插件的進程 ID (PID) 是否發生變更來判定程式是否崩潰。同時，背景自動運行 Wireshark 擷取封包，為分析人員一鍵導出完整的 PCAP 流量檔案。
+* **面對 12 個結構相似漏洞的量產式驗證（現場筆記，歸屬未經查證）：**
+  * 為十餘個結構完全相同的越界漏洞逐一撰寫報告與 PoC，是這類研究中最枯燥的部分，演講尾聲即在談如何將其自動化。
+  * *本文原稿記錄的具體流程為：以 **OpenAI Codex** 透過自製 **Model Context Protocol (MCP)** 伺服器驅動 IDA Pro 反編譯引擎，自動歸納出所有受影響指令並生成一個整合型 HTML 測試頁，再由 **Playwright** 無頭瀏覽器訪問該頁、監視插件進程 ID (PID) 判定崩潰，同時擷取 PCAP 供防禦分析人員使用。*
+  * ***校訂：*** *目前無任何公開來源可將 Philippe Laulheret 與 Codex、MCP、`ida-pro-mcp` 或 Playwright 連結。詳見文首校訂說明。以下圖示呈現的是 **Talos／資安社群通行的 LLM 輔助逆向工程模式**，而非講者已證實的工作流程。*
 * **利用邏輯設計漏洞進行桌面竊聽（反向監視）：**
   * 在梳理指令時，研究員發現了一個未公開的特殊 API 端點：`get_screen_capture`（獲取螢幕擷圖）。
   * 該 API 接受一個視窗標題參數（支持通配符 `*`），搜尋本機所有活動視窗控制代碼，對其進行畫面擷取，並將截圖轉化為 Base64 編碼的字串返回。
   * 該功能本意是用於在網頁介面上疊加攝影機視訊框，但完全沒有安全授權限制。
   * 任何外部惡意網站皆可透過 WebSocket 濫用此 API，在背景神不知鬼不覺地對用戶的整個 Windows 桌面進行持續截圖並回傳。這使得監控系統的管理員反過來被監視，變成了駭客的遠端竊聽工具。
+
+#### Web Player Cross-Origin Pivot / Web Player 跨來源樞紐路徑
+
+```mermaid
+flowchart LR
+  U["User with Web Player installed visits any page"] --> JS["Page script opens ws to localhost"]
+  JS --> WS["Local WebSocket server (no Origin validation)"]
+  WS --> H1["Command handlers taking an unchecked camera index"]
+  WS --> H2["Undocumented get_screen_capture handler"]
+  H1 --> R1["Out-of-bounds read or write<br/>Helper process crashes"]
+  H2 --> R2["Window titles matched by wildcard<br/>Desktop returned as Base64 PNG"]
+```
+
+*The missing `Origin` check is what turns a browser visit into local-machine command execution; everything downstream is reachable from any web page.*
+*缺少 `Origin` 驗證，使得單純瀏覽網頁即可對本機下達指令；其後所有處理函式皆可由任意網站直接觸及。*
+
+#### General Pattern for LLM-Assisted Reverse Engineering / LLM 輔助逆向工程的通用模式
+
+> **Attribution / 歸屬：** This diagram depicts the **general Talos / security-community pattern**, assembled from publicly documented tooling. **It is not the speaker's own workflow** — see the correction callout at the top of this file.
+> 本圖呈現的是**依公開工具文件整理出的 Talos／資安社群通用模式**，**並非講者本人的工作流程**，詳見文首校訂說明。
+
+```mermaid
+flowchart LR
+  BIN["Target binary"] --> DIS["Disassembler and decompiler (IDA Pro, Ghidra)"]
+  DIS --> BR["MCP server bridging the tool to a language model"]
+  BR --> LLM["Model reasons over decompiled functions"]
+  LLM --> C1["Shortlist of suspect handlers"]
+  LLM --> C2["Emulation harness (Unicorn) for opaque routines"]
+  C1 --> POC["Generated proof-of-concept page or script"]
+  POC --> DRV["Headless browser driver (Playwright)"]
+  DRV --> OBS["Crash observation via PID watch<br/>Traffic captured to PCAP"]
+  C2 --> OBS
+  OBS --> REP["Vendor advisory and detection rules"]
+  REP --> HUM["Human review and triage at every step"]
+```
+
+*The human stays in the loop: the model narrows the search space and drafts artefacts, but confirmation, disclosure, and judgement remain manual.*
+*人始終在迴圈中：模型負責縮小搜尋範圍與草擬產出，但驗證、通報與判斷仍由人工把關。*
 
 ---
 
@@ -188,12 +267,12 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 
 ### English
 * **Systemic IoT Fragility:** Philippe Laulheret's research highlights a persistent theme in IoT security: complex systems are only as secure as their weakest component. A highly engineered AI surveillance network is entirely undermined by basic software engineering oversights, such as compiling enterprise software without ASLR, hardcoding decryption keys in broadcast packets, and blindly trusting cross-origin WebSockets.
-* **The Paradigm Shift in Security Engineering:** The integration of LLMs like Codex with traditional static and dynamic analysis tools (like IDA Pro and Playwright) via Model Context Protocol (MCP) marks a massive shift. Automated bug hunting is no longer restricted to rigid fuzzing; AI can now reason about disassembled logic, identify context-specific flaws, write functional exploits, and validate them in real-time.
+* **The Paradigm Shift in Security Engineering:** More broadly across the field, wiring language models into traditional static and dynamic analysis tooling marks a real shift in how this work scales. Automated bug hunting is no longer restricted to rigid fuzzing; a model can reason about decompiled logic, surface context-specific flaws, draft proof-of-concept code, and drive validation. *(The specific Codex/MCP/IDA/Playwright stack recorded in these notes is not attributed to the speaker — see the correction callout at the top.)*
 * **Defense-in-Depth Priority:** Vulnerability boundaries must extend beyond the network perimeter. The local boundary between peripheral software (VMS, plugins) and the Windows operating system must be strictly policed.
 
 ### 繁體中文
 * **物聯網安全的系統性脆弱：** Philippe Laulheret 的研究再次驗證了物聯網安全中一個不變的真理：複雜系統的安全性僅取決於最脆弱的那個環節。即便部署了最先進的 AI 影像辨識防線，也可能因為基本軟體工程的低級失誤（如編譯未啟用 ASLR、在廣播中明文暴露密鑰、WebSocket 未做跨域驗證）而被瞬間攻破。
-* **安全工程的典範轉移：** 透過 Model Context Protocol (MCP) 將大語言模型（如 Codex）與傳統的靜態與動態分析工具（如 IDA Pro、Playwright）無縫橋接，標誌著自動化漏洞挖掘的重大飛躍。自動化尋找漏洞不再局限於死板的模糊測試（Fuzzing）；AI 如今已具備理解反編譯代碼邏輯、精確定位特定缺陷、撰寫可利用 Exploit，並在實時環境中進行動態驗證的綜合能力。
+* **安全工程的典範轉移：** 就整個產業而言，將大語言模型接入傳統靜態與動態分析工具，確實改變了這類研究的規模化方式。自動化尋找漏洞不再局限於死板的模糊測試（Fuzzing）；模型已具備理解反編譯邏輯、浮現特定缺陷、草擬 PoC 程式碼並驅動驗證的能力。*（本文原稿記錄的 Codex／MCP／IDA／Playwright 具體工具組並未歸屬於講者，詳見文首校訂說明。）*
 * **深度防禦的迫切性：** 安全邊界必須從傳統的網路邊界延伸至更細微之處。系統開發者必須將本機管理軟體（如 VMS、插件）與作業系統內核之間的互動，視為極其關鍵的安全邊界進行嚴格審查與防禦。
 
 ---
@@ -204,19 +283,22 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 1. **ASLR and Exploit Mitigations Enforcement:** Compile all components of the Webcam Server, VMS, and associated dynamic link libraries (`.dll`) with active Address Space Layout Randomization (`/DYNAMICBASE`), Data Execution Prevention (`/NXCOMPAT`), and Control Flow Guard (`/guard:cf`) to neutralize virtual function table hijacking and stack-based RCE.
 2. **Cryptographic Hardening & Session Security:** Completely eliminate UDP-broadcast credential transit. Transition the GV-IP Device Utility to encrypted unicast protocols (e.g., TLS 1.3) with ephemeral keys, and ensure encryption keys are never transported alongside ciphertexts.
 3. **Origin and Cross-Origin Protections (WebSocket Securing):** Secure the Web Player browser helper by implementing local token authentication or validating the `Origin` header of incoming WebSocket connections. Connections from unapproved external websites must be immediately blocked.
-4. **AI-Driven Automated Vulnerability Pipelines (DevSecOps):** Security teams can extend Philippe's MCP workflow into their CI/CD pipelines. Integrating an LLM broker with static analysis tools (e.g., Semgrep, IDA) can flag memory indexing bugs and unconstrained copies in real-time before code is compiled and shipped.
+4. **AI-Driven Automated Vulnerability Pipelines (DevSecOps):** Security teams can bring the general LLM-assisted analysis pattern into their CI/CD pipelines. Integrating a model with static analysis tools (e.g., Semgrep, IDA) can flag memory indexing bugs and unconstrained copies before code is compiled and shipped. *(This is a generic recommendation, not a workflow attributed to the speaker.)*
 
 ### 繁體中文
 1. **加強編譯期安全防禦：** 全面強制對 Webcam Server、VMS 以及所有關聯 DLL 啟用 ASLR（`/DYNAMICBASE` 編譯選項）、DEP（`/NXCOMPAT` 數據執行保護）以及控制流守護（`/guard:cf`），藉此杜絕利用虛擬函數表（Vtable）劫持與堆疊溢位進行 RCE 的路徑。
 2. **密碼學實作與傳輸安全加固：** 徹底淘汰使用 UDP 廣播傳輸敏感憑證的作法。將 GV-IP Device Utility 遷移至安全的單播加密協定（如 TLS 1.3），使用臨時金鑰，並確保金鑰絕不與密文在同一個管道中傳播。
 3. **WebSocket 來源驗證與本地認證：** 針對 Web Player 插件，實作本地身分驗證 Token 機制，並在 WebSocket 連線建立時嚴格校驗 HTTP `Origin` 標頭。一律阻斷任何非官方授權網站發起的跨域連線請求。
-4. **AI 驅動的自動化漏洞偵測流水線（DevSecOps）：** 企業安全團隊可將講者展示的 MCP 框架導入日常的 CI/CD 流程中。透過 LLM 代理（Broker）與靜態程式碼分析工具（如 Semgrep、IDA）的深度融合，在代碼編譯發布前實時自動檢測陣列索引越界、無長度限制的記憶體複製等高危險漏洞。
+4. **AI 驅動的自動化漏洞偵測流水線（DevSecOps）：** 企業安全團隊可將通用的 LLM 輔助分析模式導入日常 CI/CD 流程。透過語言模型與靜態程式碼分析工具（如 Semgrep、IDA）的整合，在代碼編譯發布前自動檢測陣列索引越界、無長度限制的記憶體複製等高危險漏洞。*（此為通則性建議，並非歸屬於講者的工作流程。）*
 
 ---
 
 ## 6. Precise Bilingual Transcript / 精確雙語對照逐字稿
 
 ### English & Traditional Chinese Parallel Table / 英文與繁體中文平行對照表
+
+> **Note / 校訂：** The rows below are preserved verbatim as originally noted in the room and have **not** been edited. Rows mentioning OpenAI Codex, MCP, IDA Pro, or Playwright are room notes only — no public source corroborates that tool attribution. See the correction callout at the top of this file.
+> 以下表格保留現場筆記原貌，**未經改動**。其中提及 OpenAI Codex、MCP、IDA Pro 或 Playwright 的段落僅為現場筆記，並無公開來源可佐證該工具歸屬，詳見文首校訂說明。
 
 | English (Bilingual Transcription) | 繁體中文對照 (Precise Translation) |
 | :--- | :--- |
@@ -258,5 +340,88 @@ This lecture details Philippe Laulheret's vulnerability research into the securi
 | We then used Playwright to automatically visit the pages, trigger the crashes, monitor PID shifts, and capture PCAPs for security analysts. | 我們隨後調用 Playwright 自動化瀏覽器工具訪問網頁，觸發程式崩潰，檢測 PID 進程標識符的變化，並自動生成封包擷取檔（PCAP）給分析人員。 |
 | We also found a logic bug: `get_screen_capture`. Any external page via the WebSocket can call it with a wildcard title to capture and retrieve screenshots of the user's desktop, turning the surveillance system into a spy tool. | 我們還發現了一個邏輯漏洞：`get_screen_capture`（獲取螢幕截圖）API。任何外部網站都能透過 WebSocket 連線，使用通配符匹配視窗標題，隨意擷取並帶走用戶的 Windows 桌面截圖，將這套安全監控系統徹底變成了駭客的間諜監聽工具。 |
 | Yesterday I mentioned the bug-report apocalypse, but even smaller vendors are facing the same automated issues. Use AI to automate the boring stuff while keeping human ingenuity in the loop. Thank you! | 昨天我提到了「漏洞申報末日」，如今即使是小型軟體開發商也面臨同樣的自動化漏洞挖掘衝擊。讓我們學會駕馭 AI 來自動化處理繁雜枯燥的工作，同時將人類特有的創造力保留在核心環節中。謝謝大家！ |
+
+---
+
+## Resources, Repositories & Contacts / 資源、程式碼庫與聯絡方式
+
+> All links in this section were checked against their live pages unless explicitly tagged `(unverified)`. Professional presence only — no personal contact details are listed.
+> 除明確標註 `(unverified)` 者外，本節所有連結皆經實際查證。僅列公開的專業聯絡管道，不含任何個人聯絡資訊。
+
+### Speaker & Contact / 講者與聯絡方式
+
+| Channel / 管道 | Link / 連結 | Notes / 備註 |
+| :--- | :--- | :--- |
+| Talos author page / Talos 作者頁 | https://blog.talosintelligence.com/author/philippe/ | Primary professional publication channel / 主要專業發表管道 |
+| GitHub | https://github.com/philippelaulheret | Personal public repositories / 個人公開程式碼庫 |
+| X (Twitter) | https://x.com/phlaul | — |
+| LinkedIn | https://www.linkedin.com/in/philippe-laulheret-094a5315 | The URL DEF CON 33 itself publishes / DEF CON 33 官方公布之網址 |
+| DEF CON 33 speakers / DEF CON 33 講者頁 | https://defcon.org/html/defcon-33/dc-33-speakers.html | Conference speaker listing / 大會講者名單 |
+
+* **Affiliation / 所屬單位:** Cisco Talos — https://blog.talosintelligence.com/
+* No personal email address or phone number is published here by design. Vulnerability correspondence goes through Cisco Talos' disclosure process, not an individual inbox.
+  基於原則，本文不刊載任何個人電子郵件或電話。漏洞通報請循 Cisco Talos 的正式揭露流程，而非個人信箱。
+
+### Code & Repositories / 程式碼庫
+
+* **Speaker's own GitHub / 講者本人的 GitHub:** https://github.com/philippelaulheret
+* No public GeoVision proof-of-concept repository from the speaker was located. The advisories below are the authoritative technical record.
+  未發現講者公開的 GeoVision PoC 程式碼庫；下方的 Talos 資安公告即為權威技術紀錄。
+* **Related community tooling / 社群相關工具 — NOT the speaker's stack / 非講者的工具組:** see *Further Reading* below.
+
+### Papers & Publications / 論文與出版品
+
+**14 Talos advisories / 37 CVEs credited on GeoVision. / 講者名下共 14 份 Talos 資安公告、37 個 GeoVision CVE。**
+
+Roundup post / 彙整文章: https://blog.talosintelligence.com/wolfssl-vulnerabilities/ (2026-07-09)
+
+Confirmed advisory IDs — URL pattern `https://talosintelligence.com/vulnerability_reports/<ID>` / 已確認之公告編號，網址格式如左:
+
+| Advisory ID / 公告編號 | Report URL / 公告網址 |
+| :--- | :--- |
+| TALOS-2026-2411 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2411 |
+| TALOS-2026-2379 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2379 |
+| TALOS-2026-2377 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2377 |
+| TALOS-2026-2375 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2375 |
+| TALOS-2026-2373 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2373 |
+| TALOS-2026-2370 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2370 |
+| TALOS-2026-2369 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2369 |
+| TALOS-2026-2333 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2333 |
+| TALOS-2026-2329 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2329 |
+| TALOS-2026-2328 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2328 |
+| TALOS-2026-2327 | https://talosintelligence.com/vulnerability_reports/TALOS-2026-2327 |
+| TALOS-2025-2332 | https://talosintelligence.com/vulnerability_reports/TALOS-2025-2332 |
+| TALOS-2025-2326 | https://talosintelligence.com/vulnerability_reports/TALOS-2025-2326 |
+| TALOS-2025-2322 | https://talosintelligence.com/vulnerability_reports/TALOS-2025-2322 |
+
+### Talk & Slides / 演講資料
+
+* **HITCON 2026 agenda index / HITCON 2026 議程總表:** https://hitcon.org/2026/en-US/agenda/
+* **This session's agenda entry / 本場次議程頁 `(unverified)`:** the HITCON site returns HTTP 403 to automated fetches and its agenda view serves only the current conference day, so the per-session URL for this talk could not be resolved. Search the agenda index above for "GeoVision" or the speaker's name to locate it.
+  HITCON 網站對自動化抓取回傳 HTTP 403，且議程頁僅顯示當日場次，因此無法取得本場次的個別議程網址。請於上方議程總表中搜尋「GeoVision」或講者姓名。
+* **Slides / 簡報 `(unverified)`:** no published slide deck for this session was located. HITCON historically posts materials to its agenda pages after the event.
+  未找到本場次的公開簡報檔。HITCON 通常於會後將資料補上議程頁。
+* **Talos speaker profile interview / Talos 講者專訪:** https://blog.talosintelligence.com/breaking-things-to-keep-them-safe-with-philippe-laulheret/
+
+### Further Reading / 延伸閱讀
+
+#### GeoVision exploitation in the wild / GeoVision 遭實際利用之背景
+
+* **CISA KEV catalog / CISA 已知遭利用漏洞目錄:** CVE-2024-11120 and CVE-2024-6047 (GeoVision devices, added 2025-05-07) — https://www.cisa.gov/known-exploited-vulnerabilities-catalog
+* **Akamai — Mirai botnet actively exploiting GeoVision IoT devices / Akamai 研究：Mirai 殭屍網路實際利用 GeoVision 裝置:** https://www.akamai.com/blog/security-research/active-exploitation-mirai-geovision-iot-botnet
+* **CISA ICS advisory ICSA-23-199-05 / CISA 工控資安公告:** https://www.cisa.gov/news-events/ics-advisories/icsa-23-199-05
+
+#### Related tooling — LLM-assisted reverse engineering / 相關工具：LLM 輔助逆向工程
+
+> **NOT the speaker's tooling / 非講者的工具組.** These are third-party and other-author resources listed only because these notes originally, and incorrectly, attributed them to the speaker. See the correction callout at the top of this file.
+> 以下皆為第三方或他人著作的資源，列於此處僅因本文原稿曾誤將其歸屬於講者。詳見文首校訂說明。
+
+* **"Using an LLM as a reverse engineering sidekick" — Cisco Talos, by *Guilherme Venere* (not Laulheret) / 作者為 Guilherme Venere，非 Laulheret:** https://blog.talosintelligence.com/using-llm-as-a-reverse-engineering-sidekick/
+* **`ida-pro-mcp` — third-party MCP server for IDA Pro / 第三方 IDA Pro MCP 伺服器:** https://github.com/mrexodia/ida-pro-mcp
+* **`playwright-mcp` — Microsoft's MCP server for Playwright / 微軟的 Playwright MCP 伺服器:** https://github.com/microsoft/playwright-mcp
+
+#### Vendor / 廠商
+
+* **GeoVision (device and software vendor) / GeoVision 官方網站:** https://www.geovision.com.tw/
 
 ---

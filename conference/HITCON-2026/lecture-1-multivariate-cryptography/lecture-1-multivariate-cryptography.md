@@ -7,8 +7,8 @@
 
 ### English
 * **Speaker:** **Wang Li-chung (王立中)**
-  * **Affiliations:** 
-    * Special Researcher at **Foxconn Research Institute** (鴻海研究院特聘研究員)
+  * **Affiliations:**
+    * Special Researcher at **Hon Hai (Foxconn) Research Institute** (鴻海研究院特聘研究員) — on **secondment** (借調) from NDHU; see *Speaker & Contact* below for sourcing
     * Professor of Applied Mathematics at **National Dong Hwa University** (國立東華大學應用數學系教授)
   * **Role & Background:** A mathematician and cryptographer with over four years of experience actively designing, tuning, and defending post-quantum digital signature systems. He is a primary designer of the **Snova** signature scheme.
 * **Topic:** **Multivariate Cryptography and Digital Signatures** (多變數密碼學與數位簽章)
@@ -17,7 +17,7 @@
 ### 繁體中文
 * **講者：** **王立中**
   * **現職與機構：**
-    * **鴻海研究院** 特聘研究員
+    * **鴻海研究院** 特聘研究員（自東華大學**借調**，來源見下方「講者與聯絡方式」）
     * **國立東華大學** 應用數學系教授
   * **專業背景：** 數學家與密碼學專家，擁有超過四年親自參與後量子數位簽章系統設計、參數調整與防禦實戰的深厚經驗。他是 **Snova** 簽章演算法的主要設計者之一。
 * **主題：** **多變數密碼學與數位簽章** (Multivariate Cryptography and Digital Signatures)
@@ -101,6 +101,28 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
 
 ### 3.4 Unbalanced Oil and Vinegar (UOV) Signature Scheme / 非平衡油醋（UOV）簽章演算法
 
+#### Diagram: The Trapdoor Construction / 圖解：陷門構造
+
+```mermaid
+flowchart LR
+  IN["Input x in F_q^n"]
+  OUT["Output y in F_q^m"]
+  subgraph SK["Private key (S, F, T) / 私鑰"]
+    direction LR
+    T["T (invertible affine map)<br/>mixes the variables"]
+    F["F (central map)<br/>carries the trapdoor structure"]
+    S["S (invertible affine map)<br/>hides the structure again"]
+    T --> F --> S
+  end
+  IN --> T
+  S --> OUT
+  IN ==>|"public key P = S composed with F composed with T"| OUT
+  PUB["To an outsider P looks like<br/>a random quadratic system"] -.-> OUT
+```
+
+*The public map is the composition; the private key is the three factors kept apart. UOV is the special case that omits S entirely, so P = F ∘ T. Recovering S, F, T from P is the hard problem.*
+*公鑰是三個映射的合成，私鑰則是分開保存的三個因子。UOV 是省去 S 的特例，故 P = F ∘ T。由 P 反推出 S、F、T 即為其數學難題。*
+
 #### English
 * **Core Design Philosophy:** Traditional multivariate systems construct the public key $P$ as a composition of three maps: $P = T \circ F \circ S$.
   * $S$ and $T$ are invertible linear mappings used to mix and entangle the variables, effectively hiding any structural features.
@@ -110,16 +132,16 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
   * Let there be $n$ variables in total, partitioned into two disjoint groups:
     1. **Vinegar Variables ($v$ variables):** $\{x_1, \dots, x_v\}$
     2. **Oil Variables ($o$ variables):** $\{x_{v+1}, \dots, x_{v+o}\}$
-  * The total dimension is $n = v + o$. The scheme is "Unbalanced" because we typically set $v > o$ (often $v pprox 2o$ or more) to prevent structural attacks.
+  * The total dimension is $n = v + o$. The scheme is "Unbalanced" because we typically set $v > o$ (often $v \approx 2o$ or more) to prevent structural attacks.
 * **The central map $F$ Structure:**
   * Every quadratic polynomial $f_k$ in the central map $F$ is constructed with a strict structural constraint:
-    $$	ext{Allowed terms: } (	ext{Vinegar} 	imes 	ext{Vinegar}) \quad 	ext{and} \quad (	ext{Vinegar} 	imes 	ext{Oil})$$
-    $$	ext{Forbidden terms: } (	ext{Oil} 	imes 	ext{Oil})$$
+    $$\text{Allowed terms: } (\text{Vinegar} \times \text{Vinegar}) \quad \text{and} \quad (\text{Vinegar} \times \text{Oil})$$
+    $$\text{Forbidden terms: } (\text{Oil} \times \text{Oil})$$
   * The name "Oil and Vinegar" is a metaphor for two liquids that do not mix, remaining in separate, well-defined layers.
 * **How Signature Generation Works (Inverting the Trapdoor):**
   1. To sign a message hash $\mathbf{y} = (y_1, \dots, y_o)$, the signer first assigns completely random values to the $v$ Vinegar variables.
-  2. Once the Vinegar variables are fixed as constants, the term $(	ext{Vinegar} 	imes 	ext{Oil})$ collapses into a linear term in the Oil variables, and $(	ext{Vinegar} 	imes 	ext{Vinegar})$ collapses into a constant.
-  3. Because there are no $(	ext{Oil} 	imes 	ext{Oil})$ terms to generate quadratic Oil interactions, the central map $F$ is transformed into a system of **linear equations** in $o$ variables.
+  2. Once the Vinegar variables are fixed as constants, the term $(\text{Vinegar} \times \text{Oil})$ collapses into a linear term in the Oil variables, and $(\text{Vinegar} \times \text{Vinegar})$ collapses into a constant.
+  3. Because there are no $(\text{Oil} \times \text{Oil})$ terms to generate quadratic Oil interactions, the central map $F$ is transformed into a system of **linear equations** in $o$ variables.
   4. The signer solves this system of $o$ linear equations for the $o$ Oil variables using standard Gaussian Elimination.
   5. The complete central signature vector is assembled. The signer then applies the inverse linear transformation $T^{-1}$ to yield the final signature $\sigma$.
 * **Security Asymmetry:** To an outside observer, the public key $P$ appears to be a general, randomized set of MQ equations with no recognizable structure, rendering any algebraic solver attempt NP-hard.
@@ -136,16 +158,16 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
   * UOV 將系統中的 $n$ 個變數分成互不相交的兩組：
     1. **醋變數 (Vinegar Variables, $v$ 個)：** $\{x_1, \dots, x_v\}$
     2. **油變數 (Oil Variables, $o$ 個)：** $\{x_{v+1}, \dots, x_{v+o}\}$
-  * 系統總變數 $n = v + o$。為了抵禦特定代數攻擊，通常使醋變數個數大於油變數（例如 $v pprox 2o$），因此稱為「非平衡（Unbalanced）」油醋系統。
+  * 系統總變數 $n = v + o$。為了抵禦特定代數攻擊，通常使醋變數個數大於油變數（例如 $v \approx 2o$），因此稱為「非平衡（Unbalanced）」油醋系統。
   * 命名取自「油與醋放入杯中會自然分離成兩層、互不融合」的物理現象。
 * **核心映射 $F$ 的特殊限制：**
   * 在核心映射 $F$ 的每一個二次多項式 $f_k$ 中，變數項的組成受到嚴格限制：
-    $$	ext{允許出現的項：} (	ext{醋變數} 	imes 	ext{醋變數}) \quad 	ext{與} \quad (	ext{醋變數} 	imes 	ext{油變數})$$
-    $$	ext{絕對禁止出現的項：} (	ext{油變數} 	imes 	ext{油變數})$$
+    $$\text{允許出現的項：} (\text{醋變數} \times \text{醋變數}) \quad \text{與} \quad (\text{醋變數} \times \text{油變數})$$
+    $$\text{絕對禁止出現的項：} (\text{油變數} \times \text{油變數})$$
 * **簽章生成流程（陷門求解）：**
   1. 當簽署者欲對訊息雜湊值 $\mathbf{y} = (y_1, \dots, y_o)$ 進行簽署時，首先隨機指派一組數值給 $v$ 個醋變數。
-  2. 當醋變數被固定為常數後，核心多項式中的 $(	ext{醋} 	imes 	ext{油})$ 項會退化成關於油變數的「一次項（線性項）」，而 $(	ext{醋} 	imes 	ext{醋})$ 項則退化成常數。
-  3. 由於公式中原本就沒有 $(	ext{油} 	imes 	ext{油})$ 二次項，整組核心映射 $F$ 瞬間轉化為關於 $o$ 個油變數的**多元一次（線性）方程組**。
+  2. 當醋變數被固定為常數後，核心多項式中的 $(\text{醋} \times \text{油})$ 項會退化成關於油變數的「一次項（線性項）」，而 $(\text{醋} \times \text{醋})$ 項則退化成常數。
+  3. 由於公式中原本就沒有 $(\text{油} \times \text{油})$ 二次項，整組核心映射 $F$ 瞬間轉化為關於 $o$ 個油變數的**多元一次（線性）方程組**。
   4. 簽署者利用常規的「高斯消去法」快速求解這 $o$ 個油變數。
   5. 將求得的醋變數與油變數拼接成完整的核心簽章向量，最後帶入可逆線性映射 $T^{-1}$，即可生成最終的數位簽章 $\sigma$。
 * **安全非對稱性：** 對於沒有私鑰的攻擊者而言，他們看到的公鑰 $P$ 是一組隨機混淆、毫無規則的多元二次方程組，求解該方程組依然是極難的 NP-hard 問題。
@@ -153,13 +175,38 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
   * **優點：** 結構極其簡單、驗簽速度極快（僅需將簽章代入公鑰多項式求值）、簽章尺寸極短。
   * **缺點：** **公鑰尺寸過於龐大**。由於需要儲存多個多項式的所有係數，即使是最低安全級別（Level 1）的 UOV 系統，其公鑰大小也高達 **40KB** 左右，這在許多即時網路通訊場景（如 TLS 握手包）中顯得過大。
 
+#### Diagram: Signing versus Verifying / 圖解：簽章與驗章流程對照
+
+```mermaid
+flowchart TB
+  M["Message M"] --> H["Hash to the target vector y"]
+
+  H --> SIGN["SIGNING - requires the private key"]
+  SIGN --> P1["Pick random values for the v vinegar variables"]
+  P1 --> P2["Vinegar times vinegar terms collapse to constants<br/>Vinegar times oil terms collapse to linear terms"]
+  P2 --> P3["Central map F becomes a linear system in the o oil variables"]
+  P3 --> P4["Gaussian elimination solves for the oil variables"]
+  P4 --> P5["Apply the inverse affine maps to the full vector"]
+  P5 --> SIG["Signature sigma"]
+
+  H --> VER["VERIFYING - needs only the public key"]
+  SIG --> VER
+  VER --> V1["Evaluate the public map P at sigma"]
+  V1 --> V2{"Does P of sigma equal y?"}
+  V2 -->|"yes"| OK["Accept the signature"]
+  V2 -->|"no"| NO["Reject the signature"]
+```
+
+*Signing walks the composition backwards one factor at a time, which only the trapdoor makes cheap. Verifying is a single forward polynomial evaluation — which is why UOV-family verification is so fast.*
+*簽章是逐層反向拆解合成映射，唯有握有陷門才能低成本完成；驗章則只是一次正向的多項式代值，這正是 UOV 家族驗章極快的原因。*
+
 ---
 
 ### 3.5 Snova: The Matrix-based UOV Variant / Snova：基於矩陣結構的 UOV 進階變體
 
 #### English
 * **The Evolution of Snova:** To overcome the key size bottleneck of classical UOV, researchers developed variants to compress the public key. Snova represents the peak of this lineage, combining multiple compression techniques into a cohesive matrix-based architecture.
-* **Matrix Variables and Coefficients:** Instead of using scalar variables and scalar coefficients over a finite field, Snova reformulates UOV by substituting them with **matrix variables and matrix coefficients** (e.g., $l 	imes l$ matrices).
+* **Matrix Variables and Coefficients:** Instead of using scalar variables and scalar coefficients over a finite field, Snova reformulates UOV by substituting them with **matrix variables and matrix coefficients** (e.g., $l \times l$ matrices).
 * **Massive Public Key Compression:**
   * When utilizing a matrix algebra framework, the coefficients are expressed as compact matrix representations.
   * From a matrix perspective, the absolute number of required coefficients stored in the public key is drastically reduced.
@@ -168,16 +215,62 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
 
 #### 繁體中文
 * **Snova 的演進背景：** 為了克服傳統 UOV 公鑰過大的瓶頸，各國學者陸續研發了多種優化變體。Snova 則是這一演進路線上的集大成者。
-* **矩陣變數與係數：** Snova 巧妙地將 UOV 中原本屬於有限域上的「標量（數值）變數與係數」，全部替換為「**矩陣變數與矩陣係數**」（例如 $l 	imes l$ 的方陣）。
+* **矩陣變數與係數：** Snova 巧妙地將 UOV 中原本屬於有限域上的「標量（數值）變數與係數」，全部替換為「**矩陣變數與矩陣係數**」（例如 $l \times l$ 的方陣）。
 * **公鑰尺寸的革命性壓縮：**
   * 藉由引入矩陣代數結構，方程組中的係數可以用更高維度且具備內部關聯的矩陣形式來表達。
   * 從矩陣的宏觀視角來看，公鑰中需要儲存的獨立係數數量大幅度降低。
   * 最終，Snova 成功將「公鑰 + 數位簽章」的總尺寸壓縮至 **1KB 以內**。
 * **系統無痛升級：** 由於「公鑰 + 簽章」總體積低於 1KB，這使得 Snova 的規格與傳統的 RSA 相當。軟體開發人員可以直接將現有系統中的 RSA 或 ECC 替換為 Snova，而無需修改底層網路通訊協定，也免去了處理 IP 分片包的麻煩，實現了真正的「無痛過渡」。在 NIST 額外數位簽章競賽的所有參賽系統中，Snova 憑藉這一優勢，在規格與效能排行榜上傲視群雄，名列第一。
 
+#### Diagram: What the Matrix Lift Buys and Costs / 圖解：矩陣升維的收益與代價
+
+```mermaid
+flowchart LR
+  UOV["Classical UOV (1999)<br/>scalar variables and coefficients over F_q"]
+  UOV -->|"lift variables and coefficients into an l by l matrix ring"| SNOVA["SNOVA<br/>matrix variables and matrix coefficients"]
+  UOV --> K1["Level 1 public key around 40 KB"]
+  SNOVA --> K2["Public key plus signature under 1 KB"]
+  K2 --> K3["Drop-in replacement for RSA sized fields<br/>No protocol refactoring or IP fragmentation"]
+  SNOVA --> C1["Added algebraic structure is also added attack surface"]
+  C1 --> C2["Rank, direct-algebraic, and geometric attacks<br/>all get new footholds to try"]
+```
+
+*The same matrix structure that compresses the key is what gives cryptanalysts something extra to grip. That trade-off is the whole story of the next section.*
+*壓縮金鑰所仰賴的矩陣結構，同時也是密碼分析者額外的著力點。這個取捨即為下一節的全部主題。*
+
 ---
 
 ### 3.6 Attacks, Defensive Hardening, and Security Margins / 密碼分析攻擊、安全防禦與安全餘裕
+
+#### Diagram: Where Each Known Cryptanalytic Result Lands / 圖解：各項已知密碼分析成果的落點
+
+```mermaid
+flowchart TB
+  P["SNOVA public map P"]
+
+  P --> RK["Rank and MinRank attacks"]
+  RK --> RK1["Exploits low-rank structure in the matrix coefficients"]
+  RK1 --> RK2["Round 2 mitigation - stop choosing homogeneous coefficients"]
+  RK1 --> RK3["ePrint 2024/096, ePrint 2024/1374 (lifting)"]
+
+  P --> DA["Direct algebraic attacks"]
+  DA --> DA1["Solve the public MQ system head-on (XL, Groebner bases)"]
+  DA1 --> DA2["Cost set by degree of regularity and parameter sizes"]
+  DA1 --> DA3["ePrint 2024/1770 (CRYPTO 2025), ePrint 2026/1620"]
+
+  P --> WK["Wedge-product and geometric attacks"]
+  WK --> WK1["Targets hidden subspace geometry shared across the UOV family"]
+  WK1 --> WK2["Mitigation - raise the number of vinegar variables v"]
+  WK1 --> WK3["ePrint 2026/260 (wedge map, design side)"]
+  WK1 --> WK4["ePrint 2026/237 - breaks 6 of 11 parameter sets"]
+
+  P --> WKY["Weak-key forgery"]
+  WKY --> WKY1["Beullens, ePrint 2024/1297 - roughly 1 key in 140000"]
+  WKY1 --> WKY2["Public exploit code at github.com/WardBeullens/BreakingSNOVA"]
+```
+
+*Read this as a live scoreboard, not a settled result. The rank and geometric branches were answered by parameter changes, but the 2026 wedge-product result against 6 of 11 parameter sets and the weak-key forgery are open items — SNOVA's parameter selection is under active scrutiny going into Round 3.*
+*本圖應視為持續更新的戰況板，而非定論。降秩與幾何兩條分支已透過調參回應，但 2026 年 wedge-product 攻擊破解 11 組參數中的 6 組、以及弱金鑰偽造，皆屬未結案項目——SNOVA 的參數選擇在進入第三輪之際仍處於學界密集檢視之中。*
 
 #### English
 * **The "Indestructible Cockroach" of Cryptography:** Over its four-year history in the NIST competition, Snova has been subjected to intense cryptographic scrutiny from top research teams worldwide (spanning Japan, China, Europe, and the US). Because of its complex matrix structure, Snova has attracted more security analysis than other candidates, earning it the humorous moniker of an "indestructible cockroach" due to its ability to withstand every successive wave of cryptanalysis.
@@ -205,6 +298,9 @@ This lecture demystifies Post-Quantum Cryptography (PQC), with a focus on **Mult
   * 在第一、二輪中，Snova 團隊刻意選擇了極其激進（Aggressive）的參數設計，僅保留了 2、3、4 位元（bits）的安全餘裕（Security Margin）。
   * 這是一種有意的「釣魚」策略：故意縮小餘裕以吸引全球頂尖密碼學家動手嘗試破譯。當全球專家圍攻四年、卻只能破譯部分刻意設計的邊緣參數而無法撼動其核心架構時，反而有力地證明了 Snova 結構的本質安全性。
   * 進入第三輪後，Snova 推出了推薦使用的保守型參數，將安全餘裕放得極大，為 NIST 最終的安全評估與採信奠定了極強的信心。
+
+> **Status note / 現況補充：** The talk's account above is the designer's, given on stage in August 2026. The published record is more contested and still moving: the wedge-product attack of [ePrint 2026/237](https://eprint.iacr.org/2026/237) reports breaking **6 of 11 SNOVA parameter sets**, and Beullens' weak-key forgery ([ePrint 2024/1297](https://eprint.iacr.org/2024/1297), with public code) affects roughly **1 key in 140,000**. Read the claims of immunity as applying to specific attack variants and specific parameter choices, not to SNOVA as a whole. The full cryptanalysis thread is collected under *Papers & Publications* below.
+> 上述論述出自設計者本人於 2026 年 8 月的現場說明。公開文獻上的情況更具爭議且仍在變動：[ePrint 2026/237](https://eprint.iacr.org/2026/237) 的 wedge-product 攻擊宣稱破解 **11 組 SNOVA 參數中的 6 組**；Beullens 的弱金鑰偽造（[ePrint 2024/1297](https://eprint.iacr.org/2024/1297)，附公開程式碼）影響約 **每 14 萬把金鑰中的 1 把**。因此「完全免疫」應理解為針對特定攻擊變體與特定參數選擇而言，而非整個 SNOVA 系統。完整的密碼分析文獻列於下方「論文與出版品」一節。
 
 ---
 
@@ -412,7 +508,7 @@ Therefore, the other three candidates focus on compressing the public key size. 
 那另外一條路徑呢，就是把變數增加。變數給它增加，譬如說各位在國中的時候就學過二元一次聯立方程式，就是次數保持一次，但變數增加，就是多元一次。所以呢這時候呢就有兩個概念：一個變數個數，一個是這個變數次數。這兩個東西其中有一個是 1，大概我們都有比較好的做法。比如一元高次我們大概比較會做，或者多元一次我們也很會解。但是呢，我們現在「多元二次」這個東西就變成一個 NP 問題。所以這個數學難題就建築在這個上面，就是說當這兩個東西都不是 1 的時候，次數跟維度（變數個數）都不是 1 的時候，這個問題就變成一個 NP 問題。那這個就是整個多變數密碼系統核心的數學難題。
 
 #### Precise English Translation (精確英文翻譯)
-Let us formally define the mathematical problem underlying multivariate cryptography. Suppose we have $m$ quadratic multivariate polynomials, $f_1, \dots, f_m$. "Multivariate" means they contain multiple variables, and "quadratic" means every term is of degree two, such as $x_1 x_2$ or $x_1^2$. With $m$ polynomials and $n$ variables, this system forms a multivariate polynomial map from an $n$-dimensional vector space to an $m$-dimensional vector space: $F: \mathbb{F}_q^n 	o \mathbb{F}_q^m$. Evaluating this map in the forward direction—meaning, plugging in an input vector $\mathbf{x}$ to compute the output vector $\mathbf{y}$—is computationally trivial, requiring only basic arithmetic. However, the inverse mapping problem—given an arbitrary output vector $\mathbf{y}$, finding an input vector $\mathbf{x}$ such that $F(\mathbf{x}) = \mathbf{y}$—is extremely difficult, requiring us to solve a system of simultaneous non-linear multivariate quadratic equations.
+Let us formally define the mathematical problem underlying multivariate cryptography. Suppose we have $m$ quadratic multivariate polynomials, $f_1, \dots, f_m$. "Multivariate" means they contain multiple variables, and "quadratic" means every term is of degree two, such as $x_1 x_2$ or $x_1^2$. With $m$ polynomials and $n$ variables, this system forms a multivariate polynomial map from an $n$-dimensional vector space to an $m$-dimensional vector space: $F: \mathbb{F}_q^n \to \mathbb{F}_q^m$. Evaluating this map in the forward direction—meaning, plugging in an input vector $\mathbf{x}$ to compute the output vector $\mathbf{y}$—is computationally trivial, requiring only basic arithmetic. However, the inverse mapping problem—given an arbitrary output vector $\mathbf{y}$, finding an input vector $\mathbf{x}$ such that $F(\mathbf{x}) = \mathbf{y}$—is extremely difficult, requiring us to solve a system of simultaneous non-linear multivariate quadratic equations.
 
 In mathematics, the complexity of solving polynomial systems depends on two parameters: the number of variables (dimension) and the polynomial degree. In middle school, we learn to solve single-variable linear equations, followed by single-variable quadratic equations. When I was a student, high schools still taught how to solve single-variable cubic equations, but today's curriculum usually stops at quadratic equations for a single variable.
 
@@ -459,14 +555,14 @@ The total number of variables is $n = v + o$. The name "Oil and Vinegar" was cho
 
 #### Precise English Translation (精確英文翻譯)
 Under this variable partition, the quadratic polynomials in the central map $F$ must adhere to a strict structural rule. For every quadratic term in each polynomial $f_k$:
-* You are allowed to have $(	ext{Vinegar} 	imes 	ext{Vinegar})$ terms.
-* You are allowed to have $(	ext{Vinegar} 	imes 	ext{Oil})$ terms.
-* **You are strictly forbidden from having $(	ext{Oil} 	imes 	ext{Oil})$ terms.**
+* You are allowed to have $(\text{Vinegar} \times \text{Vinegar})$ terms.
+* You are allowed to have $(\text{Vinegar} \times \text{Oil})$ terms.
+* **You are strictly forbidden from having $(\text{Oil} \times \text{Oil})$ terms.**
 In other words, the variables are combined such that quadratic interactions only occur between vinegar variables themselves, or between vinegar and oil variables. No oil variable can be multiplied by another oil variable.
 
 To construct the central map $F$, we generate $m$ such quadratic polynomials, choosing the coefficients randomly, subject to this term restriction.
 
-What is the mathematical consequence of forbidding $(	ext{Oil} 	imes 	ext{Oil})$ terms? Suppose we assign completely random values to all $v$ vinegar variables. Because the vinegar variables are now fixed constants, any $(	ext{Vinegar} 	imes 	ext{Vinegar})$ term collapses into a constant, and any $(	ext{Vinegar} 	imes 	ext{Oil})$ term collapses into a linear term in the oil variables. Since there are no $(	ext{Oil} 	imes 	ext{Oil})$ terms to produce quadratic oil terms, the entire system of quadratic equations in $F$ instantly collapses into a system of **linear equations** in the oil variables.
+What is the mathematical consequence of forbidding $(\text{Oil} \times \text{Oil})$ terms? Suppose we assign completely random values to all $v$ vinegar variables. Because the vinegar variables are now fixed constants, any $(\text{Vinegar} \times \text{Vinegar})$ term collapses into a constant, and any $(\text{Vinegar} \times \text{Oil})$ term collapses into a linear term in the oil variables. Since there are no $(\text{Oil} \times \text{Oil})$ terms to produce quadratic oil terms, the entire system of quadratic equations in $F$ instantly collapses into a system of **linear equations** in the oil variables.
 
 Solving a system of $o$ linear equations in $o$ variables is computationally simple using Gaussian elimination. Once we solve for the oil variables, we combine them with our chosen vinegar variables to form the complete central signature vector. Finally, we apply $T^{-1}$ (the inverse of the linear map $T$, which is easy to compute) to obtain the final signature $\sigma$. Anyone with the private key (possessing the trapdoor knowledge of the vinegar-oil partition and the linear maps) can sign messages rapidly. However, a malicious attacker who only has the public key $P$ sees what appears to be a general, completely randomized system of quadratic equations, which remains NP-hard to solve. This is the operational mechanism of UOV.
 
@@ -547,5 +643,107 @@ Between Round 2 and Round 3, a highly celebrated geometric attack known as WTAG 
 Is Snova theoretically vulnerable to a corrected version of this geometric attack? Yes, the underlying geometric structures can be targeted. Among the candidate systems, QR-UOV initially appeared immune because it is defined over a field of odd characteristic (prime field), where the initial WTAG geometric mappings are ineffective. However, subsequent variants of the geometric attack bypassed this field limitation, meaning QR-UOV's immunity was temporary.
 
 Snova's team, working in coordination with NIST researchers, analyzed these advanced WTAG geometric variants. We discovered that while the geometric attack can target Snova, its computational efficiency is extremely sensitive to the dimension of the vinegar variables ($v$). By slightly increasing the number of vinegar variables ($v$) in Snova’s parameter configurations, the geometric structure of the attack is disrupted, and its complexity scales exponentially, rendering it completely impractical. Currently, Snova is fully immune to all known WTAG and geometric variants. Crucially, these mitigations only require adjusting Snova's parameter configurations, without altering its core mathematical design. This demonstrates that Snova does not suffer from any fundamental algebraic or structural vulnerabilities.
+
+---
+
+## Resources, Repositories & Contacts / 資源、程式碼庫與聯絡方式
+
+> All links in this section were checked against their live pages unless explicitly tagged `(unverified)`. Professional presence only — no personal contact details are listed. Note that the scheme is written **SNOVA** in all official materials; the transcript above uses the spelling "Snova" as spoken.
+> 除明確標註 `(unverified)` 者外，本節所有連結皆經實際查證。僅列公開的專業聯絡管道，不含任何個人聯絡資訊。另註：官方文件一律寫作 **SNOVA**，上文逐字稿沿用口語的「Snova」寫法。
+
+### Speaker & Contact / 講者與聯絡方式
+
+**Lih-Chung Wang 王立中** — Professor, Department of Applied Mathematics, National Dong Hwa University (國立東華大學應用數學系教授)
+
+| Channel / 管道 | Link / 連結 |
+| :--- | :--- |
+| NDHU faculty page / 東華大學教師頁 | https://am.ndhu.edu.tw/p/405-1038-5242,c2920.php?Lang=zh-tw |
+| dblp publication record / dblp 著作紀錄 | https://dblp.org/pid/09/2291.html |
+
+**Channels that do not exist / 查無下列管道** — stated explicitly so nobody guesses at a URL:
+以下管道經查證確實不存在，特此明列，以免有人臆測網址：
+
+* **No Google Scholar profile / 無 Google Scholar 個人頁**
+* **No ORCID record / 無 ORCID 紀錄**
+* **No LinkedIn profile / 無 LinkedIn 個人頁**
+* **No personal GitHub account / 無個人 GitHub 帳號** (the SNOVA code lives under the team organisation — see *Code & Repositories* / SNOVA 程式碼置於團隊組織帳號下，見「程式碼庫」)
+* **No personal website / 無個人網站**
+
+**Foxconn secondment / 鴻海借調:**
+
+* He is **借調 (on secondment)** to Hon Hai Research Institute 鴻海研究院 as 特聘研究員 (Special Researcher). Source: 中時新聞網, 2026-06-20 — https://www.chinatimes.com/realtimenews/20260620001970-260410
+  他自東華大學**借調**至鴻海研究院擔任特聘研究員。來源：中時新聞網，2026-06-20。
+* Corroborated by the "Hon Hai Research Institute" affiliation line on ePrint 2026/659 — https://eprint.iacr.org/2026/659
+  ePrint 2026/659 的作者單位標註「Hon Hai Research Institute」可資佐證。
+* **The Hon Hai Research Institute website does not name him.** Do not cite HHRI's own pages as a source for this.
+  **鴻海研究院官方網站並未列出其姓名**，請勿以 HHRI 官網作為此事之來源。
+
+### Code & Repositories / 程式碼庫
+
+| Repository / 程式碼庫 | Link / 連結 | Notes / 備註 |
+| :--- | :--- | :--- |
+| SNOVA reference implementation / SNOVA 參考實作 | https://github.com/PQCLAB-SNOVA/SNOVA | MIT licensed / MIT 授權 |
+| SNOVA_KAT | https://github.com/PQCLAB-SNOVA/SNOVA_KAT | Known-answer test vectors / 已知答案測試向量 |
+| SNOVA_Analysis | https://github.com/PQCLAB-SNOVA/SNOVA_Analysis | Security-analysis scripts / 安全性分析腳本 |
+| liboqs algorithm page / liboqs 演算法頁 | https://openquantumsafe.org/liboqs/algorithms/sig/snova.html | Open Quantum Safe integration / OQS 整合 |
+| Beullens' attack code / Beullens 的攻擊程式碼 | https://github.com/WardBeullens/BreakingSNOVA | Weak-key forgery, see below / 弱金鑰偽造，詳見下文 |
+
+* **Official project site / 官方網站:** https://snova.pqclab.org/
+
+### Papers & Publications / 論文與出版品
+
+#### Specification and standardisation / 規格書與標準化
+
+* **SNOVA Round 2 specification / 第二輪規格書:** https://snova.pqclab.org/files/SNOVA_Round2.pdf
+* **NIST IR 8610** (status report on the first round of the Additional Digital Signature Schemes process / 額外數位簽章徵集第一輪狀態報告): https://csrc.nist.gov/pubs/ir/8610/final
+* **NIST Round 3 additional-signature candidates / NIST 第三輪額外簽章候選名單:** https://csrc.nist.gov/projects/pqc-dig-sig/round-3-additional-signatures
+* **SNOVA advanced to NIST Round 3 on 2026-05-18 / SNOVA 於 2026-05-18 晉級 NIST 第三輪** — team 王立中, 周君彥, 官彥良, 曾柏恩. Source / 來源: 中央社 CNA, https://www.cna.com.tw/postwrite/chi/433780
+
+#### Design papers / 設計論文
+
+| Paper / 論文 | Link / 連結 |
+| :--- | :--- |
+| NOVA | https://eprint.iacr.org/2022/665 |
+| SNOVA (origin paper) / SNOVA 原始論文 | https://eprint.iacr.org/2022/1742 |
+| SNOVA follow-up (2024) / 後續設計論文 | https://eprint.iacr.org/2024/1517 |
+| Wedge map / 楔積映射 | https://eprint.iacr.org/2026/260 |
+| Reformulation (Hon Hai Research Institute affiliation) / 重構表述 | https://eprint.iacr.org/2026/659 |
+
+#### Cryptanalysis / 密碼分析
+
+**This thread is active and unresolved — SNOVA's parameter sets are under continuing academic scrutiny, not settled.**
+**此一分析脈絡仍在進行中且尚無定論——SNOVA 的參數組持續處於學界檢視之下，並非已成定局。**
+
+| Result / 分析成果 | Link / 連結 | Impact / 影響 |
+| :--- | :--- | :--- |
+| **Wedge-product attack / 楔積攻擊 (2026)** | https://eprint.iacr.org/2026/237 | **Breaks 6 of 11 parameter sets / 破解 11 組參數中的 6 組** |
+| Beullens, weak-key forgery / 弱金鑰偽造 | https://eprint.iacr.org/2024/1297 | Roughly 1 key in 140,000 / 約每 14 萬把金鑰中 1 把 |
+| Beullens, attack implementation / 攻擊實作 | https://github.com/WardBeullens/BreakingSNOVA | Public exploit code / 公開的攻擊程式碼 |
+| Rank-based analysis / 降秩類分析 | https://eprint.iacr.org/2024/096 | — |
+| CRYPTO 2025 result / CRYPTO 2025 成果 | https://eprint.iacr.org/2024/1770 | — |
+| Lifting attack / 提升攻擊 | https://eprint.iacr.org/2024/1374 | — |
+| Further analysis (2026) / 後續分析 | https://eprint.iacr.org/2026/1620 | — |
+
+#### Background reading on the UOV family / UOV 家族背景文獻
+
+* https://eprint.iacr.org/2020/1343
+* https://eprint.iacr.org/2022/214
+
+### Talk & Slides / 演講資料
+
+* **This session / 本場次** — *Multivariate Cryptography and Digital Signatures*, 14:00–14:40, Room **R2**, tagged 「PQC 專場 需額外報名」 (PQC track, separate registration required):
+  https://hitcon.org/2026/en-US/agenda/fbf36eee-262c-40ed-9920-18ae71f36987/
+* **Panel Discussion / 綜合座談** — 16:10–16:50, Room **R2**, with 陳君朋, 郭博鈞, 楊柏因 (Bo-Yin Yang), 呂佳諺:
+  https://hitcon.org/2026/en-US/agenda/6bf42daa-f36b-4bdc-aee3-f05dfe339d01/
+* **HITCON 2026 agenda index / 議程總表:** https://hitcon.org/2026/en-US/agenda/
+* **Slides / 簡報 `(unverified)`:** no published slide deck for this session was located. HITCON typically attaches materials to the agenda page after the event.
+  未找到本場次的公開簡報檔。HITCON 通常於會後將資料補上議程頁。
+
+### Further Reading / 延伸閱讀
+
+* **Open Quantum Safe project / OQS 專案** — where SNOVA sits alongside the other candidates in a usable library: https://openquantumsafe.org/liboqs/algorithms/sig/snova.html
+* **NIST PQC digital signatures project / NIST 後量子數位簽章專案** — round-by-round status for every remaining candidate: https://csrc.nist.gov/projects/pqc-dig-sig/round-3-additional-signatures
+* **NIST IR 8610 / NIST IR 8610 報告** — the official reasoning behind the first-round selections, useful for understanding what NIST weighs: https://csrc.nist.gov/pubs/ir/8610/final
+* **SNOVA official site / SNOVA 官方網站** — specification files, parameter tables, and team information: https://snova.pqclab.org/
 
 ---
