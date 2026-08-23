@@ -9,6 +9,7 @@ import {
   getDirectoryChildren,
   getAllSlugsForParams,
 } from '@/lib/content';
+import { rewriteMarkdownLinks } from '@/lib/markdown-links';
 import HomeSection from '@/components/translated/HomeSection';
 import ArticleMarkdownPage from '@/components/translated/ArticleMarkdownPage';
 import FolderListingPage from '@/components/translated/FolderListingPage';
@@ -58,7 +59,8 @@ export default async function SlugPage({ params }: Props) {
   const relativeDir = path.join(...slug);
 
   if (filePath) {
-    const content = readFileContent(filePath);
+    // 相對連結（.md 與圖片）在本站的 slug 規則下無法直接使用，需改寫為絕對網址
+    const content = rewriteMarkdownLinks(readFileContent(filePath), filePath);
     // 若此頁是目錄的 readme，同目錄下其他 .md 也要列出，否則無法從此頁點進其他文章
     const isDirReadme =
       slug.length >= 1 &&

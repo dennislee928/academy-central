@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\" && next dev",
+    "prebuild": "node scripts/copy-content-assets.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
