@@ -36,7 +36,7 @@ A reader gets: a structured, deeply detailed record of each talk in two language
 | `lecture-N-<slug>/` | One folder per talk, holding a single bilingual markdown file of the same name / 每場演講一個資料夾，內含一份同名雙語 markdown |
 | [`CTF/`](./CTF) | Mini Cyber Range writeups, platform architecture notes, and helper scripts / 網路靶場實戰紀錄、平台架構分析與輔助腳本 |
 | [`CTF/scripts/`](./CTF/scripts) | Six helper scripts + a wordlist used during the range / 靶場期間使用的六支輔助腳本與一份字典檔 |
-| [`assets/`](./assets) | Screenshots and images referenced from the notes / 筆記引用之截圖與圖片 |
+| `assets/` | Screenshots and images referenced from the notes / 筆記引用之截圖與圖片 |
 | [`future-possible-implementation-visions.md`](./future-possible-implementation-visions.md) | Cross-cutting synthesis — ideas that span more than one talk / 跨講次綜合整理：橫跨多場演講的延伸構想 |
 
 ### Shared internal structure / 各講次的共同結構

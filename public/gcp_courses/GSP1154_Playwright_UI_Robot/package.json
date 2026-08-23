@@ -1,0 +1,15 @@
+{
+  "name": "gsp1154-agent-studio-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:browsers": "playwright install chromium",
+    "run": "node scripts/gsp1154-ui-robot.mjs",
+    "debug": "PWDEBUG=1 node scripts/gsp1154-ui-robot.mjs"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.55.0",
+    "playwright": "^1.55.0"
+  }
+}

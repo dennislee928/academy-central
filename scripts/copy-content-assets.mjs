@@ -22,8 +22,12 @@ const ROOT_EXCLUDE = new Set([
 const RECURSE_EXCLUDE = new Set(['node_modules', '.git', 'target', 'src', 'helper_scripts', '__pycache__']);
 
 const ASSET_EXT = new Set([
+  // 圖片與文件
   '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.avif', '.ico',
   '.pdf', '.woff', '.woff2', '.ttf', '.otf', '.mp4', '.webm',
+  // 內容中會被連結到的原始碼／資料檔（例如 CTF 的輔助腳本）
+  '.sh', '.py', '.js', '.mjs', '.ts', '.rb', '.pl', '.ps1',
+  '.txt', '.csv', '.json', '.yml', '.yaml', '.toml', '.conf',
 ]);
 
 let copied = 0;

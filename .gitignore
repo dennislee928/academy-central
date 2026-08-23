@@ -41,3 +41,4 @@ next-env.d.ts
 /.ignore-devdoc
 scripts/auto_commit.sh
 /conference/hitcon/scripts/__pycache__
+/.tmp-test

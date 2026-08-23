@@ -1,0 +1,16 @@
+{
+  "projectId": "AUTO",
+  "region": "us-central1",
+  "zone": "us-central1-a",
+  "model": "gemini-3.5-flash",
+  "promptSaveRegion": "us-central1",
+  "agentStudioUrlTemplate": "https://console.cloud.google.com/agent-platform/studio/chat?project={PROJECT_ID}",
+  "cloudRunRegion": "us-central1",
+  "mode": "assistive",
+  "timeouts": {
+    "pageLoadMs": 90000,
+    "uiSettleMs": 1500,
+    "generationMs": 120000,
+    "deployMs": 600000
+  }
+}
