@@ -144,7 +144,8 @@ Full writeups, including the failed and partial attempts, are in [`CTF/README.md
 |---|---|
 | Conference days / 大會天數 | 2 (2026-08-21 – 08-22) |
 | Lecture folders / 講次資料夾 | 9 (7 substantive + 2 merged stubs) |
-| Lecture note lines / 講次筆記行數 | ~2,480 |
+| Lecture note lines / 講次筆記行數 | ~3,400 |
+| Mermaid diagrams / Mermaid 圖表 | 33 (all render-verified / 全數通過渲染驗證) |
 | CTF markdown documents / 靶場文件 | 8 (README, index, 5 track writeups, 1 architecture note) |
 | CTF helper scripts / 輔助腳本 | 6 (`.sh` ×4, `.py` ×1, `.js` ×1) + 1 wordlist |
 | Cyber range tracks / 靶場賽道 | 5 |
