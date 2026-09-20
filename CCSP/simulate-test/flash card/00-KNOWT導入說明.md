@@ -1,42 +1,40 @@
-# Knowt.com Flash Card 導入說明
+# Knowt 上傳說明
 
-本資料夾的卡片是依 `CCSP/simulate-test` 重新命名、改寫後的講義整理而成。  
-格式對齊 Knowt 的 **Import manually**（手動貼上匯入）。
+你剛才開的是 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）。  
+這個頁面只接受 **PDF、PPT、圖片、影片、音訊**，所以 `.tsv` / `.md` 會顯示無法選取或無法使用。
 
-## 建議分隔符號
+## 請上傳這些檔案
 
-| 項目 | 設定 |
+在同一個 `flash card` 資料夾：
+
+| 要上傳的檔案 | 用途 |
 |---|---|
-| Between term and definition（題目與答案） | **Tab**（製表符） |
-| Between rows（卡片與卡片） | **New line**（換行） |
+| **`01-閃卡全部.pdf`** | 直接丟進 AI PDF Summarizer（232 張，建議先用這個） |
+| **`01-閃卡全部.pptx`** | 若 PDF 失敗，改傳 PPT |
+| `KNOWT上傳用/` | 分域 PDF／PPT：D1–D6、TLS |
 
-因為卡片含逗號與中文，**不要用逗號當分隔符**。
+操作：
 
-## 匯入步驟
+1. 回到 Knowt 的 Upload 畫面。
+2. 選 `01-閃卡全部.pdf`（或進入 `KNOWT上傳用` 選分域 PDF）。
+3. 等它產出 notes／flashcards 後再存成套件。
 
-1. 開啟 [Knowt](https://knowt.com) → Create → **Flashcards** → **Import manually**。
-2. 用文字編輯器開啟對應的 `.tsv` 檔，全選複製。
-3. 貼到 Knowt 匯入框。
-4. 將分隔設定為：term/definition = Tab；rows = New line。
-5. 按 Import，檢查前 5 張卡片後存檔。
+分域檔在 `KNOWT上傳用/`：
 
-## 檔案對照
+- `02-D1雲端概念.pdf`
+- `03-D2資料安全.pdf`
+- `04-D3基礎架構.pdf`
+- `05-D4應用安全.pdf`
+- `06-D5安全維運.pdf`
+- `07-D6法律合規.pdf`
+- `08-TLS-PKI-密碼學.pdf`
 
-| 檔案 | 建議 Knowt 套件名稱 | 張數 |
-|---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | CCSP D1 雲端概念與角色 | 25 |
-| `knowt-d2-data-security.tsv` | CCSP D2 資料安全 | 55 |
-| `knowt-d3-infrastructure.tsv` | CCSP D3 基礎架構與 BC/DR | 30 |
-| `knowt-d4-application.tsv` | CCSP D4 應用安全 | 22 |
-| `knowt-d5-operations.tsv` | CCSP D5 安全維運 | 32 |
-| `knowt-d6-legal-compliance.tsv` | CCSP D6 法律風險與合規 | 28 |
-| `knowt-tls-pki-crypto.tsv` | CCSP TLS／PKI／密碼學 | 40 |
-| `knowt-import-all.tsv` | CCSP 模擬測驗總卡 | 232 |
+## 另一條路：手動貼上 TSV
 
-先分域導入較好記；考前再導入 `knowt-import-all.tsv` 做混合複習。
+若要自己匯入、不要 AI 摘要：
 
-## 卡片寫法
+Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
 
-- 正面：問句或「X 與 Y 差在哪」。
-- 背面：先給答案，再補一句考場規則。
-- 單行、無 Tab、無換行，避免 Knowt 切錯欄。
+- Between term and definition：Tab  
+- Between rows：New line  
+- 貼上 `knowt-import-all.tsv` 或各域 `.tsv`
