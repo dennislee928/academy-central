@@ -1,11 +1,11 @@
-# CCSP LearnZApp Practice Test 2 弱點分析與補強講義
+# CCSP 模擬測驗講義：Practice Test 2 弱點分析與補強
 
-> 題源：ISC2 LearnZApp / Practice Test 2  
-> 題數：125  
-> 分數：77%  
-> 產出日期：2026-06-01  
-> 分析基準：本次 `zapp_6.zip` 內的 Practice Test 2 結果頁與錯題 review screenshots。  
-> 注意：壓縮檔內含 32 張截圖，其中 28 張為 2026-06-01 Practice Test 2 錯題 review，另有 4 張 2026-05-30 截圖看起來屬於前次 D3 drill；本講義的進步判斷與主要弱點以 Practice Test 2 為主。
+> **講義編號：** 07  
+> **講義類型：** 全局模考弱點分析  
+> **題源：** ISC2 LearnZApp Practice Test 2（`zapp_6.zip`）  
+> **題數／分數：** 125 題，77%  
+> **產出日期：** 2026-06-01  
+> **分析基準：** Practice Test 2 結果頁與錯題回顧。壓縮檔 32 張截圖中，28 張為本次 PT2；另 4 張屬前次 D3 drill，不納入本次進步判斷。
 
 ---
 

@@ -1,6 +1,11 @@
-# CCSP LearnZApp zapp_8 錯題分析與補強講義
+# CCSP 模擬測驗講義：Practice Test 3（zapp_8）錯題分析與補強
 
-## 0. Extraction Result
+> **講義編號：** 09  
+> **講義類型：** 全局模考錯題分析  
+> **測驗來源：** ISC2 LearnZApp（`zapp_8.zip`）  
+> **資料限制：** ZIP 僅含錯題回顧頁，無成績總覽；若為 125 題 Practice Test，46 錯約當 63.2%
+
+## 0. 擷取結果
 
 本次已解壓縮 `zapp_8.zip`。
 

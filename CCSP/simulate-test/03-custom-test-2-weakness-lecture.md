@@ -1,8 +1,10 @@
-# CCSP LearnZApp Custom Test 2 — Weakness Analysis & Patch Plan
+# CCSP 模擬測驗講義：Custom Test 2 弱點分析與補強
 
-**Source:** `zapp_2.zip` extracted screenshots from `isc2.learnzapp.com / sc2.learnzapp.com` Custom Test  
-**Extracted evidence:** 26 PNG files: 1 score summary + 25 review screenshots  
-**Test type:** Custom Test, heavily concentrated on weak domains
+> **講義編號：** 03  
+> **講義類型：** 弱點分析與補強計畫  
+> **測驗來源：** ISC2 LearnZApp Custom Test（`zapp_2.zip`）  
+> **證據：** 26 張 PNG（1 張成績總覽 + 25 張錯題回顧）  
+> **測驗類型：** Custom Test，高度集中於弱域
 
 ---
 

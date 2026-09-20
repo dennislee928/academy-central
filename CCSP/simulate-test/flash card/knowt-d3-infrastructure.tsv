@@ -1,0 +1,30 @@
+高架地板（raised flooring）的設計目的是什麼？	作為空調通風管道（air plenum）與佈線通道。不是避難所或儲藏室。
+高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
+MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
+RTO 與 MAD 的關係？	RTO 必須小於 MAD。IT 復原目標不能超過業務上限。
+RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery point）。
+誰負責攔截與協調硬體資源呼叫？	Hypervisor，不是一般系統管理員。
+DR 計畫應該寫給誰執行？	任何具備基本技能的人。核心團隊災難時可能無法連線。
+MFA 是最根本的安全原則嗎？	不是。MFA 是控制項；Defense in Depth 才是涵蓋架構的根本原則。
+雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。
+Public cloud 資料中心控制治理通常由誰制定？	Cloud provider。不要直接選 regulator。
+Uptime Tier I 到 IV 分別是什麼？	I Basic Capacity；II Redundant Capacity Components；III Concurrently Maintainable；IV Fault Tolerant。
+Uptime Tier-defined facilities 的燃油基準？	12 hours at N load。
+ASHRAE A1–A4 建議溫度範圍？	18–27°C。93°F 顯然過高。
+資料中心 Physical／Environmental／Resilience 各涵蓋什麼？	Physical：選址與實體進出；Environmental：HVAC、溫濕、氣流、消防；Resilience：UPS、發電機、燃油、冗餘電力／冷卻／連線。
+NAS 與 SAN 差在哪？	NAS 是檔案層網路儲存；SAN 是區塊層儲存網路。
+VLAN 在考試中常被當成什麼控制？	網路分段／隔離手段。不要把它當成加密或身分驗證。
+SDN control plane 的角色？	集中決定轉送策略；data plane 依此轉送流量。
+Data dispersion 與 encryption 為何有協同效應？	先加密再切碎分散：攻擊者拿到的是不完整亂碼碎片，互補彼此單獨使用的弱點。
+Asset inventory 加 personnel training 有 synergy 嗎？	通常沒有。兩者平行解決不同問題，不會互相放大同一攻擊路徑的防禦。
+Cloud data center campus 入口常見什麼？不該把哪個當成敏感區控制？	應有 badging 等入口程序；mantrap 較屬敏感區／機房內層控制，不是所有 campus access point 的必備項。
+VM configuration management 工具應包含什麼？	Log file generation，以支援變更追蹤與事件調查。不要只選 anti-tampering。
+哪種控制會影響 egress monitoring 的可視性？	Encryption。加密後監控方案更難檢查內容。
+Enhanced authentication 為什麼不該用 variable keystrokes？	每次擊鍵都不穩定就無法建立可靠生物特徵範本。Variable ≠ 有用的 dynamic factor。
+Type 1 hypervisor 的關鍵特徵？	直接跑在硬體上（bare metal），不是裝在一般宿主 OS 裡的 Type 2。
+Live migration 的維運用意？	把 workload 移到其他節點，使主機可進入 maintenance 而不中斷服務。
+Management plane 為什麼要隔離？	它能控制整個雲環境；被攻破等於控制面失守，應與 production 資料面分離。
+Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣。亂放東西會破壞氣流設計。
+Clustered host 進入維護前先做什麼？	Drain／migrate workload，確保服務由其他節點承載。
+OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（例如網路分段、傳輸加密、應用識別），不要看到「網路」就一律選同一層。
+第三方／供應鏈對基礎設施的意義？	你的 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。

@@ -1,4 +1,9 @@
-# CCSP D3 Drill 1 弱點分析與補強講義
+# CCSP 模擬測驗講義：D3 Drill 1 弱點分析與補強
+
+> **講義編號：** 05  
+> **講義類型：** 單域 drill 弱點分析  
+> **測驗來源：** ISC2 LearnZApp Custom Test  
+> **適用領域：** Domain 3 Cloud Platform & Infrastructure Security
 
 ## 0. 測驗摘要
 

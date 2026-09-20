@@ -1,12 +1,12 @@
-# CCSP Practice Test 1 弱點分析 / Weighted Weakness Analysis & Priority Strategy
+# CCSP 模擬測驗講義：Practice Test 1 加權弱點分析
 
-> 測驗來源：`isc2.learnzapp.com/practicetest` Practice Test 1  
-> 測驗型態：全局 Practice Test，非只打弱點的 Custom Test  
-> 題數：129 題  
-> 成績：65%  
-> Correct / Incorrect：85 / 44  
-> 平均作答時間：28 秒 / 題  
-> Readiness：42% → 46%
+> **講義編號：** 04  
+> **講義類型：** 全局模考弱點分析與優先策略  
+> **測驗來源：** ISC2 LearnZApp Practice Test 1  
+> **測驗型態：** 六域 Practice Test（非弱域 Custom Test）  
+> **題數／成績：** 129 題，65%（85 對／44 錯）  
+> **平均作答時間：** 28 秒／題  
+> **Readiness：** 42% → 46%
 
 ---
 

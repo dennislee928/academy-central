@@ -1,8 +1,10 @@
-# CCSP LearnZApp D2 Drill 1 弱點分析與補強講義
+# CCSP 模擬測驗講義：D2 Drill 1 弱點分析與補強
 
-> Source: `zapp_4.zip` / LearnZApp Custom Test  
-> Scope: **Domain 2 — Cloud Data Security**  
-> Date shown in screenshots: 2026-05-27
+> **講義編號：** 06  
+> **講義類型：** 單域 drill 弱點分析  
+> **測驗來源：** ISC2 LearnZApp Custom Test（`zapp_4.zip`）  
+> **適用領域：** Domain 2 Cloud Data Security  
+> **截圖日期：** 2026-05-27
 
 ---
 

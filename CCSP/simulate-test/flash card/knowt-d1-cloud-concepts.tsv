@@ -1,0 +1,25 @@
+Public cloud 的定義是什麼？	開放給一般公眾使用，通常由雲端服務提供者擁有、管理及營運。不要和 private cloud 搞混。
+Private cloud 的定義是什麼？	僅供單一組織專屬使用。
+Hybrid cloud 的定義是什麼？	由兩個以上不同雲端基礎架構組成，並以標準化技術連結。
+Community cloud 的定義是什麼？	供具有共同關注事項的特定消費者群體專屬使用。
+Multicloud 一定等於 Hybrid cloud 嗎？	不一定。Multicloud 是使用多家 CSP；Hybrid 強調不同基礎設施被標準化技術綁在一起。
+IaaS 最主要的商業驅動力是什麼？	Transfer of ownership cost：CapEx 轉 OpEx。不要先選能源或冷卻效率。
+IaaS／PaaS／SaaS 客戶各管什麼？	IaaS：客戶管 OS／app／data；PaaS：客戶專注 app／code；SaaS：CSP 提供完整應用。
+Cloud Broker 做什麼？	仲介、彙整、整合或管理雲端服務。
+Cloud Reseller 做什麼？	購買 hosting／cloud service 後轉售給自己的客戶。不要選 Broker。
+Cloud Carrier 做什麼？	提供連線與傳輸（connectivity and transport）。
+Cloud Auditor 做什麼？	執行獨立評估（independent assessment）。
+Interoperability 與 Portability 差在哪？	Interoperability 是系統能否一起運作與交換；Portability 是工作負載／資料能否搬走。
+ISC2 語境中，推動企業投入資安的最大外部因素通常是什麼？	Regulation（法規），不是「不斷演進的威脅」。
+Access control criteria 最終應主要源自什麼？	Organizational policy／business requirements。外部法規要先轉成組織政策，再變成 IAM／ACL。
+GLBA 是什麼？	Gramm-Leach-Bliley Act：美國聯邦法律，保護金融機構客戶的非公開個人資訊。
+PCI DSS 是法律嗎？	不是。PCI DSS 是支付卡產業安全標準，不是聯邦隱私法。
+Privacy 需求如何影響 deployment model？	高隱私／專屬控制需求通常偏向 private 或 community；open public 不適合高度敏感專屬資料。
+FaaS／Serverless 的考試重點是什麼？	Event-driven function；客戶不管 server 管理，但仍要管程式、權限與資料。
+為什麼 cloud sprawl 不只是基礎設施帳單問題？	還可能增加 OS、資料庫、資安設備與企業軟體的授權、訂閱與管理成本。
+Asset inventory 回答什麼？BIA 回答什麼？	Inventory 回答「我們有什麼」；BIA 回答「什麼最重要、中斷會怎樣」。
+Business requirements 能補技術盤點缺的什麼？	Business usefulness／value／criticality，這些不一定能只靠客觀 technical inventory 得到。
+Production 在 CSP-A、backup 在 CSP-B，recovery 最直接的技術風險是什麼？	Interoperability／proprietary format incompatibility。這比泛稱 vendor lock-in 更直接卡住還原目標。
+ISC2 兩個答案都合理時怎麼選？	選最直接解決題目所問 business／security objective 的答案，不要總選範圍最大的風險名詞。
+組織把工作放到雲端後，誰仍通常保有 accountability？	Organization／data owner／controller。Responsibility 可委外，accountability 通常不消失。
+評估 CSP 時，除了 CSP 本身安全態勢還要看什麼？	它所依賴的 third parties／subprocessors／supply chain。CSP secure ≠ 整條服務鏈 secure。

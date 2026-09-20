@@ -1,8 +1,10 @@
-# CCSP Assessment Test Review / 錯題複習講義
+# CCSP 模擬測驗講義：Assessment Test 錯題複習
 
-> **Test Source / 題庫來源:** ISC2 CCSP LearnZapp — Assessment Test (30 questions)  
-> **Score / 得分:** 20/30 (66%)  
-> **Focus / 範圍:** Wrong-question concept correction only
+> **講義編號：** 01  
+> **講義類型：** 弱點分析與概念補正  
+> **Test Source / 題庫來源:** ISC2 CCSP LearnZapp — Assessment Test（30 題）  
+> **Score / 得分:** 20/30（66%）  
+> **Focus / 範圍:** 錯題概念補正；不重抄整份題庫
 
 ---
 

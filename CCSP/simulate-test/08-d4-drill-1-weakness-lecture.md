@@ -1,9 +1,14 @@
-# CCSP LearnZApp D4 Custom Test 弱點分析與補強講義
+# CCSP 模擬測驗講義：D4 Drill 1 弱點分析與補強
+
+> **講義編號：** 08  
+> **講義類型：** 單域 drill 弱點分析  
+> **測驗來源：** ISC2 LearnZApp Custom Test（`zapp_7.zip`）  
+> **適用領域：** Domain 4 Cloud Application Security
 
 ## 0. 測驗來源與判讀範圍
 
-本講義依據本次 `zapp_7.zip` 解壓縮後的 LearnZApp / isc2.learnzapp.com 截圖內容整理。  
-本次測驗是 **Custom Test：Cloud Application Security / Domain 4 單域 drill**，不是全域 Practice Test。
+本講義依據 `zapp_7.zip` 解壓縮後的 LearnZApp 截圖整理。  
+本次測驗是 **Custom Test：Cloud Application Security／Domain 4 單域 drill**，不是全域 Practice Test。
 
 ---
 

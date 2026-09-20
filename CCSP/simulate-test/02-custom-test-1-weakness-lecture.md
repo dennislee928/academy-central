@@ -1,10 +1,12 @@
-# CCSP Custom Test 弱點分析與補強 / Weakness Analysis & 1-Hour Patch Plan
+# CCSP 模擬測驗講義：Custom Test 1 弱點分析與一小時補強
 
-**測驗來源**：ISC2 LearnZApp Custom Test  
-**測驗類型**：Custom Test，非前一回 Standalone 題庫進度  
-**測驗結果**：40 題，25 題正確，15 題錯誤，總分 62%  
-**平均作答時間**：33 秒 / 題  
-**Readiness Score**：46% → 45%  
+> **講義編號：** 02  
+> **講義類型：** 弱點分析與補強計畫  
+> **測驗來源：** ISC2 LearnZApp Custom Test  
+> **測驗類型：** Custom Test（非 Standalone 題庫進度）  
+> **測驗結果：** 40 題，25 對／15 錯，總分 62%  
+> **平均作答時間：** 33 秒／題  
+> **Readiness Score：** 46% → 45%  
 
 > 本講義以這次 LearnZApp Custom Test 為準，不再沿用先前 DestCert / Standalone App 的 coverage 與正確率作為主要判斷依據。
 
