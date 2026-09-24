@@ -1,0 +1,157 @@
+{
+  "version": "31.5.2",
+  "pages": [
+    {
+      "id": "X52-E4qS94_8JHt9qmTW",
+      "name": "第 1 页",
+      "cells": [
+        {
+          "id": "1",
+          "type": "layer"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-34",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-33",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-32",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-12",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-13",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-14",
+          "type": "node",
+          "parent": "1",
+          "label": "Paul"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-15",
+          "type": "node",
+          "parent": "1",
+          "label": "Mule"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-19",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-20",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-21",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-22",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-27",
+          "type": "node",
+          "parent": "1",
+          "label": "Paul's private key"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-28",
+          "type": "node",
+          "parent": "1",
+          "label": "Paul's public key"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-29",
+          "type": "node",
+          "parent": "1",
+          "label": "Mule's private key"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-30",
+          "type": "node",
+          "parent": "1",
+          "label": "Mule's public key"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-36",
+          "type": "edge",
+          "parent": "1",
+          "source": "yHVhSmgyGjDikaGRYkK9-13",
+          "target": "yHVhSmgyGjDikaGRYkK9-28"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-39",
+          "type": "node",
+          "parent": "1",
+          "label": "1.Mule uses Paul's Public key to encrypt message and send",
+          "html": "<span style=\"font-weight: 700;\">1.Mule uses Paul's Public key to encrypt message and send</span>"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-40",
+          "type": "node",
+          "parent": "1",
+          "label": "3. Paul uses \nPaul's Private key to decrypt  Mule's message encrypted by Paul's public key",
+          "html": "<span style=\"font-weight: 700;\">3. Paul uses <br>Paul's Private key to decrypt&nbsp; Mule's message encrypted by Paul's public key</span>"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-41",
+          "type": "edge",
+          "parent": "1",
+          "source": "yHVhSmgyGjDikaGRYkK9-20",
+          "target": "yHVhSmgyGjDikaGRYkK9-12"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-43",
+          "type": "edge",
+          "parent": "1",
+          "source": "yHVhSmgyGjDikaGRYkK9-12",
+          "target": "yHVhSmgyGjDikaGRYkK9-33"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-44",
+          "type": "edge",
+          "parent": "1",
+          "source": "yHVhSmgyGjDikaGRYkK9-27",
+          "target": "yHVhSmgyGjDikaGRYkK9-14"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-45",
+          "type": "node",
+          "parent": "1"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-47",
+          "type": "node",
+          "parent": "1",
+          "label": "2.Paul Receive \nPaul's Public key \nencrypted message",
+          "html": "<span style=\"font-weight: 700;\">2.Paul&nbsp;</span>Receive <br>Paul's Public key <br>encrypted message"
+        },
+        {
+          "id": "yHVhSmgyGjDikaGRYkK9-49",
+          "type": "node",
+          "parent": "1",
+          "label": "3.Paul\nreceived fully decrypted\nmessage from Mule",
+          "html": "<b>3.Paul<br></b><span style=\"color: rgb(0, 0, 0); background-color: rgb(236, 236, 236); float: none; display: inline !important;\">received fully decrypted</span><br style=\"color: rgb(0, 0, 0); background-color: rgb(236, 236, 236);\"><span style=\"color: rgb(0, 0, 0); background-color: rgb(236, 236, 236); float: none; display: inline !important;\">message from Mule</span>"
+        }
+      ]
+    }
+  ]
+}
