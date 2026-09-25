@@ -6,3 +6,5 @@ Federation 的 web of trust 與 trusted third party（hub-and-spoke）差在哪�
 SDLC 中『使用者最關鍵』通常落在哪一階段？為什麼？	Define／requirements：決定要做什麼（business requirements）。Test／beta 只能驗證是否符合已定需求。（來源 M005／4.2）
 Business requirements 在 CCSP SDLC 裡主要指什麼？	該組織／系統特定的功能、效能、安全等需求，通常來自使用者與業務 stakeholder，不是一般市場智庫資料可完全取代。（來源 M005）
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
+考題出現哪些字眼時該選 object storage？哪些字眼選 volume storage？	file、hierarchy、metadata 選 object；attached drive、block 選 volume。（來源 Domain Tutor／2.2）
+Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of trust 成員彼此直接信任，組織多了難以擴充；TTP 擴充容易，但第三方成為單點依賴。（來源 Domain Tutor／4.7）
