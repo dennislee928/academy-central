@@ -1,0 +1,8 @@
+在 CCSP data discovery 脈絡裡，dashboard 常被當成什麼風險？	管理層看到被美化（例如 no red）的指標而做出錯誤決策；不是把 dashboard 當成對外公告欄＝disclosure。（來源 M001／Disputed，對照教材確認）
+CCSP 教材慣例下，volume storage 通常指什麼？	掛給 VM 的虛擬磁碟（block storage）。（來源 M002／Disputed；對齊考試用語）
+CCSP 教材慣例下，object storage 通常指什麼？	以物件形式存放並帶 metadata，常經 API 存取。（來源 M002）
+Federation 的 web of trust 與 trusted third party（hub-and-spoke）差在哪？	信任關係模型不同；TTP 中第三方通常是 IdP／broker，不是 service provider。要分清 IdP 與 SP／relying party。（來源 M003／4.7）
+題幹強調政策成本高、多數人繞過、生產力大增時，shadow API 題優先想什麼？	政策／流程可能不符業務需求；選處理根本原因的選項，而非只強制執行既有流程。（來源 M004／4.5）
+SDLC 中『使用者最關鍵』通常落在哪一階段？為什麼？	Define／requirements：決定要做什麼（business requirements）。Test／beta 只能驗證是否符合已定需求。（來源 M005／4.2）
+Business requirements 在 CCSP SDLC 裡主要指什麼？	該組織／系統特定的功能、效能、安全等需求，通常來自使用者與業務 stakeholder，不是一般市場智庫資料可完全取代。（來源 M005）
+T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
