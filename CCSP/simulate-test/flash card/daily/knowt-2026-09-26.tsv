@@ -1,0 +1,8 @@
+Plan A（Dennis 2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經 Dennis 確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
+目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未經 Dennis 明確確認。（來源 study_state）
+T001 現在如何計入 fresh accuracy？	Dennis 確認 T001（2026-09-25）為首次作答（fresh）。原始 19/25（76%）；排除 M001、M002 兩題 Disputed 後 19/23（約 83%）。樣本一次測驗，非 readiness 指標。（來源 study_state）
+M002 關於 object 與 hierarchy，題庫說法與技術說法各是什麼？應如何標記？	題庫說法：hierarchy／filesystem 敘述常對應 object（file tree）。技術說法：object 多為 flat namespace；有目錄階層的通常是 volume 或 file storage。兩者都標「待對照 OSG／CBK 確認」；關鍵字規則為 Unresolved／Requires Verification，M002 本身仍為 Disputed。（來源 mistake_log／群組 9/26）
+為什麼不能把『出現 hierarchy 就選 object』當絕對規則？	Tutor 已撤回該絕對說法。題庫常見寫法與技術實況不一致，且 ISC2 考試採用哪種描述尚未查證。（來源群組 9/26 carryover）
+群組建議的錯題複習優先順序是什麼？M001／M002 怎麼用？	優先 M003（4.7 federation），其次 M004（4.5 先修政策再談執法），再次 M005（4.2 需求來自本組織 business stakeholder）。M001／M002 為 Disputed，只記用語對應，不當成已結案知識。（來源群組 9/26）
+Commander 建議把哪些錯題對照 §21？M003 建議怎麼練？	M004、M005 排入 §21 Software Assurance and Validation 對照；M003 可選 15 分鐘畫出 web of trust 與 trusted third party 兩種 federation model（IdP、SP／relying party、信任關係）。（來源群組 9/26／carryover）
+做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
