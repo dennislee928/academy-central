@@ -24,5 +24,5 @@ Privacy Level Agreement 常被考的是什麼？	隱私相關義務，尤其通�
 Forensic reporting 最在意什麼？	方法可辯護、證據完整、chain of custody 清楚。不是先追求最快修復。
 Evidence integrity 常見技術控制？	Hashing、寫保護、雙人保管、完整日誌。分類本身不能替代保管鏈。
 把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失。
-SOC 報告能不能當成「我已完全合規」？	不能自動等同。要看 Type、期間、範圍與是否涵蓋你關心的控制。
+SOC 報告能不能當成「已完全合規」的證明？	不能自動等同。要看 Type、期間、範圍與是否涵蓋所關心的控制。
 訴訟保全時 retention 政策怎麼辦？	與本案可能相關的資料停止例行銷毀，即使原本到期。

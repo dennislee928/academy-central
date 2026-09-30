@@ -115,7 +115,7 @@ SOAP 不是天生比 DCOM/CORBA 更安全。
 
 | 名詞 | 定義 |
 |---|---|
-| **Authentication** | 驗證身分（你是誰） |
+| **Authentication** | 驗證身分（主體是誰） |
 | **Authorization** | 決定可存取的範圍 |
 | **Non-repudiation** | 無法否認曾執行某動作 |
 | **IAM 的終極目的** | **Accountability（可歸責）**——授權只是過程 |
@@ -258,7 +258,7 @@ Application level  = 每個應用 1 個 ANF
 | SOAP | REST | 嚴格 XML 協定 vs 輕量 URI resource |
 | Define | Design | 最早的需求階段 vs 設計階段 |
 | Business requirements | Legislation／regulation | 最上位 input vs 被吸收的限制條件 |
-| Authentication | Authorization | 你是誰 vs 你能做什麼 |
+| Authentication | Authorization | 主體是誰 vs 可執行什麼 |
 | SAML | OAuth／OIDC | 認證＋授權斷言 vs 委派授權／身分層 |
 | Web of trust | Trusted third party | 彼此直接信任 vs 共同信任第三方 IdP |
 | IdP | SP／relying party | 提供身分 vs 消費身分 |

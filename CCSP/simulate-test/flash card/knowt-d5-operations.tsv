@@ -7,7 +7,7 @@ Baseline 是防毒或 HIDS 嗎？	不是。它是用來比較的安全組態標�
 發現 baseline deviation 應該直接改回去嗎？	不要。應 document → assess → authorize 或 remediate → 若屬合法變更則更新 baseline。
 Configuration maintenance 包含什麼？不包含什麼？	包含 baseline、變更、patch、版本控制、驗證、偏離管理、文件。不包含 social engineering。
 Production patch 為什麼不能看到更新就部署？	要評估 compatibility、可用性衝擊與變更風險：Identify → Evaluate → Test → Approve → Deploy → Validate。
-Vendor guidance 能否取代 risk owner？	不能。Vendor 建議重要，但風險所有者仍是你的組織。
+Vendor guidance 能否取代 risk owner？	不能。Vendor 建議重要，但風險所有者仍是採用方組織。
 Host 進入 maintenance 前，cluster 通常先做什麼？	Move／drain workload，或確保其他節點仍能承載服務。
 Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。

@@ -27,7 +27,7 @@ Management plane 為什麼要隔離？	它能控制整個雲環境；被攻破�
 Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣。亂放東西會破壞氣流設計。
 Clustered host 進入維護前先做什麼？	Drain／migrate workload，確保服務由其他節點承載。
 OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（例如網路分段、傳輸加密、應用識別），不要看到「網路」就一律選同一層。
-第三方／供應鏈對基礎設施的意義？	你的 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
+第三方／供應鏈對基礎設施的意義？	該 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
 用一句話說明 TLS 四段工作？	Certificate 綁定身分與 public key；digital signature 證明持有 private key；(EC)DHE 建立 shared secret；symmetric crypto 保護實際流量。
 TLS 是 hybrid cryptosystem 的原因？	非對稱／DH 做認證與金鑰建立；對稱金鑰做大量加密。全非對稱太慢，全對稱無法安全起步。
 TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。

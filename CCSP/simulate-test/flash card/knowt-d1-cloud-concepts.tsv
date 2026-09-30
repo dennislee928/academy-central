@@ -17,7 +17,7 @@ PCI DSS 是法律嗎？	不是。PCI DSS 是支付卡產業安全標準，不是
 Privacy 需求如何影響 deployment model？	高隱私／專屬控制需求通常偏向 private 或 community；open public 不適合高度敏感專屬資料。
 FaaS／Serverless 的考試重點是什麼？	Event-driven function；客戶不管 server 管理，但仍要管程式、權限與資料。
 為什麼 cloud sprawl 不只是基礎設施帳單問題？	還可能增加 OS、資料庫、資安設備與企業軟體的授權、訂閱與管理成本。
-Asset inventory 回答什麼？BIA 回答什麼？	Inventory 回答「我們有什麼」；BIA 回答「什麼最重要、中斷會怎樣」。
+Asset inventory 回答什麼？BIA 回答什麼？	Inventory 回答「組織有什麼資產」；BIA 回答「什麼最重要、中斷會怎樣」。
 Business requirements 能補技術盤點缺的什麼？	Business usefulness／value／criticality，這些不一定能只靠客觀 technical inventory 得到。
 Production 在 CSP-A、backup 在 CSP-B，recovery 最直接的技術風險是什麼？	Interoperability／proprietary format incompatibility。這比泛稱 vendor lock-in 更直接卡住還原目標。
 ISC2 兩個答案都合理時怎麼選？	選最直接解決題目所問 business／security objective 的答案，不要總選範圍最大的風險名詞。
