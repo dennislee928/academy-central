@@ -130,11 +130,12 @@
   - Domain 2 具有多輪版本，以 `-r1` / `-r2` / `-r3` 後綴區分。
 - `CCSP/shared/`：跨 Domain 共用資料（如威脅建模框架）。
   - `threat-models/ransomware-prevention.md`
-- `CCSP/simulate-test/`：模擬考題與弱點分析講義。
-  - `01-assessment-test-review.md`
-  - `02-custom-test-weakness-1hr.md`
-  - `03-learnzapp-test2-weakness.md`
-  - `04-practice-test1-weakness.md`
+- `CCSP/simulate-test/`：模擬考題與弱點分析講義，以 Domain 為主軸組織。
+  - `README.md`：歸類索引與維護規則。
+  - `domainN-<topic>/01-consolidated-lecture.md`：六大 Domain 彙整講義（跨測驗合併後的複習主體）。
+  - `by-test/`：原始測驗講義封存（`01`–`10` 與 `learnzapp/`），保留各場次分數與進度紀錄。
+  - `daily/`：每日整理（時間軸紀錄）。
+  - `flash card/`：Knowt 匯入用閃卡（`knowt-d1`–`knowt-d6` 分域 TSV）。
 
 ### 2. 檔名規範說明 / Naming Convention
 
