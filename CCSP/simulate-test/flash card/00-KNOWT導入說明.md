@@ -1,6 +1,6 @@
 # Knowt 上傳說明
 
-你剛才開的是 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）。  
+Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）。  
 這個頁面只接受 **PDF、PPT、圖片、影片、音訊**，所以 `.tsv` / `.md` 會顯示無法選取或無法使用。
 
 ## 請上傳這些檔案
@@ -31,7 +31,7 @@
 
 ## 另一條路：手動貼上 TSV
 
-若要自己匯入、不要 AI 摘要：
+若要手動匯入、不使用 AI 摘要：
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
 

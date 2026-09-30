@@ -168,7 +168,7 @@ Bob
 
 Bob 要證明：
 
-> 「這個 message 是我簽的，而且沒有被修改。」
+> 「這個 message 由該簽署者簽署，而且沒有被修改。」
 
 流程：
 
@@ -598,7 +598,7 @@ Fast bulk encryption
 
 # 20. TLS 1.3 的核心流程
 
-CCSP 不要求你背 packet-by-packet，但需要知道角色。
+CCSP 不要求背 packet-by-packet，但需要知道角色。
 
 簡化：
 
@@ -1017,7 +1017,7 @@ TLS 1.2 cipher suite 名稱過去可能一次寫很多資訊：
 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 ```
 
-它會告訴你：
+它會指出：
 
 * ECDHE
 * RSA

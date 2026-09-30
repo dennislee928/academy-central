@@ -516,7 +516,7 @@ Next action = targeted patch, then another D2 drill
 
 當題目出現 `EXCEPT`, `NOT`, `LEAST`, `BEST`, `PRIMARY` 時：
 1. **強制停頓 2 秒鐘！**
-2. **切換大腦模式：** 告訴自己「我要找的是那個『不合群 / 錯誤』的選項」。
+2. **切換大腦模式：** 明確鎖定「那個『不合群／錯誤』的選項」。
 3. **刪去法：** 先找出符合該類別（或正確）的敘述並刪除，剩下的就是答案。
 
 ### Summary Table)
@@ -598,7 +598,7 @@ Next action = targeted patch, then another D2 drill
 
 ### 1. 核心指標 (Metrics)
 * **RTO (Recovery Time Objective):** 復原時間目標。系統可以當機多久？(Time to restore)
-* **RPO (Recovery Point Objective):** 復原點目標。你能容忍流失多少資料？(Acceptable data loss) **注意：不是商業價值的流失。**
+* **RPO (Recovery Point Objective):** 復原點目標。可容忍的資料流失量 (Acceptable data loss)。 **注意：不是商業價值的流失。**
 
 ### 2. BC/DR 演練風險
 * 兵棋推演 (Tabletop) 最安全；但 **完整測試 (Full testing of the plan)** 本身就伴隨著極高的「營運中斷風險 (Disruptive)」。

@@ -467,7 +467,7 @@ External requirements：
 
 ### 邏輯
 
-你的架構可能其實是：
+實際架構可能是：
 
 **Customer  
 ↓  
@@ -679,7 +679,7 @@ Baseline deviation 應怎麼處理？
 
 注意：
 
-> Vendor guidance 很重要，但 vendor 不是你的 risk owner。
+> Vendor guidance 很重要，但 vendor 不是組織的 risk owner。
 
 ---
 
