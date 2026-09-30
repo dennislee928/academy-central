@@ -28,3 +28,14 @@ Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣。�
 Clustered host 進入維護前先做什麼？	Drain／migrate workload，確保服務由其他節點承載。
 OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（例如網路分段、傳輸加密、應用識別），不要看到「網路」就一律選同一層。
 第三方／供應鏈對基礎設施的意義？	你的 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
+用一句話說明 TLS 四段工作？	Certificate 綁定身分與 public key；digital signature 證明持有 private key；(EC)DHE 建立 shared secret；symmetric crypto 保護實際流量。
+TLS 是 hybrid cryptosystem 的原因？	非對稱／DH 做認證與金鑰建立；對稱金鑰做大量加密。全非對稱太慢，全對稱無法安全起步。
+TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。
+TLS application traffic 用什麼加密？	Derived symmetric traffic keys，常見 AES-GCM 或 ChaCha20-Poly1305（AEAD）。
+ECDHE 最大安全特性？	Forward secrecy：每個 session 用 ephemeral keys，長期金鑰失竊不應讓過去流量自動可解。
+TLS 1.3 還用傳統 RSA static key exchange 嗎？	不用。那是舊 TLS 常見、且無 forward secrecy 的做法。
+AES-GCM 為什麼常出現在 TLS？	它是 AEAD，可同時提供機密性與密文完整性。
+TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.3 把憑證演算法與 ECDHE group 分開協商，例如 TLS_AES_128_GCM_SHA256。
+mTLS 是什麼？	雙方都出示憑證：server authentication + client certificate authentication。一般公開 HTTPS 未必做 client cert。
+問 TLS fresh shared secret 選什麼？	(EC)DHE。
+問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。

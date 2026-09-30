@@ -20,3 +20,9 @@ Side-channel attack 在雲端為何被討論？	共享硬體可能讓攻擊者�
 應用安全題看到 best／first 時先問什麼？	這是治理／調查優先，還是立刻做技術強制。ISC2 常先選釐清與最小業務衝擊。
 為什麼「工程師不擅長測試」通常是錯的？	那是情緒性說法。考試要的是獨立測試與利益衝突，不是能力貶低。
 Release acceptance 的主要目的是什麼？	確認發行物符合既定驗收準則後才放行。文件化與核准是支撐，不是最上位目的。
+Federation 的 web of trust 與 trusted third party（hub-and-spoke）差在哪？	信任關係模型不同；TTP 中第三方通常是 IdP／broker，不是 service provider。要分清 IdP 與 SP／relying party。（來源 M003／4.7）
+題幹強調政策成本高、多數人繞過、生產力大增時，shadow API 題優先想什麼？	政策／流程可能不符業務需求；選處理根本原因的選項，而非只強制執行既有流程。（來源 M004／4.5）
+SDLC 中『使用者最關鍵』通常落在哪一階段？為什麼？	Define／requirements：決定要做什麼（business requirements）。Test／beta 只能驗證是否符合已定需求。（來源 M005／4.2）
+Business requirements 在 CCSP SDLC 裡主要指什麼？	該組織／系統特定的功能、效能、安全等需求，通常來自使用者與業務 stakeholder，不是一般市場智庫資料可完全取代。（來源 M005）
+Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of trust 成員彼此直接信任，組織多了難以擴充；TTP 擴充容易，但第三方成為單點依賴。（來源 Domain Tutor／4.7）
+做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
