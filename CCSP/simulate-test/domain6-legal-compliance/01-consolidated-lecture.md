@@ -23,6 +23,7 @@
 | `by-test/10-drill-2026-09-30-weakness-lecture.md` | 下篇 §9 USDA／USPTO／OSHA／SEC | §1.7 |
 | `by-test/learnzapp/02-...-lecture.md` | §3 成熟度、訴訟與鑑識 | §1.2、§1.5 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §9 BIA、§13 SOC／FIPS | §1.2、§1.8 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.8、§2.6 |
 
 ---
 
@@ -71,13 +72,13 @@ FISMA   = 美國聯邦資訊系統安全
 | **SOC 3** | 報告 | **公開摘要版／可公開發布**，attestation style |
 | **SOC 2 Type 3** | — | **不存在** |
 | **ISAE 3402** | 國際 attestation 標準 | 類似 SOC 1 的國際版脈絡 |
-| **ISO/IEC 27001** | ISMS **認證**標準 | 可被認證；**產品／技術中立**，不偏好 open source、PC、雲或特定廠商 |
+| **ISO/IEC 27001** | ISMS **認證**標準 | 可被認證；**technology-neutral**：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific |
 | **ISO/IEC 27002** | 控制實務指引 | 控制目錄／guidance，不是認證主體 |
 | **ISO/IEC 27017** | 雲端安全控制指引 | cloud security controls |
 | **ISO/IEC 27018** | 公有雲個資保護 | PII protection in public cloud |
 | **ISO/IEC 27034** | 應用安全框架 | 組織 1 個 ONF、每應用 1 個 ANF（見 [Domain 4](../domain4-application/01-consolidated-lecture.md)） |
 | **ISO 31000** | **風險管理**框架 | 設計、導入與管理風險 |
-| **NIST SP 800-37** | 風險管理框架 | RMF |
+| **NIST SP 800-37** | 風險管理框架 | **RMF 七步驟**，見 §1.2 末段 |
 | **NIST SP 800-53** | 控制目錄 | Security and Privacy Controls for Information Systems and Organizations |
 | **NIST SP 800-92** | 日誌管理 | Log management |
 | **CSA CCM** | 雲端控制矩陣 | 把控制對映到各種要求 |
@@ -100,6 +101,51 @@ NIST 800-92 = 日誌管理
 ```
 
 **NIST SP 800 系列為何被採用：** 公開可取得、成本效益高（public domain），**不是因為國際強制採用或比較容易**。
+
+#### NIST RMF 七步驟（來源：`by-test/11` D5 §4）
+
+```text
+Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor
+```
+
+口訣：**P-C-S-I-A-A-M**
+
+| 步驟 | 重點 |
+|---|---|
+| **Prepare** | 建立 context、角色、風險管理策略 |
+| **Categorize** | 依資訊與系統的影響程度分級 |
+| **Select** | 選定控制基線並裁適 |
+| **Implement** | 落實控制並記錄 |
+| **Assess** | 評估控制是否正確實作、按預期運作 |
+| **Authorize** | 權責主管基於風險做出授權決定 |
+| **Monitor** | 持續監控控制與風險態勢 |
+
+**RMF 不是什麼：** 不是 threat-only framework，也不是 cost-only framework。**Threat 與 cost 都只是 risk decision 的 input，不是框架的 foundation。**
+
+```text
+Mission/business context
+        ↓
+Risk
+        ↓
+Controls
+        ↓
+Assessment
+        ↓
+Authorization
+        ↓
+Continuous monitoring
+```
+
+#### ISO 27001 的 technology-neutral（來源：`by-test/11` D1 §5）
+
+ISO 27001 規範的是 **ISMS requirements**（管理系統要求），不綁任何技術或部署形態。
+
+```text
+ISO 27001 = management system / requirements
+ISO 27002 = security control guidance
+```
+
+遇到「ISO 27001 偏好哪一種技術／部署方式」的題目，答案永遠是**沒有偏好**。
 
 **Auditability：** 指「已準備好接受稽核的狀態」，不等同「受監管」，也不等同 AICPA SOC report 本身。支援稽核的雲端特性是**標準化 baseline、組態證據、可重複性、版本化產出**。
 
@@ -270,6 +316,29 @@ ALE = SLE × ARO        （年度預期損失 = 單一事件損失 × 年度發�
 
 **Exposure Factor（EF）** 受 **threat vector 類型**影響最大，因為它決定破壞機制與損失比例；EF 不等同「攻擊目標」或「資產名稱」。
 
+#### ARO 的 evidence vs calculation（來源：`by-test/11` D5 §1）
+
+**ARO（Annualized Rate of Occurrence）** 回答「一年預期發生幾次？」。問「ARO 最直接的依據是什麼」時，正解是 **historical occurrence data**。
+
+```text
+Historical data          = evidence（證據／輸入）
+Aggregation / average    = calculation technique（處理手法）
+```
+
+算例：
+
+```text
+5 years, 10 incidents  →  10 / 5 = ARO 2
+```
+
+**為什麼 Aggregation 不是最佳答案？** 它是 processing／calculation technique，不是 evidence source。整條鏈是：
+
+```text
+Historical data → Aggregation / average → Observed frequency → ARO estimate
+```
+
+Aggregation 不是「不能用」，而是**必須先有 historical observations 才能 aggregate**。
+
 **Risk appetite 由高階管理層／董事會決定。**
 
 **Asset inventory vs BIA：**
@@ -312,6 +381,11 @@ FedRAMP 是美國聯邦雲端授權計畫，**聯邦機關**使用經授權的�
 ### 2.5 隱私角色 taxonomy（`by-test/09` §7.1）
 
 Data subject／controller／processor／custodian 四者必須分清；不要把 custodian（日常維護者）與 controller（決定目的與方式）混用。
+
+### 2.6 ARO 與 RMF 的 foundation 誤判（`by-test/11` D5 §1、§4）
+
+- 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.8）。
+- 問 RMF 以什麼為 foundation 時誤選 **cost** 或 **threat**：RMF 是 risk-based framework，cost 與 threat 都只是 input（見 §1.2）。
 
 ---
 
@@ -362,6 +436,11 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 41 | Quantitative 用數字與金額；Qualitative 用分級與主觀評等。 |
 | 42 | Risk appetite 由高階管理層／董事會決定；residual risk 必須被接受。 |
 | 43 | Asset inventory 回答「有什麼」；BIA 回答「什麼最重要」。 |
+| 44 | **RMF 七步驟：Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor（P-C-S-I-A-A-M）。** |
+| 45 | RMF 是 risk-based framework；threat 與 cost 都只是 input，不是 foundation。 |
+| 46 | ARO 的 evidence 是 historical occurrence data；aggregation 只是計算手法。 |
+| 47 | Aggregation 必須先有 historical observations 才能產生 frequency estimate。 |
+| 48 | ISO 27001 是 technology-neutral：非 cloud／on-prem／vendor／open-source specific。 |
 
 ---
 
@@ -392,6 +471,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Trademark | Trade secret | 品牌識別 vs 未公開商業資訊 |
 | SLE | ALE | 單次損失 vs 年度預期損失 |
 | EF | ARO | 單次損失比例 vs 年度發生頻率 |
+| Historical data | Aggregation | 證據來源 vs 計算手法 |
+| ISO 31000 | NIST 800-37（RMF） | 風險管理原則 vs 七步驟流程 |
+
+> **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
 ---
 
@@ -429,3 +512,6 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 - Cloud provider 是 processor，那誰負最終法律責任？
 - SLE、ALE 的公式各是什麼？EF 受什麼影響最大？
 - 確保 provider 履行義務的最重要機制是什麼？
+- RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
+- 問 ARO 的直接依據時，為什麼不能選 aggregation？
+- ISO 27001 偏好 cloud 還是 on-prem？
