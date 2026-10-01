@@ -19,6 +19,7 @@
 | `by-test/07-practice-test-2-weakness-lecture.md` | §6.1 Type 1 hypervisor、§6.2 hybrid、§6.3 SaaS、§6.4 public cloud governance | §1.1、§1.2、§1.6、§2.5 |
 | `by-test/09-practice-test-3-weakness-lecture.md` | §9 P4 D1 Cloud Concepts | §1.2、§2.3 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 Q14 BC/DR + Interoperability | §2.2 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §1 Private ≠ Private Network、D1 §2 deployment 快速判斷、D1 §3 Sandbox | §1.2、§1.7、§2.6 |
 
 ---
 
@@ -60,6 +61,46 @@ They enable data/application portability
 
 不要被以下詞干擾：private ＋ public 同時出現不一定就足夠；multicloud 不一定是 hybrid。**Hybrid 的關鍵是 integration／portability／binding technology**。
 
+#### 快速判斷（來源：`by-test/11` D1 §2）
+
+```text
+Exclusive organization?           → Private
+Shared industry/regulation?       → Community
+Mix different environments?       → Hybrid
+Elastic general provider service? → Public
+```
+
+#### Private Cloud ≠ Private Network（來源：`by-test/11` D1 §1）
+
+Private cloud 的重點**不是**「只能公司內部的人使用」，而是：
+
+> **cloud infrastructure dedicated to one organization**
+
+所以 private cloud 可以 Internet-facing、可以讓客戶透過 App／Browser 使用、可以由第三方託管、不一定放在企業自有機房。
+
+```text
+Customer
+   |
+Internet
+   |
+WAF / LB
+   |
++-----------------------+
+| Bank Private Cloud    |
+| Web/API               |
+| App                   |
+| Core Banking          |
+| Database / HSM        |
++-----------------------+
+```
+
+外部使用者可以使用服務，但 **backend infrastructure 仍只供該組織使用**。
+
+```text
+Private = dedicated to one organization
+Private ≠ not Internet-facing
+```
+
 ### 1.3 Cloud Actors / Roles
 
 | Role | Function | 功能 |
@@ -100,6 +141,25 @@ Virtualization   = cloud scalability / resource abstraction / multi-tenancy 的�
 | **Type 2** | 跑在 host OS 之上 |
 | **Container** | OS-level isolation，**不是** hypervisor |
 | **VM** | virtual machine instance |
+
+### 1.7 Sandbox 與 Service Model
+
+**Sandbox 是 isolation pattern（isolated testing environment），不是 service model。** 它可以建在 IaaS、PaaS、containers、Kubernetes namespace、serverless 或 local VM 之上。
+
+| Sandbox 型態 | 適用情境 | 誰管什麼 |
+|---|---|---|
+| **PaaS sandbox** | developer 只想開發、測試 application | Developer 管 code／application／data；Provider 管 runtime／middleware／OS／virtualization／hardware |
+| **IaaS sandbox** | custom OS、malware analysis、custom firewall、IDS/IPS、packet capture、kernel testing、network segmentation、low-level security testing | Customer 管 guest OS／host firewall／VPC-VNet／subnet／routing／security groups／agents |
+
+```text
+Sandbox = isolation pattern
+PaaS    = developer sandbox
+IaaS    = sandbox requiring OS/network-level control
+```
+
+**判斷順序：** 先看 requirement 是否要求「security boundary／OS／network isolation 由 customer 控制」。若是，IaaS 較合理；若題幹只說 `software development and testing sandbox`，抓 keyword **development platform → PaaS**。
+
+> **原則：** More control ≠ automatically more secure。**More control 同時代表 more responsibility。**
 
 ---
 
@@ -148,6 +208,29 @@ Provider   → 營運 provider 自有機房的控制措施
 
 詳細的實體與機房控制見 [Domain 3 彙整講義](../domain3-infrastructure/01-consolidated-lecture.md)。
 
+### 2.6 Europe／GDPR 是否等於 Private Cloud（`by-test/11` D1 §1）
+
+常見反駁：「歐洲公司 production 搬上 cloud，為什麼一定 Private Cloud？Public Cloud 也能符合 GDPR。」
+
+**實務上這個反駁成立。** Public cloud 可以透過 EU region、data residency、encryption、sovereignty controls、contractual safeguards 達成合規，所以 **Europe／GDPR ≠ automatically Private Cloud**。
+
+**但 CCSP 題目真正想抓的是**：只有在題幹**同時**暗示下列條件時才傾向 Private cloud。
+
+```text
+maximum control
+dedicated infrastructure
+isolation
+organizational exclusivity
+strict governance
+```
+
+與 §2.3 併讀：強隱私／地理限制題仍優先 Private，但要確認題幹有上述治理語彙，而不是只看到「歐洲」或「GDPR」就選。
+
+### 2.7 歸屬他域的相關主題
+
+- **Insider threat 的控制分類**（`by-test/11` D1 §4）→ [Domain 5 §1.6](../domain5-operations/01-consolidated-lecture.md)
+- **ISO 27001 technology-neutral**（`by-test/11` D1 §5）→ [Domain 6 §1.2](../domain6-legal-compliance/01-consolidated-lecture.md)
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -166,6 +249,12 @@ Provider   → 營運 provider 自有機房的控制措施
 | 10 | Type 1 = bare-metal；Type 2 = 跑在 host OS 上；Container 不是 hypervisor。 |
 | 11 | Oversubscription = 承諾量超過實際可安全支撐的容量。 |
 | 12 | Public cloud 機房控制的治理者是 provider；regulator 訂要求、customer 評估。 |
+| 13 | **Private = dedicated to one organization；Private ≠ not Internet-facing。** |
+| 14 | 歐洲／GDPR 不等於一定要 private cloud；public cloud 可用 region、residency、加密與合約達成合規。 |
+| 15 | 只有題幹同時出現 maximum control／dedicated／isolation／exclusivity／strict governance 才傾向 Private。 |
+| 16 | Sandbox 是 isolation pattern，不是 service model。 |
+| 17 | 純開發測試 sandbox → PaaS；需要 OS／network 層控制的 sandbox → IaaS。 |
+| 18 | More control ≠ more secure；more control 同時代表 more responsibility。 |
 
 ---
 
@@ -180,6 +269,9 @@ Provider   → 營運 provider 自有機房的控制措施
 | Type 1 hypervisor | Type 2 hypervisor | 直接跑硬體 vs 跑在 host OS |
 | Hypervisor | Container | 虛擬化整個 OS vs OS-level isolation |
 | Cloud broker | Cloud reseller | 仲介整合管理 vs 買斷後轉售 |
+| Private cloud | Private network | 專屬的雲端基礎架構 vs 不對外連通的網路 |
+| PaaS sandbox | IaaS sandbox | 現成開發測試平台 vs 需自控 OS／網路隔離 |
+| Sandbox | Service model | 隔離模式 vs 服務交付層級 |
 
 ### 決策流程
 
