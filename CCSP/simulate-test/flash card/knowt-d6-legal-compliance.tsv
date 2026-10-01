@@ -26,3 +26,8 @@ Evidence integrity 常見技術控制？	Hashing、寫保護、雙人保管、�
 把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失。
 SOC 報告能不能當成「已完全合規」的證明？	不能自動等同。要看 Type、期間、範圍與是否涵蓋所關心的控制。
 訴訟保全時 retention 政策怎麼辦？	與本案可能相關的資料停止例行銷毀，即使原本到期。
+NIST RMF 的七個步驟？	Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor。口訣 P-C-S-I-A-A-M。
+NIST RMF 是以 threat 或 cost 為 foundation 嗎？	No。RMF 是 risk-based framework；threat 與 cost 都只是 risk decision 的 input。
+ARO 最直接的 evidence 是什麼？	Historical occurrence data。例如 5 年發生 10 次 → ARO = 2。
+Aggregation 在估算 ARO 時扮演什麼角色？	Calculation／processing technique，不是 evidence source。必須先有 historical observations 才能 aggregate。
+ISO 27001 偏好哪一種技術或部署方式？	沒有偏好。它是 technology-neutral 的 ISMS requirements：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific。

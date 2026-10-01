@@ -4,24 +4,36 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **250 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **282 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design | 25 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證） | 90 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 41 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design | 32 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證） | 99 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 43 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 28 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 32 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 28 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 41 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 33 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 250 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 282 |
 
-原先的 `knowt-tls-pki-crypto.tsv` 與 `daily/` 每日卡已併入上表：
+### 歷次併入紀錄
+
+**原 `knowt-tls-pki-crypto.tsv` 與 `daily/` 每日卡**（已刪除原檔）：
 
 - 密碼學原理、金鑰、簽章、雜湊、HMAC、X.509／CA／PKI、CRL/OCSP、KMS/HSM → **D2**
 - TLS 握手、TLS 1.3、ECDHE／forward secrecy、mTLS、cipher suite、AES-GCM 傳輸面 → **D3**
 - 每日卡依 learning objective 歸入 D2／D4；純進度與決議紀錄移入 `knowt-00-study-progress.tsv`
+
+**`by-test/11-drill-2026-10-01` 反駁題講義的 27 張卡**（拆併與去重後淨增 32 張）：
+
+- Private cloud／GDPR／sandbox → **D1**（+7）
+- 儲存模型、virtualization vs multitenancy、egress 障礙、TPI 系列 → **D2**（+9）
+- Hot／cold aisle 擺法 → **D3**（+2）
+- Insider threat、Synthetic vs RUM、DHCP vs NTP、HA failback → **D5**（+9）
+- ISO 27001、ARO evidence、NIST RMF → **D6**（+5）
+
+重複主題（private cloud 定義、volume storage、`SLE × ARO`、hot/cold aisle 目的）改為**增補既有卡片的答案**，不新增重複卡。
 
 ### 手動匯入步驟
 
@@ -49,7 +61,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 250 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 282 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

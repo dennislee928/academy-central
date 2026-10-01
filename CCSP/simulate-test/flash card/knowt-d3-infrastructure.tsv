@@ -24,7 +24,7 @@ Enhanced authentication 為什麼不該用 variable keystrokes？	每次擊鍵�
 Type 1 hypervisor 的關鍵特徵？	直接跑在硬體上（bare metal），不是裝在一般宿主 OS 裡的 Type 2。
 Live migration 的維運用意？	把 workload 移到其他節點，使主機可進入 maintenance 而不中斷服務。
 Management plane 為什麼要隔離？	它能控制整個雲環境；被攻破等於控制面失守，應與 production 資料面分離。
-Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣。亂放東西會破壞氣流設計。
+Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣並避免熱風回流（hot air recirculation）。亂放東西會破壞氣流設計。
 Clustered host 進入維護前先做什麼？	Drain／migrate workload，確保服務由其他節點承載。
 OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（例如網路分段、傳輸加密、應用識別），不要看到「網路」就一律選同一層。
 第三方／供應鏈對基礎設施的意義？	該 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
@@ -39,3 +39,5 @@ TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.
 mTLS 是什麼？	雙方都出示憑證：server authentication + client certificate authentication。一般公開 HTTPS 未必做 client cert。
 問 TLS fresh shared secret 選什麼？	(EC)DHE。
 問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
+Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
+為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。

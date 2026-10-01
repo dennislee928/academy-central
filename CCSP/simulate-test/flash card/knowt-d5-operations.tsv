@@ -30,3 +30,12 @@ Patch 責任在共享責任模型裡怎麼想？	誰能改那一層誰就有操�
 Honeypot EXCEPT 題秒選什麼？	Luring attackers。
 問 baseline 必要條件時不要選什麼？	不要選培訓或 HIDS；選 documentation。
 維護完成後還缺哪一步？	Validate 後 return to service，必要時更新 baseline。
+Synthetic monitoring 是什麼？	Scripted simulated transactions（如 Login→Search→Checkout）。可固定 time、location、browser、workflow，因此 controlled、repeatable。
+RUM（Real User Monitoring）觀察什麼？	真實生產環境使用者：real browser、real ISP、real device、actual behavior 與 actual latency。
+Synthetic 與 RUM 一句話怎麼分？	Synthetic asks: Can it work?；RUM asks: How is it actually working for users?
+Synthetic monitoring 為什麼涵蓋面較廣？	可主動測 rare workflows、無人時段、特定區域與 critical endpoints，不必等真實使用者剛好操作。
+DHCP 與 NTP 的邊界？	DHCP 派送網路設定（IP、mask、gateway、DNS），可用 Option 42 告知 NTP server 位址，但本身不執行時間同步，也不協商加密協定。
+Insider threat 的 preventive／detective／administrative 控制各有哪些？	Preventive：screening、least privilege、SoD、job rotation、mandatory vacation、PAM；Detective：logging、SIEM、UEBA、DLP、privileged activity monitoring；Administrative：policy、awareness、sanctions、offboarding。
+「aggressive background checks」這個措辭哪裡有問題？	過強。正確說法是 appropriate／lawful／proportionate personnel screening，人員篩查受勞動與隱私法規限制。
+External perimeter hardening 是主要的 insider control 嗎？	No。Internal segmentation 才直接限制 insider lateral movement；biometric 屬 physical access control，兩者都不是 network perimeter hardening。
+Failback to on-prem 是 cloud HA 的必備元素嗎？	No。取決於 hybrid architecture、組織環境與 DR strategy。HA 關注的是故障時服務仍可用。

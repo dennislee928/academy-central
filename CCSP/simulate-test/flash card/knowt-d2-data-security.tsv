@@ -12,7 +12,7 @@ DRM 與 Enterprise DRM／IRM 的關係？	DRM 是防止未授權複製的廣義�
 DLP 一定要裝在 client 上嗎？	不一定。可位於 endpoint、network 或 cloud／SaaS／CASB。不要背「egress monitoring 一定有 client agent」。
 Content-based discovery 較接近哪類控制？	Egress monitoring／DLP 類方案，不是 DRM。DRM 管使用權，不管內容發現。
 DLP 能不能當合約仲裁或 HR 評估工具？	不能。DLP 是 data-centric control：識別、分類比對、監控、告警／阻擋。
-VM 看到邏輯磁碟但實體不一定靠近 compute node，通常是哪種儲存？	Volume／Block storage。不要選 CDN。
+VM 看到邏輯磁碟但實體不一定靠近 compute node，通常是哪種儲存？	Volume／Block storage：virtual block device presented like a physical disk。不要選 CDN。
 Object storage 的特徵是什麼？	Object + metadata + identifier，通常經 API 存取。
 CDN 的核心目的是什麼？	把內容快取／派發到靠近使用者處，追求 delivery／performance，不是通用附加儲存區。
 IaaS／PaaS／SaaS 典型儲存對應？	IaaS → Volume／Object；PaaS → Databases；SaaS 常搭配 CDN 派發靜態內容。
@@ -88,3 +88,12 @@ CCSP 教材慣例下，object storage 通常指什麼？	以物件形式存放�
 考題出現哪些字眼時該選 object storage？哪些字眼選 volume storage？	file、hierarchy、metadata 選 object；attached drive、block 選 volume。（來源 Domain Tutor／2.2）
 M002 關於 object 與 hierarchy，題庫說法與技術說法各是什麼？應如何標記？	題庫說法：hierarchy／filesystem 敘述常對應 object（file tree）。技術說法：object 多為 flat namespace；有目錄階層的通常是 volume 或 file storage。兩者都標「待對照 OSG／CBK 確認」；關鍵字規則為 Unresolved／Requires Verification，M002 本身仍為 Disputed。（來源 mistake_log／群組 9/26）
 為什麼不能把『出現 hierarchy 就選 object』當絕對規則？	Tutor 已撤回該絕對說法。題庫常見寫法與技術實況不一致，且 ISC2 考試採用哪種描述尚未查證。（來源群組 9/26 carryover）
+Block／File／Object 三種儲存的 looks like 與 access 各是什麼？	Block／Volume = 像 disk，走 block device；File = 像 folder／share，走 NFS／SMB；Object = object + metadata，走 API／HTTP。
+Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答「資源與資料如何被抽象／轉形」；Multitenancy 回答「誰共用基礎架構」。
+Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。
+Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leakage、shared resource 爭用。
+雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
+「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。它本身不是 egress monitoring 的障礙。
+Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
+SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
+3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。

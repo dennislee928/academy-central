@@ -1,5 +1,5 @@
 Public cloud 的定義是什麼？	開放給一般公眾使用，通常由雲端服務提供者擁有、管理及營運。不要和 private cloud 搞混。
-Private cloud 的定義是什麼？	僅供單一組織專屬使用。
+Private cloud 的定義是什麼？	僅供單一組織專屬使用（dedicated to one organization）。不代表不能 Internet-facing。
 Hybrid cloud 的定義是什麼？	由兩個以上不同雲端基礎架構組成，並以標準化技術連結。
 Community cloud 的定義是什麼？	供具有共同關注事項的特定消費者群體專屬使用。
 Multicloud 一定等於 Hybrid cloud 嗎？	不一定。Multicloud 是使用多家 CSP；Hybrid 強調不同基礎設施被標準化技術綁在一起。
@@ -23,3 +23,10 @@ Production 在 CSP-A、backup 在 CSP-B，recovery 最直接的技術風險是�
 ISC2 兩個答案都合理時怎麼選？	選最直接解決題目所問 business／security objective 的答案，不要總選範圍最大的風險名詞。
 組織把工作放到雲端後，誰仍通常保有 accountability？	Organization／data owner／controller。Responsibility 可委外，accountability 通常不消失。
 評估 CSP 時，除了 CSP 本身安全態勢還要看什麼？	它所依賴的 third parties／subprocessors／supply chain。CSP secure ≠ 整條服務鏈 secure。
+Private Cloud 和 Private Network 差在哪？	Private cloud = 基礎架構專屬於一個組織，可以對外開放服務；private network = 不對外連通的網路。Private ≠ not Internet-facing。
+Europe／GDPR 是否代表一定要 Private Cloud？	No。Public cloud 也可透過 EU region、data residency、encryption、sovereignty controls、合約保障達成合規。
+CCSP 題目在什麼條件下才傾向 Private Cloud？	題幹同時暗示 maximum control、dedicated infrastructure、isolation、organizational exclusivity、strict governance 時。只看到「歐洲」或「GDPR」不夠。
+Sandbox 是 service model 嗎？	No。Sandbox 是 isolation pattern（隔離的測試環境），可建在 IaaS、PaaS、containers、K8s namespace、serverless、local VM 之上。
+Developer 想要現成的 coding／testing 環境，選哪個 service model？	PaaS。Provider 管 runtime、middleware、OS、虛擬化與硬體；developer 只管 code、application、data。
+Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
+More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。

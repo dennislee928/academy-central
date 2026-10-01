@@ -1,5 +1,5 @@
 Public cloud 的定義是什麼？	開放給一般公眾使用，通常由雲端服務提供者擁有、管理及營運。不要和 private cloud 搞混。
-Private cloud 的定義是什麼？	僅供單一組織專屬使用。
+Private cloud 的定義是什麼？	僅供單一組織專屬使用（dedicated to one organization）。不代表不能 Internet-facing。
 Hybrid cloud 的定義是什麼？	由兩個以上不同雲端基礎架構組成，並以標準化技術連結。
 Community cloud 的定義是什麼？	供具有共同關注事項的特定消費者群體專屬使用。
 Multicloud 一定等於 Hybrid cloud 嗎？	不一定。Multicloud 是使用多家 CSP；Hybrid 強調不同基礎設施被標準化技術綁在一起。
@@ -23,6 +23,13 @@ Production 在 CSP-A、backup 在 CSP-B，recovery 最直接的技術風險是�
 ISC2 兩個答案都合理時怎麼選？	選最直接解決題目所問 business／security objective 的答案，不要總選範圍最大的風險名詞。
 組織把工作放到雲端後，誰仍通常保有 accountability？	Organization／data owner／controller。Responsibility 可委外，accountability 通常不消失。
 評估 CSP 時，除了 CSP 本身安全態勢還要看什麼？	它所依賴的 third parties／subprocessors／supply chain。CSP secure ≠ 整條服務鏈 secure。
+Private Cloud 和 Private Network 差在哪？	Private cloud = 基礎架構專屬於一個組織，可以對外開放服務；private network = 不對外連通的網路。Private ≠ not Internet-facing。
+Europe／GDPR 是否代表一定要 Private Cloud？	No。Public cloud 也可透過 EU region、data residency、encryption、sovereignty controls、合約保障達成合規。
+CCSP 題目在什麼條件下才傾向 Private Cloud？	題幹同時暗示 maximum control、dedicated infrastructure、isolation、organizational exclusivity、strict governance 時。只看到「歐洲」或「GDPR」不夠。
+Sandbox 是 service model 嗎？	No。Sandbox 是 isolation pattern（隔離的測試環境），可建在 IaaS、PaaS、containers、K8s namespace、serverless、local VM 之上。
+Developer 想要現成的 coding／testing 環境，選哪個 service model？	PaaS。Provider 管 runtime、middleware、OS、虛擬化與硬體；developer 只管 code、application、data。
+Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
+More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -37,7 +44,7 @@ DRM 與 Enterprise DRM／IRM 的關係？	DRM 是防止未授權複製的廣義�
 DLP 一定要裝在 client 上嗎？	不一定。可位於 endpoint、network 或 cloud／SaaS／CASB。不要背「egress monitoring 一定有 client agent」。
 Content-based discovery 較接近哪類控制？	Egress monitoring／DLP 類方案，不是 DRM。DRM 管使用權，不管內容發現。
 DLP 能不能當合約仲裁或 HR 評估工具？	不能。DLP 是 data-centric control：識別、分類比對、監控、告警／阻擋。
-VM 看到邏輯磁碟但實體不一定靠近 compute node，通常是哪種儲存？	Volume／Block storage。不要選 CDN。
+VM 看到邏輯磁碟但實體不一定靠近 compute node，通常是哪種儲存？	Volume／Block storage：virtual block device presented like a physical disk。不要選 CDN。
 Object storage 的特徵是什麼？	Object + metadata + identifier，通常經 API 存取。
 CDN 的核心目的是什麼？	把內容快取／派發到靠近使用者處，追求 delivery／performance，不是通用附加儲存區。
 IaaS／PaaS／SaaS 典型儲存對應？	IaaS → Volume／Object；PaaS → Databases；SaaS 常搭配 CDN 派發靜態內容。
@@ -113,6 +120,15 @@ CCSP 教材慣例下，object storage 通常指什麼？	以物件形式存放�
 考題出現哪些字眼時該選 object storage？哪些字眼選 volume storage？	file、hierarchy、metadata 選 object；attached drive、block 選 volume。（來源 Domain Tutor／2.2）
 M002 關於 object 與 hierarchy，題庫說法與技術說法各是什麼？應如何標記？	題庫說法：hierarchy／filesystem 敘述常對應 object（file tree）。技術說法：object 多為 flat namespace；有目錄階層的通常是 volume 或 file storage。兩者都標「待對照 OSG／CBK 確認」；關鍵字規則為 Unresolved／Requires Verification，M002 本身仍為 Disputed。（來源 mistake_log／群組 9/26）
 為什麼不能把『出現 hierarchy 就選 object』當絕對規則？	Tutor 已撤回該絕對說法。題庫常見寫法與技術實況不一致，且 ISC2 考試採用哪種描述尚未查證。（來源群組 9/26 carryover）
+Block／File／Object 三種儲存的 looks like 與 access 各是什麼？	Block／Volume = 像 disk，走 block device；File = 像 folder／share，走 NFS／SMB；Object = object + metadata，走 API／HTTP。
+Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答「資源與資料如何被抽象／轉形」；Multitenancy 回答「誰共用基礎架構」。
+Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。
+Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leakage、shared resource 爭用。
+雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
+「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。它本身不是 egress monitoring 的障礙。
+Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
+SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
+3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
 高架地板（raised flooring）的設計目的是什麼？	作為空調通風管道（air plenum）與佈線通道。不是避難所或儲藏室。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
@@ -139,7 +155,7 @@ Enhanced authentication 為什麼不該用 variable keystrokes？	每次擊鍵�
 Type 1 hypervisor 的關鍵特徵？	直接跑在硬體上（bare metal），不是裝在一般宿主 OS 裡的 Type 2。
 Live migration 的維運用意？	把 workload 移到其他節點，使主機可進入 maintenance 而不中斷服務。
 Management plane 為什麼要隔離？	它能控制整個雲環境；被攻破等於控制面失守，應與 production 資料面分離。
-Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣。亂放東西會破壞氣流設計。
+Hot aisle／cold aisle 目的？	組織氣流，讓空調有效帶走熱氣並避免熱風回流（hot air recirculation）。亂放東西會破壞氣流設計。
 Clustered host 進入維護前先做什麼？	Drain／migrate workload，確保服務由其他節點承載。
 OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（例如網路分段、傳輸加密、應用識別），不要看到「網路」就一律選同一層。
 第三方／供應鏈對基礎設施的意義？	該 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
@@ -154,6 +170,8 @@ TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.
 mTLS 是什麼？	雙方都出示憑證：server authentication + client certificate authentication。一般公開 HTTPS 未必做 client cert。
 問 TLS fresh shared secret 選什麼？	(EC)DHE。
 問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
+Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
+為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -214,6 +232,15 @@ Patch 責任在共享責任模型裡怎麼想？	誰能改那一層誰就有操�
 Honeypot EXCEPT 題秒選什麼？	Luring attackers。
 問 baseline 必要條件時不要選什麼？	不要選培訓或 HIDS；選 documentation。
 維護完成後還缺哪一步？	Validate 後 return to service，必要時更新 baseline。
+Synthetic monitoring 是什麼？	Scripted simulated transactions（如 Login→Search→Checkout）。可固定 time、location、browser、workflow，因此 controlled、repeatable。
+RUM（Real User Monitoring）觀察什麼？	真實生產環境使用者：real browser、real ISP、real device、actual behavior 與 actual latency。
+Synthetic 與 RUM 一句話怎麼分？	Synthetic asks: Can it work?；RUM asks: How is it actually working for users?
+Synthetic monitoring 為什麼涵蓋面較廣？	可主動測 rare workflows、無人時段、特定區域與 critical endpoints，不必等真實使用者剛好操作。
+DHCP 與 NTP 的邊界？	DHCP 派送網路設定（IP、mask、gateway、DNS），可用 Option 42 告知 NTP server 位址，但本身不執行時間同步，也不協商加密協定。
+Insider threat 的 preventive／detective／administrative 控制各有哪些？	Preventive：screening、least privilege、SoD、job rotation、mandatory vacation、PAM；Detective：logging、SIEM、UEBA、DLP、privileged activity monitoring；Administrative：policy、awareness、sanctions、offboarding。
+「aggressive background checks」這個措辭哪裡有問題？	過強。正確說法是 appropriate／lawful／proportionate personnel screening，人員篩查受勞動與隱私法規限制。
+External perimeter hardening 是主要的 insider control 嗎？	No。Internal segmentation 才直接限制 insider lateral movement；biometric 屬 physical access control，兩者都不是 network perimeter hardening。
+Failback to on-prem 是 cloud HA 的必備元素嗎？	No。取決於 hybrid architecture、組織環境與 DR strategy。HA 關注的是故障時服務仍可用。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證，不是量測流程成熟度。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
@@ -242,6 +269,11 @@ Evidence integrity 常見技術控制？	Hashing、寫保護、雙人保管、�
 把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失。
 SOC 報告能不能當成「已完全合規」的證明？	不能自動等同。要看 Type、期間、範圍與是否涵蓋所關心的控制。
 訴訟保全時 retention 政策怎麼辦？	與本案可能相關的資料停止例行銷毀，即使原本到期。
+NIST RMF 的七個步驟？	Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor。口訣 P-C-S-I-A-A-M。
+NIST RMF 是以 threat 或 cost 為 foundation 嗎？	No。RMF 是 risk-based framework；threat 與 cost 都只是 risk decision 的 input。
+ARO 最直接的 evidence 是什麼？	Historical occurrence data。例如 5 年發生 10 次 → ARO = 2。
+Aggregation 在估算 ARO 時扮演什麼角色？	Calculation／processing technique，不是 evidence source。必須先有 historical observations 才能 aggregate。
+ISO 27001 偏好哪一種技術或部署方式？	沒有偏好。它是 technology-neutral 的 ISMS requirements：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）
