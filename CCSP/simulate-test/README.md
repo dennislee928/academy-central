@@ -16,7 +16,7 @@ simulate-test/
 ├── domain5-operations/                ← D5
 ├── domain6-legal-compliance/          ← D6
 ├── by-test/                           ← 原始測驗講義封存（出處與分數紀錄）
-│   ├── 01 ~ 10-*-weakness-lecture.md
+│   ├── 01 ~ 11-*-weakness-lecture.md
 │   └── learnzapp/01 ~ 05-*-lecture.md
 ├── daily/                             ← 每日整理（時間軸紀錄）
 └── flash card/                        ← Knowt 匯入用閃卡（分域 TSV）
@@ -64,6 +64,7 @@ simulate-test/
 | `by-test/08-d4-drill-1-weakness-lecture.md` | | ✅ | | ✅ | | ✅ |
 | `by-test/09-practice-test-3-weakness-lecture.md` | ✅ | | ✅ | ✅ | ✅ | ✅ |
 | `by-test/10-drill-2026-09-30-weakness-lecture.md` | | ✅ | ✅ | | ✅ | ✅ |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | ✅ | ✅ | ✅ | | ✅ | ✅ |
 | `by-test/learnzapp/01-d3-d4-architecture-and-boundaries-lecture.md` | | | ✅ | ✅ | | |
 | `by-test/learnzapp/02-d5-d6-operations-monitoring-compliance-lecture.md` | | | | | ✅ | ✅ |
 | `by-test/learnzapp/03-d5-operations-and-d2-data-security-lecture.md` | | ✅ | | | ✅ | |
@@ -78,7 +79,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 250 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 282 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度與群組決議紀錄），不計入任何 domain。
 
