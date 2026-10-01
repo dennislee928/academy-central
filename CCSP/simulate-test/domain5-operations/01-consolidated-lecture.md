@@ -20,6 +20,7 @@
 | `by-test/learnzapp/02-...-lecture.md` | §2 維運監控與系統生命週期 | §1.2、§1.3、§1.5 |
 | `by-test/learnzapp/03-...-lecture.md` | 上篇 §1 維運生命週期、§1.5 資料中心三層 | §1.1、§1.4 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §6 responsibility、§7 supply chain、§10 cloud sprawl、§11–12 configuration/patch | §1.3、§1.7、§1.9 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §4 insider threat、D5 §3 Synthetic vs RUM、D5 §6 DHCP、D5 §7 HA | §1.4、§1.5、§1.6 |
 
 ---
 
@@ -43,7 +44,7 @@ Physical              Environmental          Resilience
 └─ facility security  └─ fire suppression    └─ redundant connectivity
 ```
 
-實體與環境細節見 [Domain 3 §1.1](../domain3-infrastructure/01-consolidated-lecture.md)。
+實體與環境細節見 [Domain 3 §1.1](../domain3-infrastructure/01-consolidated-lecture.md)，其中 **Hot／Cold Aisle 的 `Front ↔ Front` / `Rear ↔ Rear` 判斷規則**（來源 `by-test/11` D5 §5）也在該節。
 
 ### 1.2 Baseline、Hardening 與 Configuration Management
 
@@ -120,6 +121,14 @@ Drain / migrate workload
 | **管理平面** | 必須隔離（isolated management network），因為它是最高權限入口 |
 | **多租戶隔離** | 雲端是多租戶環境，isolation 是關鍵控制 |
 
+#### High Availability（`by-test/11` D5 §7）
+
+HA 關注的是 **service remains available despite failures**，常見手段：redundancy、replication、clustering、failover、load balancing。
+
+> **易錯點：failback to on-prem 不是所有 cloud HA 架構的必備元素。** 它是否存在取決於 hybrid architecture、組織環境與 DR strategy——看到選項列出「必須能 failback 回自有機房」時不要反射選它。
+
+BC/DR 的完整指標與 4R 流程見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)。
+
 ### 1.5 監控、日誌與偵測工具
 
 | 主題 | 規則 |
@@ -128,6 +137,38 @@ Drain / migrate workload
 | **SIEM／DLP 調校** | 需要 tuning／learning period，初期 false positive 高是正常現象 |
 | **Egress monitoring 與 classification** | Egress monitoring 依賴 classification／labeling 才知道哪些資料不該外流；classification 從 Create 階段開始 |
 | **加密對監控的影響** | 見 [Domain 3 §1.7](../domain3-infrastructure/01-consolidated-lecture.md) |
+
+#### Synthetic Monitoring vs RUM（`by-test/11` D5 §3）
+
+| | **Synthetic Monitoring** | **RUM（Real User Monitoring）** |
+|---|---|---|
+| 本質 | scripted simulated transactions | 觀察真實生產環境使用者 |
+| 可固定什麼 | time、location、browser、workflow → **controlled／repeatable** | 不可控：real browser、real ISP、real device |
+| 看到什麼 | 流程能不能跑通、特定端點是否健康 | actual user behavior、actual latency、真實體驗 |
+| 涵蓋面 | 可**主動**測 rare workflows、無人時段、特定區域、critical endpoints | 只看得到真實使用者剛好走過的路徑 |
+
+腳本範例：`Login → Search → Checkout`。
+
+**為什麼 synthetic 有 broad coverage？** 因為不必等真實使用者剛好操作，可以主動排程測試少用流程與離峰時段。
+
+```text
+Synthetic asks: Can it work?
+RUM asks:       How is it actually working for users?
+```
+
+#### DHCP vs NTP（`by-test/11` D5 §6）
+
+DHCP 派送的是 **network configuration**：IP address、subnet mask、gateway、DNS 以及各種 option-based 設定。
+
+它可以透過 **Option 42** 告訴 client NTP server 的位址，**但 DHCP 本身不執行時間同步**。
+
+```text
+DHCP distributes network configuration.
+NTP synchronizes clocks.
+DHCP does not negotiate encryption protocols.
+```
+
+與本節第一列併讀：跨系統日誌關聯的先決條件是 **NTP 的時鐘同步**，不是 DHCP 發得出 IP。
 
 #### Honeypot
 
@@ -153,6 +194,37 @@ Drain / migrate workload
 | **Privileged access** | 應為 **just-in-time、temporary、time-bound、least privilege、monitored**，重點不是 granular |
 | **Privilege escalation 的控制** | access control、authentication、monitoring、log analysis、SIEM。**Cryptographic sanitization 是 data remanence 控制，不是 privilege escalation 控制** |
 | **內部威脅控制** | background check、training、skills testing、monitoring。**Perimeter hardening 主要對抗外部威脅** |
+
+#### Insider Threat 控制分類（`by-test/11` D1 §4）
+
+Insider threat 指**已位於某種 trust boundary 內**的對象：employee、contractor、privileged administrator、trusted partner。
+
+| 類別 | 控制 |
+|---|---|
+| **Preventive** | background screening、least privilege、separation of duties、job rotation、mandatory vacation、PAM |
+| **Detective** | logging、SIEM、UEBA、DLP、privileged activity monitoring |
+| **Administrative** | policy、awareness、sanctions、offboarding |
+
+**用語修正：** 題庫的「aggressive background checks」措辭過強。較正確的說法是 **appropriate／lawful／proportionate personnel screening**——不是「越激進越安全」。人員篩查受當地勞動與隱私法規限制。
+
+**為什麼強化周界不是主要的 insider control？** 周界型控制確實能擋住一些內部風險，但名稱與層級要分清：
+
+```text
+Corporate LAN
+     |
+Internal Firewall      ← 這叫 internal segmentation
+     |
+Sensitive Network
+```
+
+- **Internal segmentation firewall** 可以限制 insider lateral movement，但它是內部分段，不是典型的 perimeter device。
+- **Biometric** 屬 **physical access control**，可防未授權實體進入、冒用身分、盜用識別證，但不是 network perimeter hardening。
+
+```text
+Background screening         = preventive personnel control
+Internal segmentation        = limits insider movement
+External perimeter hardening = primarily outsider-focused
+```
 
 ### 1.7 Responsibility、Accountability 與供應鏈
 
@@ -194,7 +266,7 @@ ALE = SLE × ARO
 
 **Exposure Factor（EF）** 是單一事件可能造成的資產損失比例；**威脅媒介類型（type of threat vector）決定破壞機制與損失百分比，因此對 EF 影響最大**。不要把 EF 等同「攻擊目標」或「資產名稱」。
 
-風險處置、質性／量化評估、risk appetite 歸屬的完整整理見 [Domain 6 彙整講義](../domain6-legal-compliance/01-consolidated-lecture.md)。
+風險處置、質性／量化評估、risk appetite 歸屬的完整整理見 [Domain 6 彙整講義](../domain6-legal-compliance/01-consolidated-lecture.md)，其中也包含 **ARO 的 evidence vs calculation 之分**與 **NIST RMF 七步驟**（來源 `by-test/11` D5 §1、§4）。
 
 ### 1.9 Cloud Sprawl
 
@@ -287,6 +359,13 @@ Redundancy = 可用性 / 容錯
 | 25 | SLE = AV × EF；ALE = SLE × ARO；threat vector 類型對 EF 影響最大。 |
 | 26 | Cloud sprawl 還會帶來 software licensing 成本。 |
 | 27 | TLS session key 是 symmetric；TLS trust 來自 PKI certificates。 |
+| 28 | **Synthetic asks: Can it work?；RUM asks: How is it actually working for users?** |
+| 29 | Synthetic 可主動涵蓋 rare workflow 與無人時段；RUM 只看得到真實走過的路徑。 |
+| 30 | DHCP 派送網路設定（可用 Option 42 指 NTP server），但**不執行時間同步**，也不協商加密協定。 |
+| 31 | Insider threat 的 preventive 控制是人員篩查與權限設計，不是強化周界。 |
+| 32 | 正確措辭是 appropriate／lawful／proportionate screening，不是 aggressive background checks。 |
+| 33 | Internal segmentation ≠ perimeter device；biometric 是 physical access control。 |
+| 34 | Failback to on-prem 不是所有 cloud HA 架構的必備元素。 |
 
 ---
 
@@ -307,6 +386,11 @@ Redundancy = 可用性 / 容錯
 | Privilege escalation 控制 | Cryptographic sanitization | 存取與監控 vs 資料殘餘處理 |
 | 內部威脅控制 | Perimeter hardening | 人員與監控 vs 外部邊界 |
 | EF | ARO | 單次損失比例 vs 年度發生頻率 |
+| Synthetic monitoring | RUM | 腳本模擬、可控可重複 vs 真實使用者體驗 |
+| DHCP | NTP | 派送網路設定 vs 同步時鐘 |
+| Internal segmentation | Perimeter hardening | 限制內部橫向移動 vs 對外邊界防護 |
+| Biometric（實體） | Network perimeter | 實體進出控制 vs 網路邊界控制 |
+| HA | DR／failback | 故障時服務不中斷 vs 災後切回原站點 |
 
 ---
 
@@ -338,6 +422,10 @@ Redundancy = 可用性 / 容錯
 8. 為什麼 maintenance mode 不能停 logging？
 9. 跨系統日誌關聯的第一先決條件是什麼？
 10. Honeypot 的哪一項用途會是 EXCEPT 題的答案？
+11. Synthetic monitoring 與 RUM 各回答什麼問題？為什麼 synthetic 的涵蓋面較廣？
+12. DHCP 的 Option 42 做什麼？它等於時間同步嗎？
+13. Insider threat 的 preventive／detective／administrative 控制各舉三項。
+14. 為什麼 internal segmentation firewall 不算 perimeter device？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
