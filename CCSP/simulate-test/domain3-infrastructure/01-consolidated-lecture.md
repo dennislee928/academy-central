@@ -21,6 +21,7 @@
 | `by-test/10-drill-2026-09-30-weakness-lecture.md` | 上篇 A Secure KVM、C GRE vs IPsec、F ASHRAE、G plenum | §1.1、§1.3、§1.4 |
 | `by-test/learnzapp/01-...-lecture.md` | §2 基礎架構與實體邊界 | §1.1、§1.4、§1.6 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 BC/DR + interoperability、§10 cloud sprawl | §1.6 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D5 §5 Hot／Cold Aisle | §1.1 |
 
 ---
 
@@ -42,6 +43,40 @@
 | **Generator 的風險** | 在各項冗餘中，**generators／fuel 對人身安全威脅最大**（燃料、火災、排氣、機電）|
 | **Ionization smoke detector** | 使用放射性物質 |
 | **Emergency egress** | 是 safety control，**不是** redundancy threat |
+
+#### Hot Aisle / Cold Aisle（來源：`by-test/11` D5 §5）
+
+典型 server 氣流是**前進後出**：
+
+```text
+FRONT              REAR
+
+Cold air
+   ↓
+[ SERVER ]
+          ↓
+       Hot air
+```
+
+因此機櫃必須成對相向擺放：
+
+| 走道 | 擺法 | 走道裡是什麼 |
+|---|---|---|
+| **Cold aisle** | front（inlet）面對 front | 空調送出的冷風，供伺服器吸入 |
+| **Hot aisle** | rear（exhaust）面對 rear | 伺服器排出的熱風，由空調回風帶走 |
+
+```text
+Rack FRONT → COLD AISLE ← FRONT Rack
+Rack REAR  → HOT AISLE  ← REAR  Rack
+```
+
+**易錯擺法：`Exhaust → Inlet`**——一排的排氣直接吹進下一排的進氣，造成 **hot air recirculation**，伺服器吸入的是熱風，冷卻效率崩壞。
+
+```text
+Front ↔ Front = Cold aisle
+Back  ↔ Back  = Hot aisle
+Never Hot → Cold
+```
 
 #### Uptime Institute Tier I–IV
 
@@ -297,6 +332,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 32 | 產品特定安全組態以 vendor guidance 優先。 |
 | 33 | Business requirements 驅動安全控制。 |
 | 34 | Secure KVM 絕不含 keystroke logging。 |
+| 35 | **Front ↔ Front = Cold aisle；Rear ↔ Rear = Hot aisle。** |
+| 36 | 絕不讓 exhaust 吹進 inlet，那是 hot air recirculation。 |
 
 ---
 
@@ -318,6 +355,7 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Tier III | Tier IV | 維護不停機 vs 無預警故障也不停機 |
 | Multiple carriers | Diverse routing | 多家電信 vs 實體路徑分離 |
 | Tabletop 演練 | Full test | 最安全 vs 高營運中斷風險 |
+| Hot aisle | Cold aisle | 機櫃後方排氣相對 vs 機櫃前方進氣相對 |
 
 ---
 
@@ -360,3 +398,4 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - 4R 的正確順序是什麼？哪兩個最常被顛倒？
 - 多電信商之外還需要什麼才能抵抗實體線路中斷？
 - 哪一項冗餘設施帶來最大的人身安全風險？
+- Cold aisle 是哪一面相對？為什麼 `exhaust → inlet` 的擺法是錯的？
