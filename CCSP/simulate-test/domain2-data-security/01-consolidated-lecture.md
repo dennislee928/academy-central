@@ -24,6 +24,7 @@
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §1–§5 | §1.1、§1.2、§1.3、§1.6、§1.9 |
 | `by-test/learnzapp/05-tls-pki-cryptography-lecture.md` | 密碼學原理、金鑰、簽章、雜湊、PKI／憑證 | §1.7 |
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `2.2` 儲存型態、`2.4` dashboard | §1.3、§2.10 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D2 §1 volume、§2 virtualization/multitenancy、§3 egress 障礙、§4 TPI 系列 | §1.3、§1.10、§1.11、§2.11 |
 
 ---
 
@@ -95,6 +96,29 @@ DLP 可以   → 協助 evidence collection / eDiscovery
 DLP 不能   → 提供法庭 testimony、進行刑事起訴、直接執行 IP 權利
 ```
 
+**Egress monitoring 在雲端的實際障礙（`by-test/11` D2 §3）：**
+
+```text
+Cloud workload
+      |
+      | egress
+      v
+Internet / external service
+```
+
+監控用途：exfiltration、C2、malicious upload、DLP、unauthorized outbound access。
+
+| 障礙 | 說明 |
+|---|---|
+| limited visibility | 看不到底層封包或完整流量 |
+| limited privileges | 客戶在共享環境中權限有限 |
+| dynamic workloads | 執行個體會自動增減 |
+| encryption | 內容被加密後無法檢查（見 §1.4 末段） |
+| changing topology | 網路拓樸持續變動 |
+| performance overhead | 全流量檢查的成本 |
+
+> **EXCEPT 陷阱：redundancy／resilience 本身不是 egress monitoring 的主要障礙。**
+
 **Discovery 的三種分析型態（`by-test/10` 下篇最完整）：**
 
 | 分析型態 | 訊號來源 | 典型特徵 |
@@ -112,7 +136,7 @@ DLP 不能   → 提供法庭 testimony、進行刑事起訴、直接執行 IP �
 
 | 類型 | 本質 | 不是什麼 |
 |---|---|---|
-| **Volume／Block** | 對 VM／主機呈現為 disk／volume；邏輯掛載，實體位置可遠離 compute node | 不是 CDN |
+| **Volume／Block** | **virtual block device presented like a physical disk**；邏輯掛載，實體位置可遠離 compute node | 不是 CDN |
 | **Object** | object + metadata + identifier，多經 API 存取 | 不是區塊磁碟 |
 | **File** | 共享 filesystem | |
 | **CDN** | 把內容快取／派發到靠近使用者的位置 | 不是通用附加儲存區 |
@@ -127,6 +151,30 @@ DLP 不能   → 提供法庭 testimony、進行刑事起訴、直接執行 IP �
 **題幹若描述「配置給使用者的邏輯儲存區，實體上不一定接在 compute node」，答案通常是 Volume storage。**
 
 **PaaS 儲存：** 常為 provider 管理、customer application 存取的 database storage。
+
+#### Block / File / Object 三者對照（`by-test/11` D2 §1）
+
+| Type | Looks like | Access |
+|---|---|---|
+| **Block／Volume** | Disk | block device |
+| **File** | Folder／share | NFS／SMB |
+| **Object** | Object + metadata | API／HTTP |
+
+Volume 在 guest OS 內的呈現：
+
+```text
+Physical storage pool
+        |
+Virtual volume
+        |
+      VM
+        |
+Guest OS sees:  /dev/sda   E:   disk
+```
+
+```text
+Volume = virtual block device behaving like a disk
+```
 
 ### 1.4 加密層級與金鑰管理
 
@@ -321,6 +369,66 @@ PCI DSS 是 **industry security standard**，不是政府 statute／regulation �
 
 > 智慧財產權（copyright／patent／trademark／trade secret）雖在部分測驗講義中被歸到 D2，完整整理見 [Domain 6 彙整講義](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
+### 1.10 Virtualization vs Multitenancy
+
+兩者常被混用，但回答的是**不同問題**。
+
+| | **Virtualization** | **Multitenancy** |
+|---|---|---|
+| 回答什麼 | How resources／data are **abstracted** | **Who shares** infrastructure |
+| 本質 | abstraction／transformation | shared infrastructure |
+| 主要影響 | 資料改變 representation／container，**classification 必須跟著資料走** | isolation、co-residency、leakage、shared resource |
+
+**Virtualization 造成的資料轉形鏈：**
+
+```text
+file → VM disk → snapshot → image → backup → object
+```
+
+每一次轉形都換了容器與呈現方式，但敏感度不變——所以 classification 與對應控制必須一路跟著。
+
+**Multitenancy 的結構：**
+
+```text
+Host
+├ Tenant A
+├ Tenant B
+└ Tenant C
+```
+
+```text
+Virtualization = abstraction / transformation
+Multitenancy   = shared infrastructure
+```
+
+### 1.11 Two-Person Integrity 與相關控制
+
+**TPI（Two-Person Integrity）：** 敏感操作不能由單一人員完成，至少兩位 authorized individuals 共同參與。
+
+```text
+Admin A ----\
+             > HSM key operation
+Admin B ----/
+```
+
+四個容易混用的控制必須一次切清：
+
+| 控制 | 機制 | 範例 |
+|---|---|---|
+| **Separation of Duties（SoD）** | 不同 duties 給不同人 | `Alice requests → Bob approves → Carol executes` |
+| **TPI／Dual Control** | **同一**敏感操作需要兩人 | `Alice + Bob → key export` |
+| **Split Knowledge** | 每個人只知道 secret 的一部分 | `Alice → share A`；`Bob → share B`；`A + B → complete key` |
+| **M-of-N** | 門檻式控制 | 3-of-5 custodians required |
+
+```text
+SoD                = divide responsibilities
+TPI / Dual Control = two people required
+Split Knowledge    = nobody knows full secret
+M-of-N             = threshold control
+```
+
+> 對照：`by-test/06` P0-2 的金鑰管理題中，**separation of duties** 是「金鑰管理與被加密資料分離」的正解標籤；two-person integrity 則是「關鍵動作需兩人」的標籤。兩者不可互換（見 §1.4 的誤選對照表）。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -351,6 +459,8 @@ PCI DSS 是 **industry security standard**，不是政府 statute／regulation �
 | **Access control** | **不支援** |
 
 > Egress monitoring observes outbound flow; it does not grant or deny access。
+
+**另一個 EXCEPT 變體（`by-test/11` D2 §3）：** 問「雲端 egress monitoring 的主要障礙，except」時，正解是 **redundancy／resilience**——它不是監控障礙。其餘六項障礙見 §1.2。
 
 ### 2.5 Classification 的 lifecycle phase（`by-test/02` Q15、`lz04` Q1）
 
@@ -428,6 +538,12 @@ BEST    = 選最完整／最適當的答案
 | 28 | HMAC 因雙方共享 secret，通常不提供真正的 non-repudiation。 |
 | 29 | PAN 可在保護下儲存；**CVV／CVC 授權後不得保留**。 |
 | 30 | 看到 EXCEPT／NOT／LEAST／BEST／PRIMARY 先停兩秒，再用刪去法。 |
+| 31 | Volume = virtual block device behaving like a disk；Block 看 disk、File 看 share、Object 看 API。 |
+| 32 | Virtualization 回答「如何被抽象」；Multitenancy 回答「誰共用基礎架構」。 |
+| 33 | 資料經 file→snapshot→image→backup 轉形後，classification 必須跟著走。 |
+| 34 | Multitenancy 的核心風險是 isolation、co-residency、leakage、shared resource。 |
+| 35 | 雲端 egress monitoring 的障礙是可視性／權限／動態負載／加密／拓樸／效能，**不是** redundancy。 |
+| 36 | SoD 分責任；TPI／Dual Control 同一動作要兩人；Split Knowledge 沒人知道完整 secret；M-of-N 是門檻。 |
 
 ---
 
@@ -453,6 +569,11 @@ BEST    = 選最完整／最適當的答案
 | Digital signature | HMAC | 非對稱、可不可否認 vs 對稱、雙方共享 |
 | Hash | Encryption | 單向偵測修改 vs 可逆機密性 |
 | DRM | Bit splitting | 權限管理 vs 資料分散儲存 |
+| Virtualization | Multitenancy | 抽象與轉形 vs 共用基礎架構 |
+| SoD | TPI／Dual Control | 不同人做不同事 vs 同一件事要兩人 |
+| TPI | Split Knowledge | 多人共同執行 vs 每人只有部分 secret |
+| Split Knowledge | M-of-N | 需全部拼齊 vs 達到門檻即可 |
+| Block storage | File storage | block device vs NFS／SMB 共享 |
 
 ---
 
