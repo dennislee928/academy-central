@@ -11,7 +11,7 @@ simulate-test/
 ├── README.md                          ← 本檔：歸類索引與維護規則
 ├── domain1-cloud-concepts/            ← D1 彙整講義（複習主體）
 ├── domain2-data-security/             ← D2
-├── domain3-infrastructure/            ← D3
+├── domain3-infrastructure/            ← D3（另含 02-airflow-diagrams.md 圖解補充）
 ├── domain4-application/               ← D4
 ├── domain5-operations/                ← D5
 ├── domain6-legal-compliance/          ← D6
@@ -34,6 +34,8 @@ simulate-test/
 | **D4** Cloud Application Security | 16% | [`domain4-application/01-consolidated-lecture.md`](domain4-application/01-consolidated-lecture.md) | ISC2 最佳解邏輯、Secure SDLC、應用測試、SOAP/REST/API、身分與 federation、雲端應用風險 |
 | **D5** Cloud Security Operations | 17% | [`domain5-operations/01-consolidated-lecture.md`](domain5-operations/01-consolidated-lecture.md) | 維運生命週期、baseline 與組態管理、patch management、maintenance mode、日誌與監控、incident、responsibility vs accountability、cloud sprawl |
 | **D6** Legal, Risk and Compliance | 13% | [`domain6-legal-compliance/01-consolidated-lecture.md`](domain6-legal-compliance/01-consolidated-lecture.md) | 法規與標準、SOC 報告、OECD 原則、隱私角色與跨境傳輸、法律流程與鑑識、合約治理、IP、風險管理 |
+
+**域內補充檔：** [`domain3-infrastructure/02-airflow-diagrams.md`](domain3-infrastructure/02-airflow-diagrams.md) — 資料中心氣流的 Mermaid 圖解（server 氣流、cold／hot aisle 配置、錯誤配置、熱風回流後果鏈、完整機列配置）。文字版規則在 D3 §1.1。
 
 每份彙整講義的固定骨架：
 
@@ -80,7 +82,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 297 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 299 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度與群組決議紀錄），不計入任何 domain。
 
@@ -95,6 +97,8 @@ simulate-test/
 3. 更新該 domain 彙整講義的 **§0 來源對照表**（來源檔 · 原章節 · 併入位置）。
 4. 更新本檔的**來源 → Domain 對應總表**。
 5. 原檔保持完整，不刪節——分數、進步判定與補強排程只留在 `by-test/`，不併入彙整講義。
+
+> **例外：** 若新檔不是測驗紀錄，而是**單一 domain 的主題教材**（例如圖解、速查表），放進該 domain 資料夾並沿用 `0N-<topic>.md` 編號，不放 `by-test/`。文字版規則仍要併入該 domain 的 `01-consolidated-lecture.md`，補充檔只保留視覺化或延伸內容，避免兩邊重複。
 
 ### 新增閃卡時
 
