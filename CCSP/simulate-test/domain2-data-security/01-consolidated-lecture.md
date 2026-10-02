@@ -25,6 +25,7 @@
 | `by-test/learnzapp/05-tls-pki-cryptography-lecture.md` | 密碼學原理、金鑰、簽章、雜湊、PKI／憑證 | §1.7 |
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `2.2` 儲存型態、`2.4` dashboard | §1.3、§2.10 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D2 §1 volume、§2 virtualization/multitenancy、§3 egress 障礙、§4 TPI 系列 | §1.3、§1.10、§1.11、§2.11 |
+| `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §13 encryption vs mirroring、§12 DH／OOB（復現） | §1.8、§1.7 |
 
 ---
 
@@ -300,6 +301,8 @@ PCI DSS 場景看到 tokenization → 降低 cardholder data exposure / complian
 
 #### Key agreement vs key distribution
 
+> **復現標記：** DH vs OOB 已在 `by-test/10` 上篇 B 與 `by-test/12` §12 連續出現，屬高頻考點。
+
 | | **DH／ECDHE** | **OOB** |
 |---|---|---|
 | 類型 | Key **agreement** | Key **distribution／provisioning** |
@@ -357,6 +360,31 @@ Purpose = secure communication and trust using public key cryptography
 | 實體埋深等物理條件 | **不是**核心資安考量 |
 
 > **Patch rule：** Archive value depends on future recoverability. Wrong format can equal data loss.
+
+#### Encryption vs Mirroring：備份／封存的控制選擇（`by-test/10` 上篇 E、`by-test/12` §13）
+
+題幹出現 `e-commerce + backup／archive` 時的推理鏈：
+
+```text
+Payment-card data
+→ Stored backup
+→ Data at rest
+→ Confidentiality
+→ Encryption
+```
+
+| 控制 | 回答什麼問題 |
+|---|---|
+| **Encryption** | Confidentiality of recoverable stored data |
+| **Mirroring** | **Availability／aggressive RPO**（持續複製） |
+| **Hashing** | One-way integrity／non-recoverable representation |
+
+```text
+Need recoverable protected backup?            → Encryption
+Need near-zero RPO / continuous replication?  → Mirroring
+```
+
+**易錯點：** 看到「備份」就選 mirroring。Backup 不等於 continuous mirroring——mirroring 是由 RPO／availability 需求驅動的；若題幹強調的是**可回復且受保護的敏感資料**，正解是 encryption。
 
 ### 1.9 PCI DSS 資料處理
 
@@ -544,6 +572,8 @@ BEST    = 選最完整／最適當的答案
 | 34 | Multitenancy 的核心風險是 isolation、co-residency、leakage、shared resource。 |
 | 35 | 雲端 egress monitoring 的障礙是可視性／權限／動態負載／加密／拓樸／效能，**不是** redundancy。 |
 | 36 | SoD 分責任；TPI／Dual Control 同一動作要兩人；Split Knowledge 沒人知道完整 secret；M-of-N 是門檻。 |
+| 37 | **可回復且受保護的敏感備份 → Encryption；近零 RPO／持續複製 → Mirroring。** |
+| 38 | Backup 不等於 continuous mirroring；mirroring 由 RPO／availability 驅動。 |
 
 ---
 
@@ -574,6 +604,7 @@ BEST    = 選最完整／最適當的答案
 | TPI | Split Knowledge | 多人共同執行 vs 每人只有部分 secret |
 | Split Knowledge | M-of-N | 需全部拼齊 vs 達到門檻即可 |
 | Block storage | File storage | block device vs NFS／SMB 共享 |
+| Encryption（備份） | Mirroring | 機密性 vs 可用性與 RPO |
 
 ---
 
