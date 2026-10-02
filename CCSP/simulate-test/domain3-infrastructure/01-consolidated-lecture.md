@@ -23,6 +23,7 @@
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 BC/DR + interoperability、§10 cloud sprawl | §1.6 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D5 §5 Hot／Cold Aisle | §1.1 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §1 management plane、§8 live migration、§11 raised floor、§9／§10 GRE／KVM（復現） | §1.1、§1.3、§1.4 |
+| `02-airflow-diagrams.md`（原 `CCSP_D5_Data_Center_Airflow_Mermaid.md`） | §5 hot-air recirculation 後果鏈 | §1.1 |
 
 ---
 
@@ -95,6 +96,23 @@ Front ↔ Front = Cold aisle
 Back  ↔ Back  = Hot aisle
 Never Hot → Cold
 ```
+
+**Hot-air recirculation 的完整後果鏈**（來源：`02-airflow-diagrams.md` §5）：
+
+```text
+熱氣被另一台 server 吸入
+   → Inlet temperature ↑
+   → Fan speed ↑
+   → Cooling load ↑
+   → Energy cost ↑
+   → Thermal risk ↑
+```
+
+考試常見的不完整選項只答「溫度升高」。完整後果同時涉及**能耗成本**與**過熱風險**——這也是氣流管理同屬 availability 與成本議題的理由。
+
+> **視覺化：** 五張 Mermaid 流程圖（server 氣流、cold／hot aisle 配置、錯誤配置、後果鏈、完整機列配置）與俯視示意見 [02-airflow-diagrams.md](02-airflow-diagrams.md)。
+
+**復現標記：** hot／cold aisle 已在 `by-test/11` D5 §5、`by-test/12` §11 與 `02-airflow-diagrams.md` 連續三次出現，屬高頻考點。
 
 #### Uptime Institute Tier I–IV
 
@@ -389,6 +407,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 40 | **VMware Tools ≠ virtualization management plane**；前者在 guest OS，後者管 hypervisor／VM／host。 |
 | 41 | Management plane 必須與 workload 及公開網路隔離；手段不限 VLAN（subnet／VRF／admin zone 皆可）。 |
 | 42 | **Live migration moves a running VM; snapshot does not。** |
+| 43 | Server 氣流固定是 **Front／Inlet → Server → Rear／Exhaust**。 |
+| 44 | Hot-air recirculation 的後果鏈：inlet temp ↑ → fan speed ↑ → cooling load ↑ → energy cost ↑ → thermal risk ↑。 |
 
 ---
 
@@ -459,3 +479,4 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - Raised floor 的兩個用途是什麼？為什麼「增加結構強度」是錯的？
 - VMware Tools 與 virtualization management plane 差在哪？
 - Host 進維護時搬移 VM 的正確機制是什麼？為什麼不是 snapshot？
+- Hot-air recirculation 除了溫度升高，還會連帶造成哪四項後果？
