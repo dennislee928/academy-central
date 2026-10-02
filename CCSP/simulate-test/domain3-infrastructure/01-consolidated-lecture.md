@@ -22,6 +22,7 @@
 | `by-test/learnzapp/01-...-lecture.md` | §2 基礎架構與實體邊界 | §1.1、§1.4、§1.6 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 BC/DR + interoperability、§10 cloud sprawl | §1.6 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D5 §5 Hot／Cold Aisle | §1.1 |
+| `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §1 management plane、§8 live migration、§11 raised floor、§9／§10 GRE／KVM（復現） | §1.1、§1.3、§1.4 |
 
 ---
 
@@ -31,9 +32,10 @@
 
 | 主題 | 規則 |
 |---|---|
-| **Raised flooring** | 設計目的**只有兩項**：空調送／回風管道（air plenum）、纜線管路通道。不是避難所或儲藏空間 |
+| **Raised flooring** | 設計目的**只有兩項**：空調送／回風管道（air plenum）、纜線與管路通道（power／network cable／fiber／piping）。不是避難所、不是儲藏空間，**也不是為了增加結構強度** |
 | 地板下線材凌亂 | 最大危害是**阻礙氣流、降低 HVAC 效率**，不是防跌倒 |
 | **Underfloor plenum 開孔** | 用 grommet／tight gasket 封住 cable opening，避免冷空氣不受控外漏 |
+| **Raised floor 的承重** | raised floor **本身**必須被設計成能承受 rack 重量；它不是結構補強手段，而是需要被結構設計照顧的對象 |
 | **ASHRAE temperature** | Server inlet 應維持在合理 equipment operating range；93°F（約 34°C）明顯過高 |
 | **ASHRAE humidity** | 維持濕度標準可降低 static discharge 風險 |
 | **UPS** | 不只供電，也做 **line conditioning**；續航要能撐到交易完成／接上發電機 |
@@ -43,6 +45,22 @@
 | **Generator 的風險** | 在各項冗餘中，**generators／fuel 對人身安全威脅最大**（燃料、火災、排氣、機電）|
 | **Ionization smoke detector** | 使用放射性物質 |
 | **Emergency egress** | 是 safety control，**不是** redundancy threat |
+
+#### 冷風路徑（來源：`by-test/12` §11）
+
+```text
+CRAC/CRAH
+  ↓
+Underfloor plenum
+  ↓
+Perforated tile
+  ↓
+Cold aisle
+  ↓
+Server inlet
+```
+
+題目問 `Raised floor serves what purposes?` → **cold air feed ＋ place to run wires／cables**，不是 `increases structural soundness`。
 
 #### Hot Aisle / Cold Aisle（來源：`by-test/11` D5 §5）
 
@@ -124,6 +142,8 @@ SDN control plane            = 定義邏輯網路，獨立於實體拓樸
 
 #### GRE vs IPsec
 
+> **復現標記：** 已在 `by-test/10` 上篇 C 與 `by-test/12` §9 連續出現，屬 recurring terminology。
+
 ```text
 GRE   = Tunnel（Generic Routing Encapsulation，只做封裝，不提供 encryption）
 IPsec = Secure（保護 IP 通訊，有 transport 與 tunnel 兩種 mode）
@@ -140,13 +160,42 @@ GRE over IPsec = Tunnel + Security
 | **Hypervisor** | 雲端底層攔截並協調硬體資源呼叫（orchestrating resource calls）的是 hypervisor，不是系統管理員 |
 | **Type 1 / Type 2** | 見 [Domain 1 §1.6](../domain1-cloud-concepts/01-consolidated-lecture.md) |
 | **Containerization** | **不模擬硬體**，共用 kernel |
-| **Live migration** | Host 維護期間搬移 VM 的正式名稱 |
-| **管理平面隔離** | Virtualization management tools 必須放在隔離的管理網路 |
+| **Live migration** | Host 維護期間搬移 VM 的正式名稱；要 **move VM as a live instance**，不是存 snapshot image |
+| **Snapshot** | point-in-time state／rollback／reference——**不是**維護期間搬移工作負載的手段 |
+| **管理平面隔離** | Virtualization management tools 必須放在隔離的管理網路，詳見下方 |
 | **VM configuration management tool** | 必須具備 **log generation 與 audit trail** |
 | **Snapshot／dormant VM** | 收不到 patch，是常見盲點 |
 | **Cloud sprawl** | 雲端最常見的無意行為後果是忘記關 VM，造成 resource sprawl，不一定是 disaster |
 
+#### Virtualization Management Plane（來源：`by-test/12` §1）
+
+**Virtualization management toolset 指的是管理 hypervisor／VM／host 的介面，不是裝在 guest OS 裡的工具。**
+
+| | **Management Plane** | **VMware Tools（guest agent）** |
+|---|---|---|
+| 位置 | 管理 hypervisor／VM／host | 裝在 **Guest OS** 內 |
+| 內容 | ESXi management interface、vCenter、hypervisor management API、orchestration／admin plane | drivers、time sync、graceful shutdown、guest integration |
+
+```text
+VMware Tools   → 裝在 Guest OS
+Management Plane → 管 Hypervisor / VM / Host（vCenter / ESXi mgmt / APIs）
+```
+
+**安全原則：**
+
+- 與 workload network 分離
+- 避免 public-facing
+- 透過 dedicated management VLAN／subnet／VRF／admin zone
+- 僅允許管理員與管理工具存取
+- MFA／bastion／logging
+
+> **考試版：** Management plane should be isolated／segmented from production and public networks.
+>
+> **不要死背「一定只能用 VLAN」**——subnet、VRF、admin zone 都是合法的隔離手段。
+
 #### Secure KVM
+
+> **復現標記：** 已在 `by-test/10` 上篇 A 與 `by-test/12` §10 連續出現。
 
 Secure KVM 要避免的是**不同 security domains 透過 peripherals 發生 cross-domain leakage**。
 
@@ -334,6 +383,12 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 34 | Secure KVM 絕不含 keystroke logging。 |
 | 35 | **Front ↔ Front = Cold aisle；Rear ↔ Rear = Hot aisle。** |
 | 36 | 絕不讓 exhaust 吹進 inlet，那是 hot air recirculation。 |
+| 37 | Raised floor = cooling plenum ＋ cabling／infrastructure space；**不是**增加結構強度。 |
+| 38 | Raised floor 本身必須被設計成能承受 rack 重量。 |
+| 39 | 冷風路徑：CRAC/CRAH → underfloor plenum → perforated tile → cold aisle → server inlet。 |
+| 40 | **VMware Tools ≠ virtualization management plane**；前者在 guest OS，後者管 hypervisor／VM／host。 |
+| 41 | Management plane 必須與 workload 及公開網路隔離；手段不限 VLAN（subnet／VRF／admin zone 皆可）。 |
+| 42 | **Live migration moves a running VM; snapshot does not。** |
 
 ---
 
@@ -356,6 +411,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Multiple carriers | Diverse routing | 多家電信 vs 實體路徑分離 |
 | Tabletop 演練 | Full test | 最安全 vs 高營運中斷風險 |
 | Hot aisle | Cold aisle | 機櫃後方排氣相對 vs 機櫃前方進氣相對 |
+| Management plane | VMware Tools／guest agent | 管 hypervisor／VM／host vs 裝在 guest OS 內 |
+| Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
 
 ---
 
@@ -399,3 +456,6 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - 多電信商之外還需要什麼才能抵抗實體線路中斷？
 - 哪一項冗餘設施帶來最大的人身安全風險？
 - Cold aisle 是哪一面相對？為什麼 `exhaust → inlet` 的擺法是錯的？
+- Raised floor 的兩個用途是什麼？為什麼「增加結構強度」是錯的？
+- VMware Tools 與 virtualization management plane 差在哪？
+- Host 進維護時搬移 VM 的正確機制是什麼？為什麼不是 snapshot？
