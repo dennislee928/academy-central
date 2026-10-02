@@ -47,3 +47,5 @@ Virtualization management toolset 指的是什麼？	ESXi management interface�
 VMware Tools 是 virtualization management plane 嗎？	No。VMware Tools 裝在 Guest OS 內，提供 drivers、time sync、graceful shutdown、guest integration。Management plane 管的是 hypervisor／VM／host。
 Management plane 的隔離原則有哪些？	與 workload network 分離、避免 public-facing、用 dedicated management VLAN／subnet／VRF／admin zone、僅允許管理員與管理工具、搭配 MFA／bastion／logging。不要死背「只能用 VLAN」。
 Host 要進維護時，VM 應該怎麼搬？	Live migration：move VM as a live instance。不是存 snapshot image——snapshot 的用途是 point-in-time state／rollback／reference。
+Server 的一般 airflow 方向是什麼？	Front／Inlet（吸入冷空氣）→ Server → Rear／Exhaust（排出熱空氣）。記法：Front = Inlet = Cold；Rear = Exhaust = Hot。
+Hot-air recirculation 會連帶造成哪些後果？	熱氣被另一台 server 吸入 → inlet temperature ↑ → fan speed ↑ → cooling load ↑ → energy cost ↑ → thermal risk ↑。只答「溫度升高」不完整。
