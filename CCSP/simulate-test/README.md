@@ -16,7 +16,7 @@ simulate-test/
 ├── domain5-operations/                ← D5
 ├── domain6-legal-compliance/          ← D6
 ├── by-test/                           ← 原始測驗講義封存（出處與分數紀錄）
-│   ├── 01 ~ 11-*-weakness-lecture.md
+│   ├── 01 ~ 12-*-weakness-lecture.md
 │   └── learnzapp/01 ~ 05-*-lecture.md
 ├── daily/                             ← 每日整理（時間軸紀錄）
 └── flash card/                        ← Knowt 匯入用閃卡（分域 TSV）
@@ -65,6 +65,7 @@ simulate-test/
 | `by-test/09-practice-test-3-weakness-lecture.md` | ✅ | | ✅ | ✅ | ✅ | ✅ |
 | `by-test/10-drill-2026-09-30-weakness-lecture.md` | | ✅ | ✅ | | ✅ | ✅ |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | ✅ | ✅ | ✅ | | ✅ | ✅ |
+| `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | | ✅ | ✅ | | ✅ | |
 | `by-test/learnzapp/01-d3-d4-architecture-and-boundaries-lecture.md` | | | ✅ | ✅ | | |
 | `by-test/learnzapp/02-d5-d6-operations-monitoring-compliance-lecture.md` | | | | | ✅ | ✅ |
 | `by-test/learnzapp/03-d5-operations-and-d2-data-security-lecture.md` | | ✅ | | | ✅ | |
@@ -79,7 +80,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 282 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 297 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度與群組決議紀錄），不計入任何 domain。
 
@@ -101,6 +102,34 @@ simulate-test/
 2. 非 domain 知識（進度、決議）寫進 `knowt-00-study-progress.tsv`。
 3. 重建 `knowt-import-all.tsv`：依 d1 → d6 → study-progress 順序串接。
 4. 更新 `00-KNOWT導入說明.md` 的張數表。
+
+### 錯題複習與 argue 流程
+
+來源：`by-test/09` §10 Review Question Guidelines、`by-test/12` 附錄。
+
+對已具工程實務背景的學習者，以 argue（對題庫敘述提出質疑並辯證）方式處理錯題，效果優於單純背答案，因為它涵蓋三種有效學習行為：
+
+| 行為 | 內容 |
+|---|---|
+| **Elaborative interrogation** | 問的不是「正解是什麼」，而是「為什麼這個答案成立、反例為什麼不成立」。這會迫使學習者建立 causal model，而不是只記 A／B／C／D。 |
+| **Error correction** | 修正被誤認為同一件事的概念（例如 VMware Tools 與 virtualization management plane）。被辯論修正過的錯誤通常比直接看答案更牢。 |
+| **Boundary learning** | 多數錯題並非完全不知道，而是邊界模糊：Audit vs Hardening、Personnel vs Physical Access、DLP vs IRM、Metadata vs Content、GRE vs IPsec、DH vs OOB。Argue 最適合修這類問題。 |
+
+**五步流程：**
+
+```text
+1. 為何不同意？
+2. 這個 argument 是技術上成立，還是只是 edge case？
+3. 題目在考：terminology？taxonomy？responsibility？technical mechanism？
+4. 題庫答案是否仍有 ambiguity？
+5. 寫一句 corrected mental model
+```
+
+**要避免的陷阱：** 不要變成「每一題都努力證明題庫錯」。常見真因是**作答時用的是 workflow／實務邏輯，而題目在考 taxonomy**。
+
+範例：mantrap 控制人員在技術上成立，但題目考分類 → Physical Access ≠ Personnel → corrected model：**作用對象相同，不代表 control category 相同。**
+
+這套流程對 CCSP 特別有效，因為 CCSP 許多題目的難點正是「兩個答案都技術上合理，但考試在問哪個層級／角色／分類」。
 
 ### 撰寫規範
 
