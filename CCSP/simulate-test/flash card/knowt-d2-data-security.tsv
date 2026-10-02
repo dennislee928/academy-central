@@ -97,3 +97,5 @@ Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leaka
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
 SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
+E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
+Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。

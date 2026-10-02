@@ -1,4 +1,4 @@
-高架地板（raised flooring）的設計目的是什麼？	作為空調通風管道（air plenum）與佈線通道。不是避難所或儲藏室。
+高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
 RTO 與 MAD 的關係？	RTO 必須小於 MAD。IT 復原目標不能超過業務上限。
@@ -41,3 +41,9 @@ mTLS 是什麼？	雙方都出示憑證：server authentication + client certifi
 問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
 Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
 為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。
+「Raised floor increases structural soundness」為什麼是錯的？	Raised floor 本身必須被設計成能承受 rack 重量，它是需要被結構設計照顧的對象，不是結構補強手段。
+機房冷風從 CRAC 到伺服器的完整路徑？	CRAC／CRAH → underfloor plenum → perforated tile → cold aisle → server inlet。
+Virtualization management toolset 指的是什麼？	ESXi management interface、vCenter、hypervisor management API、orchestration／admin plane——管 hypervisor／VM／host 的介面。
+VMware Tools 是 virtualization management plane 嗎？	No。VMware Tools 裝在 Guest OS 內，提供 drivers、time sync、graceful shutdown、guest integration。Management plane 管的是 hypervisor／VM／host。
+Management plane 的隔離原則有哪些？	與 workload network 分離、避免 public-facing、用 dedicated management VLAN／subnet／VRF／admin zone、僅允許管理員與管理工具、搭配 MFA／bastion／logging。不要死背「只能用 VLAN」。
+Host 要進維護時，VM 應該怎麼搬？	Live migration：move VM as a live instance。不是存 snapshot image——snapshot 的用途是 point-in-time state／rollback／reference。

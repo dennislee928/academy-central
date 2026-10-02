@@ -129,7 +129,9 @@ Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leaka
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
 SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
-高架地板（raised flooring）的設計目的是什麼？	作為空調通風管道（air plenum）與佈線通道。不是避難所或儲藏室。
+E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
+Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
+高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
 RTO 與 MAD 的關係？	RTO 必須小於 MAD。IT 復原目標不能超過業務上限。
@@ -172,6 +174,12 @@ mTLS 是什麼？	雙方都出示憑證：server authentication + client certifi
 問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
 Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
 為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。
+「Raised floor increases structural soundness」為什麼是錯的？	Raised floor 本身必須被設計成能承受 rack 重量，它是需要被結構設計照顧的對象，不是結構補強手段。
+機房冷風從 CRAC 到伺服器的完整路徑？	CRAC／CRAH → underfloor plenum → perforated tile → cold aisle → server inlet。
+Virtualization management toolset 指的是什麼？	ESXi management interface、vCenter、hypervisor management API、orchestration／admin plane——管 hypervisor／VM／host 的介面。
+VMware Tools 是 virtualization management plane 嗎？	No。VMware Tools 裝在 Guest OS 內，提供 drivers、time sync、graceful shutdown、guest integration。Management plane 管的是 hypervisor／VM／host。
+Management plane 的隔離原則有哪些？	與 workload network 分離、避免 public-facing、用 dedicated management VLAN／subnet／VRF／admin zone、僅允許管理員與管理工具、搭配 MFA／bastion／logging。不要死背「只能用 VLAN」。
+Host 要進維護時，VM 應該怎麼搬？	Live migration：move VM as a live instance。不是存 snapshot image——snapshot 的用途是 point-in-time state／rollback／reference。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -241,6 +249,13 @@ Insider threat 的 preventive／detective／administrative 控制各有哪些？
 「aggressive background checks」這個措辭哪裡有問題？	過強。正確說法是 appropriate／lawful／proportionate personnel screening，人員篩查受勞動與隱私法規限制。
 External perimeter hardening 是主要的 insider control 嗎？	No。Internal segmentation 才直接限制 insider lateral movement；biometric 屬 physical access control，兩者都不是 network perimeter hardening。
 Failback to on-prem 是 cloud HA 的必備元素嗎？	No。取決於 hybrid architecture、組織環境與 DR strategy。HA 關注的是故障時服務仍可用。
+Audit 是 hardening 本身嗎？	No。Audit = assessment／verification（找問題、驗證）；Hardening = implementation／remediation（改系統、修問題）。Hardening changes the system; audit checks the system.
+Audit 與 hardening 在 workflow 上的關係？	Baseline/Policy → Hardening → Audit → Find drift/gaps → Remediation → Re-audit。Audit 可驅動下一輪 hardening，是 feedback mechanism，但 taxonomy 上不是 hardening。
+題幹動詞怎麼判斷 audit 還是 hardening？	check／verify／assess／review → Audit；disable／remove／configure／restrict／patch → Hardening。
+Hardening 的典型動作有哪些？	移除不必要軟體、關閉不必要 service／port、patch、secure configuration、least privilege、host firewall、HIDS／endpoint protection、disable weak protocols、secure logging configuration。
+Personnel controls 治理什麼？包含哪些項目？	治理人的可信度、行為與 employment lifecycle：background check、reference check、security awareness／training、job rotation、SoD、termination／exit procedure。
+Mantrap 是 personnel control 嗎？	No。Mantrap 作用在人身上，但分類是 Physical Access Control。Personnel = govern the person；Physical Access = govern entry／movement。作用對象相同不代表 control category 相同。
+Patch 能解決 cloud interoperability 問題嗎？	不能。Patch 修 software defect／vulnerability／performance；interoperability 是 architecture／API／format／standard 層面的問題。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證，不是量測流程成熟度。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。

@@ -39,3 +39,10 @@ Insider threat 的 preventive／detective／administrative 控制各有哪些？
 「aggressive background checks」這個措辭哪裡有問題？	過強。正確說法是 appropriate／lawful／proportionate personnel screening，人員篩查受勞動與隱私法規限制。
 External perimeter hardening 是主要的 insider control 嗎？	No。Internal segmentation 才直接限制 insider lateral movement；biometric 屬 physical access control，兩者都不是 network perimeter hardening。
 Failback to on-prem 是 cloud HA 的必備元素嗎？	No。取決於 hybrid architecture、組織環境與 DR strategy。HA 關注的是故障時服務仍可用。
+Audit 是 hardening 本身嗎？	No。Audit = assessment／verification（找問題、驗證）；Hardening = implementation／remediation（改系統、修問題）。Hardening changes the system; audit checks the system.
+Audit 與 hardening 在 workflow 上的關係？	Baseline/Policy → Hardening → Audit → Find drift/gaps → Remediation → Re-audit。Audit 可驅動下一輪 hardening，是 feedback mechanism，但 taxonomy 上不是 hardening。
+題幹動詞怎麼判斷 audit 還是 hardening？	check／verify／assess／review → Audit；disable／remove／configure／restrict／patch → Hardening。
+Hardening 的典型動作有哪些？	移除不必要軟體、關閉不必要 service／port、patch、secure configuration、least privilege、host firewall、HIDS／endpoint protection、disable weak protocols、secure logging configuration。
+Personnel controls 治理什麼？包含哪些項目？	治理人的可信度、行為與 employment lifecycle：background check、reference check、security awareness／training、job rotation、SoD、termination／exit procedure。
+Mantrap 是 personnel control 嗎？	No。Mantrap 作用在人身上，但分類是 Physical Access Control。Personnel = govern the person；Physical Access = govern entry／movement。作用對象相同不代表 control category 相同。
+Patch 能解決 cloud interoperability 問題嗎？	不能。Patch 修 software defect／vulnerability／performance；interoperability 是 architecture／API／format／standard 層面的問題。

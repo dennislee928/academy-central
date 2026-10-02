@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **282 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **297 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
 | `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design | 32 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證） | 99 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 43 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證） | 101 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 49 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 28 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 41 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
 | `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 33 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 282 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 297 |
 
 ### 歷次併入紀錄
 
@@ -34,6 +34,14 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 - ISO 27001、ARO evidence、NIST RMF → **D6**（+5）
 
 重複主題（private cloud 定義、volume storage、`SLE × ARO`、hot/cold aisle 目的）改為**增補既有卡片的答案**，不新增重複卡。
+
+**`by-test/12-d5-drill-2026-10-02` 講義**（原檔無實際卡片，由講義內容自行產出 15 張）：
+
+- Encryption vs Mirroring（備份情境） → **D2**（+2）
+- Virtualization management plane vs VMware Tools、raised floor 承重與冷風路徑、live migration vs snapshot → **D3**（+6）
+- ⭐ Audit vs Hardening、⭐ Personnel vs Physical Access、patch vs interoperability → **D5**（+7）
+
+復現主題（GRE vs IPsec、Secure KVM、vendor advises、DH vs OOB）既有卡已覆蓋，不產新卡；raised floor 兩張既有卡改為增補答案。
 
 ### 手動匯入步驟
 
@@ -61,7 +69,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 282 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 297 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 
