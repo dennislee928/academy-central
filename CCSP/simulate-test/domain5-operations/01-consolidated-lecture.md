@@ -21,6 +21,7 @@
 | `by-test/learnzapp/03-...-lecture.md` | 上篇 §1 維運生命週期、§1.5 資料中心三層 | §1.1、§1.4 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §6 responsibility、§7 supply chain、§10 cloud sprawl、§11–12 configuration/patch | §1.3、§1.7、§1.9 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §4 insider threat、D5 §3 Synthetic vs RUM、D5 §6 DHCP、D5 §7 HA | §1.4、§1.5、§1.6 |
+| `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §2 hardening 清單、§3 ⭐ Audit vs Hardening、§4／§5 ⭐ personnel vs physical、§6 patch vs interoperability、§8 live migration | §1.2、§1.3、§1.4、§1.6 |
 
 ---
 
@@ -51,7 +52,7 @@ Physical              Environmental          Resilience
 | 概念 | 定義 |
 |---|---|
 | **Baseline** | 「比較的標準」——不是防毒軟體、不是 HIDS |
-| **Hardening** | 縮小攻擊面：安全組態、關閉不必要服務、patch、baseline |
+| **Hardening** | **降低 attack surface，直接改變系統安全狀態**（見下方動作清單） |
 | **Redundancy** | 可用性／容錯——**冗餘電源是 redundancy，不是 hardening** |
 | **Configuration maintenance** | baseline、configuration change、patching、version control、configuration validation、deviation management、documentation |
 
@@ -67,6 +68,62 @@ Document → Assess → Authorize / Remediate → 若屬合理則透過變更流
 
 **Social engineering 不屬於 configuration maintenance**，它是 human-layer 的攻擊／測試活動。
 
+#### Hardening 的典型動作（`by-test/12` §2）
+
+- 移除不必要軟體
+- 關閉不必要 service／ports
+- patch／update
+- secure configuration
+- least privilege
+- host firewall
+- HIDS／endpoint protection
+- disable weak protocols
+- secure logging configuration
+
+#### ⭐ Audit ≠ Hardening（`by-test/12` §3）
+
+```text
+Audit     = assessment / verification     → 找問題、驗證
+Hardening = implementation / remediation  → 改系統、修問題
+```
+
+**常見反駁：** 不 audit，怎麼知道 baseline／policy／control 哪裡有缺口？
+
+這在 **workflow** 上完全成立——audit 可以驅動下一輪 hardening，是 hardening loop 的重要 feedback mechanism：
+
+```text
+Baseline / Policy
+      ↓
+Hardening
+      ↓
+Audit / Assessment
+      ↓
+Find drift / gaps
+      ↓
+Remediation
+      ↓
+Re-audit
+```
+
+**但 taxonomy 上兩者不同。** 工程類比：
+
+```text
+Unit test ≠ Feature implementation
+Test discovers defect → developer modifies code
+
+Audit discovers:  SSH root login enabled
+Hardening:        disable root SSH
+```
+
+**動詞判斷法：**
+
+| 題幹動詞 | 分類 |
+|---|---|
+| `check`、`verify`、`assess`、`review` | **Audit／Assessment** |
+| `disable`、`remove`、`configure`、`restrict`、`patch` | **Hardening** |
+
+> **Hardening changes the system; Audit checks the system.**
+
 ### 1.3 Patch Management
 
 **典型流程：**
@@ -77,7 +134,20 @@ Identify → Evaluate → Test → Approve → Deploy → Validate
 
 Production 不能看到更新就直接部署，必須測試 **compatibility、availability impact 與 change risk**。
 
+#### Patch 不解決 interoperability（`by-test/12` §6）
+
+Patch 可以修 vulnerability、修 bug、改善 performance，有時帶入功能或 compatibility fix。但 **generic cloud interoperability 是架構層面的問題**。
+
+```text
+Patch            → software defect / vulnerability / performance
+Interoperability → architecture / API / format / standard
+```
+
+看到「升級／打補丁能否解決跨雲互通」時，答案是不能——那要靠標準、API 與格式（見 [Domain 1 §1.5](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+
 #### Vendor 的角色
+
+> **復現標記：** 已在 `by-test/10` 上篇 D 與 `by-test/12` §7 連續出現，屬高頻考點。
 
 **題目問「production 系統修補時誰的建議權重最高」→ Vendor**，因為 vendor 最清楚 prerequisites、compatibility、supported versions、known issues、rollback、reboot requirement。
 
@@ -118,7 +188,8 @@ Drain / migrate workload
 | 維護期間 | **不可停止 logging** |
 | 管理員存取 | **Maintenance mode 不會阻擋 admin 存取** |
 | HA → 維護的順序 | HA → migrate／drain → maintenance mode → patch／change → validate → return to service |
-| **管理平面** | 必須隔離（isolated management network），因為它是最高權限入口 |
+| **搬移方式** | 要 **move VM as a live instance**（live migration），**不是**存 snapshot image；snapshot 的用途是 point-in-time state／rollback／reference |
+| **管理平面** | 必須隔離（isolated management network），因為它是最高權限入口。隔離手段不限 VLAN，可為 subnet／VRF／admin zone，並搭配 MFA／bastion／logging；**VMware Tools 這類 guest agent 不是 management plane**——完整對照見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md) |
 | **多租戶隔離** | 雲端是多租戶環境，isolation 是關鍵控制 |
 
 #### High Availability（`by-test/11` D5 §7）
@@ -225,6 +296,43 @@ Background screening         = preventive personnel control
 Internal segmentation        = limits insider movement
 External perimeter hardening = primarily outsider-focused
 ```
+
+#### Personnel Controls 的範圍（`by-test/12` §4）
+
+Personnel controls 治理的是**人的可信度、行為與 employment lifecycle**：
+
+- Background checks
+- Reference checks
+- Security awareness／training
+- Job rotation
+- Separation of duties
+- Termination procedures
+- Exit process
+
+#### ⭐ Physical Access Control ≠ Personnel Control（`by-test/12` §5）
+
+精確的說法是：**Physical access controls 會作用在人身上，但 taxonomy 上不等於 personnel controls。**
+
+| | **Personnel Control** | **Physical Access Control** |
+|---|---|---|
+| 控制什麼 | 人員風險／trust／lifecycle | 人能不能進入特定實體區域 |
+| 典型項目 | background check、reference check、security training、termination procedure | mantrap、turnstile、badge reader、door lock、security guard |
+
+```text
+Mantrap
+→ controls people
+→ but category = Physical Access Control   （不是 Personnel Control）
+```
+
+> **最短記法：**
+> **Personnel = govern the person**
+> **Physical Access = govern entry／movement**
+
+**常見反駁：** Mantrap／turnstile 比 training 更有用吧？
+
+這是在比較 **effectiveness**，但題目考的是 **classification**。**兩個維度要分開。** 結論一句：**作用對象相同，不代表 control category 相同。**
+
+實體存取控制的分層（reception／badging／video／mantrap／bollards）見 [Domain 3 §1.2](../domain3-infrastructure/01-consolidated-lecture.md)。
 
 ### 1.7 Responsibility、Accountability 與供應鏈
 
@@ -366,6 +474,15 @@ Redundancy = 可用性 / 容錯
 | 32 | 正確措辭是 appropriate／lawful／proportionate screening，不是 aggressive background checks。 |
 | 33 | Internal segmentation ≠ perimeter device；biometric 是 physical access control。 |
 | 34 | Failback to on-prem 不是所有 cloud HA 架構的必備元素。 |
+| 35 | **Hardening changes the system; Audit checks the system.** |
+| 36 | Audit 可以驅動 hardening，但 audit 本身不是 hardening。 |
+| 37 | 動詞判斷：check／verify／assess／review → Audit；disable／remove／configure／restrict／patch → Hardening。 |
+| 38 | **Personnel controls govern people; physical access controls govern entry／movement.** |
+| 39 | Mantrap 作用在人身上，但分類是 physical access control，不是 personnel control。 |
+| 40 | 題目問 classification 時不要用 effectiveness 作答——兩個維度要分開。 |
+| 41 | Patch 修 defect／vulnerability／performance；interoperability 靠 architecture／API／format／standard。 |
+| 42 | 維護時要 live-migrate 執行中的 VM，不是存 snapshot image。 |
+| 43 | Management plane 的隔離手段不限 VLAN；VMware Tools 不是 management plane。 |
 
 ---
 
@@ -391,6 +508,13 @@ Redundancy = 可用性 / 容錯
 | Internal segmentation | Perimeter hardening | 限制內部橫向移動 vs 對外邊界防護 |
 | Biometric（實體） | Network perimeter | 實體進出控制 vs 網路邊界控制 |
 | HA | DR／failback | 故障時服務不中斷 vs 災後切回原站點 |
+| Audit | Hardening | 評估驗證 vs 實作修正 |
+| Personnel control | Physical access control | 治理人員本身 vs 治理進出與移動 |
+| Classification（分類） | Effectiveness（有效性） | 題目問哪一類 vs 哪個更有用 |
+| Patch | Interoperability 修正 | 軟體缺陷 vs 架構與標準 |
+| Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
+
+> **Boundary learning 提示：** Audit vs Hardening、Personnel vs Physical Access 這兩組都屬「兩個答案技術上都合理，但題目在問分類」的典型。處理流程見 [README 的錯題複習與 argue 流程](../README.md)。
 
 ---
 
@@ -426,6 +550,10 @@ Redundancy = 可用性 / 容錯
 12. DHCP 的 Option 42 做什麼？它等於時間同步嗎？
 13. Insider threat 的 preventive／detective／administrative 控制各舉三項。
 14. 為什麼 internal segmentation firewall 不算 perimeter device？
+15. Audit 與 hardening 的分類差異是什麼？為什麼「audit 能找出缺口」不能讓它變成 hardening？
+16. 題幹出現 verify、review 時該選哪一類？出現 disable、restrict 時呢？
+17. Mantrap 控制的是人，為什麼分類不是 personnel control？
+18. Patch 能解決跨雲 interoperability 嗎？為什麼？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
