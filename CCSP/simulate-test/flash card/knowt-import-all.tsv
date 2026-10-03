@@ -30,6 +30,7 @@ Sandbox 是 service model 嗎？	No。Sandbox 是 isolation pattern（隔離的�
 Developer 想要現成的 coding／testing 環境，選哪個 service model？	PaaS。Provider 管 runtime、middleware、OS、虛擬化與硬體；developer 只管 code、application、data。
 Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
 More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。
+題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -131,6 +132,25 @@ SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給�
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
 E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
 Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
+Cryptographic key 應該被保護到什麼程度？	At least as strongly as the data they can decrypt。Vault／KMS／HSM 只是 implementation mechanism；Protection(Key) ≥ Protection(Data) 才是原則。
+金鑰保護四選一出現 in vaults／armed guards／two-person integrity 時選什麼？	選「at least as securely as the data they decrypt」。其餘三者都是 context-dependent implementation。
+Key vault 什麼情況下會失去隔離價值？	被配置成與 DB 同一 trust boundary：共用 admin credentials、allow secret/* policy、長效 root token、dev mode 上 production、app 可 export 所有 key、未開 audit logging。弱的是 control plane 配置，不是技術。
+「只加密某個 table 或 column」要選哪種 encryption？	Application-level encryption。App 在資料進 DB 前就加密，可精確指定 table／column／field，DB 從頭拿到的就是 ciphertext。
+「加密某一個完整檔案」要選哪種？	File-level encryption（例如 report.pdf → report.enc）。不是針對 DB schema。
+「加密對 application 是透明的」要選哪種？	Transparent encryption／TDE。保護 DB data files、tablespaces、transaction logs、backups，主要解決 data at rest。
+「加密雲端儲存的單一物件」要選哪種？	Object-level encryption。典型是 S3／object storage bucket 內的個別物件，不是 relational table。
+Masking 的 Substitution 是什麼？	換成另一個合理但不真實的值（Alice Wang → Mary Chen），保持 format、realism 與應用可用性，但失去真實 identity。
+Masking 的 Shuffling 是什麼？	把同一欄的真實值重新排列。所有值都是真的，但 person ↔ value 的對應被打破。
+Masking 的 Number variance 是什麼？	在合理範圍內加減（Salary 100000 ±10% → 94,215），保留 distribution 與統計可用性，同時避免 exact original value。
+Masking 的 Masking-out 是什麼？	只顯示部分字元（4111111111111111 → ************1111）。常見於 PAN、帳號、SSN、電話。
+Masking 的 Character scrambling 是什麼？	打亂字元順序或值（ABCDE12345 → D4A1E32BC5），保留 length 與部分格式特徵但移除原值。
+Deletion／Nulling 算不算 masking technique？	算。在廣義 test-data masking taxonomy 中 nulling／deletion 是一種 masking：confidentiality 最直接，但 data utility 最低。
+Algorithmic substitution 的特點是什麼？	用演算法產生替代值，可做到 deterministic consistency——同一來源每次 masking 後得到相同假值。
+Conflation 是 masking technique 嗎？	不是。Conflation 只是一般英文的「把兩個不同概念混為一談」，在題目中純屬 distractor。
+Bit-splitting／data dispersion 的核心是什麼？與 RAID 差在哪？	把資料切成多個 fragment 分散保存，單一 fragment 不足以重建。RAID 偏 availability／resilience／performance；secure dispersion 另提供 confidentiality、compromise isolation 與 provider/site diversity。
+跨 jurisdiction 做 bit-splitting，正確的 security model 說法是什麼？	Compromise／seizure of one location does not yield the full dataset。不要把「阻撓 law enforcement」當成 security objective。
+AONT-RS 是什麼？屬於哪一類技術？	All-or-Nothing Transform + Reed-Solomon：資料經轉換與編碼後切成多個 fragment 分散儲存，沒有足夠 fragment 無法 recovery。屬 data transformation／dispersion，不是 quantum computing。
+Hash 與 Backup 各回答什麼問題？	Hash 回答「Has this file／config changed?」→ integrity、baseline validation、configuration drift、forensic checking；Backup 回答「Can I recover?」→ availability／recovery。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
@@ -276,7 +296,7 @@ eDiscovery 與一般 backup 差在哪？	eDiscovery 是為訴訟／調查識別�
 EU privacy adequacy 大致在問什麼？	第三方國家是否被認定提供足夠個資保護，以支持跨境傳輸。
 GLBA 與 PCI DSS 再次對照？	GLBA = 美國聯邦金融隱私法；PCI DSS = 支付卡安全標準。
 DMCA／copyright 題不要選成什麼？	不要選成隱私或資安控制框架。它處理著作權與數位內容保護。
-ISO 31000 與 NIST 800-37 各偏什麼？	ISO 31000 是風險管理原則；NIST 800-37 是 RMF（風險管理框架）流程。
+ISO 31000 與 NIST 800-37 各偏什麼？	ISO 31000 是一般企業風險管理 guidelines（現行 2018 版，非 certification）；NIST 800-37 是 RMF 七步驟流程。
 Right to Audit 通常出現在哪？	合約／SLA 條款，讓客戶或指定稽核人有權查核 CSP 控制。不是單靠公開行銷聲明。
 Privacy Level Agreement 常被考的是什麼？	隱私相關義務，尤其通報／reporting obligation，而不只是時間長短。
 合約／SLA incentive 的作用？	用獎懲驅動 CSP 達成可用性、安全或通報義務，而不只寫願望。
@@ -291,6 +311,29 @@ NIST RMF 是以 threat 或 cost 為 foundation 嗎？	No。RMF 是 risk-based fr
 ARO 最直接的 evidence 是什麼？	Historical occurrence data。例如 5 年發生 10 次 → ARO = 2。
 Aggregation 在估算 ARO 時扮演什麼角色？	Calculation／processing technique，不是 evidence source。必須先有 historical observations 才能 aggregate。
 ISO 27001 偏好哪一種技術或部署方式？	沒有偏好。它是 technology-neutral 的 ISMS requirements：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific。
+COBIT 兩秒歸類是什麼？	Enterprise IT governance ＋ management。不是只做 security，也不是純 risk framework。
+SAS 70 在 CCSP 的定位是什麼？	Legacy service-organization reporting standard。AICPA 現以 SOC 1 作為其後繼體系。
+Hex GBL 是什麼？	虛構名詞（Discworld 典故），純 distractor，不必記。
+ISO 27002:2022 有多少 controls？分幾個主題？	93 controls，分 organizational、people、physical、technological 四大主題。它是 controls guidance，不是 ISMS 認證標準。
+SOC 2 的 Trust Services Criteria 有哪五項？	Security、Availability、Processing Integrity、Confidentiality、Privacy。
+SSAE 的版本號需要死背嗎？	不需要。AICPA 現行 SOC 2 Type 2 illustrative report 已引用 SSAE 21；看到 SSAE 18 認得「auditor attestation standard」即可。
+ISO 27001 vs SOC 2 怎麼切？	ISO 27001 → organization has an ISMS（holistic security management program，可認證）；SOC 2 → auditor 對特定範圍服務控制出具 assurance report（控制是否有效運作 → Type 2）。
+SOC 2 vs SSAE 的關係比較像什麼？	Compiler vs binary：SSAE 是 auditor 遵循的 rules／standards，SOC 2 是交付給 stakeholder 的 examination／report。兩者不是競爭的 certification。
+ISO 27001 vs 27002 的工程類比？	27001 = interface／specification（ISMS 必須滿足什麼，可認證）；27002 = implementation guidance（控制怎麼做）。
+OECD 八原則的中文記憶串是什麼？	少收 → 收對 → 說明目的 → 不亂用 → 保護 → 透明 → 本人能查改 → 公司負責。
+題幹出現「過度蒐集與服務無關的欄位」對應哪條 OECD 原則？	Collection Limitation。蒐集要有限制、lawful、fair，適當時需 knowledge／consent。
+題幹出現 incorrect／obsolete／incomplete personal data 對應哪條？	Data Quality：個資須與用途相關，必要時準確、完整、保持更新。
+Purpose Specification 與 Use Limitation 的最短切法？	Purpose = Declare why（最遲在 collection 時指定用途）；Use = Stay within why（後續不得越界，除非有 consent 或 lawful authority）。
+題幹出現「保護 PII 免於未授權存取／修改／揭露」對應哪條 OECD 原則？	Security Safeguards。對應 encryption、IAM、MFA、RBAC、logging、DLP、backup、network 與實體控制。
+OECD 的 Openness 原則要求什麼？	對 personal-data practices／policies 有一般性公開：有沒有收、大概收什麼、怎麼用、為什麼、誰是 controller。典型產物是 Privacy Notice。
+OECD 的 Individual Participation 中的 individual 指誰？	Data subject，不是員工。本人應能確認組織是否持有自己的資料、取得、challenge 不正確資料並要求 rectification。
+OECD 的 Accountability 原則與雲端外包的關係？	Outsource 給 CSP 不等於免責。Controller 仍須能證明各項 privacy principle 被遵守，對應 responsibility can be delegated, accountability remains。
+Due Care、Due Diligence、Liability 的助記？	Due Care = DO（實際採取並維持 reasonable safeguards）；Due Diligence = CHECK（事前盡職調查並持續驗證有效性）；Liability = CONSEQUENCE。動詞判斷：investigate／verify → diligence；implement／maintain → care。
+鑑識證據的標準處理流程？	Original evidence → Forensic image → Hash verification → Working copy → Analysis。重點在 chain of custody、hashes、documentation、repeatability、original preservation。
+「modified data = automatically inadmissible」對嗎？	太絕對。正確理解是 unexplained／undocumented modification 損害證據可信度與完整性，但 modification 本身不必然自動造成 inadmissibility。
+Preponderance of evidence 與 comparative negligence 各回答什麼？	Preponderance of evidence 是 burden of proof（某主張是否 more likely than not）；comparative negligence 才決定 fault 百分比如何按比例減免 damages（75% fault × $125,000 → $93,750）。
+Court order 一定會拿走 electronic data 加 hardware 嗎？	不一定。可取得什麼由法律權限、warrant／order scope 與 jurisdiction 決定；雲端多租戶下更可能要求 CSP production／disclosure。digital evidence 與 physical media 都可能成為 seizure 對象。
+遇到陌生管理框架題的四問法是什麼？	① 這是 standard／framework／report／law 還是 principle？② 誰使用：organization／auditor／regulator／customer？③ 產出什麼：certification／report／controls／process？④ 題目在問 governance／audit／risk 還是 privacy？
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

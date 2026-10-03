@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **299 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **342 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design | 32 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證） | 101 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 33 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 120 |
 | `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 51 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 28 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 33 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 56 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 299 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 342 |
 
 ### 歷次併入紀錄
 
@@ -48,6 +48,14 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 - Card 3 server airflow 方向、hot-air recirculation 後果鏈 → **D3**（+2）
 - Card 1／2／5（F-F = Cold、R-R = Hot、口訣）與 Card 4（exhaust→inlet 為何錯）既有卡已覆蓋，不新增。
 
+**`by-test/13-d2-d6-drill-2026-10-03` 講義**（原檔兩個閃卡區段皆為空的 widget 佔位，由講義內容自行產出 43 張）：
+
+- Quantum computing 關鍵字 → **D1**（+1）
+- Key protection 原則、vault blast radius、encryption 粒度四選一、masking 九技術、bit-splitting／RAID／AONT-RS、hash vs backup → **D2**（+19）
+- 框架兩秒歸類（COBIT／SAS 70／Hex GBL）、ISO 27002 93 controls、SOC 2 TSC、SSAE 版本、鄰近切法、OECD 八原則 trigger、due care/diligence/liability、鑑識流程與可採性、preponderance vs comparative negligence、seizure、四問法 → **D6**（+23）
+
+`ISO 31000 與 NIST 800-37 各偏什麼？`既有卡改為增補答案（補上 2018 版與非認證）。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -74,7 +82,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 299 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 342 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

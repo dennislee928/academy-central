@@ -99,3 +99,22 @@ SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給�
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
 E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
 Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
+Cryptographic key 應該被保護到什麼程度？	At least as strongly as the data they can decrypt。Vault／KMS／HSM 只是 implementation mechanism；Protection(Key) ≥ Protection(Data) 才是原則。
+金鑰保護四選一出現 in vaults／armed guards／two-person integrity 時選什麼？	選「at least as securely as the data they decrypt」。其餘三者都是 context-dependent implementation。
+Key vault 什麼情況下會失去隔離價值？	被配置成與 DB 同一 trust boundary：共用 admin credentials、allow secret/* policy、長效 root token、dev mode 上 production、app 可 export 所有 key、未開 audit logging。弱的是 control plane 配置，不是技術。
+「只加密某個 table 或 column」要選哪種 encryption？	Application-level encryption。App 在資料進 DB 前就加密，可精確指定 table／column／field，DB 從頭拿到的就是 ciphertext。
+「加密某一個完整檔案」要選哪種？	File-level encryption（例如 report.pdf → report.enc）。不是針對 DB schema。
+「加密對 application 是透明的」要選哪種？	Transparent encryption／TDE。保護 DB data files、tablespaces、transaction logs、backups，主要解決 data at rest。
+「加密雲端儲存的單一物件」要選哪種？	Object-level encryption。典型是 S3／object storage bucket 內的個別物件，不是 relational table。
+Masking 的 Substitution 是什麼？	換成另一個合理但不真實的值（Alice Wang → Mary Chen），保持 format、realism 與應用可用性，但失去真實 identity。
+Masking 的 Shuffling 是什麼？	把同一欄的真實值重新排列。所有值都是真的，但 person ↔ value 的對應被打破。
+Masking 的 Number variance 是什麼？	在合理範圍內加減（Salary 100000 ±10% → 94,215），保留 distribution 與統計可用性，同時避免 exact original value。
+Masking 的 Masking-out 是什麼？	只顯示部分字元（4111111111111111 → ************1111）。常見於 PAN、帳號、SSN、電話。
+Masking 的 Character scrambling 是什麼？	打亂字元順序或值（ABCDE12345 → D4A1E32BC5），保留 length 與部分格式特徵但移除原值。
+Deletion／Nulling 算不算 masking technique？	算。在廣義 test-data masking taxonomy 中 nulling／deletion 是一種 masking：confidentiality 最直接，但 data utility 最低。
+Algorithmic substitution 的特點是什麼？	用演算法產生替代值，可做到 deterministic consistency——同一來源每次 masking 後得到相同假值。
+Conflation 是 masking technique 嗎？	不是。Conflation 只是一般英文的「把兩個不同概念混為一談」，在題目中純屬 distractor。
+Bit-splitting／data dispersion 的核心是什麼？與 RAID 差在哪？	把資料切成多個 fragment 分散保存，單一 fragment 不足以重建。RAID 偏 availability／resilience／performance；secure dispersion 另提供 confidentiality、compromise isolation 與 provider/site diversity。
+跨 jurisdiction 做 bit-splitting，正確的 security model 說法是什麼？	Compromise／seizure of one location does not yield the full dataset。不要把「阻撓 law enforcement」當成 security objective。
+AONT-RS 是什麼？屬於哪一類技術？	All-or-Nothing Transform + Reed-Solomon：資料經轉換與編碼後切成多個 fragment 分散儲存，沒有足夠 fragment 無法 recovery。屬 data transformation／dispersion，不是 quantum computing。
+Hash 與 Backup 各回答什麼問題？	Hash 回答「Has this file／config changed?」→ integrity、baseline validation、configuration drift、forensic checking；Backup 回答「Can I recover?」→ availability／recovery。

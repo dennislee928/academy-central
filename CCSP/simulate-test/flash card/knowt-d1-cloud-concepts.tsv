@@ -30,3 +30,4 @@ Sandbox 是 service model 嗎？	No。Sandbox 是 isolation pattern（隔離的�
 Developer 想要現成的 coding／testing 環境，選哪個 service model？	PaaS。Provider 管 runtime、middleware、OS、虛擬化與硬體；developer 只管 code、application、data。
 Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
 More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。
+題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
