@@ -20,6 +20,7 @@
 | `by-test/09-practice-test-3-weakness-lecture.md` | §9 P4 D1 Cloud Concepts | §1.2、§2.3 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 Q14 BC/DR + Interoperability | §2.2 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §1 Private ≠ Private Network、D1 §2 deployment 快速判斷、D1 §3 Sandbox | §1.2、§1.7、§2.6 |
+| `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §8 Quantum computing | §1.8 |
 
 ---
 
@@ -161,6 +162,25 @@ IaaS    = sandbox requiring OS/network-level control
 
 > **原則：** More control ≠ automatically more secure。**More control 同時代表 more responsibility。**
 
+### 1.8 相關與新興技術
+
+依 ISC2 outline，related／emerging technologies 歸在 Domain 1。這類題多半是**關鍵字直送**，不要求原理。
+
+#### Quantum computing（來源：`by-test/13` Part 1 §8）
+
+題幹出現下列任一關鍵字，優先選 **quantum computing**：
+
+```text
+superposition
+qubit
+entanglement
+quantum interference
+```
+
+其中 `superposition of physical states` 幾乎是送分 keyword。
+
+**反例提醒：** **AONT-RS**（All-or-Nothing Transform + Reed-Solomon）屬於 data transformation／dispersion，**不是** quantum computing——詳見 [Domain 2 §1.5](../domain2-data-security/01-consolidated-lecture.md)。密碼學本身的整理在 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -255,6 +275,8 @@ strict governance
 | 16 | Sandbox 是 isolation pattern，不是 service model。 |
 | 17 | 純開發測試 sandbox → PaaS；需要 OS／network 層控制的 sandbox → IaaS。 |
 | 18 | More control ≠ more secure；more control 同時代表 more responsibility。 |
+| 19 | 看到 superposition／qubit／entanglement／quantum interference → **quantum computing**。 |
+| 20 | AONT-RS 是 data dispersion，不是 quantum computing。 |
 
 ---
 
@@ -272,6 +294,7 @@ strict governance
 | Private cloud | Private network | 專屬的雲端基礎架構 vs 不對外連通的網路 |
 | PaaS sandbox | IaaS sandbox | 現成開發測試平台 vs 需自控 OS／網路隔離 |
 | Sandbox | Service model | 隔離模式 vs 服務交付層級 |
+| Quantum computing | AONT-RS | superposition／qubit 關鍵字 vs 資料轉換與分散 |
 
 ### 決策流程
 
