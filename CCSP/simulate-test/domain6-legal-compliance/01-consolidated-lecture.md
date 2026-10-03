@@ -24,6 +24,7 @@
 | `by-test/learnzapp/02-...-lecture.md` | §3 成熟度、訴訟與鑑識 | §1.2、§1.5 |
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §9 BIA、§13 SOC／FIPS | §1.2、§1.8 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.8、§2.6 |
+| `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 
 ---
 
@@ -63,21 +64,41 @@ FISMA   = 美國聯邦資訊系統安全
 
 ### 1.2 標準、框架與審計報告
 
+#### 兩秒歸類表（`by-test/13` Part 2 §2 Layer 1）
+
+看到名稱要能在兩秒內說出它「是什麼東西」。這一層比記條號重要得多。
+
+| 名稱 | 兩秒內該想到的第一個詞 |
+|---|---|
+| **OECD Privacy Guidelines** | Privacy principles |
+| **ISO 27001** | ISMS requirements／certification |
+| **ISO 27002** | Security controls guidance |
+| **ISO 31000** | General risk management |
+| **NIST SP 800-37** | RMF process |
+| **COBIT** | **IT governance** |
+| **SOC 2** | Service-provider assurance report |
+| **SSAE** | Auditor attestation standard |
+| **SAS 70** | **Legacy** |
+
 | 名詞 | 類型 | 秒殺判斷 |
 |---|---|---|
-| **SSAE 18** | **標準** | Service organization audit／attestation standard，**不是 report** |
+| **SSAE 18** | **標準** | Service organization audit／attestation standard，**不是 report**。版本號不必死背——AICPA 現行 SOC 2 Type 2 illustrative report 已引用 **SSAE 21**；看到 `SSAE 18` 認得「attestation standard」即可 |
+| **SAS 70** | 報告（已汰換） | **Legacy** service-organization reporting standard；AICPA 現以 SOC 1 作為其後繼體系 |
 | **SOC 1** | 報告 | 與**財務報告**相關的控制 |
+| **SOC 2** | 報告家族 | 服務組織 controls assurance，採 **Trust Services Criteria**：Security、Availability、Processing Integrity、Confidentiality、Privacy |
 | **SOC 2 Type 1** | 報告 | 某一時間點的 controls **design** |
 | **SOC 2 Type 2** | 報告 | 一段期間的 controls **operating effectiveness**；詳細且敏感，通常 restricted use |
 | **SOC 3** | 報告 | **公開摘要版／可公開發布**，attestation style |
 | **SOC 2 Type 3** | — | **不存在** |
 | **ISAE 3402** | 國際 attestation 標準 | 類似 SOC 1 的國際版脈絡 |
 | **ISO/IEC 27001** | ISMS **認證**標準 | 可被認證；**technology-neutral**：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific |
-| **ISO/IEC 27002** | 控制實務指引 | 控制目錄／guidance，不是認證主體 |
+| **ISO/IEC 27002** | 控制實務指引 | 控制目錄／guidance，不是認證主體。**2022 版有 93 controls**，分 organizational／people／physical／technological 四大主題 |
 | **ISO/IEC 27017** | 雲端安全控制指引 | cloud security controls |
 | **ISO/IEC 27018** | 公有雲個資保護 | PII protection in public cloud |
 | **ISO/IEC 27034** | 應用安全框架 | 組織 1 個 ONF、每應用 1 個 ANF（見 [Domain 4](../domain4-application/01-consolidated-lecture.md)） |
-| **ISO 31000** | **風險管理**框架 | 設計、導入與管理風險 |
+| **COBIT** | IT 治理框架 | **Enterprise IT governance ＋ management**；不是只做 security，也不是純 risk framework |
+| **ISO 31000** | **風險管理**框架 | 設計、導入與管理風險。**現行為 2018 版**，是 guidelines 不是 certification standard；題庫若出 `ISO 31000:2009` 視為 legacy wording |
+| **Hex GBL** | — | **虛構名詞**（Discworld 典故），純 distractor，不必記 |
 | **NIST SP 800-37** | 風險管理框架 | **RMF 七步驟**，見 §1.2 末段 |
 | **NIST SP 800-53** | 控制目錄 | Security and Privacy Controls for Information Systems and Organizations |
 | **NIST SP 800-92** | 日誌管理 | Log management |
@@ -98,6 +119,29 @@ CSA CCM   = 控制矩陣；CAIQ = 問卷；STAR = 保證／登錄
 CMM       = 成熟度（嚴謹、細節、可重複）→ 不要選 CSA STAR
 ISO 31000 / NIST 800-37 = 風險管理框架
 NIST 800-92 = 日誌管理
+COBIT     = enterprise IT governance
+SAS 70    = legacy，後繼為 SOC 1
+```
+
+#### 鄰近項目的切法（`by-test/13` Part 2 §2 Layer 2）
+
+| 對照 | 切法 |
+|---|---|
+| **ISO 27001 vs 27002** | `27001 = What an ISMS MUST satisfy（requirements，可認證）`；`27002 = HOW，控制實務指引`。工程類比：**27001 = interface／specification，27002 = implementation guidance** |
+| **ISO 27001 vs SOC 2** | `ISO 27001 → organization has an ISMS`（holistic security management program）；`SOC 2 → auditor reports on scoped service controls`（CSP／SaaS 控制是否有效運作 → SOC 2 Type 2） |
+| **SOC 2 vs SSAE** | `SSAE = auditor 遵循的 rules／standards`；`SOC 2 = 交付給 stakeholder 的 assurance examination／report`。工程類比接近 **compiler vs binary**，不是兩個競爭的 certification |
+
+#### Exam trigger words（Layer 3）
+
+```text
+Holistic ISMS                                → ISO 27001
+Security control guidance                    → ISO 27002
+Enterprise IT governance                     → COBIT
+General risk management                      → ISO 31000
+Prepare→Categorize→Select→Implement→Assess
+  →Authorize→Monitor                         → NIST RMF / SP 800-37
+Service organization assurance               → SOC
+Privacy principles                           → OECD
 ```
 
 **NIST SP 800 系列為何被採用：** 公開可取得、成本效益高（public domain），**不是因為國際強制採用或比較容易**。
