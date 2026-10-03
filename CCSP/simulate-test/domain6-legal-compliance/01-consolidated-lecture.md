@@ -208,6 +208,49 @@ ISO 27002 = security control guidance
 
 > **陷阱：** **Right to be forgotten／purge 是 GDPR 時代的概念，不是原始 OECD 八原則之一。**
 
+#### 八原則的 lifecycle 串法（`by-test/13` Part 2 §1）
+
+OECD Privacy Guidelines 是一組 **privacy／data-governance principles**，不是像 ISO 27001 那樣的認證標準，而且八條應視為一個整體。最有效的記法不是背英文首字母，而是串成 personal data 的生命週期：
+
+```text
+Collect → Keep good data → State why → Don't use it for something else
+       → Protect it → Tell people → Let the person inspect/challenge
+       → Organization remains accountable
+```
+
+| 中文記憶串 | OECD 原則 |
+|---|---|
+| 少收 | Collection Limitation |
+| 收對 | Data Quality |
+| 說明目的 | Purpose Specification |
+| 不亂用 | Use Limitation |
+| 保護 | Security Safeguards |
+| 透明 | Openness |
+| 本人能查改 | Individual Participation |
+| 公司負責 | Accountability |
+
+#### 逐條：工程師 mental model 與 exam trigger
+
+| 原則 | 核心 | 工程師 mental model | **Exam trigger keyword** |
+|---|---|---|---|
+| **Collection Limitation** | 蒐集要有限制、lawful、fair，適當時需 knowledge／consent | API input 最小化／allow only required fields | **What should we collect?** 過度蒐集與服務無關的欄位 |
+| **Data Quality** | 個資須與用途相關，必要時準確、完整、保持更新 | data validation + integrity + freshness | **incorrect／obsolete／incomplete** personal data |
+| **Purpose Specification** | 最遲在 collection 時指定用途 | 先宣告 API contract 再處理 | **Why are we collecting this?** |
+| **Use Limitation** | 後續使用原則上限於該目的或相容目的，除非有 consent 或 lawful authority | 不得越界呼叫 | 收集時說「送貨通知」，後來把名單賣給廣告商 |
+| **Security Safeguards** | 合理 safeguards 防止 loss、unauthorized access、destruction、use、modification、disclosure | encryption／IAM／MFA／RBAC／logging／DLP／backup／network／physical | **Protect PII against unauthorized access／modification／disclosure** |
+| **Openness** | 對 personal-data practices／policies 有一般性公開 | documentation／transparency（Privacy Notice） | 有沒有收、收什麼、怎麼用、誰是 controller |
+| **Individual Participation** | **data subject**（不是員工）可確認、取得、challenge、要求 rectification | 自助查詢與更正流程 | **access／correct／challenge one's own data** |
+| **Accountability** | 治理責任最終要有人承擔，outsource 給 CSP 不等於免責 | controller → policies／controls／processors／CSP，仍須能證明原則被遵守 | 對應 `responsibility can be delegated, accountability remains` |
+
+#### Purpose Specification vs Use Limitation（最常混）
+
+```text
+Purpose Specification = Declare why   （先定義用途）
+Use Limitation        = Stay within why（之後不要拿去做別的）
+```
+
+> **Individual Participation 的 individual 是 data subject，不是「員工參與資安」。**
+
 ### 1.4 隱私角色與跨境傳輸
 
 | 角色 | 定義 |
@@ -272,6 +315,45 @@ Data localization  = 法規要求資料必須留在特定國家／地區
 - **Forensic reporting 的最終法律接收者是 the court**（不是 regulator、不是 senior management）。
 - **Forensic copy 的完整性值必須與 the original 比對**（不是 backup、不是另一份副本）。
 
+#### 鑑識處理流程與可採性（`by-test/13` Part 2 §3G）
+
+```text
+Original Evidence → Forensic image → Hash verification → Working copy → Analysis
+```
+
+**修正一個過絕對的說法：** `modified data = automatically inadmissible` **太絕對**。正確理解是：
+
+> **Unexplained／undocumented modifications damage evidence credibility and integrity**——但 modification 本身不必然自動造成 inadmissibility。
+
+真正的重點在 **chain of custody、hashes、documentation、repeatability、original preservation**。Hash 作為完整性驗證手段的說明見 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)。
+
+#### Preponderance of Evidence vs Comparative Negligence（`by-test/13` Part 2 §3H）
+
+這兩個常被題庫混用：
+
+| 名詞 | 回答什麼 |
+|---|---|
+| **Preponderance of evidence** | **Burden of proof**：某個 factual claim 是否 more likely than not |
+| **Comparative negligence** | **Fault 百分比如何影響 damages**（按比例減免） |
+
+pure comparative model 範例：
+
+```text
+Defendant = 75% fault
+Damage    = $125,000
+→ $93,750
+```
+
+> 題庫的「75% fault > 51% → 賠 100%」把兩者混為一談，且不同 jurisdiction 規則不同——標記 **`[Q]` 題庫品質**。
+
+#### Seizure 的範圍（`by-test/13` Part 2 §3I）
+
+**不要背「court order 一定拿走 electronic data ＋ hardware」。** 實際可取得什麼，由**法律權限、warrant／order scope、jurisdiction** 決定。
+
+雲端多租戶下，客戶資料位於 CSP 共用硬體，因此執法更可能要求 **CSP production／disclosure**，而不是搬走整台實體伺服器。
+
+> 要知道的是：**digital evidence 與 physical media 都可能成為 seizure 對象。**
+
 ### 1.6 合約、供應商治理與責任邊界
 
 | 名詞 | 秒殺判斷 |
@@ -284,16 +366,19 @@ Data localization  = 法規要求資料必須留在特定國家／地區
 | **Right to audit** | 稽核權，是 assurance 能力，不是技術控制 |
 | **Indemnification** | 補償／賠償條款 |
 | **Liability** | 誰對損失負責 |
-| **Due care** | 持續維持合理注意 |
-| **Due diligence** | 事前盡職調查與驗證 |
+| **Due care** | **DO**：實際採取並維持 reasonable safeguards（encrypt、patch、access control、protect PII） |
+| **Due diligence** | **CHECK**：調查與驗證——事前盡職調查，並持續確認 safeguards 確實存在且有效（risk assessment、audit、vendor review、SOC review、continuous monitoring） |
+| **Liability** | **CONSEQUENCE**：未盡前兩者時可能承擔的法律責任 |
 | **RACI** | Responsible／Accountable／Consulted／Informed |
 
 ```text
 Outsourcing 不等於責任全部轉移。
 SLA 是服務水準承諾，不是完整安全保證。
 Right to audit 是 assurance 能力，不是技術控制。
-Due diligence 偏事前調查；due care 偏持續合理注意。
+Due Care = DO ／ Due Diligence = CHECK ／ Liability = CONSEQUENCE
 ```
+
+> **用語註記：** ISC2 教材在「diligence 是事前調查還是持續驗證」上兩種寫法都出現過，本檔採合併表述（事前 ＋ 持續皆屬 diligence）。作答時抓動詞：**investigate／verify／assess → Due diligence**；**implement／maintain safeguards → Due care**。
 
 **Contract 是信任的根本機制：** 確保 provider 履行義務的最重要機制是 **contract**；技術控制支援 assurance，但法律責任錨定在合約。
 
@@ -485,6 +570,20 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 46 | ARO 的 evidence 是 historical occurrence data；aggregation 只是計算手法。 |
 | 47 | Aggregation 必須先有 historical observations 才能產生 frequency estimate。 |
 | 48 | ISO 27001 是 technology-neutral：非 cloud／on-prem／vendor／open-source specific。 |
+| 49 | COBIT = enterprise IT governance；不是純 security 也不是純 risk framework。 |
+| 50 | SAS 70 是 legacy，現代後繼體系是 SOC 1。 |
+| 51 | ISO 27002:2022 有 **93 controls**，分 organizational／people／physical／technological。 |
+| 52 | SOC 2 的 TSC 是 Security、Availability、Processing Integrity、Confidentiality、Privacy。 |
+| 53 | SSAE 版本號不必死背；現行 SOC 2 Type 2 illustrative report 已引用 SSAE 21。 |
+| 54 | ISO 31000 現行為 2018 版，是 guidelines 不是 certification standard。 |
+| 55 | Hex GBL 是虛構名詞，純 distractor。 |
+| 56 | OECD 記憶串：少收 → 收對 → 說明目的 → 不亂用 → 保護 → 透明 → 本人能查改 → 公司負責。 |
+| 57 | `Purpose = Declare why`；`Use = Stay within why`。 |
+| 58 | Individual Participation 的 individual 是 **data subject**，不是員工。 |
+| 59 | `modified data = automatically inadmissible` 太絕對；關鍵是 unexplained／undocumented 的修改損害可信度。 |
+| 60 | **Preponderance of evidence = burden of proof；comparative negligence 才決定 damages 比例。** |
+| 61 | Seizure 範圍由法律權限、warrant scope 與 jurisdiction 決定；digital 與 physical 都可能被取得。 |
+| 62 | **Due Care = DO；Due Diligence = CHECK；Liability = CONSEQUENCE。** |
 
 ---
 
@@ -517,6 +616,13 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | EF | ARO | 單次損失比例 vs 年度發生頻率 |
 | Historical data | Aggregation | 證據來源 vs 計算手法 |
 | ISO 31000 | NIST 800-37（RMF） | 風險管理原則 vs 七步驟流程 |
+| ISO 31000 | COBIT | 一般企業風險管理 vs IT 治理 |
+| ISO 27001 | SOC 2 | 組織有 ISMS vs auditor 對特定範圍控制出具報告 |
+| SOC 2 | SSAE | 交付的 assurance 報告 vs auditor 遵循的標準 |
+| SOC 1 | SAS 70 | 現行 vs 已汰換的前身 |
+| Purpose Specification | Use Limitation | 先宣告用途 vs 事後不得越界 |
+| Individual Participation | 員工資安參與 | data subject 的查改權 vs 無關概念 |
+| Preponderance of evidence | Comparative negligence | 舉證門檻 vs 責任比例與賠償 |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
@@ -556,6 +662,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 - Cloud provider 是 processor，那誰負最終法律責任？
 - SLE、ALE 的公式各是什麼？EF 受什麼影響最大？
 - 確保 provider 履行義務的最重要機制是什麼？
+- OECD 八原則用中文記憶串怎麼背？Purpose 與 Use Limitation 差在哪？
+- Individual Participation 的「individual」指誰？
+- `modified data` 一定不可採證嗎？真正的判準是什麼？
+- Preponderance of evidence 與 comparative negligence 各回答什麼問題？
 - RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
 - 問 ARO 的直接依據時，為什麼不能選 aggregation？
 - ISO 27001 偏好 cloud 還是 on-prem？
