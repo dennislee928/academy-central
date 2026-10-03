@@ -641,6 +641,52 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | D6 targeted questions 20–25 題 | — |
 | **Gate** | **≥ 75–80%** |
 
+### 框架題的答題方法（`by-test/13` Part 2 §2）
+
+D6 的 ROI 關鍵是**先建 taxonomy map，而不是通讀標準全文**。ISO 27002:2022 本身就有 93 controls，硬讀的 ROI 對 CCSP 很低。CCSP 的準備目標不是 ISO Lead Auditor。
+
+#### 三層模型
+
+| 層 | 做什麼 | 對應 |
+|---|---|---|
+| **Layer 1** | 看到名稱兩秒內能歸類「它是什麼東西」 | §1.2 兩秒歸類表 |
+| **Layer 2** | 學會與鄰近項目的差異 | §1.2 鄰近項目的切法 |
+| **Layer 3** | 只背 exam trigger words | §1.2 trigger words |
+
+**Layer 1 最重要。** 不需要背 ISO 條號。
+
+#### 陌生管理題的四問法
+
+```text
+① 這是 standard、framework、report、law 還是 principle？
+② 誰使用它：organization、auditor、regulator 還是 customer？
+③ 它產出什麼：certification、report、controls 還是 process？
+④ 題目在問 governance、audit、risk 還是 privacy？
+```
+
+填答範例：
+
+| | **SOC 2** | **ISO 27001** |
+|---|---|---|
+| What? | report／examination | management-system requirements standard |
+| Who? | service organization ＋ independent auditor | organization |
+| Output? | assurance report | ISMS ＋ possible certification |
+| Purpose? | customer／vendor assurance | systematic information-security governance |
+
+這是 [README 錯題 argue 流程](../README.md) 的 D6 專用變體。
+
+#### 建議的 D6 備考時間配置
+
+| 比例 | 工作 |
+|---:|---|
+| 40% | LearnZapp fresh questions |
+| 25% | 錯題 argue ＋ boundary 修正 |
+| 20% | Framework comparison flashcards |
+| 10% | Udemy／DestCert targeted review |
+| 5% | 官方 summary 查證陌生術語 |
+
+> **原則：** 不要一看到陌生名詞就去讀 30 頁 PDF。先建立 `name → category → purpose → neighboring distinction`，已足以應付大部分 CCSP 題。
+
 ### Drill B：法規與標準閉卷默寫（10 分鐘）
 
 寫出 §1.1 的最小必背集合七條，再寫出 §1.2 的易混淆規則七行。
