@@ -26,6 +26,7 @@
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `2.2` 儲存型態、`2.4` dashboard | §1.3、§2.10 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D2 §1 volume、§2 virtualization/multitenancy、§3 egress 障礙、§4 TPI 系列 | §1.3、§1.10、§1.11、§2.11 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §13 encryption vs mirroring、§12 DH／OOB（復現） | §1.8、§1.7 |
+| `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §1–§7 key protection／encryption 粒度／masking／dispersion／AONT-RS；Part 2 §3B hash vs backup | §1.3–§1.5、§1.7 |
 
 ---
 
@@ -153,6 +154,20 @@ Internet / external service
 
 **PaaS 儲存：** 常為 provider 管理、customer application 存取的 database storage。
 
+```text
+Volume = Disk
+File   = Filesystem hierarchy
+Object = Key + Metadata + Object
+```
+
+| 類型 | 典型用途 |
+|---|---|
+| **Volume／Block** | OS disk、DB storage、高效能 block I/O（virtual disk、SAN LUN、cloud block volume） |
+| **Object** | S3-style storage、images、backups、data lake、大量非結構化資料 |
+| **File** | NFS／SMB／NAS 等共享階層式 filesystem |
+
+> **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（與 §1.3 下方的 Unresolved 標記併讀）。
+
 #### Block / File / Object 三者對照（`by-test/11` D2 §1）
 
 | Type | Looks like | Access |
@@ -204,6 +219,55 @@ Application → DBMS (TDE Engine) → Encrypted Data
 | **Key escrow** | 第三方或受控方式保存 key |
 | **Envelope encryption** | data key 加密資料，master key 加密 data key |
 
+#### Cryptographic key protection 原則（`by-test/13` Part 1 §1）
+
+> **Cryptographic keys must be protected at least as strongly as the data they can decrypt.**
+
+```text
+Vault / KMS / HSM          = implementation mechanisms
+Protection(Key) ≥ Protection(Data) = security principle
+```
+
+**為什麼：** 若 DB 是 AES-256 加密的 ciphertext，但 AES key 放在 world-readable 的 plaintext config file，AES-256 幾乎沒有意義——攻擊者取得 `Ciphertext + Key` 就能還原 plaintext。
+
+**四選一秒答：** 選項若為 `In vaults`／`By armed guards`／`With two-person integrity`／**`At least as securely as the data they decrypt`**，選最後一個——其餘三者都是 context-dependent implementation。
+
+**Key vault 的 blast radius：** 正確部署的 vault／KMS 本就應該比一般 DB 強。真正的風險是 **vault 被配置成與 DB 同一 trust boundary**：
+
+```text
+DB compromise
++ 同一組 admin credentials 可直接讀 Vault
++ Vault policy = allow secret/*
++ 長效 root/admin token
+= Encryption 幾乎失去隔離價值
+```
+
+其他常見反模式：dev mode 上 production、root token 共用、application 可 export 所有 key、DB admin 兼 vault admin、未啟用 audit logging、unseal／recovery material 管理不良。
+
+> 弱的不是 vault 技術本身，而是 **key-management control plane 被配置得太弱**。KEK／root-of-trust／master key 更應該做到 `Protection(Key) > Protection(Data)`。
+
+#### Encryption 粒度四選一（`by-test/13` Part 1 §2 ⭐）
+
+上表的 application-level／TDE／volume／transport 是**引擎位置**的切法；考試另有一組**保護範圍**的四選一：
+
+| 題目看到 | 優先想到 |
+|---|---|
+| One particular **file** | **File-level encryption** |
+| DB／storage encryption 對 app **transparent** | **Transparent／TDE** |
+| Specific **table／column／field** | **Application-level encryption** |
+| One cloud-storage **object** | **Object-level encryption** |
+
+| 型態 | 範圍 | 說明 |
+|---|---|---|
+| **File-level** | 一個完整檔案 | `report.pdf → report.enc`；不是針對 DB schema |
+| **TDE** | DB data files、tablespaces、transaction logs、backups | Application 不需知道 encryption 發生；主要解決 **data at rest** |
+| **Application-level** | table／column／field | App 加密後才寫入 DB，DB 從頭拿到的就是 ciphertext；DB admin 可能也看不到 plaintext |
+| **Object-level** | 單一 cloud-storage object | 典型是 S3／object storage bucket 內的個別物件，不是 relational table |
+
+**Application-level 的代價：** application complexity、key management、indexing／search／query 困難。
+
+> **Nuance：** 真實世界某些 DB 可把特定 table 放進 dedicated encrypted tablespace，因此 TDE 也能做到部分 selective protection。但 **CCSP 四選一**若題幹強調「application only needs to encrypt specific sensitive fields／tables」，仍優先 **Application-level encryption**。
+
 **金鑰管理原則：**
 
 ```text
@@ -252,6 +316,77 @@ FPE          = encryption but preserves format
 **Masking 最佳商業情境：** 使用者只需要**部分驗證**、不需要完整敏感值時最強。例：客服只需部分 SSN 驗證客戶身分。反例：出貨需要完整地址、HR 需要完整駕照資料。
 
 **Tokenization 必要條件：** 需要保存 token ↔ original value 的 **mapping／token vault**。
+
+#### ⭐ Data masking 的九種技術（`by-test/13` Part 1 §3）
+
+上表是「masking vs 其他保護技術」的區分；這一組是 **masking 內部的 technique taxonomy**，建議直接背 terminology。
+
+| 技術 | 做什麼 | 範例 |
+|---|---|---|
+| **Substitution** | 換成另一個合理值，保持 format／realism／可用性，但失去真實 identity | `Alice Wang → Mary Chen` |
+| **Random substitution** | 從候選資料中隨機取值 | `Alice／Taipei → David／Kaohsiung` |
+| **Algorithmic substitution** | 用演算法產生替代值，可做到 **deterministic consistency**（同一來源每次得到相同假值） | `123-45-6789 → 673-82-4107` |
+| **Shuffling** | 把**同一欄**的真實值重新排列——值全是真的，但 person ↔ value 的對應被打破 | `Alice→70000, Bob→90000` 洗成 `Alice→90000, Bob→80000` |
+| **Deletion／Nulling** | 直接拿掉敏感值 | `SSN = NULL` 或 `SSN = ""` |
+| **Character scrambling** | 打亂字元順序或值，保留 length 與部分格式特徵 | `ABCDE12345 → D4A1E32BC5` |
+| **Number variance** | 在合理範圍內加減，保留 distribution／統計可用性 | `Salary 100000 ±10% → 94,215` |
+| **Masking-out** | 只顯示部分字元 | `4111111111111111 → ************1111` |
+| **Algorithmic transformation** | deterministic 轉換成結構仍有效的值（與 algorithmic substitution 重疊） | — |
+
+**必背清單（七項）：**
+
+```text
+Substitution
+Shuffling
+Deletion / Nulling
+Character scrambling
+Number variance
+Masking-out
+Algorithmic transformation
+```
+
+> **常見疑問：** 「Deletion 怎麼算 masking？」——在廣義的 test-data masking taxonomy 中，**nulling／deletion 確實被算成 masking technique**（confidentiality 最直接，但 data utility 最低）。
+
+> **❌ 不是 masking technique：`Conflation`。** 它只是一般英文的「把兩個不同概念混為一談」（例如 conflating authentication with authorization），在題目中純屬 distractor。
+
+#### Bit-splitting／Data dispersion（`by-test/13` Part 1 §4–§5）
+
+核心：**將資料轉換／切成多個 fragment 分散保存，單一 fragment 不足以重建完整資料。**
+
+```text
+Original Data
+      ↓
+Split / Transform
+      ↓
+ ┌────┼────┬────┐
+ F1   F2   F3   F4
+ ↓    ↓    ↓    ↓
+ A    B    C    D
+```
+
+可跨 storage nodes、providers、geographic regions。
+
+**為什麼題庫說它像 RAID？** 共同概念是「資料分散在多個 storage component」，但目的不同：
+
+| | **RAID** | **Secure data dispersion** |
+|---|---|---|
+| 主要目的 | availability、resilience、有時 performance | 另提供 **confidentiality benefit**、compromise isolation、provider／site diversity |
+
+**不要理解成 `bit-splitting = RAID`。**
+
+**跨 jurisdiction 的正確說法：** 題庫常說分散多 jurisdiction 會讓單一 jurisdiction 的執法 seizure 更複雜。其邏輯可以理解（只取得 Fragment A 無法 reconstruct），但**不要把「阻撓 law enforcement」當成 security objective 去背**。較好的 security model 是：
+
+> **Compromise／seizure of one location does not yield the full dataset.**
+
+#### AONT-RS（`by-test/13` Part 1 §7）
+
+**All-or-Nothing Transform + Reed-Solomon：**
+
+```text
+Data → AONT transform → Reed-Solomon encoding → Multiple fragments → Distributed storage
+```
+
+沒有足夠 fragment 就無法有效 recovery。它屬於 **data transformation／dispersion**，**不是 quantum computing**（quantum 關鍵字見 [Domain 1 §1.8](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
 
 ```text
 Tokenization 不是 encryption；沒有 encryption engine，也不一定有 key。
@@ -322,6 +457,24 @@ PCI DSS 場景看到 tokenization → 降低 cardholder data exposure / complian
 | **HMAC** | integrity + shared-secret authentication | 真正的 non-repudiation（雙方共享同一 secret） |
 
 用語提醒：不要說「用 private key 加密」來形容簽章；CCSP 較安全的說法是 **sign with the private key、verify with the public key**。
+
+**Hash vs Backup（`by-test/13` Part 2 §3B）：**
+
+| | **Hash** | **Backup** |
+|---|---|---|
+| 回答什麼 | **Has this file／config changed?** | **Can I recover the data／system?** |
+| 提供 | **Integrity** | **Availability／Recovery** |
+| 典型用途 | integrity verification、baseline validation、configuration drift 偵測、forensic evidence checking | 還原資料與系統 |
+
+```text
+Approved config → SHA-256 → HASH-A
+Current  config → SHA-256 → HASH-B
+A != B → modification / drift
+```
+
+Baseline 與組態偏離的維運面見 [Domain 5 §1.2](../domain5-operations/01-consolidated-lecture.md)；鑑識面見 [Domain 6 §1.5](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
+> **Quantum computing** 關鍵字（superposition／qubit／entanglement）歸 [Domain 1 §1.8](../domain1-cloud-concepts/01-consolidated-lecture.md)。
 
 #### PKI 與 X.509
 
@@ -574,6 +727,18 @@ BEST    = 選最完整／最適當的答案
 | 36 | SoD 分責任；TPI／Dual Control 同一動作要兩人；Split Knowledge 沒人知道完整 secret；M-of-N 是門檻。 |
 | 37 | **可回復且受保護的敏感備份 → Encryption；近零 RPO／持續複製 → Mirroring。** |
 | 38 | Backup 不等於 continuous mirroring；mirroring 由 RPO／availability 驅動。 |
+| 39 | **Cryptographic keys 必須被保護得至少和它們能解密的資料一樣強。** |
+| 40 | Vault／KMS／HSM 是 implementation；`Protection(Key) ≥ Protection(Data)` 才是原則。 |
+| 41 | Vault 的真正風險是被配置成與 DB 同一 trust boundary，不是技術本身弱。 |
+| 42 | 保護範圍四選一：file → File-level；transparent → TDE；table/column/field → **Application-level**；cloud object → Object-level。 |
+| 43 | Masking 技術七項：substitution、shuffling、deletion/nulling、character scrambling、number variance、masking-out、algorithmic transformation。 |
+| 44 | Shuffling 的值都是真的，被打破的是 person ↔ value 的對應。 |
+| 45 | Nulling／deletion 算 masking；**Conflation 不是** masking technique。 |
+| 46 | Bit-splitting：單一 fragment 不足以重建；正確 security model 是「單一地點被取得不會洩漏完整資料集」。 |
+| 47 | RAID 偏 availability；secure dispersion 另有 confidentiality 與 compromise isolation。 |
+| 48 | AONT-RS = All-or-Nothing Transform + Reed-Solomon，屬 dispersion，不是 quantum。 |
+| 49 | **Hash 回答 has this changed（integrity）；Backup 回答 can I recover（availability）。** |
+| 50 | Volume = Disk；File = Filesystem hierarchy；Object = Key + Metadata + Object。 |
 
 ---
 
@@ -605,6 +770,15 @@ BEST    = 選最完整／最適當的答案
 | Split Knowledge | M-of-N | 需全部拼齊 vs 達到門檻即可 |
 | Block storage | File storage | block device vs NFS／SMB 共享 |
 | Encryption（備份） | Mirroring | 機密性 vs 可用性與 RPO |
+| File-level | Object-level | 檔案系統中的檔案 vs 物件儲存中的物件 |
+| TDE | Application-level | 對 app 透明、保護 DB 檔案 vs app 先加密、可選欄位 |
+| Substitution | Shuffling | 換成不存在的假值 vs 重排既有真值 |
+| Algorithmic substitution | Random substitution | deterministic 一致 vs 每次隨機 |
+| Masking-out | Character scrambling | 遮住部分字元 vs 打亂全部字元 |
+| Number variance | Nulling | 保留統計分布 vs 完全移除 |
+| Bit-splitting | RAID | 另含機密性與 compromise isolation vs 偏可用性 |
+| AONT-RS | Quantum computing | 資料轉換與分散 vs superposition／qubit |
+| Hash | Backup | 完整性驗證 vs 可回復性 |
 
 ---
 
