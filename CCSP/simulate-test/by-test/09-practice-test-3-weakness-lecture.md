@@ -563,9 +563,9 @@ Next gate = D3/D4/D6 mixed mini-test ≥75%.
         
 - **今日檢驗行動**：
     
-    - 執行 **D3 targeted drill 25 題**（Gate 門檻：$\ge 75\%$）。
+    - 執行 **D3 targeted drill 25 題**（Gate 門檻：`≥ 75%`）。
         
-    - 執行 **D6 targeted drill 20 題**（Gate 門檻：$\ge 75\%$）。
+    - 執行 **D6 targeted drill 20 題**（Gate 門檻：`≥ 75%`）。
         
 
 ### 💻 Day 2（週五）：D4 雲端應用安全專項（穩固技術邊界）
@@ -580,7 +580,7 @@ Next gate = D3/D4/D6 mixed mini-test ≥75%.
         
 - **今日檢驗行動**：
     
-    - 執行 **D4 targeted drill 30 題**（Gate 門檻：$\ge 75\%$）。
+    - 執行 **D4 targeted drill 30 題**（Gate 門檻：`≥ 75%`）。
         
 
 ### 🧪 Day 3（週六）：三域綜合驗收（Mixed Validation）
@@ -593,7 +593,7 @@ Next gate = D3/D4/D6 mixed mini-test ≥75%.
         
     - **週日上場前 Gate Check 門檻**：
         
-        - 混合測驗總分 $\ge 75\%$。
+        - 混合測驗總分 `≥ 75%`。
             
         - D3、D4、D6 的單項子分數**皆不得低於 70%**。
             
@@ -608,4 +608,4 @@ Next gate = D3/D4/D6 mixed mini-test ≥75%.
     
     - **時間管控**：上一回平均每題僅花 31 秒，衝刺過快容易看漏細節。本回應將平均作答時間拉長至 **45-50 秒/題**，多出來的 15 秒用來雙重確認題幹是問 `Customer` 還是 `Provider`，以及要求的是 `BEST`、`FIRST` 還是 `EXCEPT`。
         
-    - 目標總分：穩定複製並超越 **$\ge 77\%$**。
+    - 目標總分：穩定複製並超越 **`≥ 77%`**。
