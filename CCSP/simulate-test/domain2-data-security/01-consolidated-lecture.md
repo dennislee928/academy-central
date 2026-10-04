@@ -27,6 +27,7 @@
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D2 §1 volume、§2 virtualization/multitenancy、§3 egress 障礙、§4 TPI 系列 | §1.3、§1.10、§1.11、§2.11 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §13 encryption vs mirroring、§12 DH／OOB（復現） | §1.8、§1.7 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §1–§7 key protection／encryption 粒度／masking／dispersion／AONT-RS；Part 2 §3B hash vs backup | §1.3–§1.5、§1.7 |
+| 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | object storage 判準、multitenancy 共享層級、SoD 分離對象 | §1.3、§1.10、§1.11 |
 
 ---
 
@@ -166,7 +167,18 @@ Object = Key + Metadata + Object
 | **Object** | S3-style storage、images、backups、data lake、大量非結構化資料 |
 | **File** | NFS／SMB／NAS 等共享階層式 filesystem |
 
-> **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（與 §1.3 下方的 Unresolved 標記併讀）。
+> **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（與 §1.3 下方的 Unresolved 標記併讀）。有些產品能模擬 folder UX，但底層模型仍不同——**不是「特別設定之後就變成 traditional filesystem hierarchy」**。
+
+**Object storage 的判準是模型，不是產品名：**
+
+```text
+判準 = object + metadata + key 的 flat namespace 模型
+```
+
+- **S3／MinIO** → object store。
+- **MongoDB／GridFS** → 能存 binary／file，但**不等於被分類成 object storage**。「能放檔案」不是 object storage 的判準。
+
+> 作答時先問「它的資料模型是 object + metadata + key 嗎？」，不要用產品是否能存檔案來判斷。
 
 #### Block / File / Object 三者對照（`by-test/11` D2 §1）
 
@@ -577,6 +589,8 @@ Host
 └ Tenant C
 ```
 
+> **共享層級的邊界：** multitenancy 指多個 tenant 共用**同一個 logical platform／infrastructure**，**不要求一定落在同一台 physical host**。上圖只是最常見的一種實作，不是定義。
+
 ```text
 Virtualization = abstraction / transformation
 Multitenancy   = shared infrastructure
@@ -609,6 +623,15 @@ M-of-N             = threshold control
 ```
 
 > 對照：`by-test/06` P0-2 的金鑰管理題中，**separation of duties** 是「金鑰管理與被加密資料分離」的正解標籤；two-person integrity 則是「關鍵動作需兩人」的標籤。兩者不可互換（見 §1.4 的誤選對照表）。
+
+**SoD 分離的對象是 authority／functions，不是元件：**
+
+```text
+SoD                              = 分離職權與職能
+單純把元件／系統拆開             = segmentation / compartmentalization
+```
+
+把資料庫與應用拆成兩台機器並不構成 SoD；要看的是**誰有權做什麼**是否被拆開。這與 §1.4 誤選對照表中「compartmentalization 不是金鑰／資料職責分離的最佳標籤」是同一個邊界。
 
 ---
 
@@ -739,6 +762,10 @@ BEST    = 選最完整／最適當的答案
 | 48 | AONT-RS = All-or-Nothing Transform + Reed-Solomon，屬 dispersion，不是 quantum。 |
 | 49 | **Hash 回答 has this changed（integrity）；Backup 回答 can I recover（availability）。** |
 | 50 | Volume = Disk；File = Filesystem hierarchy；Object = Key + Metadata + Object。 |
+| 51 | **Object storage 的判準是 object + metadata + key 的 flat namespace 模型，不是「能不能存檔案」。** |
+| 52 | S3／MinIO 是 object store；MongoDB／GridFS 能存 binary 但不被分類為 object storage。 |
+| 53 | Multitenancy 共用的是 **logical platform／infrastructure**，不要求同一台 physical host。 |
+| 54 | **SoD 分離的是 authority／functions**；單純拆開元件只是 segmentation／compartmentalization。 |
 
 ---
 
@@ -779,6 +806,9 @@ BEST    = 選最完整／最適當的答案
 | Bit-splitting | RAID | 另含機密性與 compromise isolation vs 偏可用性 |
 | AONT-RS | Quantum computing | 資料轉換與分散 vs superposition／qubit |
 | Hash | Backup | 完整性驗證 vs 可回復性 |
+| Object storage | 能存檔案的資料庫 | flat key + metadata 模型 vs 僅具備存 binary 的能力 |
+| Multitenancy | 同一 physical host | 共用邏輯平台 vs 共用實體主機（非定義） |
+| SoD | Segmentation／Compartmentalization | 分離職權與職能 vs 分離元件或資訊分艙 |
 
 ---
 
@@ -821,6 +851,14 @@ BEST    = 選最完整／最適當的答案
 
 **參考答案：** ① BC/DR ② 存取資料庫的 application ③ Separation of duties ④ Evidence collection ⑤ 客服看部分 SSN ⑥ 邏輯資料位置難以確定 ⑦ Inheritance ⑧ Viewing ⑨ Virtualization ⑩ Symmetric AEAD（不是憑證直接加密）
 
-### Drill D：維持節奏
+### Drill D：閉卷 KPI（terminology precision）
+
+下列三題只要能用**定義**而非舉例回答，就算這一塊補完：
+
+1. Object storage 的判準是什麼？（答模型，不要答產品名）
+2. Multitenancy 共用的是哪一層？物理主機是必要條件嗎？
+3. SoD 分離的對象是什麼？把元件拆開算不算 SoD？
+
+### Drill E：維持節奏
 
 每週 15–25 題 D2 mixed drill，**重點看錯題，而不是追新題量**。D2 權重最高，不可視為已補完。
