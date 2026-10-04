@@ -381,6 +381,28 @@ Original Evidence → Forensic image → Hash verification → Working copy → 
 
 真正的重點在 **chain of custody、hashes、documentation、repeatability、original preservation**。Hash 作為完整性驗證手段的說明見 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)。
 
+**證據完整性的五要素模型**（把零散的 supporting factors 固定下來）：
+
+```text
+Original preservation
+        +
+Hash / integrity verification
+        +
+Chain of custody
+        +
+Documentation
+        +
+Repeatable / validated process
+```
+
+**考場秒答順序：**
+
+```text
+Preserve → Hash → Document → Track custody
+```
+
+> CCSP 不要求深入 digital forensics 工具操作；看到 evidence 題先找上面四個動作。
+
 #### Preponderance of Evidence vs Comparative Negligence（`by-test/13` Part 2 §3H）
 
 這兩個常被題庫混用：
@@ -433,6 +455,17 @@ Due Care = DO ／ Due Diligence = CHECK ／ Liability = CONSEQUENCE
 ```
 
 > **用語註記：** ISC2 教材在「diligence 是事前調查還是持續驗證」上兩種寫法都出現過，本檔採合併表述（事前 ＋ 持續皆屬 diligence）。作答時抓動詞：**investigate／verify／assess → Due diligence**；**implement／maintain safeguards → Due care**。
+
+**四個詞一次釘死（含英文混淆陷阱）：**
+
+```text
+Due Diligence = KNOW / investigate / assess / review
+Due Care      = DO / implement reasonable safeguards
+Liability     = legal responsibility   ← 法律責任
+Reliability   = 可靠性                 ← 完全不同的字，不要混
+```
+
+> **常見混淆：把 Liability 誤記為「可依賴性」。** 那是 **Reliability**。中文直譯「盡職工作／盡職調查」對考試也不夠精準，建議直接用 `KNOW／DO／legal responsibility` 三個英文定位。
 
 **Contract 是信任的根本機制：** 確保 provider 履行義務的最重要機制是 **contract**；技術控制支援 assurance，但法律責任錨定在合約。
 
@@ -685,6 +718,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 68 | **把 ARO 誤認為年度總損失是常見錯誤——年度總損失是 ALE。** |
 | 69 | 一次損失 500,000、每 4 年一次 → ARO 0.25、ALE 125,000／year。 |
 | 70 | OECD 題多半給情境，要能從情境反推原則（見 §1.3 反推表）。 |
+| 71 | **Liability = legal responsibility；Reliability = 可靠性——兩個字不要混。** |
+| 72 | Due Diligence = KNOW／investigate；Due Care = DO／implement。 |
+| 73 | 證據完整性五要素：original preservation ＋ hash ＋ chain of custody ＋ documentation ＋ repeatable process。 |
+| 74 | 看到 evidence 題的秒答順序：**Preserve → Hash → Document → Track custody**。 |
 
 ---
 
@@ -709,7 +746,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Legal hold | eDiscovery | 先停止刪除 vs 找出並提交證據 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
 | Court | Regulator | 鑑識報告最終接收者 vs 一般合規對象 |
-| Due care | Due diligence | 持續合理注意 vs 事前盡職調查 |
+| Due care | Due diligence | DO／實作維持 vs KNOW／調查驗證 |
+| Liability | Reliability | 法律責任 vs 可靠性（英文易混） |
 | SLA | Contract | 服務水準承諾 vs 法律責任錨點 |
 | Copyright | Patent | 具體表達 vs 發明與製程 |
 | Trademark | Trade secret | 品牌識別 vs 未公開商業資訊 |
