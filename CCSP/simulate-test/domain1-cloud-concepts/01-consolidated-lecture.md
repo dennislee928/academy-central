@@ -21,6 +21,7 @@
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §8 Q14 BC/DR + Interoperability | §2.2 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §1 Private ≠ Private Network、D1 §2 deployment 快速判斷、D1 §3 Sandbox | §1.2、§1.7、§2.6 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §8 Quantum computing | §1.8 |
+| 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | §9 Cloud actors：Carrier vs Broker | §1.3 |
 
 ---
 
@@ -112,6 +113,42 @@ Private ≠ not Internet-facing
 | **Cloud Reseller** | Purchases hosting/cloud services and resells to its own customers | 購買主機／雲端服務後轉售給自有客戶 |
 | **Cloud Carrier** | Provides connectivity and transport | 提供連線與傳輸服務 |
 | **Cloud Auditor** | Conducts independent assessment | 執行獨立評估 |
+
+#### Carrier vs Broker（最常混的一組）
+
+```text
+Carrier carries traffic.    → connectivity / transport（ISP、telecom、transport path）
+Broker manages services.    → 管理、整合、協商 cloud services
+```
+
+**Carrier 在路徑上的位置：**
+
+```text
+Consumer
+   │
+ network
+   │
+Carrier
+   │
+ network
+   │
+Provider
+```
+
+**Broker 的架構與三種行為：**
+
+```text
+Customer
+   │
+ Broker
+ ├── AWS
+ ├── Azure
+ └── GCP
+```
+
+Broker 可能執行 **aggregation**（彙總多個服務）、**intermediation**（加值中介）、**arbitrage**（在供應商之間動態選擇）。
+
+> 與 **Reseller** 的差別見上表：reseller 是買斷後轉售給自有客戶，broker 是仲介、整合與管理。
 
 ### 1.4 IaaS 商業價值
 
@@ -277,6 +314,8 @@ strict governance
 | 18 | More control ≠ more secure；more control 同時代表 more responsibility。 |
 | 19 | 看到 superposition／qubit／entanglement／quantum interference → **quantum computing**。 |
 | 20 | AONT-RS 是 data dispersion，不是 quantum computing。 |
+| 21 | **Carrier carries traffic；Broker manages services。** |
+| 22 | Broker 的三種行為：aggregation、intermediation、arbitrage。 |
 
 ---
 
@@ -295,6 +334,7 @@ strict governance
 | PaaS sandbox | IaaS sandbox | 現成開發測試平台 vs 需自控 OS／網路隔離 |
 | Sandbox | Service model | 隔離模式 vs 服務交付層級 |
 | Quantum computing | AONT-RS | superposition／qubit 關鍵字 vs 資料轉換與分散 |
+| Cloud carrier | Cloud broker | 載送流量（連線與傳輸） vs 管理整合服務 |
 
 ### 決策流程
 
