@@ -492,8 +492,8 @@ Evidence from this review set:
 
 ### Interpretation
 
-Earlier Practice Test 2 had strong D6 performance, so D6 is not permanently broken.  
-However, this review proves D6 and non-technical concepts are **not yet stable under mixed-question pressure**.
+Earlier Practice Test 2 scored **D6 86% (12 / 14)** — see `07-practice-test-2-weakness-lecture.md` §2 — so D6 is not permanently broken.  
+However, this review proves D6 and non-technical concepts are **not yet stable under mixed-question pressure**: D6 can spike in a single full mock, yet still breaks down under denser non-technical taxonomy questions.
 
 Recommended handling:
 
