@@ -25,6 +25,7 @@
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §9 BIA、§13 SOC／FIPS | §1.2、§1.8 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.8、§2.6 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
+| 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 
 ---
 
@@ -152,17 +153,40 @@ Privacy principles                           → OECD
 Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor
 ```
 
-口訣：**P-C-S-I-A-A-M**
+英文口訣 **P-C-S-I-A-A-M** 不好記，建議改用中文生命週期口訣：
 
-| 步驟 | 重點 |
-|---|---|
-| **Prepare** | 建立 context、角色、風險管理策略 |
-| **Categorize** | 依資訊與系統的影響程度分級 |
-| **Select** | 選定控制基線並裁適 |
-| **Implement** | 落實控制並記錄 |
-| **Assess** | 評估控制是否正確實作、按預期運作 |
-| **Authorize** | 權責主管基於風險做出授權決定 |
-| **Monitor** | 持續監控控制與風險態勢 |
+> ## **準、分、選、做、驗、准、監**
+
+```text
+準 = Prepare     準備 context / roles / risk assumptions
+分 = Categorize  系統與資料的 impact 有多高？
+選 = Select      選哪些 controls？
+做 = Implement   真的部署 controls
+驗 = Assess      測試 controls 有沒有作用
+准 = Authorize   risk owner／AO 正式接受 residual risk
+監 = Monitor     上線後持續監控
+```
+
+| 步驟 | 重點 | 工程師類比 |
+|---|---|---|
+| **Prepare** | 建立 context、角色、風險管理策略 | requirements／threat model／architecture context |
+| **Categorize** | 依資訊與系統的影響程度分級 | determine impact／criticality——「這是 blog 還是 national payment system？」 |
+| **Select** | 選定控制基線並裁適 | choose security controls（MFA、logging、encryption、segmentation） |
+| **Implement** | 落實控制並記錄 | 真的 deploy：Terraform、Ansible、Kubernetes policy、EDR、IAM |
+| **Assess** | 評估控制是否正確實作、按預期運作 | vuln scan、audit、pentest、configuration assessment |
+| **Authorize** | 權責主管基於風險做出授權決定 | **工程師最不直覺的一步**：管理者正式接受 residual risk、允許系統上線。可想成 production go-live approval，但**不等於 DevOps approve** |
+| **Monitor** | 持續監控控制與風險態勢 | drift、vulnerabilities、logs、control effectiveness、environment changes |
+
+**為什麼順序不會錯——它有因果：**
+
+```text
+不知道 context       → 不能分類
+不知道風險等級       → 不知道選什麼 controls
+沒選 controls        → 無法 implement
+沒 implement         → 無法 assess
+沒 assess            → 不應 authorize
+authorize 後         → 必須 monitor
+```
 
 **RMF 不是什麼：** 不是 threat-only framework，也不是 cost-only framework。**Threat 與 cost 都只是 risk decision 的 input，不是框架的 foundation。**
 
@@ -178,6 +202,14 @@ Assessment
 Authorization
         ↓
 Continuous monitoring
+```
+
+#### 三個常被混用的治理／風險框架（一行定位）
+
+```text
+COBIT    = Govern IT            （企業 IT 治理）
+800-37   = Run RMF              （執行風險管理流程）
+31000    = Manage risk broadly  （一般企業風險管理原則）
 ```
 
 #### ISO 27001 的 technology-neutral（來源：`by-test/11` D1 §5）
@@ -584,6 +616,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 60 | **Preponderance of evidence = burden of proof；comparative negligence 才決定 damages 比例。** |
 | 61 | Seizure 範圍由法律權限、warrant scope 與 jurisdiction 決定；digital 與 physical 都可能被取得。 |
 | 62 | **Due Care = DO；Due Diligence = CHECK；Liability = CONSEQUENCE。** |
+| 63 | **RMF 中文口訣：準、分、選、做、驗、准、監。** |
+| 64 | RMF 的 **Authorize** 是管理者正式接受 residual risk，不等於 DevOps approve。 |
+| 65 | RMF 順序有因果：沒 context 不能分類、沒 assess 不應 authorize、authorize 後必須 monitor。 |
+| 66 | `COBIT = Govern IT`；`800-37 = Run RMF`；`31000 = Manage risk broadly`。 |
 
 ---
 
@@ -617,6 +653,7 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Historical data | Aggregation | 證據來源 vs 計算手法 |
 | ISO 31000 | NIST 800-37（RMF） | 風險管理原則 vs 七步驟流程 |
 | ISO 31000 | COBIT | 一般企業風險管理 vs IT 治理 |
+| RMF Authorize | DevOps approve | 管理者接受 residual risk vs 部署審核 |
 | ISO 27001 | SOC 2 | 組織有 ISMS vs auditor 對特定範圍控制出具報告 |
 | SOC 2 | SSAE | 交付的 assurance 報告 vs auditor 遵循的標準 |
 | SOC 1 | SAS 70 | 現行 vs 已汰換的前身 |
