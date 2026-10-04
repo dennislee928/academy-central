@@ -1,5 +1,5 @@
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
-CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證，不是量測流程成熟度。
+CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。Level 1 = Self-Assessment；Level 2 = Third-party assurance。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
@@ -14,7 +14,7 @@ Common Criteria 是什麼？	IT 產品安全評估與保證等級框架（EAL �
 Auditability 強調什麼？	活動可被記錄、追蹤與獨立驗證。沒有 log／clock sync／custody 就很難審計。
 eDiscovery 與一般 backup 差在哪？	eDiscovery 是為訴訟／調查識別、保存、產出電子證據；backup 是復原營運資料。
 EU privacy adequacy 大致在問什麼？	第三方國家是否被認定提供足夠個資保護，以支持跨境傳輸。
-GLBA 與 PCI DSS 再次對照？	GLBA = 美國聯邦金融隱私法；PCI DSS = 支付卡安全標準。
+GLBA 與 PCI DSS 再次對照？	GLBA = 美國聯邦法，管金融機構的 nonpublic personal information；PCI DSS = 產業安全標準，管 payment card data。題幹出現「federal law」就不是 PCI DSS。
 DMCA／copyright 題不要選成什麼？	不要選成隱私或資安控制框架。它處理著作權與數位內容保護。
 ISO 31000 與 NIST 800-37 各偏什麼？	ISO 31000 是一般企業風險管理 guidelines（現行 2018 版，非 certification）；NIST 800-37 是 RMF 七步驟流程。
 Right to Audit 通常出現在哪？	合約／SLA 條款，讓客戶或指定稽核人有權查核 CSP 控制。不是單靠公開行銷聲明。
@@ -65,3 +65,9 @@ ARO、SLE、ALE 的單位各是什麼？	ARO = 次數／year（frequency）；SL
 ARO 是不是「年度總損失」？	不是。年度總損失是 ALE；ARO 只是頻率（一年發生幾次）。把 ARO 誤認為年度總損失是常見 factual error。
 Liability 與 Reliability 差在哪？	Liability = legal responsibility（法律責任）；Reliability = 可靠性。兩個英文字容易混，把 Liability 誤記為「可依賴性」是常見錯誤。
 證據完整性的五要素是什麼？	Original preservation ＋ Hash／integrity verification ＋ Chain of custody ＋ Documentation ＋ Repeatable／validated process。
+CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（control framework：有哪些 controls、如何對映其他 framework）→ CAIQ（assessment questionnaire：有沒有實作）→ STAR（assurance／registry：L1 自我評估、L2 第三方保證）。
+「Ensuring baseline configuration is applied」算 CCM 的 benefit 嗎？	不算。CCM tells you what controls matter；tooling（Ansible／CSPM／Policy-as-Code）verifies／enforces them。這是 framework vs enforcement 的邊界。
+STAR Level 1 與 Level 2 各是什麼？	Level 1 = Self-Assessment；Level 2 = Third-party assurance。題庫有時寫 Tier 1，看到 self-assessment 就選 Level／Tier 1。
+GAAP 是 cloud security audit standard 嗎？	不是。GAAP = Generally Accepted Accounting Principles，是會計原則。問 service organization 的 audit standard 時正解是 SSAE 18（SOC 是 report）。
+Jurisdiction 與 Choice of Law 差在哪？	Jurisdiction = Which court can hear?（哪個法院有權受理）；Choice of Law = Which law applies?（應適用哪個地方的實體法）。
+Restatement (Second) of Conflict of Laws 用來做什麼？	案件涉及多個 jurisdiction 時，用來判斷應適用哪個 jurisdiction 的 substantive law，偏 choice of law 一側。CCSP 不要求 law-school 深度。

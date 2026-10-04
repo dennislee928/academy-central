@@ -31,3 +31,5 @@ Developer 想要現成的 coding／testing 環境，選哪個 service model？	P
 Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
 More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。
 題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
+Cloud carrier 與 cloud broker 一句話怎麼分？	Carrier carries traffic（connectivity／transport，像 ISP／telecom）；Broker manages services（管理、整合、協商 cloud services）。
+Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）、intermediation（加值中介）、arbitrage（在供應商之間動態選擇）。與 reseller 的「買斷後轉售」不同。

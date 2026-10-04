@@ -31,6 +31,8 @@ Developer 想要現成的 coding／testing 環境，選哪個 service model？	P
 Sandbox 需要 custom OS 或 network-level 隔離控制時選哪個？	IaaS。customer 可控 guest OS、host firewall、VPC／subnet、routing、security groups，適合 malware analysis、packet capture、kernel testing。
 More control 是否等於 more secure？	No。More control 同時代表 more responsibility；要看 requirement 是否真的需要客戶自控安全邊界。
 題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
+Cloud carrier 與 cloud broker 一句話怎麼分？	Carrier carries traffic（connectivity／transport，像 ISP／telecom）；Broker manages services（管理、整合、協商 cloud services）。
+Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）、intermediation（加值中介）、arbitrage（在供應商之間動態選擇）。與 reseller 的「買斷後轉售」不同。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -66,8 +68,8 @@ Format-Preserving Encryption 的特點？	加密後仍保持原資料格式，�
 哪一項通常不是 reclassification 的理由？	Color change。顏色改變通常與敏感度分類無關。
 Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。
 PII 放在 CSP，CSP 發生 breach，customer 的 accountability 消失嗎？	不會。責任可共享或委外，歸責通常仍在 data owner／controller。
-CSA CCM 是什麼？	雲端控制框架（control objectives／domains），可 mapping 其他標準。不要背完整 mapping 清單。
-CAIQ 是什麼？	CSA 的評估問卷，用來詢問 CCM 控制如何實作。
+CSA CCM 是什麼？	雲端控制框架：定義有哪些 cloud security controls，並 cross-map 到 ISO／NIST／FedRAMP。它不是 enforcement tool——CCM 說明哪些 controls 重要，實際套用與檢查靠 tooling。
+CAIQ 是什麼？	CSA 的評估問卷：CCM = What controls?；CAIQ = Do you implement them?。CAIQ 不是 control catalog 本身。
 STAR 是什麼？	CSA 的雲端供應商保證／登錄計畫，不是成熟度模型。
 SSAE 18 與 SOC 1／SOC 2 差在哪？	SSAE 18 是認證／attestation 標準；SOC 1／2 是報告類型。
 SOC 1 與 SOC 2 各看什麼？	SOC 1：財務報導控制；SOC 2：security／privacy 等信任原則控制。
@@ -282,7 +284,7 @@ Personnel controls 治理什麼？包含哪些項目？	治理人的可信度、
 Mantrap 是 personnel control 嗎？	No。Mantrap 作用在人身上，但分類是 Physical Access Control。Personnel = govern the person；Physical Access = govern entry／movement。作用對象相同不代表 control category 相同。
 Patch 能解決 cloud interoperability 問題嗎？	不能。Patch 修 software defect／vulnerability／performance；interoperability 是 architecture／API／format／standard 層面的問題。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
-CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證，不是量測流程成熟度。
+CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。Level 1 = Self-Assessment；Level 2 = Third-party assurance。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
@@ -297,7 +299,7 @@ Common Criteria 是什麼？	IT 產品安全評估與保證等級框架（EAL �
 Auditability 強調什麼？	活動可被記錄、追蹤與獨立驗證。沒有 log／clock sync／custody 就很難審計。
 eDiscovery 與一般 backup 差在哪？	eDiscovery 是為訴訟／調查識別、保存、產出電子證據；backup 是復原營運資料。
 EU privacy adequacy 大致在問什麼？	第三方國家是否被認定提供足夠個資保護，以支持跨境傳輸。
-GLBA 與 PCI DSS 再次對照？	GLBA = 美國聯邦金融隱私法；PCI DSS = 支付卡安全標準。
+GLBA 與 PCI DSS 再次對照？	GLBA = 美國聯邦法，管金融機構的 nonpublic personal information；PCI DSS = 產業安全標準，管 payment card data。題幹出現「federal law」就不是 PCI DSS。
 DMCA／copyright 題不要選成什麼？	不要選成隱私或資安控制框架。它處理著作權與數位內容保護。
 ISO 31000 與 NIST 800-37 各偏什麼？	ISO 31000 是一般企業風險管理 guidelines（現行 2018 版，非 certification）；NIST 800-37 是 RMF 七步驟流程。
 Right to Audit 通常出現在哪？	合約／SLA 條款，讓客戶或指定稽核人有權查核 CSP 控制。不是單靠公開行銷聲明。
@@ -348,6 +350,12 @@ ARO、SLE、ALE 的單位各是什麼？	ARO = 次數／year（frequency）；SL
 ARO 是不是「年度總損失」？	不是。年度總損失是 ALE；ARO 只是頻率（一年發生幾次）。把 ARO 誤認為年度總損失是常見 factual error。
 Liability 與 Reliability 差在哪？	Liability = legal responsibility（法律責任）；Reliability = 可靠性。兩個英文字容易混，把 Liability 誤記為「可依賴性」是常見錯誤。
 證據完整性的五要素是什麼？	Original preservation ＋ Hash／integrity verification ＋ Chain of custody ＋ Documentation ＋ Repeatable／validated process。
+CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（control framework：有哪些 controls、如何對映其他 framework）→ CAIQ（assessment questionnaire：有沒有實作）→ STAR（assurance／registry：L1 自我評估、L2 第三方保證）。
+「Ensuring baseline configuration is applied」算 CCM 的 benefit 嗎？	不算。CCM tells you what controls matter；tooling（Ansible／CSPM／Policy-as-Code）verifies／enforces them。這是 framework vs enforcement 的邊界。
+STAR Level 1 與 Level 2 各是什麼？	Level 1 = Self-Assessment；Level 2 = Third-party assurance。題庫有時寫 Tier 1，看到 self-assessment 就選 Level／Tier 1。
+GAAP 是 cloud security audit standard 嗎？	不是。GAAP = Generally Accepted Accounting Principles，是會計原則。問 service organization 的 audit standard 時正解是 SSAE 18（SOC 是 report）。
+Jurisdiction 與 Choice of Law 差在哪？	Jurisdiction = Which court can hear?（哪個法院有權受理）；Choice of Law = Which law applies?（應適用哪個地方的實體法）。
+Restatement (Second) of Conflict of Laws 用來做什麼？	案件涉及多個 jurisdiction 時，用來判斷應適用哪個 jurisdiction 的 substantive law，偏 choice of law 一側。CCSP 不要求 law-school 深度。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

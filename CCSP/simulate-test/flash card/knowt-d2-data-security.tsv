@@ -33,8 +33,8 @@ Format-Preserving Encryption 的特點？	加密後仍保持原資料格式，�
 哪一項通常不是 reclassification 的理由？	Color change。顏色改變通常與敏感度分類無關。
 Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。
 PII 放在 CSP，CSP 發生 breach，customer 的 accountability 消失嗎？	不會。責任可共享或委外，歸責通常仍在 data owner／controller。
-CSA CCM 是什麼？	雲端控制框架（control objectives／domains），可 mapping 其他標準。不要背完整 mapping 清單。
-CAIQ 是什麼？	CSA 的評估問卷，用來詢問 CCM 控制如何實作。
+CSA CCM 是什麼？	雲端控制框架：定義有哪些 cloud security controls，並 cross-map 到 ISO／NIST／FedRAMP。它不是 enforcement tool——CCM 說明哪些 controls 重要，實際套用與檢查靠 tooling。
+CAIQ 是什麼？	CSA 的評估問卷：CCM = What controls?；CAIQ = Do you implement them?。CAIQ 不是 control catalog 本身。
 STAR 是什麼？	CSA 的雲端供應商保證／登錄計畫，不是成熟度模型。
 SSAE 18 與 SOC 1／SOC 2 差在哪？	SSAE 18 是認證／attestation 標準；SOC 1／2 是報告類型。
 SOC 1 與 SOC 2 各看什麼？	SOC 1：財務報導控制；SOC 2：security／privacy 等信任原則控制。
