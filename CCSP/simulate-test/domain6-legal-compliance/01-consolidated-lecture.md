@@ -26,6 +26,7 @@
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.8、§2.6 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
+| 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | CSA ecosystem（CCM／CAIQ／STAR L1-L2、CCM ≠ enforcement）、GAAP、GLBA vs PCI DSS、Conflict of Laws | §1.1、§1.2、§1.4 |
 
 ---
 
@@ -105,10 +106,11 @@ FISMA   = 美國聯邦資訊系統安全
 | **NIST SP 800-92** | 日誌管理 | Log management |
 | **CSA CCM** | 雲端控制矩陣 | 把控制對映到各種要求 |
 | **CAIQ** | 問卷 | 搭配 CCM 使用的 CSA 問卷 |
-| **CSA STAR** | 保證／登錄計畫 | 分 self-assessment、third-party certification、continuous monitoring 等層級 |
+| **CSA STAR** | 保證／登錄計畫 | 分 self-assessment、third-party certification、continuous monitoring 等層級。**Level 1 = Self-Assessment；Level 2 = Third-party assurance**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1） |
 | **CMM** | 能力成熟度模型 | 流程的**嚴謹度、細節、可重複性（repeatability）** |
 | **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL |
 | **FIPS 140-2／140-3** | 密碼模組驗證 | **140-2 = legacy；140-3 = current** |
+| **GAAP** | 會計原則 | Generally Accepted Accounting Principles——**不是** cloud security audit standard，是 distractor |
 
 **易混淆規則：**
 
@@ -122,7 +124,10 @@ ISO 31000 / NIST 800-37 = 風險管理框架
 NIST 800-92 = 日誌管理
 COBIT     = enterprise IT governance
 SAS 70    = legacy，後繼為 SOC 1
+GAAP      = 會計原則，不是 audit standard
 ```
+
+> **四選一範例：** 問「service organization 的 audit standard 是哪個」，選項為 SOC 1／**SSAE 18**／GAAP／SOC 2 時，正解是 **SSAE 18**——SOC 是 report，GAAP 是會計原則。
 
 #### 鄰近項目的切法（`by-test/13` Part 2 §2 Layer 2）
 
@@ -146,6 +151,63 @@ Privacy principles                           → OECD
 ```
 
 **NIST SP 800 系列為何被採用：** 公開可取得、成本效益高（public domain），**不是因為國際強制採用或比較容易**。
+
+#### CSA Ecosystem：CCM → CAIQ → STAR
+
+三者常被混用，要能串成一條線：
+
+```text
+CSA
+ │
+ ├─ CCM    → control framework（哪些 controls？如何對應其他 framework？）
+ │
+ ├─ CAIQ   → assessment questionnaire（你有沒有實作這些 controls？）
+ │
+ └─ STAR   → assurance / registry program
+      ├─ Level 1 = Self-Assessment
+      └─ Level 2 = Third-party assurance
+```
+
+**CCM 的兩個角色：**
+
+1. 回答「cloud security 應有哪些 controls？」
+2. 回答「這些 controls 和 ISO、NIST、FedRAMP 等 framework 如何對應？」——即 **cross-mapping**
+
+```text
+                 CCM
+        Cloud control framework
+                 │
+     ┌───────────┼───────────┐
+     ↓           ↓           ↓
+ ISO controls   NIST      FedRAMP
+     ↖           ↑           ↗
+          control mappings
+```
+
+**⭐ CCM 不是 enforcement tool。** 它不是 SIEM、configuration enforcement engine、CSPM scanner、Ansible 或 policy engine。
+
+```text
+CCM tells you what controls matter.
+Tooling verifies / enforces them.
+```
+
+例如：
+
+```text
+CCM                               → Require secure configuration baseline
+Ansible / CSPM / Policy-as-Code   → Actually apply / check that baseline
+```
+
+> **常見錯因：** 把「ensuring baseline configuration is applied」當成 CCM 的 benefit。那是 tooling 的職責，不是 framework 的。這是 **framework vs enforcement** 的邊界問題。
+
+**CAIQ 的定位：**
+
+```text
+CCM  = What controls?
+CAIQ = Do you implement them?
+```
+
+範例：CCM 寫「Key management controls should exist」→ CAIQ 問「Do you maintain documented key-management procedures?」「Do you control cryptographic key access?」。**CAIQ 不是 control catalog 本身**，它是 assessment questionnaire。
 
 #### NIST RMF 七步驟（來源：`by-test/11` D5 §4）
 
@@ -722,6 +784,12 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 72 | Due Diligence = KNOW／investigate；Due Care = DO／implement。 |
 | 73 | 證據完整性五要素：original preservation ＋ hash ＋ chain of custody ＋ documentation ＋ repeatable process。 |
 | 74 | 看到 evidence 題的秒答順序：**Preserve → Hash → Document → Track custody**。 |
+| 75 | CCM 的兩個角色：定義 cloud controls ＋ **cross-mapping** 到 ISO／NIST／FedRAMP。 |
+| 76 | **CCM tells you what controls matter; tooling verifies／enforces them.** |
+| 77 | 「ensuring baseline configuration is applied」不是 CCM 的 benefit，是 Ansible／CSPM 的職責。 |
+| 78 | `CCM = What controls?`；`CAIQ = Do you implement them?` |
+| 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party assurance。** |
+| 80 | **GAAP 是會計原則，不是 cloud security audit standard**（四選一的 distractor）。 |
 
 ---
 
@@ -736,7 +804,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | ISO 27001 | ISO 27002 | 可認證的 ISMS vs 控制指引 |
 | ISO 27017 | ISO 27018 | 雲端安全控制 vs 公有雲 PII |
 | ISO 31000 | NIST 800-92 | 風險管理 vs 日誌管理 |
-| CSA CCM | CAIQ | 控制矩陣 vs 問卷 |
+| CSA CCM | CAIQ | 控制矩陣（有哪些 controls） vs 問卷（有沒有實作） |
+| CSA CCM | Ansible／CSPM／policy engine | 定義與對映 controls vs 實際套用與檢查 |
+| STAR Level 1 | STAR Level 2 | 自我評估 vs 第三方保證 |
+| SSAE 18 | GAAP | 審計 attestation 標準 vs 會計原則 |
 | CMM | CSA STAR | 流程成熟度 vs 雲端控制保證 |
 | Auditability | Regulated | 就緒狀態 vs 受監管 |
 | Controller | Processor | 決定目的與方式 vs 依指示處理 |
