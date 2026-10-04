@@ -287,7 +287,7 @@ Collect → Keep good data → State why → Don't use it for something else
 | 沒保護 PII | **Security Safeguards** |
 | 不透明的 data practice | **Openness** |
 | 本人無法 access／correct | **Individual Participation** |
-| 組織說「外包所以不關我的事」 | **Accountability** |
+| 組織主張「外包給 CSP 之後就不是本組織的責任」 | **Accountability** |
 
 #### Purpose Specification vs Use Limitation（最常混）
 

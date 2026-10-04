@@ -151,6 +151,9 @@ Bit-splitting／data dispersion 的核心是什麼？與 RAID 差在哪？	把�
 跨 jurisdiction 做 bit-splitting，正確的 security model 說法是什麼？	Compromise／seizure of one location does not yield the full dataset。不要把「阻撓 law enforcement」當成 security objective。
 AONT-RS 是什麼？屬於哪一類技術？	All-or-Nothing Transform + Reed-Solomon：資料經轉換與編碼後切成多個 fragment 分散儲存，沒有足夠 fragment 無法 recovery。屬 data transformation／dispersion，不是 quantum computing。
 Hash 與 Backup 各回答什麼問題？	Hash 回答「Has this file／config changed?」→ integrity、baseline validation、configuration drift、forensic checking；Backup 回答「Can I recover?」→ availability／recovery。
+MongoDB／GridFS 算 object storage 嗎？	不算。Object storage 的判準是 object + metadata + key 的 flat namespace 模型（S3／MinIO）；能存 binary／file 不等於被分類成 object storage。
+Multitenancy 要求多個 tenant 在同一台 physical host 嗎？	不要求。共用的是同一個 logical platform／infrastructure；同一台物理主機只是常見實作，不是定義。
+SoD 分離的對象是什麼？把元件拆開算 SoD 嗎？	分離的是 authority／functions（職權與職能）。單純把元件或系統拆開只是 segmentation／compartmentalization，不構成 SoD。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
@@ -244,7 +247,7 @@ Host 進入 maintenance 前，cluster 通常先做什麼？	Move／drain workloa
 Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
-SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。
+SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
 Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險最終必須被適當接受。
 ITIL 是什麼？	IT service management 框架。不要當成資安控制目錄或法律。
 COBIT 偏向什麼？	IT 治理與控制目標，不是單純技術組態基準。
@@ -306,7 +309,7 @@ Evidence integrity 常見技術控制？	Hashing、寫保護、雙人保管、�
 把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失。
 SOC 報告能不能當成「已完全合規」的證明？	不能自動等同。要看 Type、期間、範圍與是否涵蓋所關心的控制。
 訴訟保全時 retention 政策怎麼辦？	與本案可能相關的資料停止例行銷毀，即使原本到期。
-NIST RMF 的七個步驟？	Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor。口訣 P-C-S-I-A-A-M。
+NIST RMF 的七個步驟？	Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor。中文口訣「準、分、選、做、驗、准、監」比 P-C-S-I-A-A-M 好記。
 NIST RMF 是以 threat 或 cost 為 foundation 嗎？	No。RMF 是 risk-based framework；threat 與 cost 都只是 risk decision 的 input。
 ARO 最直接的 evidence 是什麼？	Historical occurrence data。例如 5 年發生 10 次 → ARO = 2。
 Aggregation 在估算 ARO 時扮演什麼角色？	Calculation／processing technique，不是 evidence source。必須先有 historical observations 才能 aggregate。
@@ -329,11 +332,22 @@ OECD 的 Openness 原則要求什麼？	對 personal-data practices／policies �
 OECD 的 Individual Participation 中的 individual 指誰？	Data subject，不是員工。本人應能確認組織是否持有自己的資料、取得、challenge 不正確資料並要求 rectification。
 OECD 的 Accountability 原則與雲端外包的關係？	Outsource 給 CSP 不等於免責。Controller 仍須能證明各項 privacy principle 被遵守，對應 responsibility can be delegated, accountability remains。
 Due Care、Due Diligence、Liability 的助記？	Due Care = DO（實際採取並維持 reasonable safeguards）；Due Diligence = CHECK（事前盡職調查並持續驗證有效性）；Liability = CONSEQUENCE。動詞判斷：investigate／verify → diligence；implement／maintain → care。
-鑑識證據的標準處理流程？	Original evidence → Forensic image → Hash verification → Working copy → Analysis。重點在 chain of custody、hashes、documentation、repeatability、original preservation。
+鑑識證據的標準處理流程？	Original evidence → Forensic image → Hash verification → Working copy → Analysis。秒答順序：Preserve → Hash → Document → Track custody。
 「modified data = automatically inadmissible」對嗎？	太絕對。正確理解是 unexplained／undocumented modification 損害證據可信度與完整性，但 modification 本身不必然自動造成 inadmissibility。
 Preponderance of evidence 與 comparative negligence 各回答什麼？	Preponderance of evidence 是 burden of proof（某主張是否 more likely than not）；comparative negligence 才決定 fault 百分比如何按比例減免 damages（75% fault × $125,000 → $93,750）。
 Court order 一定會拿走 electronic data 加 hardware 嗎？	不一定。可取得什麼由法律權限、warrant／order scope 與 jurisdiction 決定；雲端多租戶下更可能要求 CSP production／disclosure。digital evidence 與 physical media 都可能成為 seizure 對象。
 遇到陌生管理框架題的四問法是什麼？	① 這是 standard／framework／report／law 還是 principle？② 誰使用：organization／auditor／regulator／customer？③ 產出什麼：certification／report／controls／process？④ 題目在問 governance／audit／risk 還是 privacy？
+RMF 的中文生命週期口訣是什麼？	準、分、選、做、驗、准、監 = 準備 context → 分級 impact → 選 controls → 做部署 → 驗證有效 → 核准接受 residual risk → 持續監控。
+RMF 的 Authorize 這一步在做什麼？	Risk owner／AO 正式接受 residual risk、允許系統上線。可類比 production go-live approval，但不等於 DevOps approve。
+為什麼 RMF 的七步驟順序不會記錯？	它有因果：沒 context 不能分類 → 不知風險等級不知選什麼 controls → 沒選不能 implement → 沒 implement 不能 assess → 沒 assess 不應 authorize → authorize 後必須 monitor。
+COBIT、NIST 800-37、ISO 31000 一行各怎麼定位？	COBIT = Govern IT（企業 IT 治理）；800-37 = Run RMF（執行風險管理流程）；31000 = Manage risk broadly（一般企業風險管理原則）。
+「外包給 CSP 之後就不是本組織的責任」對應哪條 OECD 原則？	Accountability。治理責任最終要有人承擔，outsource 給 CSP 不等於免責。
+「本人無法 access 或 correct 自己的資料」對應哪條 OECD 原則？	Individual Participation。這裡的 individual 是 data subject，不是員工。
+ARO、SLE、ALE 的單位各是什麼？	ARO = 次數／year（frequency）；SLE = $／incident（loss per occurrence）；ALE = expected $／year（annual loss）。
+一次 ransomware 損失 500,000、平均每 4 年一次，ALE 是多少？	SLE = 500,000；ARO = 0.25；ALE = 500,000 × 0.25 = 125,000／year。
+ARO 是不是「年度總損失」？	不是。年度總損失是 ALE；ARO 只是頻率（一年發生幾次）。把 ARO 誤認為年度總損失是常見 factual error。
+Liability 與 Reliability 差在哪？	Liability = legal responsibility（法律責任）；Reliability = 可靠性。兩個英文字容易混，把 Liability 誤記為「可依賴性」是常見錯誤。
+證據完整性的五要素是什麼？	Original preservation ＋ Hash／integrity verification ＋ Chain of custody ＋ Documentation ＋ Repeatable／validated process。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

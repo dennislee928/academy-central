@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **342 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **356 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
 | `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 33 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 120 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 123 |
 | `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 51 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 28 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 56 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 67 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 342 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 356 |
 
 ### 歷次併入紀錄
 
@@ -56,6 +56,13 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 `ISO 31000 與 NIST 800-37 各偏什麼？`既有卡改為增補答案（補上 2018 版與非認證）。
 
+**2026-10-04 recall 缺口分析**（原檔未封存，知識點已併入彙整講義，由其內容產出 14 張）：
+
+- Object storage 判準、multitenancy 共享層級、SoD 分離對象 → **D2**（+3）
+- RMF 中文口訣與因果鏈、Authorize 的意義、COBIT/800-37/31000 三行定位、OECD scenario 反推 ×2、ARO/SLE/ALE 單位定位、ALE worked example、ARO 常見誤認、Liability vs Reliability、鑑識五要素 → **D6**（+11）
+
+`NIST RMF 的七個步驟？`、`鑑識證據的標準處理流程？`、`SLE 與 ALE 公式？` 三張既有卡改為增補答案。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -82,7 +89,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 342 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 356 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

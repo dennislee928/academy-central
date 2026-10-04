@@ -118,3 +118,6 @@ Bit-splitting／data dispersion 的核心是什麼？與 RAID 差在哪？	把�
 跨 jurisdiction 做 bit-splitting，正確的 security model 說法是什麼？	Compromise／seizure of one location does not yield the full dataset。不要把「阻撓 law enforcement」當成 security objective。
 AONT-RS 是什麼？屬於哪一類技術？	All-or-Nothing Transform + Reed-Solomon：資料經轉換與編碼後切成多個 fragment 分散儲存，沒有足夠 fragment 無法 recovery。屬 data transformation／dispersion，不是 quantum computing。
 Hash 與 Backup 各回答什麼問題？	Hash 回答「Has this file／config changed?」→ integrity、baseline validation、configuration drift、forensic checking；Backup 回答「Can I recover?」→ availability／recovery。
+MongoDB／GridFS 算 object storage 嗎？	不算。Object storage 的判準是 object + metadata + key 的 flat namespace 模型（S3／MinIO）；能存 binary／file 不等於被分類成 object storage。
+Multitenancy 要求多個 tenant 在同一台 physical host 嗎？	不要求。共用的是同一個 logical platform／infrastructure；同一台物理主機只是常見實作，不是定義。
+SoD 分離的對象是什麼？把元件拆開算 SoD 嗎？	分離的是 authority／functions（職權與職能）。單純把元件或系統拆開只是 segmentation／compartmentalization，不構成 SoD。

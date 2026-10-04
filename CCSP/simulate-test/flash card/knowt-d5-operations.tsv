@@ -12,7 +12,7 @@ Host 進入 maintenance 前，cluster 通常先做什麼？	Move／drain workloa
 Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
-SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。
+SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
 Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險最終必須被適當接受。
 ITIL 是什麼？	IT service management 框架。不要當成資安控制目錄或法律。
 COBIT 偏向什麼？	IT 治理與控制目標，不是單純技術組態基準。
