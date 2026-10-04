@@ -171,7 +171,7 @@ CSA
  │
  ├─ CCM    → control framework（哪些 controls？如何對應其他 framework？）
  │
- ├─ CAIQ   → assessment questionnaire（你有沒有實作這些 controls？）
+ ├─ CAIQ   → assessment questionnaire（是否已實作這些 controls？）
  │
  └─ STAR   → assurance / registry program
       ├─ Level 1 = Self-Assessment
