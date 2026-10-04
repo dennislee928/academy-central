@@ -274,11 +274,33 @@ Collect → Keep good data → State why → Don't use it for something else
 | **Individual Participation** | **data subject**（不是員工）可確認、取得、challenge、要求 rectification | 自助查詢與更正流程 | **access／correct／challenge one's own data** |
 | **Accountability** | 治理責任最終要有人承擔，outsource 給 CSP 不等於免責 | controller → policies／controls／processors／CSP，仍須能證明原則被遵守 | 對應 `responsibility can be delegated, accountability remains` |
 
+#### Scenario → Principle 反推表
+
+考題多半給情境而不給名詞，練習時要能反向對應：
+
+| Scenario | Principle |
+|---|---|
+| 收太多資料 | **Collection Limitation** |
+| 資料錯誤／過期 | **Data Quality** |
+| 沒說為什麼收 | **Purpose Specification** |
+| 拿去做原本沒說的用途 | **Use Limitation** |
+| 沒保護 PII | **Security Safeguards** |
+| 不透明的 data practice | **Openness** |
+| 本人無法 access／correct | **Individual Participation** |
+| 組織說「外包所以不關我的事」 | **Accountability** |
+
 #### Purpose Specification vs Use Limitation（最常混）
 
 ```text
 Purpose Specification = Declare why   （先定義用途）
 Use Limitation        = Stay within why（之後不要拿去做別的）
+```
+
+更口語的版本：
+
+```text
+Purpose = 說我要拿來幹嘛
+Use     = 不要拿去幹別的
 ```
 
 > **Individual Participation 的 individual 是 data subject，不是「員工參與資安」。**
@@ -475,6 +497,45 @@ SLE = AV × EF          （單一事件損失 = 資產價值 × 暴露係數）
 ALE = SLE × ARO        （年度預期損失 = 單一事件損失 × 年度發生率）
 ```
 
+**三者的單位定位（最快的防混淆法）：**
+
+```text
+ARO = 次數 / year        （frequency）
+SLE = $ / incident       （loss per occurrence）
+ALE = expected $ / year  （expected annual loss）
+```
+
+完整鏈：
+
+```text
+Asset Value
+   × Exposure Factor
+   ↓
+  SLE
+   × ARO
+   ↓
+  ALE
+```
+
+**ARO 算例：**
+
+```text
+平均每 5 年一次   → ARO = 1/5 = 0.2
+平均每年 4 次     → ARO = 4
+```
+
+**完整 worked example：**
+
+```text
+一次 ransomware 損失 NT$500,000，平均每 4 年一次
+
+SLE = 500,000
+ARO = 0.25
+ALE = 500,000 × 0.25 = 125,000 / year
+```
+
+> **常見 factual error：把 ARO 誤認為「年度總損失」。** 年度總損失是 **ALE**；ARO 只是頻率。能秒算上面這個例子，就算補完。
+
 **Exposure Factor（EF）** 受 **threat vector 類型**影響最大，因為它決定破壞機制與損失比例；EF 不等同「攻擊目標」或「資產名稱」。
 
 #### ARO 的 evidence vs calculation（來源：`by-test/11` D5 §1）
@@ -620,6 +681,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 64 | RMF 的 **Authorize** 是管理者正式接受 residual risk，不等於 DevOps approve。 |
 | 65 | RMF 順序有因果：沒 context 不能分類、沒 assess 不應 authorize、authorize 後必須 monitor。 |
 | 66 | `COBIT = Govern IT`；`800-37 = Run RMF`；`31000 = Manage risk broadly`。 |
+| 67 | **ARO = 次數／year；SLE = $／incident；ALE = expected $／year。** |
+| 68 | **把 ARO 誤認為年度總損失是常見錯誤——年度總損失是 ALE。** |
+| 69 | 一次損失 500,000、每 4 年一次 → ARO 0.25、ALE 125,000／year。 |
+| 70 | OECD 題多半給情境，要能從情境反推原則（見 §1.3 反推表）。 |
 
 ---
 
@@ -660,6 +725,7 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Purpose Specification | Use Limitation | 先宣告用途 vs 事後不得越界 |
 | Individual Participation | 員工資安參與 | data subject 的查改權 vs 無關概念 |
 | Preponderance of evidence | Comparative negligence | 舉證門檻 vs 責任比例與賠償 |
+| ARO | ALE | 一年發生幾次 vs 一年預期損失多少錢 |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
