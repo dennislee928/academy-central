@@ -36,7 +36,7 @@
 
 | 名詞 | 中文理解 | 秒殺判斷 |
 |---|---|---|
-| **GLBA** | Gramm-Leach-Bliley Act | **美國金融機構 + 客戶財務個資** |
+| **GLBA** | Gramm-Leach-Bliley Act | **美國金融機構 + 客戶財務個資**；要保護的是 **nonpublic personal information** |
 | **PCI DSS** | 支付卡產業資料安全標準 | **信用卡／cardholder data**（是 industry standard，不是政府法規） |
 | **HIPAA** | 美國醫療資料保護法 | **health information／PHI**；涵蓋電子醫療交易、國家識別碼、covered entities、providers、health plans、employers |
 | **SOX** | Sarbanes-Oxley Act | **上市公司財報、內控、審計責任** |
@@ -59,6 +59,16 @@ GDPR    = EU 個資
 FedRAMP = 美國聯邦雲服務授權
 FISMA   = 美國聯邦資訊系統安全
 ```
+
+#### GLBA vs PCI DSS（最重要的 boundary）
+
+| | **GLBA** | **PCI DSS** |
+|---|---|---|
+| 性質 | **US federal law**（法律） | **Industry security standard**（產業標準） |
+| 對象 | financial institutions（banks、lenders） | 處理支付卡資料的組織 |
+| 保護什麼 | **nonpublic／private personal financial information** | **payment card data（cardholder data）** |
+
+題幹若為「**federal law** controlling financial institutions' handling of private information」→ **GLBA**，不是 PCI DSS（PCI DSS 不是法律）。
 
 **Taxonomy 陷阱（`by-test/06` P0-4）：** CSA CCM 對映的是雲端安全／隱私控制。在 HIPAA、FERPA、PIPEDA、**DMCA** 之中，**DMCA 是唯一的著作權／IP 法**，不是隱私／資安控制來源。
 
@@ -389,6 +399,27 @@ Data localization  = 法規要求資料必須留在特定國家／地區
 
 **跨境傳輸：** 練習時抓 **adequacy／cross-border transfer** 的判斷邏輯；實務上的國家清單具時效性，**必須查證現行官方 adequacy 名單**（題庫中「南韓不符合」的敘述已過時，現行 EU adequacy 清單包含大韓民國）。
 
+#### Conflict of Laws / Choice of Law
+
+雲端場景天生跨多個 jurisdiction：
+
+```text
+Customer    = 台灣
+CSP         = 美國
+Data center = 德國
+Contract    = 英國法條款
+Incident    = 法國
+```
+
+問「到底適用哪裡的法律」就是 **conflict of laws／choice of law** 的問題。兩個名詞必須分清：
+
+```text
+Jurisdiction    = Which court can hear?   （法院有無受理權限）
+Choice of Law   = Which law applies?      （應適用哪個地方的實體法）
+```
+
+**Restatement (Second) of Conflict of Laws** 是美國用來處理後者的彙編。此為法律名詞，CCSP 不要求 law-school 深度——認得「多 jurisdiction 時判斷適用法」即可。
+
 ### 1.5 法律流程、證據與鑑識
 
 | 名詞 | 中文理解 | 秒殺判斷 |
@@ -401,7 +432,9 @@ Data localization  = 法規要求資料必須留在特定國家／地區
 | **Subpoena** | 傳票 | 要求提供證據或出庭 |
 | **Warrant** | 搜索令 | 執法機關取得搜索／扣押授權 |
 | **MLAT** | 跨國司法協助條約 | 跨境取證 |
-| **Jurisdiction** | 管轄權 | 哪個國家／地區法律有權管 |
+| **Jurisdiction** | 管轄權 | **哪個法院有權受理案件**（Which court can hear?）——不是「哪個法律適用」，後者是 choice of law |
+| **Choice of Law** | 法律選擇 | 既然該法院可受理，**應適用哪個 jurisdiction 的 substantive law**（Which law applies?） |
+| **Restatement (Second) of Conflict of Laws** | 衝突法彙編 | 案件涉及多個 jurisdiction 時，用來判斷應適用哪個 jurisdiction 的法律；偏 **choice of law** 一側 |
 
 **Legal hold 流程：**
 
@@ -790,6 +823,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 78 | `CCM = What controls?`；`CAIQ = Do you implement them?` |
 | 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party assurance。** |
 | 80 | **GAAP 是會計原則，不是 cloud security audit standard**（四選一的 distractor）。 |
+| 81 | GLBA 是**美國聯邦法**、管金融機構的 **nonpublic personal information**；PCI DSS 是產業標準、管支付卡資料。 |
+| 82 | 題幹出現「federal law ＋ financial institutions ＋ private information」→ **GLBA**。 |
+| 83 | **Jurisdiction = Which court can hear?；Choice of Law = Which law applies?** |
+| 84 | Restatement (Second) of Conflict of Laws 用於多 jurisdiction 時判斷適用法，偏 choice of law。 |
 
 ---
 
@@ -813,6 +850,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Controller | Processor | 決定目的與方式 vs 依指示處理 |
 | Custodian | Owner | 日常維護 vs 最終法律責任 |
 | Residency | Sovereignty | 放在哪 vs 受誰法律管 |
+| Jurisdiction | Choice of Law | 哪個法院可受理 vs 應適用哪個法律 |
+| GLBA | PCI DSS | 美國聯邦法、金融機構個資 vs 產業標準、支付卡資料 |
 | Sovereignty | Localization | 受誰管 vs 必須留在哪 |
 | Legal hold | eDiscovery | 先停止刪除 vs 找出並提交證據 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
@@ -957,6 +996,10 @@ SAS 70     = legacy
 - Individual Participation 的「individual」指誰？
 - `modified data` 一定不可採證嗎？真正的判準是什麼？
 - Preponderance of evidence 與 comparative negligence 各回答什麼問題？
+- CCM 能不能「確保 baseline configuration 被套用」？為什麼？
+- STAR Level 1 與 Level 2 各是什麼？
+- Jurisdiction 與 Choice of Law 差在哪？
+- 「federal law 管金融機構的私人資訊」是 GLBA 還是 PCI DSS？
 - RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
 - 問 ARO 的直接依據時，為什麼不能選 aggregation？
 - ISO 27001 偏好 cloud 還是 on-prem？
