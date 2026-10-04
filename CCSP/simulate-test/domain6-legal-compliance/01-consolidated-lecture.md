@@ -828,6 +828,39 @@ D6 的 ROI 關鍵是**先建 taxonomy map，而不是通讀標準全文**。ISO 
 
 > **原則：** 不要一看到陌生名詞就去讀 30 頁 PDF。先建立 `name → category → purpose → neighboring distinction`，已足以應付大部分 CCSP 題。
 
+#### 補強材料看完後的閉卷檢核
+
+§5 前段的四問法用於**作答**；這一組用於**驗收補強是否生效**。每看完一段材料後關掉它，花 2–3 分鐘閉卷寫：
+
+```text
+這個東西是什麼？
+它不是什麼？
+最容易跟誰混？
+題目出什麼 keyword 我會選它？
+```
+
+以 SOC 系列為例，能寫出下列四行才算材料有作用：
+
+```text
+SSAE       = auditor standard
+SOC 2      = assurance report
+ISO 27001  = ISMS certification
+SAS 70     = legacy
+```
+
+**不要一次把補強材料清空。** 每看完一段就先做這組檢核，再看下一段。
+
+#### D6 的閉卷 KPI
+
+這四項能閉卷完成，D6 的主要 retention 缺口就算補起來：
+
+| # | KPI |
+|---|---|
+| 1 | 寫出 RMF 七步驟（中文口訣亦可）＋每步一句用途 |
+| 2 | SSAE／SOC 1-2-3／Type 1-2／ISO 27001-27002 能一眼分類 |
+| 3 | 由 scenario 反推是哪一條 OECD 原則 |
+| 4 | 秒算 SLE／ARO／ALE（含 worked example） |
+
 ### Drill B：法規與標準閉卷默寫（10 分鐘）
 
 寫出 §1.1 的最小必背集合七條，再寫出 §1.2 的易混淆規則七行。
