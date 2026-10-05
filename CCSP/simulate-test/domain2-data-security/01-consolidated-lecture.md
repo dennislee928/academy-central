@@ -28,6 +28,7 @@
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §13 encryption vs mirroring、§12 DH／OOB（復現） | §1.8、§1.7 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §1–§7 key protection／encryption 粒度／masking／dispersion／AONT-RS；Part 2 §3B hash vs backup | §1.3–§1.5、§1.7 |
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | object storage 判準、multitenancy 共享層級、SoD 分離對象 | §1.3、§1.10、§1.11 |
+| 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §7–§16 Backup vs Archive、forensic readiness | §1.1、§1.8 |
 
 ---
 
@@ -62,6 +63,8 @@ Backup      = recoverability（還原）
 Retention   = 資料必須保存多久
 Destruction = secure disposal / crypto-erasure / sanitization
 ```
+
+> **限定：** archive 可以支援 BCDR，但它的 **primary purpose 是 retention，不保證快速還原 production**。完整的 Backup vs Archive 對照見 §1.8。
 
 **Processing vs Viewing（PII 題）：** Processing 包含 storing、printing、destroying、using；**Viewing 是被動接收**，在考題用語中常是 processing 的例外。
 
@@ -526,6 +529,73 @@ Purpose = secure communication and trust using public key cryptography
 
 > **Patch rule：** Archive value depends on future recoverability. Wrong format can equal data loss.
 
+#### ⭐ Backup vs Archive：primary purpose 的切法
+
+> ## **Backup = Recover ／ Archive = Retain**
+
+**Backup 的核心目的是 Recovery**——回答「資料或系統壞掉之後能不能恢復」，因此直接支援 availability、DR、operational recovery、RPO、RTO。
+
+```text
+Production → Backup → Failure → Restore → Production resumes
+```
+
+**Archive 的核心目的是 Long-term retention／preservation**——回答「這些資料現在不用，但未來為 legal／compliance／history 需要時能不能保留」。典型對象：old logs、historical records、legal records、compliance data。主要用途是 retention、compliance、historical preservation、evidence preservation。
+
+**⭐ Archive ≠ restorable production environment。** 「archive」這個詞**完全沒有保證**：
+
+```text
+hot storage
+fast retrieval
+production-compatible format
+完整 OS / app state
+recent recovery point
+automated restoration
+```
+
+因為 archive 可能是 tape、cold storage、Glacier-style storage、WORM archive 或 immutable log repository——這些甚至可能需要很久才能 retrieve。
+
+| | **Backup** | **Archive** |
+|---|---|---|
+| Primary purpose | **Recovery** | **Retention** |
+| Availability／DR | **強** | 不一定 |
+| Historical records | 有 | **強** |
+| Forensic usefulness | 有 | 有 |
+| Fast production restore | 預期用途 | **不保證** |
+| Long-term compliance retention | 次要 | **核心** |
+
+#### Backup 與 Forensic Readiness
+
+**Full backup 同時支援 operations 與 forensics。** 它保存了歷史 system state：
+
+```text
+Day 1 backup → Day 2 backup → Day 3 compromise → Day 4 backup
+```
+
+Investigator 可以比較 **known-good state vs compromised state**，進而 recover deleted artifacts、inspect 舊組態、比對 file states、建立 timeline、reconstruct environment。
+
+```text
+Regular Full Backup
+├── Operations → Recovery
+└── Forensics  → Historical state / data
+```
+
+**但 Backup ≠ 自動成為法庭證據。** Backup 是 **potential forensic source**，不是 automatically trustworthy／admissible evidence。仍需：
+
+```text
+Original / source preservation
++ Integrity verification / hashes
++ Chain of custody
++ Documentation
++ Access control
++ Timestamps
+```
+
+> **一句話：** Backup helps forensic readiness; **forensic process** establishes evidentiary integrity.（鑑識五要素見 [Domain 6 §1.5](../domain6-legal-compliance/01-consolidated-lecture.md)）
+
+**反向情形：secure archive 對 forensics 可能比 backup 更強。** 若 archive 具備 immutable／WORM、hashes、timestamping、access control、audit logs、retention lock，它對 **evidence preservation** 可以非常好。所以題目若改問 `best for long-term preservation of forensic records?` → **secure archive** 可能優於 regular backup。
+
+> **解題要點：** 題目問「同時改善 operations 與 forensic readiness」時選 **full backup**（兩者都是其標準用途）；問「long-term preservation of forensic records」時選 **secure archive**。不要為了讓 archive 也能快速還原而自行加入題幹沒說的架構假設——詳見 [README 的 argue 流程](../README.md)。
+
 #### Encryption vs Mirroring：備份／封存的控制選擇（`by-test/10` 上篇 E、`by-test/12` §13）
 
 題幹出現 `e-commerce + backup／archive` 時的推理鏈：
@@ -766,6 +836,12 @@ BEST    = 選最完整／最適當的答案
 | 52 | S3／MinIO 是 object store；MongoDB／GridFS 能存 binary 但不被分類為 object storage。 |
 | 53 | Multitenancy 共用的是 **logical platform／infrastructure**，不要求同一台 physical host。 |
 | 54 | **SoD 分離的是 authority／functions**；單純拆開元件只是 segmentation／compartmentalization。 |
+| 55 | **Backup = Recover；Archive = Retain。** |
+| 56 | Archive 不保證 hot storage、fast retrieval 或 production-compatible format——它可能是 tape／cold／WORM。 |
+| 57 | **Archive ≠ restorable production environment。** |
+| 58 | Full backup 同時支援 operations（recovery）與 forensics（歷史 system state 比對）。 |
+| 59 | **Backup 是 potential forensic source，不是自動可採的證據**——仍需 hash、chain of custody、documentation。 |
+| 60 | 問「long-term preservation of forensic records」時，具 WORM／hash／retention lock 的 **secure archive** 可能優於 backup。 |
 
 ---
 
@@ -797,6 +873,8 @@ BEST    = 選最完整／最適當的答案
 | Split Knowledge | M-of-N | 需全部拼齊 vs 達到門檻即可 |
 | Block storage | File storage | block device vs NFS／SMB 共享 |
 | Encryption（備份） | Mirroring | 機密性 vs 可用性與 RPO |
+| Backup | Archive | Recovery（primary） vs Retention（primary） |
+| Backup 的 forensic 價值 | 可採證據 | potential forensic source vs 需經鑑識流程建立完整性 |
 | File-level | Object-level | 檔案系統中的檔案 vs 物件儲存中的物件 |
 | TDE | Application-level | 對 app 透明、保護 DB 檔案 vs app 先加密、可選欄位 |
 | Substitution | Shuffling | 換成不存在的假值 vs 重排既有真值 |
