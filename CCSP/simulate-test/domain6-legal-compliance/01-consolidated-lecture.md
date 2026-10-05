@@ -27,6 +27,7 @@
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | CSA ecosystem（CCM／CAIQ／STAR L1-L2、CCM ≠ enforcement）、GAAP、GLBA vs PCI DSS、Conflict of Laws | §1.1、§1.2、§1.4 |
+| 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §1 STAR 三層與無 Level 4、§3–§6 forensic testimony | §1.2、§1.5 |
 
 ---
 
@@ -116,7 +117,7 @@ FISMA   = 美國聯邦資訊系統安全
 | **NIST SP 800-92** | 日誌管理 | Log management |
 | **CSA CCM** | 雲端控制矩陣 | 把控制對映到各種要求 |
 | **CAIQ** | 問卷 | 搭配 CCM 使用的 CSA 問卷 |
-| **CSA STAR** | 保證／登錄計畫 | 分 self-assessment、third-party certification、continuous monitoring 等層級。**Level 1 = Self-Assessment；Level 2 = Third-party assurance**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1） |
+| **CSA STAR** | 保證／登錄計畫 | **三個層級：Level 1 = Self-Assessment；Level 2 = Third-party certification／attestation；Level 3 = Continuous auditing／monitoring**。**沒有 Level 4。**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1） |
 | **CMM** | 能力成熟度模型 | 流程的**嚴謹度、細節、可重複性（repeatability）** |
 | **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL |
 | **FIPS 140-2／140-3** | 密碼模組驗證 | **140-2 = legacy；140-3 = current** |
@@ -175,8 +176,44 @@ CSA
  │
  └─ STAR   → assurance / registry program
       ├─ Level 1 = Self-Assessment
-      └─ Level 2 = Third-party assurance
+      ├─ Level 2 = Third-party certification / attestation
+      └─ Level 3 = Continuous auditing / monitoring
 ```
+
+**一句話版：**
+
+```text
+CCM  = controls      （應有哪些 controls？）
+CAIQ = questions     （這些 controls 做了嗎？）
+STAR = assurance maturity / registry
+```
+
+#### STAR 的三個層級
+
+```text
+STAR Level 1   SELF        → Self-Assessment
+STAR Level 2   THIRD PARTY → Third-party Certification / Attestation
+STAR Level 3   CONTINUOUS  → Continuous Auditing / Monitoring
+```
+
+> **建議的 mnemonic：1 自己看 → 2 別人看 → 3 一直看**
+
+| 層級 | 內容 |
+|---|---|
+| **Level 1 — Self-Assessment** | 由 CSP 自己揭露、回答 security posture，**直接對應 CAIQ**：`CSP → CCM controls → CAIQ questionnaire → STAR Level 1` |
+| **Level 2 — Third-Party Assurance** | 有獨立第三方介入：`Cloud Provider → Independent third party → Certification／Attestation`。問 `STAR level requiring third-party assessment?` → **Level 2** |
+| **Level 3 — Continuous** | 持續性的 monitoring／auditing／assurance。問 `highest STAR level?` → **3** |
+
+**⭐ 不要自行發明 Level 4：**
+
+```text
+1 = Self
+2 = Third party
+3 = Continuous
+4 = ❌（不存在）
+```
+
+> **常見錯誤：** third-party assessment 與 highest level 兩題都誤選 Level 4。
 
 **CCM 的兩個角色：**
 
@@ -821,7 +858,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 76 | **CCM tells you what controls matter; tooling verifies／enforces them.** |
 | 77 | 「ensuring baseline configuration is applied」不是 CCM 的 benefit，是 Ansible／CSPM 的職責。 |
 | 78 | `CCM = What controls?`；`CAIQ = Do you implement them?` |
-| 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party assurance。** |
+| 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party certification；Level 3 = Continuous auditing。** |
+| 79a | **STAR 沒有 Level 4**；問 highest level 答 **3**，問 third-party 答 **2**。 |
+| 79b | STAR mnemonic：**1 自己看 → 2 別人看 → 3 一直看**。 |
+| 79c | STAR Level 1 直接對應 CAIQ：`CCM controls → CAIQ questionnaire → STAR L1 self-assessment`。 |
 | 80 | **GAAP 是會計原則，不是 cloud security audit standard**（四選一的 distractor）。 |
 | 81 | GLBA 是**美國聯邦法**、管金融機構的 **nonpublic personal information**；PCI DSS 是產業標準、管支付卡資料。 |
 | 82 | 題幹出現「federal law ＋ financial institutions ＋ private information」→ **GLBA**。 |
@@ -843,7 +883,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | ISO 31000 | NIST 800-92 | 風險管理 vs 日誌管理 |
 | CSA CCM | CAIQ | 控制矩陣（有哪些 controls） vs 問卷（有沒有實作） |
 | CSA CCM | Ansible／CSPM／policy engine | 定義與對映 controls vs 實際套用與檢查 |
-| STAR Level 1 | STAR Level 2 | 自我評估 vs 第三方保證 |
+| STAR Level 1 | STAR Level 2 | 自我評估 vs 第三方認證／證明 |
+| STAR Level 2 | STAR Level 3 | 第三方一次性認證 vs 持續稽核與監控 |
 | SSAE 18 | GAAP | 審計 attestation 標準 vs 會計原則 |
 | CMM | CSA STAR | 流程成熟度 vs 雲端控制保證 |
 | Auditability | Regulated | 就緒狀態 vs 受監管 |
