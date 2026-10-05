@@ -535,6 +535,58 @@ Preserve → Hash → Document → Track custody
 
 > CCSP 不要求深入 digital forensics 工具操作；看到 evidence 題先找上面四個動作。
 
+#### Forensic Testimony：為什麼要講 Alternative Explanations
+
+題型：`When presenting forensic evidence in court as testimony, include, if possible...` → 正解 **Alternative explanations**。分類 `[J] ISC2 judgment`。
+
+它測的不是法律知識，而是：**forensic examiner 應保持客觀，而不是替某一方 advocacy。**
+
+**假設檢驗模型。** 例如證據顯示：
+
+```text
+03:17  Alice's account downloaded secrets.zip
+```
+
+較差的推論是直接說「Alice stole the data」——證據只證明**該 account 執行過 download**。合理的 hypotheses 至少有四個：
+
+```text
+H1  Alice 主動下載
+H2  Alice credential 被盜
+H3  Malware 使用 Alice session
+H4  Automated process 使用相同 credential
+```
+
+專業作法是：① 提出合理的 alternative explanations → ② 用證據逐一驗證或排除 → ③ 最後才提出 professional conclusion。
+
+```text
+H2 → MFA records + source IP      → unlikely
+H3 → EDR telemetry                → no supporting evidence
+H4 → service configuration        → not applicable
+H1 → most consistent with evidence
+```
+
+**Professional opinion ≠ Personal opinion：**
+
+| | 可以 | 不該 |
+|---|---|---|
+| 類型 | **Professional opinion** | **Personal opinion** |
+| 基於 | evidence、expertise、validated methodology、repeatable analysis | 主觀感受（例如「這個人看起來就很可疑」） |
+| 證據價值 | 有 | 無 evidentiary value |
+
+**為什麼「your side of the case」也不是最佳答案：** forensic examiner 不是 plaintiff 的 technical salesman，也不是 defense 的 technical salesman，而應是 **independent technical expert**。
+
+```text
+Forensic testimony = objective + evidence-based + considers alternatives
+```
+
+ISC2 judgment 的偏好方向：
+
+| 偏好 | 不偏好 |
+|---|---|
+| objective、evidence-based、complete、documented、considers alternative explanations | defend your side、personal opinion、win the argument |
+
+> **CCSP 的深度界線：** 此題有 courtroom context，但只需到「**forensic expert = objective ＋ professional ＋ considers competing explanations**」。不需深入 rules of evidence、hearsay doctrine、expert witness qualification procedure 或 cross-examination law——這不是需要大量投入的純法律章節。
+
 #### Preponderance of Evidence vs Comparative Negligence（`by-test/13` Part 2 §3H）
 
 這兩個常被題庫混用：
@@ -867,6 +919,11 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 82 | 題幹出現「federal law ＋ financial institutions ＋ private information」→ **GLBA**。 |
 | 83 | **Jurisdiction = Which court can hear?；Choice of Law = Which law applies?** |
 | 84 | Restatement (Second) of Conflict of Laws 用於多 jurisdiction 時判斷適用法，偏 choice of law。 |
+| 85 | **法庭作證應包含 alternative explanations**——測的是 examiner 的客觀性。 |
+| 86 | Forensic examiner 是 **independent technical expert**，不是任一方的 technical salesman。 |
+| 87 | Professional opinion 基於 evidence 與 validated methodology；personal opinion 無 evidentiary value。 |
+| 88 | ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side。 |
+| 89 | 證據只證明「該 account 做了某事」，不等於「該人做了某事」——要列並排除 credential 被盜、malware、automated process 等假設。 |
 
 ---
 
@@ -914,6 +971,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Purpose Specification | Use Limitation | 先宣告用途 vs 事後不得越界 |
 | Individual Participation | 員工資安參與 | data subject 的查改權 vs 無關概念 |
 | Preponderance of evidence | Comparative negligence | 舉證門檻 vs 責任比例與賠償 |
+| Professional opinion | Personal opinion | 基於證據與方法論 vs 主觀感受 |
+| Independent expert | Advocate for one side | 客觀技術專家 vs 某一方的技術說服者 |
 | ARO | ALE | 一年發生幾次 vs 一年預期損失多少錢 |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
@@ -1041,6 +1100,9 @@ SAS 70     = legacy
 - STAR Level 1 與 Level 2 各是什麼？
 - Jurisdiction 與 Choice of Law 差在哪？
 - 「federal law 管金融機構的私人資訊」是 GLBA 還是 PCI DSS？
+- STAR 有幾個層級？第三方評估與最高層級各是哪一個？
+- 法庭作證時為什麼要主動提出 alternative explanations？
+- 「Alice 的帳號下載了檔案」能直接推論「Alice 偷了資料」嗎？要先排除哪些假設？
 - RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
 - 問 ARO 的直接依據時，為什麼不能選 aggregation？
 - ISO 27001 偏好 cloud 還是 on-prem？
