@@ -1,5 +1,5 @@
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
-CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。Level 1 = Self-Assessment；Level 2 = Third-party assurance。
+CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。三個層級：L1 Self-Assessment、L2 Third-party certification、L3 Continuous auditing。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
@@ -65,9 +65,16 @@ ARO、SLE、ALE 的單位各是什麼？	ARO = 次數／year（frequency）；SL
 ARO 是不是「年度總損失」？	不是。年度總損失是 ALE；ARO 只是頻率（一年發生幾次）。把 ARO 誤認為年度總損失是常見 factual error。
 Liability 與 Reliability 差在哪？	Liability = legal responsibility（法律責任）；Reliability = 可靠性。兩個英文字容易混，把 Liability 誤記為「可依賴性」是常見錯誤。
 證據完整性的五要素是什麼？	Original preservation ＋ Hash／integrity verification ＋ Chain of custody ＋ Documentation ＋ Repeatable／validated process。
-CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（control framework：有哪些 controls、如何對映其他 framework）→ CAIQ（assessment questionnaire：有沒有實作）→ STAR（assurance／registry：L1 自我評估、L2 第三方保證）。
+CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（controls：有哪些 controls）→ CAIQ（questions：有沒有實作）→ STAR（assurance／registry：L1 自評、L2 第三方、L3 持續稽核）。
 「Ensuring baseline configuration is applied」算 CCM 的 benefit 嗎？	不算。CCM tells you what controls matter；tooling（Ansible／CSPM／Policy-as-Code）verifies／enforces them。這是 framework vs enforcement 的邊界。
-STAR Level 1 與 Level 2 各是什麼？	Level 1 = Self-Assessment；Level 2 = Third-party assurance。題庫有時寫 Tier 1，看到 self-assessment 就選 Level／Tier 1。
+CSA STAR 的三個層級各是什麼？	Level 1 = Self-Assessment；Level 2 = Third-party certification／attestation；Level 3 = Continuous auditing／monitoring。沒有 Level 4。
 GAAP 是 cloud security audit standard 嗎？	不是。GAAP = Generally Accepted Accounting Principles，是會計原則。問 service organization 的 audit standard 時正解是 SSAE 18（SOC 是 report）。
 Jurisdiction 與 Choice of Law 差在哪？	Jurisdiction = Which court can hear?（哪個法院有權受理）；Choice of Law = Which law applies?（應適用哪個地方的實體法）。
 Restatement (Second) of Conflict of Laws 用來做什麼？	案件涉及多個 jurisdiction 時，用來判斷應適用哪個 jurisdiction 的 substantive law，偏 choice of law 一側。CCSP 不要求 law-school 深度。
+STAR 的三層 mnemonic 怎麼記？	1 自己看 → 2 別人看 → 3 一直看（Self → Third party → Continuous）。
+問 STAR 的 highest level 與 third-party assessment 各答什麼？	Highest level → 3（Continuous）；third-party assessment → 2。常見錯誤是兩題都答 Level 4——STAR 沒有 Level 4。
+STAR Level 1 和 CAIQ 的關係是什麼？	L1 是 CSP 自我揭露 security posture，直接以 CAIQ 作答：CCM controls → CAIQ questionnaire → STAR Level 1 self-assessment。
+法庭上提出鑑識證據作證時，應盡可能包含什麼？	Alternative explanations。它測的是 forensic examiner 的客觀性——應提出合理的競爭假設並用證據逐一排除，而不是替某一方 advocacy。
+「Alice 的帳號下載了檔案」能推論「Alice 偷了資料」嗎？	不能。證據只證明該 account 執行過 download。要先列出並排除：credential 被盜、malware 使用其 session、automated process 使用相同 credential 等假設（用 MFA records、source IP、EDR telemetry、service configuration 驗證）。
+Professional opinion 與 personal opinion 差在哪？	Professional opinion 基於 evidence、expertise、validated methodology、repeatable analysis；personal opinion 是主觀感受，無 evidentiary value。
+Forensic examiner 在法庭上的角色定位是什麼？	Independent technical expert，不是 plaintiff 或 defense 的 technical salesman。ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side／win the argument。
