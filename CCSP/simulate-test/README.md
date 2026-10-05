@@ -132,9 +132,27 @@ simulate-test/
 5. 寫一句 corrected mental model
 ```
 
-**要避免的陷阱：** 不要變成「每一題都努力證明題庫錯」。常見真因是**作答時用的是 workflow／實務邏輯，而題目在考 taxonomy**。
+**要避免的陷阱一：** 不要變成「每一題都努力證明題庫錯」。常見真因是**作答時用的是 workflow／實務邏輯，而題目在考 taxonomy**。
 
 範例：mantrap 控制人員在技術上成立，但題目考分類 → Physical Access ≠ Personnel → corrected model：**作用對象相同，不代表 control category 相同。**
+
+**要避免的陷阱二：不要為了讓答案成立而加入題幹沒說的架構假設。** 這是典型的工程師答題陷阱。
+
+題目問「哪個 control 同時改善 **A 與 B**」時：
+
+```text
+不要問：哪個選項經過我的特殊設計後也能做到 A + B？
+要問：  哪個選項在正常、標準定義下，本來就直接支援 A + B？
+```
+
+範例（見 [Domain 2 §1.8](domain2-data-security/01-consolidated-lecture.md)）：
+
+| 選項 | Operations | Forensics |
+|---|:-:|:-:|
+| **Full backup** | ✅ | ✅ |
+| Secure archive | 視設計而定 | ✅ |
+
+→ 選 **full backup**。「secure archive 也能很快還原 production」在技術上可能成立，但需要 hot storage ＋ 完整 application snapshot ＋ recent data ＋ automated restore ＋ production-compatible format 等**額外假設**，題幹沒說就不能加。
 
 這套流程對 CCSP 特別有效，因為 CCSP 許多題目的難點正是「兩個答案都技術上合理，但考試在問哪個層級／角色／分類」。
 
