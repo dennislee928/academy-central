@@ -5,6 +5,7 @@
 > **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
+> **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)。
 
 ---
 
@@ -28,6 +29,7 @@
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | CSA ecosystem（CCM／CAIQ／STAR L1-L2、CCM ≠ enforcement）、GAAP、GLBA vs PCI DSS、Conflict of Laws | §1.1、§1.2、§1.4 |
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §1 STAR 三層與無 Level 4、§3–§6 forensic testimony | §1.2、§1.5 |
+| 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存；速查表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)） | 6 題錯題 ＋ A–M 法規／標準分區 | §1.1、§1.2、§1.4、§1.5、§1.6 |
 
 ---
 
@@ -40,6 +42,8 @@
 | **GLBA** | Gramm-Leach-Bliley Act | **美國金融機構 + 客戶財務個資**；要保護的是 **nonpublic personal information** |
 | **PCI DSS** | 支付卡產業資料安全標準 | **信用卡／cardholder data**（是 industry standard，不是政府法規） |
 | **HIPAA** | 美國醫療資料保護法 | **health information／PHI**；涵蓋電子醫療交易、國家識別碼、covered entities、providers、health plans、employers |
+| **HITECH** | 美國醫療資訊科技法 | **electronic health records／breach notification**；強化 HIPAA。最易與 HIPAA 混 |
+| **NERC CIP** | 強制性產業標準 | **bulk electric system／critical infrastructure**；不要用泛用 NIST 代替 |
 | **SOX** | Sarbanes-Oxley Act | **上市公司財報、內控、審計責任** |
 | **GDPR** | 歐盟個資保護規範 | **EU personal data／data subject rights／controller／processor** |
 | **CCPA／CPRA** | 加州消費者隱私法 | California consumer privacy rights |
@@ -71,9 +75,56 @@ FISMA   = 美國聯邦資訊系統安全
 
 題幹若為「**federal law** controlling financial institutions' handling of private information」→ **GLBA**，不是 PCI DSS（PCI DSS 不是法律）。
 
+#### PCI DSS merchant tiers（題庫易錯）
+
+**所有適用的 merchant 都必須符合 PCI DSS。** Merchant level 影響的是 **compliance validation／reporting 的方法與 rigor**，而且 merchant levels 由 **payment brands／acquirers** 定義，不是 PCI SSC 統一規定。
+
+| Level | 常見 validation（Visa 典型模型） |
+|---|---|
+| Level 1 | ROC by QSA／internal assessor ＋ AOC |
+| Level 2／3 | SAQ ＋ AOC |
+| Level 4 | SAQ／acquirer-defined validation |
+
+```text
+PCI DSS controls ≠ merchant tier-specific control sets
+Merchant tier   → validation / reporting rigor
+```
+
+> **兩個都不要背：** ❌「tier 越高只是 audit 做得比較多」（過度簡化）、❌「不同 tier 有不同的 control sets」（錯）。
+
+#### FISMA vs FedRAMP 與 data residency
+
+```text
+FISMA   = federal information-security law／program requirement
+FedRAMP = federal cloud security assessment／certification program
+```
+
+較高 assurance class 的 FedRAMP 確實有 U.S.／U.S. territories／U.S. jurisdiction 的 location requirement，但**不是「所有 federal cloud use 一律 US-only」**。
+
+> **不要背「FedRAMP = 永遠 US-only」。** Data residency 取決於**適用的 FedRAMP class／baseline ＋ agency／legal requirements**，不同 baseline（Moderate vs High）的 location assumptions 也可能不同。
+
 **Taxonomy 陷阱（`by-test/06` P0-4）：** CSA CCM 對映的是雲端安全／隱私控制。在 HIPAA、FERPA、PIPEDA、**DMCA** 之中，**DMCA 是唯一的著作權／IP 法**，不是隱私／資安控制來源。
 
 **美國隱私法模式：** 美國是 **sectoral model**，沒有一部涵蓋全體國民個資的綜合聯邦隱私法；GDPR 則是廣泛的歐盟隱私規範。
+
+#### 各國隱私法（2026 outline 明確涵蓋 country-specific privacy laws）
+
+| 地區 | 法規 | 要記什麼 |
+|---|---|---|
+| **加拿大** | **PIPEDA** | Federal **private-sector** privacy law；管 commercial activity 中 personal information 的 collection／use／disclosure；內含 **10 fair-information principles**。trigger：`Canadian private company + customer personal information` |
+| **印度** | **DPDP Act, 2023** | **2026 outline 明確新增。Data Principal ≈ data subject；Data Fiduciary ≈ controller-like role；Data Protection Board** 為監管機構。trigger：`India + digital personal data`。不需背 implementation dates |
+
+**P2（僅需認名，不背條文）：**
+
+| 地區 | 法規 |
+|---|---|
+| Australia | Privacy Act 1988 |
+| Argentina | Personal Data Protection Law 25.326 |
+| Brazil | **LGPD**（GDPR-like） |
+| Japan | **APPI** |
+| Singapore | **PDPA** |
+| UK | UK GDPR ＋ Data Protection Act 2018（post-Brexit） |
+| China | **PIPL** |
 
 ### 1.2 標準、框架與審計報告
 
