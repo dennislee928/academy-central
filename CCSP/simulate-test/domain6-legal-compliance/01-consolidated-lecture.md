@@ -530,6 +530,59 @@ Data localization  = 法規要求資料必須留在特定國家／地區
 
 **跨境傳輸：** 練習時抓 **adequacy／cross-border transfer** 的判斷邏輯；實務上的國家清單具時效性，**必須查證現行官方 adequacy 名單**（題庫中「南韓不符合」的敘述已過時，現行 EU adequacy 清單包含大韓民國）。
 
+#### EU 國際傳輸決策樹
+
+```text
+EU/EEA personal data
+       ↓
+   Third country
+       ↓
+   Adequacy?
+ ├─ YES → transfer
+ └─ NO
+      ↓
+ appropriate safeguard?
+      ├─ SCC
+      ├─ BCR
+      └─ 其他 GDPR 機制
+```
+
+**四種主要機制：**
+
+| 機制 | 內容 |
+|---|---|
+| **Adequacy decision** | EU 執委會認定第三國保護程度充分；現行清單含英國、日本、加拿大（商業組織）、南韓、巴西，以及參與 DPF 的美國組織等 |
+| **SCCs**（Standard Contractual Clauses） | **European Commission 預先核可的契約條款**，作為傳輸至非 adequate 第三國的 safeguard |
+| **BCRs**（Binding Corporate Rules） | 跨國集團的**集團內部**傳輸機制 |
+| 其他 | certification／codes of conduct、Article 49 的有限 derogations |
+
+```text
+EU → non-adequate third country  →  often SCCs
+EU → certified U.S. organization →  EU-U.S. Data Privacy Framework
+```
+
+#### ⭐ Privacy Shield → EU-U.S. DPF 的正確理解
+
+```text
+歷史：
+  U.S. Department of Commerce → administered Privacy Shield
+  FTC                         → enforced participating companies' commitments
+
+2020 Schrems II（CJEU）       → Privacy Shield 判定 invalid
+2023 起                       → EU-U.S. Data Privacy Framework (DPF)
+  管理：Commerce / ITA
+  執法：FTC / DOT（依管轄範圍）
+```
+
+**兩個題庫問題：**
+
+1. 題庫把「Privacy Shield 由 **FTC** administer」當正解——**不準**。Commerce administer、FTC enforce。
+2. 整題前提 **Privacy Shield 已 legacy／invalid**，不應當成現行機制背。
+
+> 看到 **HHS** 先想 **HIPAA／healthcare**，不是跨境傳輸機制。
+>
+> 題目前提雖已過時，但 **SCC 本身是現行且高價值的概念**，務必記住。
+
 #### Conflict of Laws / Choice of Law
 
 雲端場景天生跨多個 jurisdiction：
