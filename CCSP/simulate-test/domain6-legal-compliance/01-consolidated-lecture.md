@@ -682,6 +682,29 @@ Preserve → Hash → Document → Track custody
 
 > CCSP 不要求深入 digital forensics 工具操作；看到 evidence 題先找上面四個動作。
 
+#### 鑑識工具：Write Blocker vs TCB
+
+Forensics 的核心要求之一是**不讓 acquisition／examination 過程改動 source evidence**。
+
+```text
+Evidence disk
+     │
+     ▼
+Write Blocker      ← 允許 READ，阻擋 WRITE
+     │
+     ▼
+Forensic workstation
+```
+
+Write blocker 避免的是：filesystem metadata 改動、timestamp 改動、OS auto-mount 寫入、調查者誤改 source media。它與上面的五要素是同一套。
+
+**Trusted Computing Base（TCB）** 則是：執行 security policy 所依賴的 **hardware／software／firmware components 集合**——**不是** forensic acquisition tool。
+
+```text
+Evidence media                      → write blocker
+System security-enforcement components → TCB
+```
+
 #### Forensic Testimony：為什麼要講 Alternative Explanations
 
 題型：`When presenting forensic evidence in court as testimony, include, if possible...` → 正解 **Alternative explanations**。分類 `[J] ISC2 judgment`。
@@ -765,18 +788,39 @@ Damage    = $125,000
 
 | 名詞 | 秒殺判斷 |
 |---|---|
-| **SLA** | 服務水準承諾（uptime、response time） |
+| **SLA** | **可量測**的服務水準承諾（uptime、response time） |
 | **SLO／SLI** | 目標性服務水準／可量測指標 |
-| **MSA** | 主服務合約 |
+| **MSA** | 主服務合約——整體法律與商務關係 |
+| **SOW** | 工作說明書——工作範圍、交付項目、時程 |
 | **DPA** | 資料處理協議（GDPR／processor 情境） |
 | **NDA** | 保密協議——**分享 SOC 2 Type 2 時常被要求簽署** |
 | **Right to audit** | 稽核權，是 assurance 能力，不是技術控制 |
 | **Indemnification** | 補償／賠償條款 |
-| **Liability** | 誰對損失負責 |
 | **Due care** | **DO**：實際採取並維持 reasonable safeguards（encrypt、patch、access control、protect PII） |
 | **Due diligence** | **CHECK**：調查與驗證——事前盡職調查，並持續確認 safeguards 確實存在且有效（risk assessment、audit、vendor review、SOC review、continuous monitoring） |
-| **Liability** | **CONSEQUENCE**：未盡前兩者時可能承擔的法律責任 |
+| **Liability** | **CONSEQUENCE**：誰對損失負責／未盡前兩者時可能承擔的法律責任（注意與 **Reliability 可靠性** 不是同一個字） |
 | **RACI** | Responsible／Accountable／Consulted／Informed |
+
+#### SLA vs MSA vs SOW（三個合約名稱的快速切法）
+
+```text
+MSA = relationship / rules                    （整體關係與規則）
+SOW = what work                               （做什麼工作）
+SLA = how well the service must perform       （服務要做到多好）
+```
+
+**SLA 的判準是 measurable／objective／repeatable：**
+
+```text
+99.95% availability
+response < 200 ms
+support response ≤ 30 min
+monthly capacity quota = 20 TB
+```
+
+而 **jurisdiction for litigation 屬於 MSA／governing law／venue，不是 SLA**——把 contract clause 與 service-level metric 混在一起是常見錯因。
+
+> **nuance：不要背「SLA 只能是數字」。** Data residency、service location 在實務上完全可能寫進合約、service schedule 或 SLA。考試情境下 `SLA → measurable service commitment`，但不要推論成絕對規則。
 
 ```text
 Outsourcing 不等於責任全部轉移。
