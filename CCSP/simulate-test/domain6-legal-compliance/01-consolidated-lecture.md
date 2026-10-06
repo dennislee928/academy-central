@@ -1115,6 +1115,26 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 87 | Professional opinion 基於 evidence 與 validated methodology；personal opinion 無 evidentiary value。 |
 | 88 | ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side。 |
 | 89 | 證據只證明「該 account 做了某事」，不等於「該人做了某事」——要列並排除 credential 被盜、malware、automated process 等假設。 |
+| 90 | **HITECH** 管 EHR 與 breach notification、強化 HIPAA；**NERC CIP** 管 bulk electric system。 |
+| 91 | 所有適用 merchant 都須符合 PCI DSS；**merchant tier → validation／reporting rigor**，不是不同 control sets、也不只是 audit 數量。 |
+| 92 | Merchant levels 由 **payment brands／acquirers** 定義，不是 PCI SSC 統一規定。 |
+| 93 | **不要背「FedRAMP = 永遠 US-only」**；residency 取決於適用的 class／baseline ＋ agency 要求。 |
+| 94 | PIPEDA 是加拿大 **private-sector** 聯邦隱私法，含 10 fair-information principles。 |
+| 95 | **印度 DPDP Act 2023**：Data Principal ≈ data subject；Data Fiduciary ≈ controller。 |
+| 96 | **ISO 27037 = 數位證據處理；ISO 27050 = eDiscovery；ISO 27036 = 供應鏈。** |
+| 97 | NIST **800-53 = 控制目錄；800-53A = 評估那些控制；800-88 = 媒體淨化**。 |
+| 98 | FIPS **199 = 分級；200 = 最低要求；140-3 = 密碼模組（140-2 為 legacy）**。 |
+| 99 | 核心鏈：`FISMA → RMF(800-37) → 800-53 → 800-53A`。 |
+| 100 | **COSO = 內控與風險治理**（易混 COBIT）；**CIS Controls = 實務控制清單**；**ISO 20000-1 = ITSM 要求**（易混 ISO 27001）。 |
+| 101 | 版本陷阱：ISO 31000:2009→2018、27018:2019→2025、27017:2015→2026、FIPS 140-2→140-3。 |
+| 102 | EU 傳輸：`adequacy? YES→transfer／NO→SCC、BCR 或其他機制`。 |
+| 103 | **SCCs 是 European Commission 預先核可的契約條款**；BCRs 是集團內部機制。 |
+| 104 | **Privacy Shield：Commerce administered、FTC enforced；2020 Schrems II 判定 invalid；現行為 EU-U.S. DPF。** |
+| 105 | **Evidence media → write blocker；security-enforcement components → TCB。** |
+| 106 | Write blocker 允許 READ、阻擋 WRITE，避免 metadata／timestamp 改動與 OS auto-mount 寫入。 |
+| 107 | **MSA = relationship／rules；SOW = what work；SLA = how well service must perform。** |
+| 108 | SLA 的判準是 measurable／objective／repeatable；**jurisdiction for litigation 屬 MSA，不是 SLA**。 |
+| 109 | 但不要背「SLA 只能是數字」——residency／location 實務上也可能寫進 SLA 或 service schedule。 |
 
 ---
 
@@ -1141,6 +1161,16 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Residency | Sovereignty | 放在哪 vs 受誰法律管 |
 | Jurisdiction | Choice of Law | 哪個法院可受理 vs 應適用哪個法律 |
 | GLBA | PCI DSS | 美國聯邦法、金融機構個資 vs 產業標準、支付卡資料 |
+| HIPAA | HITECH | PHI 隱私與安全 vs EHR、breach notification 與強化條款 |
+| FISMA | FedRAMP | 聯邦資安法律／計畫要求 vs 雲端服務評估與授權 |
+| COBIT | COSO | IT 治理 vs 內控與企業風險治理 |
+| ISO 27001 | ISO 20000-1 | 資安管理系統要求 vs IT 服務管理系統要求 |
+| ISO 27037 | ISO 27050 | 數位證據處理 vs eDiscovery（ESI） |
+| NIST 800-53 | NIST 800-53A | 控制目錄 vs 控制評估 |
+| Adequacy decision | SCC／BCR | 第三國被認定充分 vs 無 adequacy 時的 safeguard |
+| Privacy Shield | EU-U.S. DPF | 已失效（Schrems II） vs 現行機制 |
+| Write blocker | TCB | 鑑識取證工具 vs 執行 security policy 的元件集合 |
+| SLA | MSA／SOW | 可量測服務承諾 vs 整體關係／工作範圍 |
 | Sovereignty | Localization | 受誰管 vs 必須留在哪 |
 | Legal hold | eDiscovery | 先停止刪除 vs 找出並提交證據 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
@@ -1291,6 +1321,12 @@ SAS 70     = legacy
 - STAR Level 1 與 Level 2 各是什麼？
 - Jurisdiction 與 Choice of Law 差在哪？
 - 「federal law 管金融機構的私人資訊」是 GLBA 還是 PCI DSS？
+- PCI merchant tier 改變的是 control sets、audit 數量，還是 validation rigor？
+- `FedRAMP = 永遠 US-only` 對嗎？residency 實際取決於什麼？
+- ISO 27037 與 27050 各管什麼？800-53 與 800-53A 差在哪？
+- Privacy Shield 是誰 administer、誰 enforce？現在被什麼取代？
+- 取證要接什麼裝置？TCB 是不是取證工具？
+- 「爭議須在某 jurisdiction 解決」該寫在 SLA 還是 MSA？
 - STAR 有幾個層級？第三方評估與最高層級各是哪一個？
 - 法庭作證時為什麼要主動提出 alternative explanations？
 - 「Alice 的帳號下載了檔案」能直接推論「Alice 偷了資料」嗎？要先排除哪些假設？

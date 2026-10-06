@@ -29,6 +29,7 @@
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §1–§7 key protection／encryption 粒度／masking／dispersion／AONT-RS；Part 2 §3B hash vs backup | §1.3–§1.5、§1.7 |
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | object storage 判準、multitenancy 共享層級、SoD 分離對象 | §1.3、§1.10、§1.11 |
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §7–§16 Backup vs Archive、forensic readiness | §1.1、§1.8 |
+| 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存） | §1 PCI merchant tiers | §1.9 |
 
 ---
 
@@ -630,6 +631,8 @@ Need near-zero RPO / continuous replication?  → Mirroring
 
 PCI DSS 是 **industry security standard**，不是政府 statute／regulation 本身。
 
+**Merchant tiers：** 所有適用的 merchant 都必須符合 PCI DSS；**merchant level 影響的是 validation／reporting 的方法與 rigor**（Level 1 的 ROC by QSA＋AOC vs Level 2–4 的 SAQ），而且 level 由 payment brands／acquirers 定義。不要背「不同 tier 有不同 control sets」或「tier 越高只是 audit 數量較多」——完整說明見 [Domain 6 §1.1](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
 > 智慧財產權（copyright／patent／trademark／trade secret）雖在部分測驗講義中被歸到 D2，完整整理見 [Domain 6 彙整講義](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
 ### 1.10 Virtualization vs Multitenancy
@@ -842,6 +845,7 @@ BEST    = 選最完整／最適當的答案
 | 58 | Full backup 同時支援 operations（recovery）與 forensics（歷史 system state 比對）。 |
 | 59 | **Backup 是 potential forensic source，不是自動可採的證據**——仍需 hash、chain of custody、documentation。 |
 | 60 | 問「long-term preservation of forensic records」時，具 WORM／hash／retention lock 的 **secure archive** 可能優於 backup。 |
+| 61 | 所有適用 merchant 都須符合 PCI DSS；**merchant tier 影響 validation／reporting rigor，不是 control sets**。 |
 
 ---
 
