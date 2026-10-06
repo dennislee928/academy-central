@@ -37,6 +37,8 @@ simulate-test/
 
 **域內補充檔：** [`domain3-infrastructure/02-airflow-diagrams.md`](domain3-infrastructure/02-airflow-diagrams.md) — 資料中心氣流的 Mermaid 圖解（server 氣流、cold／hot aisle 配置、錯誤配置、熱風回流後果鏈、完整機列配置）。文字版規則在 D3 §1.1。
 
+**外部速查表：** [`CCSP/domain6-legal-framework-reference.md`](../domain6-legal-framework-reference.md) — Domain 6 法律、法規與框架總表（A–M 分區、Legacy／題庫陷阱表、trigger word 索引）。放在 `CCSP/` 根層而非本資料夾，因為它是跨講義的考前速查表；完整推導與錯題脈絡仍在 D6 彙整講義。
+
 每份彙整講義的固定骨架：
 
 ```text
@@ -83,7 +85,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 376 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 398 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度與群組決議紀錄），不計入任何 domain。
 
