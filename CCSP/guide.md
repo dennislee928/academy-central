@@ -128,6 +128,7 @@
   - `03-quick-reference.md`：考前口訣、秒殺決策表。
   - `04-full-notes-[topic].md`：完整原始講義或專題補充（依內容命名）。
   - Domain 2 具有多輪版本，以 `-r1` / `-r2` / `-r3` 後綴區分。
+- `CCSP/domain6-legal-framework-reference.md`：Domain 6 法律、法規與框架總表（考前速查；A–M 分區 ＋ Legacy／題庫陷阱表 ＋ trigger word 索引）。
 - `CCSP/shared/`：跨 Domain 共用資料（如威脅建模框架）。
   - `threat-models/ransomware-prevention.md`
 - `CCSP/simulate-test/`：模擬考題與弱點分析講義，以 Domain 為主軸組織。
