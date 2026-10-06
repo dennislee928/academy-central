@@ -160,11 +160,24 @@ FedRAMP = federal cloud security assessment／certification program
 | **ISO/IEC 27017** | 雲端安全控制指引 | cloud security controls |
 | **ISO/IEC 27018** | 公有雲個資保護 | PII protection in public cloud |
 | **ISO/IEC 27034** | 應用安全框架 | 組織 1 個 ONF、每應用 1 個 ANF（見 [Domain 4](../domain4-application/01-consolidated-lecture.md)） |
+| **ISO/IEC 27036** | 供應商／供應鏈安全 | vendor、supply chain |
+| **ISO/IEC 27037** | **數位證據處理** | identify／collect／acquire／**preserve** digital evidence |
+| **ISO/IEC 27041** | 調查方法的適切性與保證 | forensic methodology assurance |
+| **ISO/IEC 27042** | 數位證據的分析與解讀 | forensic analysis／interpretation |
+| **ISO/IEC 27043** | 事件調查原則與流程 | incident investigation |
+| **ISO/IEC 27050** | **eDiscovery** | ESI：identification → preservation → collection → processing → review → production |
 | **COBIT** | IT 治理框架 | **Enterprise IT governance ＋ management**；不是只做 security，也不是純 risk framework |
+| **COSO** | 內控與風險治理 | Enterprise／internal control／risk governance。**最易與 COBIT 混** |
+| **CIS Controls** | 實務控制清單 | 已排序的實務安全控制；不是 ISMS 管理系統 |
+| **ISO/IEC 20000-1** | ITSM 管理系統**要求** | IT service management；**最易與 ISO 27001 混**（一個管服務、一個管資安） |
 | **ISO 31000** | **風險管理**框架 | 設計、導入與管理風險。**現行為 2018 版**，是 guidelines 不是 certification standard；題庫若出 `ISO 31000:2009` 視為 legacy wording |
 | **Hex GBL** | — | **虛構名詞**（Discworld 典故），純 distractor，不必記 |
 | **NIST SP 800-37** | 風險管理框架 | **RMF 七步驟**，見 §1.2 末段 |
 | **NIST SP 800-53** | 控制目錄 | Security and Privacy Controls for Information Systems and Organizations |
+| **NIST SP 800-53A** | 控制評估 | **評估** 800-53 的那些 controls |
+| **NIST SP 800-88** | 媒體淨化 | Media sanitization |
+| **FIPS 199** | 分級 | Security categorization |
+| **FIPS 200** | 最低要求 | Minimum federal security requirements |
 | **NIST SP 800-92** | 日誌管理 | Log management |
 | **CSA CCM** | 雲端控制矩陣 | 把控制對映到各種要求 |
 | **CAIQ** | 問卷 | 搭配 CCM 使用的 CSA 問卷 |
@@ -187,7 +200,37 @@ NIST 800-92 = 日誌管理
 COBIT     = enterprise IT governance
 SAS 70    = legacy，後繼為 SOC 1
 GAAP      = 會計原則，不是 audit standard
+COSO      = internal control / risk governance（不是 IT governance）
+CIS Controls = 實務控制清單（不是 ISMS）
+ISO 20000-1  = ITSM 要求（不是資安 ISMS）
+27036     = supplier／supply chain
+27037     = 數位證據處理 ／ 27050 = eDiscovery
 ```
+
+#### FISMA → RMF → 800-53 → 800-53A 核心鏈
+
+```text
+FISMA
+  ↓ risk-based federal security
+RMF / NIST SP 800-37
+  ↓ select controls
+NIST SP 800-53
+  ↓ assess controls
+NIST SP 800-53A
+```
+
+#### ⭐ 版本 legacy 陷阱
+
+| 題庫可能出 | 現行 |
+|---|---|
+| **ISO 31000:2009** | 已撤 → **2018** |
+| **ISO 27018:2019** | 已撤 → **2025** |
+| **ISO 27017:2015** | **2026 edition** |
+| **FIPS 140-2** | legacy 世代 → **140-3** |
+| **SAS 70** | legacy → 後繼 **SOC 1** |
+| **Privacy Shield** | invalid → **EU-U.S. DPF**（見 §1.4） |
+
+完整的題庫陷阱表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)。
 
 > **四選一範例：** 問「service organization 的 audit standard 是哪個」，選項為 SOC 1／**SSAE 18**／GAAP／SOC 2 時，正解是 **SSAE 18**——SOC 是 report，GAAP 是會計原則。
 
