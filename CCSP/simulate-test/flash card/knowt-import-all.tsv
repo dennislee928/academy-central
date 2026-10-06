@@ -161,6 +161,7 @@ Backup 與 Archive 的 primary purpose 各是什麼？	Backup = Recover（支援
 Full backup 為什麼也支援 forensic readiness？	它保存歷史 system state，investigator 可比較 known-good vs compromised、recover deleted artifacts、檢視舊組態、建立 timeline 並 reconstruct environment。因此同時命中 operations 與 forensics。
 Backup 可以直接當成法庭證據嗎？	不行。Backup 是 potential forensic source，不是自動可採的證據。仍需 original preservation、integrity verification／hashes、chain of custody、documentation、access control 與 timestamps。
 什麼情況下 secure archive 對 forensics 優於 backup？	當 archive 具備 immutable／WORM、hashes、timestamping、access control、audit logs 與 retention lock 時，對 evidence preservation 很強。題目問「long-term preservation of forensic records」就選 secure archive。
+PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant 都必須符合 PCI DSS；merchant tier 影響的是 validation／reporting 的方法與 rigor，不是各 tier 有不同的 control sets。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
@@ -368,6 +369,27 @@ STAR Level 1 和 CAIQ 的關係是什麼？	L1 是 CSP 自我揭露 security pos
 「Alice 的帳號下載了檔案」能推論「Alice 偷了資料」嗎？	不能。證據只證明該 account 執行過 download。要先列出並排除：credential 被盜、malware 使用其 session、automated process 使用相同 credential 等假設（用 MFA records、source IP、EDR telemetry、service configuration 驗證）。
 Professional opinion 與 personal opinion 差在哪？	Professional opinion 基於 evidence、expertise、validated methodology、repeatable analysis；personal opinion 是主觀感受，無 evidentiary value。
 Forensic examiner 在法庭上的角色定位是什麼？	Independent technical expert，不是 plaintiff 或 defense 的 technical salesman。ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side／win the argument。
+鑑識取證時為什麼要接 write blocker？	避免 acquisition／examination 過程改動 source evidence。它允許 READ、阻擋 WRITE，防止 filesystem metadata 改動、timestamp 改動、OS auto-mount 寫入與調查者誤改原始媒體。
+Trusted Computing Base（TCB）是什麼？是取證工具嗎？	是執行 security policy 所依賴的 hardware／software／firmware components 集合。不是 forensic acquisition tool。秒答：evidence media → write blocker；security-enforcement components → TCB。
+PCI DSS 的 merchant tier 改變了什麼？	改變 compliance validation／reporting 的方法與 rigor（L1 ROC by QSA＋AOC；L2/3 SAQ＋AOC；L4 SAQ 或 acquirer-defined）。所有適用 merchant 都須符合 PCI DSS。
+PCI merchant levels 是誰定義的？	Payment brands／acquirers，不是 PCI SSC 統一規定。不要背「不同 tier 有不同 control sets」或「tier 越高只是 audit 數量較多」。
+Privacy Shield 是誰 administer、誰 enforce？	U.S. Department of Commerce administered；FTC enforced 參與企業的承諾。題庫把「FTC administer」當正解並不準確。
+Privacy Shield 現在還有效嗎？被什麼取代？	無效。2020 Schrems II（CJEU）判定 invalid。2023 起由 EU-U.S. Data Privacy Framework (DPF) 取代，Commerce／ITA 管理、FTC／DOT 依管轄執法。
+FISMA 與 FedRAMP 各是什麼？	FISMA = 美國聯邦資訊安全法律／計畫要求；FedRAMP = 聯邦雲端服務的標準化安全評估與授權計畫。
+「FedRAMP 代表資料一律只能放在美國」對嗎？	太絕對。較高 assurance class 確有 U.S. jurisdiction 的 location requirement，但 residency 取決於適用的 FedRAMP class／baseline ＋ agency／legal requirements。
+MSA、SOW、SLA 三者怎麼切？	MSA = relationship／rules（整體關係與規則）；SOW = what work（做什麼工作）；SLA = how well the service must perform（服務要做到多好）。
+「爭議須在某 jurisdiction 解決」應該寫在 SLA 嗎？	不是。那屬 MSA／governing law／venue。SLA 的判準是 measurable／objective／repeatable（99.95% availability、response < 200 ms、monthly quota）。但不要背「SLA 只能是數字」——residency 實務上也可能寫進 SLA。
+EU/EEA 個資傳到第三國的決策順序是什麼？	先看 adequacy：有就可傳；沒有就要 appropriate safeguard——SCC、BCR 或其他 GDPR 機制（certification／codes、Article 49 derogations）。
+SCCs 與 BCRs 各是什麼？	SCCs = European Commission 預先核可的契約條款，用於傳輸至非 adequate 第三國；BCRs = 跨國集團的集團內部傳輸機制。
+ISO 27037 與 ISO 27050 各管什麼？	27037 = 數位證據的 identify／collect／acquire／preserve（證據處理）；27050 = eDiscovery（ESI 的 identification→preservation→collection→processing→review→production）。
+ISO 27036 是什麼？	供應商與供應鏈安全（supplier／supply-chain security）。看到 vendor／供應鏈就想它。
+NIST SP 800-53 與 800-53A 差在哪？800-88 是什麼？	800-53 = 安全與隱私控制目錄；800-53A = 評估那些控制；800-88 = media sanitization（媒體淨化）。
+FIPS 199 與 FIPS 200 各是什麼？	FIPS 199 = security categorization（分級）；FIPS 200 = minimum federal security requirements（最低要求）。FIPS 140-3 則是密碼模組驗證（140-2 為 legacy）。
+COSO 與 COBIT 差在哪？CIS Controls 與 ISO 20000-1 呢？	COSO = 內控與企業風險治理；COBIT = enterprise IT governance。CIS Controls = 已排序的實務安全控制（不是 ISMS）；ISO 20000-1 = ITSM 管理系統要求（易與 ISO 27001 混）。
+HITECH 與 NERC CIP 各管什麼？	HITECH = electronic health records、breach notification，強化 HIPAA（最易與 HIPAA 混）；NERC CIP = bulk electric system／critical infrastructure 的強制性產業標準。
+印度 DPDP Act 2023 的三個關鍵名詞？	Data Principal ≈ data subject；Data Fiduciary ≈ controller-like role；Data Protection Board 為監管機構。2026 CCSP outline 明確新增。
+PIPEDA 的定位與 trigger？	加拿大聯邦 private-sector 隱私法，管 commercial activity 中 personal information 的 collection／use／disclosure，含 10 fair-information principles。Trigger：Canadian private company + customer personal information。
+哪些 ISO／FIPS 版本是題庫常見的 legacy 寫法？	ISO 31000:2009（→2018）、ISO 27018:2019（→2025）、ISO 27017:2015（→2026 edition）、FIPS 140-2（→140-3）、SAS 70（→SOC 1）、Privacy Shield（→EU-U.S. DPF）。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

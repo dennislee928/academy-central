@@ -126,3 +126,4 @@ Backup 與 Archive 的 primary purpose 各是什麼？	Backup = Recover（支援
 Full backup 為什麼也支援 forensic readiness？	它保存歷史 system state，investigator 可比較 known-good vs compromised、recover deleted artifacts、檢視舊組態、建立 timeline 並 reconstruct environment。因此同時命中 operations 與 forensics。
 Backup 可以直接當成法庭證據嗎？	不行。Backup 是 potential forensic source，不是自動可採的證據。仍需 original preservation、integrity verification／hashes、chain of custody、documentation、access control 與 timestamps。
 什麼情況下 secure archive 對 forensics 優於 backup？	當 archive 具備 immutable／WORM、hashes、timestamping、access control、audit logs 與 retention lock 時，對 evidence preservation 很強。題目問「long-term preservation of forensic records」就選 secure archive。
+PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant 都必須符合 PCI DSS；merchant tier 影響的是 validation／reporting 的方法與 rigor，不是各 tier 有不同的 control sets。
