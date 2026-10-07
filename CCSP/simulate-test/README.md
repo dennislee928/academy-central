@@ -85,7 +85,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 398 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 421 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度與群組決議紀錄），不計入任何 domain。
 
