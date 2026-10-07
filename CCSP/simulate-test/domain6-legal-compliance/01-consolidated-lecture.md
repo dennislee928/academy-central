@@ -30,6 +30,7 @@
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | CSA ecosystem（CCM／CAIQ／STAR L1-L2、CCM ≠ enforcement）、GAAP、GLBA vs PCI DSS、Conflict of Laws | §1.1、§1.2、§1.4 |
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §1 STAR 三層與無 Level 4、§3–§6 forensic testimony | §1.2、§1.5 |
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存；速查表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)） | 6 題錯題 ＋ A–M 法規／標準分區 | §1.1、§1.2、§1.4、§1.5、§1.6 |
+| 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | eDiscovery 邊界、Evidence Custodian 保管鏈、data roles、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 | §1.1、§1.4、§1.5、§1.6 |
 
 ---
 
@@ -41,7 +42,7 @@
 |---|---|---|
 | **GLBA** | Gramm-Leach-Bliley Act | **美國金融機構 + 客戶財務個資**；要保護的是 **nonpublic personal information** |
 | **PCI DSS** | 支付卡產業資料安全標準 | **信用卡／cardholder data**（是 industry standard，不是政府法規） |
-| **HIPAA** | 美國醫療資料保護法 | **health information／PHI**；涵蓋電子醫療交易、國家識別碼、covered entities、providers、health plans、employers |
+| **HIPAA** | **美國聯邦法律**（不是 contractual standards） | **health information／PHI**；四大塊：隱私（PHI 使用與揭露）、安全（ePHI 保護）、電子醫療交易、全國識別碼。涵蓋 covered entities、providers、health plans、employers |
 | **HITECH** | 美國醫療資訊科技法 | **electronic health records／breach notification**；強化 HIPAA。最易與 HIPAA 混 |
 | **NERC CIP** | 強制性產業標準 | **bulk electric system／critical infrastructure**；不要用泛用 NIST 代替 |
 | **SOX** | Sarbanes-Oxley Act | **上市公司財報、內控、審計責任** |
@@ -74,6 +75,20 @@ FISMA   = 美國聯邦資訊系統安全
 | 保護什麼 | **nonpublic／private personal financial information** | **payment card data（cardholder data）** |
 
 題幹若為「**federal law** controlling financial institutions' handling of private information」→ **GLBA**，不是 PCI DSS（PCI DSS 不是法律）。
+
+#### 美國主管機關：FTC vs HHS
+
+| 機關 | 全名 | 核心職掌 |
+|---|---|---|
+| **FTC** | Federal Trade Commission（聯邦貿易委員會） | **consumer／commercial enforcement**：消費者保護、不公平商業行為、欺騙性商業行為，以及部分 privacy／data-security 執法 |
+| **HHS** | Department of Health and Human Services（衛生與公共服務部） | **health**：HIPAA、healthcare、PHI |
+
+```text
+FTC → Consumer / Commercial enforcement
+HHS → Health
+```
+
+> 看到 HIPAA／healthcare／PHI 選 **HHS**；看到消費者保護或商業行為執法選 **FTC**。另見 §1.4 Privacy Shield 一節——該制度歷史上由 **Commerce 管理、FTC 執法**。
 
 #### PCI DSS merchant tiers（題庫易錯）
 
@@ -510,13 +525,17 @@ Use     = 不要拿去幹別的
 
 ### 1.4 隱私角色與跨境傳輸
 
-| 角色 | 定義 |
-|---|---|
-| **Data subject** | 個資所描述的個人 |
-| **Data controller** | 決定處理的**目的與方式** |
-| **Data processor** | 依 controller 指示處理；cloud provider 常扮演此角色 |
-| **Data custodian** | 資料的日常維護與保護者 |
-| **Data owner** | 最終法律責任歸屬者 |
+| 角色 | 中文 | 回答什麼問題 |
+|---|---|---|
+| **Data subject** | 資料當事人 | 資料是關於誰？ |
+| **Data controller** | 資料控制者 | 誰決定處理的**目的與方式**？ |
+| **Data processor** | 資料處理者 | 誰依 controller 指示處理？（cloud provider 常扮演此角色） |
+| **Data owner** | 資料責任人 | 誰負最終資料風險與法律責任？ |
+| **Data steward** | 資料管理專責人 | 誰維持資料**品質、定義、規則**？ |
+| **Data custodian** | 資料保管人 | 誰**技術上**保存、備份、操作資料？ |
+| **Evidence custodian** | **證據保管人** | 誰維持**證據與保管鏈**？（鑑識角色，見 §1.5） |
+
+> **⭐ 不要把 Evidence Custodian 和資料治理角色混在一起。** 前者屬鑑識證據鏈，後者屬資料治理。題目出現 `evidence from collection until court` → **Evidence Custodian**。
 
 > **核心原則：** Cloud provider 常是 data processor，但 **cloud customer／data owner／controller 仍負最終法律責任**。Outsourcing 不會完全轉移 accountability。
 
