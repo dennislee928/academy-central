@@ -30,6 +30,7 @@
 | 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | object storage 判準、multitenancy 共享層級、SoD 分離對象 | §1.3、§1.10、§1.11 |
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §7–§16 Backup vs Archive、forensic readiness | §1.1、§1.8 |
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存） | §1 PCI merchant tiers | §1.9 |
+| 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 外部協作邊界、NAS/SMB 歸類、TPI threat model | §1.1、§1.3、§1.11 |
 
 ---
 
@@ -68,6 +69,18 @@ Destruction = secure disposal / crypto-erasure / sanitization
 > **限定：** archive 可以支援 BCDR，但它的 **primary purpose 是 retention，不保證快速還原 production**。完整的 Backup vs Archive 對照見 §1.8。
 
 **Processing vs Viewing（PII 題）：** Processing 包含 storing、printing、destroying、using；**Viewing 是被動接收**，在考題用語中常是 processing 的例外。
+
+**Share 階段的邊界：外部協作 ≠ 公開揭露**
+
+```text
+Controlled sharing              Public disclosure
+External partner                Anyone
+→ authenticated                 → can access data
+→ authorized
+→ limited dataset
+```
+
+> **第三方存取 ≠ 公開存取。** 評估雲端協作風險時，要對準「**把資料送出傳統環境邊界交給外部協作方**」，不要直接升級成 public disclosure——常見錯選就是把 controlled sharing 的風險答成公開揭露。
 
 **Reclassification 觸發因素：** 時間、用途改變（repurposing）、所有權／controller 移轉、法規狀態改變、business context 改變。**Color change 與敏感度分類無關**，只是低品質 distractor。
 
@@ -169,7 +182,7 @@ Object = Key + Metadata + Object
 |---|---|
 | **Volume／Block** | OS disk、DB storage、高效能 block I/O（virtual disk、SAN LUN、cloud block volume） |
 | **Object** | S3-style storage、images、backups、data lake、大量非結構化資料 |
-| **File** | NFS／SMB／NAS 等共享階層式 filesystem |
+| **File** | NFS／SMB／NAS 等共享階層式 filesystem。**注意：NAS／SMB 屬 File Storage，不是 Volume** |
 
 > **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（與 §1.3 下方的 Unresolved 標記併讀）。有些產品能模擬 folder UX，但底層模型仍不同——**不是「特別設定之後就變成 traditional filesystem hierarchy」**。
 
@@ -673,6 +686,18 @@ Multitenancy   = shared infrastructure
 
 **TPI（Two-Person Integrity）：** 敏感操作不能由單一人員完成，至少兩位 authorized individuals 共同參與。
 
+**TPI 的 threat model（容易答錯的部分）：** 它防的是
+
+```text
+叛變 / rogue insider
+帳號被攻陷
+被脅迫
+單人誤操作
+unilateral control
+```
+
+> **更精確的說法不是一般 availability 的「SPOF」，而是 `single point of control／single-person compromise`。** 把 TPI 答成「避免單點故障」會落在錯誤的維度上——TPI 處理的是**控制權集中**，不是可用性。
+
 ```text
 Admin A ----\
              > HSM key operation
@@ -846,6 +871,11 @@ BEST    = 選最完整／最適當的答案
 | 59 | **Backup 是 potential forensic source，不是自動可採的證據**——仍需 hash、chain of custody、documentation。 |
 | 60 | 問「long-term preservation of forensic records」時，具 WORM／hash／retention lock 的 **secure archive** 可能優於 backup。 |
 | 61 | 所有適用 merchant 都須符合 PCI DSS；**merchant tier 影響 validation／reporting rigor，不是 control sets**。 |
+| 62 | **Controlled sharing（authenticated／authorized／limited dataset）≠ public disclosure（anyone can access）。** |
+| 63 | 第三方存取不等於公開存取；雲端協作風險要對準「送出傳統環境邊界」。 |
+| 64 | **NAS／SMB 屬 File Storage，不是 Volume。** |
+| 65 | **TPI 防的是 single point of control／single-person compromise**，不是 availability 的 SPOF。 |
+| 66 | TPI 可防叛變、帳號被攻陷、被脅迫、單人誤操作與 unilateral control。 |
 
 ---
 
@@ -879,6 +909,9 @@ BEST    = 選最完整／最適當的答案
 | Encryption（備份） | Mirroring | 機密性 vs 可用性與 RPO |
 | Backup | Archive | Recovery（primary） vs Retention（primary） |
 | Backup 的 forensic 價值 | 可採證據 | potential forensic source vs 需經鑑識流程建立完整性 |
+| Controlled sharing | Public disclosure | 已驗證授權的有限資料集 vs 任何人皆可存取 |
+| NAS／SMB | Volume／Block | File storage（共享檔案系統） vs 區塊裝置 |
+| TPI 的 single point of control | Availability 的 SPOF | 控制權集中 vs 可用性單點故障 |
 | File-level | Object-level | 檔案系統中的檔案 vs 物件儲存中的物件 |
 | TDE | Application-level | 對 app 透明、保護 DB 檔案 vs app 先加密、可選欄位 |
 | Substitution | Shuffling | 換成不存在的假值 vs 重排既有真值 |
