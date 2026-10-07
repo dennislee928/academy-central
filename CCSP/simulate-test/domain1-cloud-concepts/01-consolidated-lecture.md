@@ -22,6 +22,7 @@
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §1 Private ≠ Private Network、D1 §2 deployment 快速判斷、D1 §3 Sandbox | §1.2、§1.7、§2.6 |
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §8 Quantum computing | §1.8 |
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | §9 Cloud actors：Carrier vs Broker | §1.3 |
+| 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 供應商鎖定雙層模型、media 分類、private cloud plane 區分 | §1.2、§1.5 |
 
 ---
 
@@ -103,6 +104,15 @@ Private = dedicated to one organization
 Private ≠ not Internet-facing
 ```
 
+**哪一層可以對外、哪一層要鎖死：**
+
+| 層 | 對外暴露 |
+|---|---|
+| Web／API／application plane | 通常**可以**對外（客戶要用服務） |
+| **Management plane、config plane、admin interface** | **應嚴格限制**，不對公網開放 |
+
+與 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md) 的管理平面隔離原則一致——「private cloud 可以 Internet-facing」指的是服務平面，不是管理平面。
+
 ### 1.3 Cloud Actors / Roles
 
 | Role | Function | 功能 |
@@ -165,6 +175,54 @@ Broker 可能執行 **aggregation**（彙總多個服務）、**intermediation**
 | **Vendor lock-in** | 難以移出或替換 provider | 出不去 |
 | **Vendor lock-out** | provider 倒閉／失效導致客戶失去資料存取 | 對方消失 |
 | **Reversibility** | 能否把資料與流程取回並終止服務 | 契約層的退出能力 |
+
+#### ⭐ 降低供應商鎖定的雙層模型
+
+> **`降低供應商鎖定 = 技術可移轉性 ＋ 合約退出保障`**
+
+```text
+              降低供應商鎖定
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+      技術可移轉性            合約退出保障
+          │                     │
+     開放格式                 匯出權
+     標準介面                 匯出時限
+     可移植設定               轉移協助
+     IaC                      終止條款
+     備份匯出                 費用／刪除
+          │                     │
+          └──────────┬──────────┘
+                     ↓
+                  退出策略
+```
+
+| 層 | 具體手段 |
+|---|---|
+| **技術可移轉性** | 開放／非專有資料格式、標準介面、可移植映像格式、Kubernetes YAML、IaC、標準化日誌格式、可匯出的備份、避免過度依賴單一 CSP 專有服務、**定期測試資料匯出與復原** |
+| **合約退出保障** | 資料匯出權、匯出格式、匯出期限、轉移協助、終止條款、退出費用、終止後資料保留期限、資料刪除、API／account termination timing |
+
+> **不要背「合約永遠比技術措施重要」。** 兩層缺一不可：技術上搬得走，供應商在法律與商業上也必須讓你搬。依題幹判斷問的是技術層還是合約層。
+>
+> 技術需求由誰定義、誰負責寫進合約，見 [Domain 6 §1.6](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
+#### industry-standard「media」的精確分類
+
+題庫以 `industry-standard media` 泛稱可降低鎖定的手段，措辭含糊（標 `[Q]`）。精確分類：
+
+| 項目 | 更精確的名稱 |
+|---|---|
+| JSON | 資料交換格式 |
+| ISO image | 磁碟映像格式 |
+| Syslog | 日誌格式／傳輸標準 |
+| YAML | 設定表示格式 |
+| Terraform／OpenTofu HCL | IaC 設定語言 |
+| Kubernetes manifests | 可移植的工作負載設定 |
+| Backup | 備份資料／復原工件 |
+| Vault secret | **秘密資料，不是「媒介」** |
+
+共同點確實是**降低對單一供應商專有格式的依賴**，但**不要把 media 當成現代雲端架構的精準分類**。
 
 ### 1.6 雲端基礎特性與虛擬化
 
@@ -316,6 +374,11 @@ strict governance
 | 20 | AONT-RS 是 data dispersion，不是 quantum computing。 |
 | 21 | **Carrier carries traffic；Broker manages services。** |
 | 22 | Broker 的三種行為：aggregation、intermediation、arbitrage。 |
+| 23 | **降低供應商鎖定 = 技術可移轉性 ＋ 合約退出保障**；不是「合約永遠勝過技術措施」。 |
+| 24 | 技術層：開放格式、標準介面、IaC、K8s manifest、可匯出備份、定期測試匯出與復原。 |
+| 25 | 合約層：匯出權／格式／期限、轉移協助、終止條款、退出費用、終止後保留與刪除。 |
+| 26 | `industry-standard media` 是含糊措辭；JSON/YAML/HCL/K8s manifest 各有精確名稱，Vault secret 不是「媒介」。 |
+| 27 | Private cloud 可對外的是 web／API／application plane；**management／config／admin plane 要鎖死**。 |
 
 ---
 
@@ -335,6 +398,8 @@ strict governance
 | Sandbox | Service model | 隔離模式 vs 服務交付層級 |
 | Quantum computing | AONT-RS | superposition／qubit 關鍵字 vs 資料轉換與分散 |
 | Cloud carrier | Cloud broker | 載送流量（連線與傳輸） vs 管理整合服務 |
+| 技術可移轉性 | 合約退出保障 | 搬得走 vs 法律上允許並協助搬 |
+| Application plane | Management plane | 可對外的服務介面 vs 必須鎖死的管理介面 |
 
 ### 決策流程
 
@@ -367,3 +432,5 @@ strict governance
 - 「backup 在另一家 CSP，還原不回來」最直接的風險名詞是什麼？
 - IaaS 的主要商業驅動力是什麼？為什麼不是 scalability？
 - Oversubscription 的定義中，被比較的兩個量各是什麼？
+- 降低供應商鎖定的兩層各包含哪些手段？為什麼不能只靠合約？
+- Private cloud 的哪一層可以對外、哪一層必須鎖死？
