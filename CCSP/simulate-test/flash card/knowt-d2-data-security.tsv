@@ -127,3 +127,6 @@ Full backup 為什麼也支援 forensic readiness？	它保存歷史 system stat
 Backup 可以直接當成法庭證據嗎？	不行。Backup 是 potential forensic source，不是自動可採的證據。仍需 original preservation、integrity verification／hashes、chain of custody、documentation、access control 與 timestamps。
 什麼情況下 secure archive 對 forensics 優於 backup？	當 archive 具備 immutable／WORM、hashes、timestamping、access control、audit logs 與 retention lock 時，對 evidence preservation 很強。題目問「long-term preservation of forensic records」就選 secure archive。
 PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant 都必須符合 PCI DSS；merchant tier 影響的是 validation／reporting 的方法與 rigor，不是各 tier 有不同的 control sets。
+外部協作與公開揭露差在哪？	Controlled sharing：external partner → authenticated／authorized／limited dataset；Public disclosure：anyone → can access。第三方存取 ≠ 公開存取，雲端協作風險要對準「送出傳統環境邊界」。
+NAS 與 SMB 屬於哪一種儲存？	File Storage（共享階層式 filesystem），不是 Volume／Block。
+TPI 防的是什麼威脅？是 availability 的 SPOF 嗎？	不是。TPI 防的是 single point of control／single-person compromise——叛變、帳號被攻陷、被脅迫、單人誤操作、unilateral control。它處理控制權集中，不是可用性。

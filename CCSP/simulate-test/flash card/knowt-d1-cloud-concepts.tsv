@@ -33,3 +33,8 @@ More control 是否等於 more secure？	No。More control 同時代表 more res
 題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
 Cloud carrier 與 cloud broker 一句話怎麼分？	Carrier carries traffic（connectivity／transport，像 ISP／telecom）；Broker manages services（管理、整合、協商 cloud services）。
 Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）、intermediation（加值中介）、arbitrage（在供應商之間動態選擇）。與 reseller 的「買斷後轉售」不同。
+降低供應商鎖定的完整模型是什麼？	技術可移轉性 ＋ 合約退出保障。兩層缺一不可——技術上搬得走，供應商在法律與商業上也必須允許並協助搬遷。不要背「合約永遠比技術措施重要」。
+降低供應商鎖定的技術面手段有哪些？	開放／非專有資料格式、標準介面、可移植映像格式、Kubernetes YAML、IaC、標準化日誌格式、可匯出備份、避免過度依賴單一 CSP 專有服務，以及定期測試資料匯出與復原。
+退出策略的合約面應明訂哪些？	資料匯出權、匯出格式、匯出期限、轉移協助、終止條款、退出費用、終止後資料保留期限、資料刪除、API／account termination timing。
+JSON、YAML、Terraform HCL、K8s manifest、Vault secret 的精確分類？	JSON = 資料交換格式；YAML = 設定表示格式；Terraform/OpenTofu HCL = IaC 設定語言；K8s manifests = 可移植的工作負載設定；Vault secret = 秘密資料，不是「媒介」。題庫的 industry-standard media 是含糊措辭。
+Private cloud 的哪一層可以對外、哪一層要鎖死？	Web／API／application plane 通常可對外；management plane、config plane、admin interface 應嚴格限制、不對公網開放。

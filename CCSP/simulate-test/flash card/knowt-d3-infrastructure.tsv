@@ -49,3 +49,7 @@ Management plane 的隔離原則有哪些？	與 workload network 分離、避�
 Host 要進維護時，VM 應該怎麼搬？	Live migration：move VM as a live instance。不是存 snapshot image——snapshot 的用途是 point-in-time state／rollback／reference。
 Server 的一般 airflow 方向是什麼？	Front／Inlet（吸入冷空氣）→ Server → Rear／Exhaust（排出熱空氣）。記法：Front = Inlet = Cold；Rear = Exhaust = Hot。
 Hot-air recirculation 會連帶造成哪些後果？	熱氣被另一台 server 吸入 → inlet temperature ↑ → fan speed ↑ → cooling load ↑ → energy cost ↑ → thermal risk ↑。只答「溫度升高」不完整。
+Reservation、Limit、Shares 三者各回答什麼問題？	Reservation = 保底（至少保證多少）；Limit = 封頂（最多能用多少，即使 host 閒置也不能超過）；Shares = 爭用時排順位（相對優先級）。
+題幹出現 contention 或 relative priority 要選哪個資源機制？	Shares（資源權重）。例 2000:1000 在爭用時約 2:1。Reservation 容易誤選——它回答「至少給多少」，不是「不夠分時誰優先」。
+「It is best to use variables in ___」答什麼？為什麼？	BC/DR tests。變數指改變測試情境與故障條件；劇本固定只證明「會演習」，不代表有復原能力。變化情境才能驗證人員是否真懂程序、備援有無未知依賴、RTO/RPO 能否達成。
+Baseline 與 BC/DR 測試對「變化」的要求為什麼相反？	Baseline 要穩——它是比對用的已核准參考狀態，自己一直變就無法偵測 configuration drift；BC/DR 測試要變——情境不變就只是照劇本演一次。

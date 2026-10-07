@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **398 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **421 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 35 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 129 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 51 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security | 28 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 40 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 132 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 55 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security | 30 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 101 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 110 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 398 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 421 |
 
 ### 歷次併入紀錄
 
@@ -82,6 +82,14 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 - write blocker vs TCB、PCI merchant tier ×2、Privacy Shield→DPF ×2、FISMA vs FedRAMP residency ×2、MSA/SOW/SLA ×2、EU 傳輸機制 ×2、ISO 27037 vs 27050、ISO 27036、NIST 800-53A/800-88、FIPS 199/200、COSO/CIS/20000-1、HITECH/NERC CIP、DPDP、PIPEDA、版本 legacy → **D6**（+21）
 - PCI DSS 適用範圍與 merchant tier → **D2**（+1）
 
+**2026-10-07 D3 ＋ D6 錯題補強與本輪 recall**（原檔未封存，知識點已併入彙整講義，由其內容產出 23 張）：
+
+- 資源三機制、contention → Shares、BC/DR 測試變數、Baseline 穩 vs 測試變 → **D3**（+4）
+- 供應商鎖定雙層模型、技術手段、合約條款、media 精確分類、private cloud plane 區分 → **D1**（+5）
+- 外部協作 ≠ 公開揭露、NAS/SMB → File、TPI threat model → **D2**（+3）
+- SCA vs SAST、Shift Left ＋ Security Throughout → **D4**（+2）
+- eDiscovery 流程與三組邊界、Evidence Custodian 保管鏈、Data steward、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 → **D6**（+9）
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -108,7 +116,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 398 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 421 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

@@ -26,3 +26,5 @@ SDLC 中『使用者最關鍵』通常落在哪一階段？為什麼？	Define�
 Business requirements 在 CCSP SDLC 裡主要指什麼？	該組織／系統特定的功能、效能、安全等需求，通常來自使用者與業務 stakeholder，不是一般市場智庫資料可完全取代。（來源 M005）
 Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of trust 成員彼此直接信任，組織多了難以擴充；TTP 擴充容易，但第三方成為單點依賴。（來源 Domain Tutor／4.7）
 做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
+SCA 看什麼？與 SAST 差在哪？	SCA 分析第三方 dependencies／libraries：CVE、license、SBOM。SAST 看自己寫的程式（source code／bytecode／data flow）。SAST ≠ SCA——不要把 SCA、IaC scan、image scan 全包進 SAST。
+SDLC 安全介入的完整說法是什麼？	Shift Left ＋ Security Throughout：越早介入越好，而且要貫穿整個 SDLC，不是只在 testing 階段。只答其中一半都不完整。

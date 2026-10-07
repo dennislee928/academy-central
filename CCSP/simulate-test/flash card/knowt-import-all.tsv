@@ -33,6 +33,11 @@ More control 是否等於 more secure？	No。More control 同時代表 more res
 題幹出現 superposition／qubit／entanglement 要選什麼？	Quantum computing。依 ISC2 outline，related／emerging technologies 屬 Domain 1。注意 AONT-RS 不是 quantum，而是 data dispersion。
 Cloud carrier 與 cloud broker 一句話怎麼分？	Carrier carries traffic（connectivity／transport，像 ISP／telecom）；Broker manages services（管理、整合、協商 cloud services）。
 Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）、intermediation（加值中介）、arbitrage（在供應商之間動態選擇）。與 reseller 的「買斷後轉售」不同。
+降低供應商鎖定的完整模型是什麼？	技術可移轉性 ＋ 合約退出保障。兩層缺一不可——技術上搬得走，供應商在法律與商業上也必須允許並協助搬遷。不要背「合約永遠比技術措施重要」。
+降低供應商鎖定的技術面手段有哪些？	開放／非專有資料格式、標準介面、可移植映像格式、Kubernetes YAML、IaC、標準化日誌格式、可匯出備份、避免過度依賴單一 CSP 專有服務，以及定期測試資料匯出與復原。
+退出策略的合約面應明訂哪些？	資料匯出權、匯出格式、匯出期限、轉移協助、終止條款、退出費用、終止後資料保留期限、資料刪除、API／account termination timing。
+JSON、YAML、Terraform HCL、K8s manifest、Vault secret 的精確分類？	JSON = 資料交換格式；YAML = 設定表示格式；Terraform/OpenTofu HCL = IaC 設定語言；K8s manifests = 可移植的工作負載設定；Vault secret = 秘密資料，不是「媒介」。題庫的 industry-standard media 是含糊措辭。
+Private cloud 的哪一層可以對外、哪一層要鎖死？	Web／API／application plane 通常可對外；management plane、config plane、admin interface 應嚴格限制、不對公網開放。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -162,6 +167,9 @@ Full backup 為什麼也支援 forensic readiness？	它保存歷史 system stat
 Backup 可以直接當成法庭證據嗎？	不行。Backup 是 potential forensic source，不是自動可採的證據。仍需 original preservation、integrity verification／hashes、chain of custody、documentation、access control 與 timestamps。
 什麼情況下 secure archive 對 forensics 優於 backup？	當 archive 具備 immutable／WORM、hashes、timestamping、access control、audit logs 與 retention lock 時，對 evidence preservation 很強。題目問「long-term preservation of forensic records」就選 secure archive。
 PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant 都必須符合 PCI DSS；merchant tier 影響的是 validation／reporting 的方法與 rigor，不是各 tier 有不同的 control sets。
+外部協作與公開揭露差在哪？	Controlled sharing：external partner → authenticated／authorized／limited dataset；Public disclosure：anyone → can access。第三方存取 ≠ 公開存取，雲端協作風險要對準「送出傳統環境邊界」。
+NAS 與 SMB 屬於哪一種儲存？	File Storage（共享階層式 filesystem），不是 Volume／Block。
+TPI 防的是什麼威脅？是 availability 的 SPOF 嗎？	不是。TPI 防的是 single point of control／single-person compromise——叛變、帳號被攻陷、被脅迫、單人誤操作、unilateral control。它處理控制權集中，不是可用性。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
@@ -213,6 +221,10 @@ Management plane 的隔離原則有哪些？	與 workload network 分離、避�
 Host 要進維護時，VM 應該怎麼搬？	Live migration：move VM as a live instance。不是存 snapshot image——snapshot 的用途是 point-in-time state／rollback／reference。
 Server 的一般 airflow 方向是什麼？	Front／Inlet（吸入冷空氣）→ Server → Rear／Exhaust（排出熱空氣）。記法：Front = Inlet = Cold；Rear = Exhaust = Hot。
 Hot-air recirculation 會連帶造成哪些後果？	熱氣被另一台 server 吸入 → inlet temperature ↑ → fan speed ↑ → cooling load ↑ → energy cost ↑ → thermal risk ↑。只答「溫度升高」不完整。
+Reservation、Limit、Shares 三者各回答什麼問題？	Reservation = 保底（至少保證多少）；Limit = 封頂（最多能用多少，即使 host 閒置也不能超過）；Shares = 爭用時排順位（相對優先級）。
+題幹出現 contention 或 relative priority 要選哪個資源機制？	Shares（資源權重）。例 2000:1000 在爭用時約 2:1。Reservation 容易誤選——它回答「至少給多少」，不是「不夠分時誰優先」。
+「It is best to use variables in ___」答什麼？為什麼？	BC/DR tests。變數指改變測試情境與故障條件；劇本固定只證明「會演習」，不代表有復原能力。變化情境才能驗證人員是否真懂程序、備援有無未知依賴、RTO/RPO 能否達成。
+Baseline 與 BC/DR 測試對「變化」的要求為什麼相反？	Baseline 要穩——它是比對用的已核准參考狀態，自己一直變就無法偵測 configuration drift；BC/DR 測試要變——情境不變就只是照劇本演一次。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -241,6 +253,8 @@ SDLC 中『使用者最關鍵』通常落在哪一階段？為什麼？	Define�
 Business requirements 在 CCSP SDLC 裡主要指什麼？	該組織／系統特定的功能、效能、安全等需求，通常來自使用者與業務 stakeholder，不是一般市場智庫資料可完全取代。（來源 M005）
 Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of trust 成員彼此直接信任，組織多了難以擴充；TTP 擴充容易，但第三方成為單點依賴。（來源 Domain Tutor／4.7）
 做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
+SCA 看什麼？與 SAST 差在哪？	SCA 分析第三方 dependencies／libraries：CVE、license、SBOM。SAST 看自己寫的程式（source code／bytecode／data flow）。SAST ≠ SCA——不要把 SCA、IaC scan、image scan 全包進 SAST。
+SDLC 安全介入的完整說法是什麼？	Shift Left ＋ Security Throughout：越早介入越好，而且要貫穿整個 SDLC，不是只在 testing 階段。只答其中一半都不完整。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
@@ -390,6 +404,15 @@ HITECH 與 NERC CIP 各管什麼？	HITECH = electronic health records、breach 
 印度 DPDP Act 2023 的三個關鍵名詞？	Data Principal ≈ data subject；Data Fiduciary ≈ controller-like role；Data Protection Board 為監管機構。2026 CCSP outline 明確新增。
 PIPEDA 的定位與 trigger？	加拿大聯邦 private-sector 隱私法，管 commercial activity 中 personal information 的 collection／use／disclosure，含 10 fair-information principles。Trigger：Canadian private company + customer personal information。
 哪些 ISO／FIPS 版本是題庫常見的 legacy 寫法？	ISO 31000:2009（→2018）、ISO 27018:2019（→2025）、ISO 27017:2015（→2026 edition）、FIPS 140-2（→140-3）、SAS 70（→SOC 1）、Privacy Shield（→EU-U.S. DPF）。
+eDiscovery 的完整流程是什麼？	可能涉訟 → 識別相關電子資料 → Legal Hold／保存 → 蒐集 → 處理／篩選 → 審閱 → 提交。核心情境是訴訟、預期訴訟或法律程序。
+「investigation 中蒐集證據的階段」等於 eDiscovery 嗎？	不等於。eDiscovery 包含 collection，但不是 generic investigation 的唯一 collection phase——題庫這樣寫屬 [Q] 定義過度寬泛。
+eDiscovery 與 digital forensics 各回答什麼？	eDiscovery = 為法律程序找資料（哪些與案件相關、須保存審閱提交）；Digital forensics = 為事件調查分析證據（發生了什麼、證據是否完整、能否重建事件）。
+eDiscovery 與 DLP、data discovery 的分工？	Data discovery/classification 問「資料在哪、是什麼、多敏感」；DLP 問「如何防止不當使用與外洩」；eDiscovery 問「哪些與案件相關、需保存及提交」。eDiscovery 可利用前兩者的能力，但目的屬法律程序。
+Evidence Custodian 的保管鏈流程與必記事項？	證據取得 → 唯一 Evidence ID → Hash → 保管人接收 → 安全保存 → 記錄誰何時領取 → 鑑識分析 → 歸還 → 法庭。須記錄誰碰過、何時、為何移交、移交給誰、保存在哪、evidence 狀態。
+Data steward 與 data custodian 差在哪？	Data steward 維持資料品質、定義與規則；data custodian 在技術上保存、備份、操作資料。兩者都不等於 evidence custodian（鑑識證據保管鏈）。
+FTC 與 HHS 的職掌各是什麼？	FTC → consumer／commercial enforcement（消費者保護、不公平與欺騙性商業行為、部分 privacy/data-security 執法）；HHS → health（HIPAA、healthcare、PHI）。
+HIPAA 是法律還是 contractual standards？涵蓋哪四塊？	是美國聯邦法律，不是 contractual standards。四塊：隱私（PHI 使用與揭露）、安全（ePHI 保護）、電子醫療交易、全國識別碼。
+退出需求是誰定義、誰寫進合約？	技術團隊定義要求（資料匯出格式、加密、IAM、介面、可移轉架構、security controls）；法務長／總法律顧問契約化要求（條款、責任、適用法律、管轄、賠償、退出條款、終止後責任）。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

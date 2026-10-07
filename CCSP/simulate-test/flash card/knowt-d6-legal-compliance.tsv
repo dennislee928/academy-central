@@ -99,3 +99,12 @@ HITECH 與 NERC CIP 各管什麼？	HITECH = electronic health records、breach 
 印度 DPDP Act 2023 的三個關鍵名詞？	Data Principal ≈ data subject；Data Fiduciary ≈ controller-like role；Data Protection Board 為監管機構。2026 CCSP outline 明確新增。
 PIPEDA 的定位與 trigger？	加拿大聯邦 private-sector 隱私法，管 commercial activity 中 personal information 的 collection／use／disclosure，含 10 fair-information principles。Trigger：Canadian private company + customer personal information。
 哪些 ISO／FIPS 版本是題庫常見的 legacy 寫法？	ISO 31000:2009（→2018）、ISO 27018:2019（→2025）、ISO 27017:2015（→2026 edition）、FIPS 140-2（→140-3）、SAS 70（→SOC 1）、Privacy Shield（→EU-U.S. DPF）。
+eDiscovery 的完整流程是什麼？	可能涉訟 → 識別相關電子資料 → Legal Hold／保存 → 蒐集 → 處理／篩選 → 審閱 → 提交。核心情境是訴訟、預期訴訟或法律程序。
+「investigation 中蒐集證據的階段」等於 eDiscovery 嗎？	不等於。eDiscovery 包含 collection，但不是 generic investigation 的唯一 collection phase——題庫這樣寫屬 [Q] 定義過度寬泛。
+eDiscovery 與 digital forensics 各回答什麼？	eDiscovery = 為法律程序找資料（哪些與案件相關、須保存審閱提交）；Digital forensics = 為事件調查分析證據（發生了什麼、證據是否完整、能否重建事件）。
+eDiscovery 與 DLP、data discovery 的分工？	Data discovery/classification 問「資料在哪、是什麼、多敏感」；DLP 問「如何防止不當使用與外洩」；eDiscovery 問「哪些與案件相關、需保存及提交」。eDiscovery 可利用前兩者的能力，但目的屬法律程序。
+Evidence Custodian 的保管鏈流程與必記事項？	證據取得 → 唯一 Evidence ID → Hash → 保管人接收 → 安全保存 → 記錄誰何時領取 → 鑑識分析 → 歸還 → 法庭。須記錄誰碰過、何時、為何移交、移交給誰、保存在哪、evidence 狀態。
+Data steward 與 data custodian 差在哪？	Data steward 維持資料品質、定義與規則；data custodian 在技術上保存、備份、操作資料。兩者都不等於 evidence custodian（鑑識證據保管鏈）。
+FTC 與 HHS 的職掌各是什麼？	FTC → consumer／commercial enforcement（消費者保護、不公平與欺騙性商業行為、部分 privacy/data-security 執法）；HHS → health（HIPAA、healthcare、PHI）。
+HIPAA 是法律還是 contractual standards？涵蓋哪四塊？	是美國聯邦法律，不是 contractual standards。四塊：隱私（PHI 使用與揭露）、安全（ePHI 保護）、電子醫療交易、全國識別碼。
+退出需求是誰定義、誰寫進合約？	技術團隊定義要求（資料匯出格式、加密、IAM、介面、可移轉架構、security controls）；法務長／總法律顧問契約化要求（條款、責任、適用法律、管轄、賠償、退出條款、終止後責任）。
