@@ -24,6 +24,7 @@
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D5 §5 Hot／Cold Aisle | §1.1 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §1 management plane、§8 live migration、§11 raised floor、§9／§10 GRE／KVM（復現） | §1.1、§1.3、§1.4 |
 | `02-airflow-diagrams.md`（原 `CCSP_D5_Data_Center_Airflow_Mermaid.md`） | §5 hot-air recirculation 後果鏈 | §1.1 |
+| 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 資源分配三機制、BC/DR 測試變數 | §1.4、§1.6 |
 
 ---
 
@@ -185,6 +186,34 @@ GRE over IPsec = Tunnel + Security
 | **Snapshot／dormant VM** | 收不到 patch，是常見盲點 |
 | **Cloud sprawl** | 雲端最常見的無意行為後果是忘記關 VM，造成 resource sprawl，不一定是 disaster |
 
+#### ⭐ 資源分配三機制：Reservation／Limit／Shares
+
+Hypervisor 層的資源管理有三個常被混用的機制，各回答不同問題：
+
+| 機制 | 回答什麼 | 記法 |
+|---|---|---|
+| **Reservation**（資源保留） | 至少保證多少？ | **保底** |
+| **Limit**（資源上限） | 最多能用多少？ | **封頂** |
+| **Shares**（資源權重） | 不夠分時誰相對優先？ | **排順位** |
+
+```text
+Reservation：VM-A CPU 保留 = 4 GHz  → 平台應保證至少取得此量
+Limit      ：VM-A CPU 上限 = 6 GHz  → 即使 host 還有大量閒置 CPU 也不能超過
+Shares     ：VM-A = 2000、VM-B = 1000
+             無爭用時通常沒有明顯作用；發生爭用時 A : B ≈ 2 : 1
+```
+
+**題幹觸發詞 → Shares：**
+
+```text
+contention
+prioritize resource requests
+relative priority
+relative entitlement
+```
+
+> **常見錯因：** reservation 確實能在資源爭用時保護重要 VM，所以容易被誤選。但它回答的是「**至少要給多少**」，不是「**剩下的資源不夠分時，誰相對優先**」——後者才是 shares。
+
 #### Virtualization Management Plane（來源：`by-test/12` §1）
 
 **Virtualization management toolset 指的是管理 hypervisor／VM／host 的介面，不是裝在 guest OS 裡的工具。**
@@ -296,6 +325,34 @@ BC/DR plan references laws/standards；it does not need to embed full copies.
 - **執行紀律：** 災難當下要**按 plan／checklist 執行**，不是臨場 improvisation。
 - **可執行性：** 核心 DR 團隊可能無法連線，計畫必須讓**具備基本技能的人**都能執行。
 - **演練風險：** Tabletop 最安全；**full testing 本身帶有極高的營運中斷風險**。
+- **測試情境要有變數：** 見下方小節。
+
+#### BC/DR 測試為什麼要有「變數」
+
+題型：`It is best to use variables in ______.` → **BC/DR tests**。
+
+這裡的「變數」不是程式變數，而是**改變測試情境、故障條件與突發事件**：
+
+```text
+第一次：主要資料中心失效
+第二次：資料庫毀損
+第三次：主要區域失效 ＋ 備援連線異常
+第四次：關鍵人員無法聯絡 ＋ 備份復原時間超過 RTO
+```
+
+**為什麼要變？** 若每次演練劇本完全相同，結果只是「大家知道劇本 → 照 SOP 演一次 → 全部通過」——**會演習不代表真正有復原能力**。
+
+變化情境才能驗證：
+
+- 人員是否真的理解程序（而非背劇本）
+- 備援方案有沒有未知依賴
+- RTO／RPO 能否真正達成
+- 單點故障是否真的處理掉
+- plan 是否只適用單一劇本
+
+> **⭐ 對照：Baseline 要穩，BC/DR 測試要變。**
+>
+> Baseline 的目的是提供**穩定、已核准的參考狀態**，必須以 current state 比對 approved baseline 才能偵測 configuration drift。baseline 若自己一直變就失去 reference value。詳見 [Domain 5 §1.2](../domain5-operations/01-consolidated-lecture.md)。
 - **雲端特性對 BC/DR 的幫助：** on-demand self-service 可快速供裝；任意位置存取可降低對專屬備援設施的需求；**data classification 可辨識關鍵資產與復原優先序**。
 - **反例：** Egress monitoring **不是** BC/DR 事件預測來源。
 - **跨 CSP 備份的最大技術風險：** interoperability／proprietary format incompatibility（見 [Domain 1 §2.2](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
@@ -409,6 +466,12 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 42 | **Live migration moves a running VM; snapshot does not。** |
 | 43 | Server 氣流固定是 **Front／Inlet → Server → Rear／Exhaust**。 |
 | 44 | Hot-air recirculation 的後果鏈：inlet temp ↑ → fan speed ↑ → cooling load ↑ → energy cost ↑ → thermal risk ↑。 |
+| 45 | **Reservation = 保底；Limit = 封頂；Shares = 爭用時排順位。** |
+| 46 | 題幹出現 contention／prioritize／relative priority／relative entitlement → **Shares**。 |
+| 47 | Reservation 回答「至少給多少」，不是「不夠分時誰優先」。 |
+| 48 | Limit 即使在 host 閒置時也會封頂。 |
+| 49 | **BC/DR 測試要有變數（改變故障情境）；Baseline 要穩。** |
+| 50 | 劇本固定的演練只證明「會演習」，不代表有復原能力。 |
 
 ---
 
@@ -433,6 +496,9 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Hot aisle | Cold aisle | 機櫃後方排氣相對 vs 機櫃前方進氣相對 |
 | Management plane | VMware Tools／guest agent | 管 hypervisor／VM／host vs 裝在 guest OS 內 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
+| Reservation | Shares | 保證最低量 vs 爭用時的相對優先級 |
+| Reservation | Limit | 保底 vs 封頂 |
+| BC/DR 測試 | Baseline | 情境要變（驗證真實復原力） vs 要穩（作為比對基準） |
 
 ---
 
@@ -480,3 +546,5 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - VMware Tools 與 virtualization management plane 差在哪？
 - Host 進維護時搬移 VM 的正確機制是什麼？為什麼不是 snapshot？
 - Hot-air recirculation 除了溫度升高，還會連帶造成哪四項後果？
+- Reservation、Limit、Shares 各回答什麼問題？看到 contention 該選哪個？
+- BC/DR 測試為什麼要換情境？為什麼 baseline 相反地要穩定？
