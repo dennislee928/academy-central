@@ -653,12 +653,84 @@ Choice of Law   = Which law applies?      （應適用哪個地方的實體法�
 
 不要選：暫停威脅建模、先做新的風險評估、繼續原排程銷毀。
 
+#### ⭐ eDiscovery 的三組邊界
+
+**完整流程：**
+
+```text
+可能涉及訴訟
+    ↓
+識別相關電子資料
+    ↓
+Legal Hold / 保存
+    ↓
+蒐集
+    ↓
+處理 / 篩選
+    ↓
+審閱
+    ↓
+提交
+```
+
+**① `[Q]` 判定：不是所有 evidence collection 都叫 eDiscovery。** 題庫把 `the phase of an investigation where evidence is collected` 直接答成 eDiscovery，定義過度寬泛。
+
+> **eDiscovery 包含 collection，但不是 generic investigation 的唯一 collection phase。** eDiscovery 的核心情境是**訴訟、預期訴訟、法律程序**。
+
+**② vs Digital Forensics：**
+
+| | 問什麼 |
+|---|---|
+| **eDiscovery** | 哪些電子資料與法律案件相關，必須保存、審閱、提交？ |
+| **Digital Forensics** | 發生了什麼？證據是否完整？能否重建事件？ |
+
+```text
+eDiscovery        = 為法律程序找資料
+Digital Forensics = 為事件調查分析證據
+```
+
+**③ vs DLP／Data Discovery：**
+
+| 技術 | 問什麼 |
+|---|---|
+| **Data discovery／classification** | 資料在哪？是什麼？敏感程度？ |
+| **DLP** | 如何防止敏感資料不當使用、傳輸或外洩？ |
+| **eDiscovery** | 哪些資料與案件相關，需要保存及提交？ |
+
+> eDiscovery **可以利用** data discovery、classification、metadata、內容搜尋等能力，**但目的屬於法律程序，不是 DLP 本身**。（D2 的工具邊界見 [Domain 2 §1.2](../domain2-data-security/01-consolidated-lecture.md)）
+
 **鑑識角色：**
 
 | 角色 | 職責邊界 |
 |---|---|
 | **Evidence Custodian** | 出庭前監管所有證物完整性與保管狀態（chain of custody） |
 | Incident Handler | 事件遏制與調查，未必是出庭證物保管人 |
+
+#### Evidence Custodian 的保管鏈流程
+
+```text
+證據取得
+ ↓
+唯一 Evidence ID
+ ↓
+Hash
+ ↓
+證據保管人接收
+ ↓
+安全保存
+ ↓
+記錄誰何時領取
+ ↓
+鑑識分析
+ ↓
+歸還
+ ↓
+法庭
+```
+
+保管人必須記錄：**誰碰過、什麼時候、為什麼移交、移交給誰、保存在哪、evidence 狀態**。
+
+> **秒答：** 題目出現 `evidence from collection until court` → **Evidence Custodian**。角色與資料治理角色的對照見 §1.4。
 
 > **不要把隱私角色（controller／processor）直接套到鑑識證據鏈。**
 
@@ -840,6 +912,34 @@ monthly capacity quota = 20 TB
 而 **jurisdiction for litigation 屬於 MSA／governing law／venue，不是 SLA**——把 contract clause 與 service-level metric 混在一起是常見錯因。
 
 > **nuance：不要背「SLA 只能是數字」。** Data residency、service location 在實務上完全可能寫進合約、service schedule 或 SLA。考試情境下 `SLA → measurable service commitment`，但不要推論成絕對規則。
+
+**一般合約條款**（不是典型 SLA 指標）：準據法、管轄法院、賠償、責任限制、終止、資料返還。
+
+```text
+SLA      = 服務做到多好
+Contract = 雙方法律關係怎麼規定
+```
+
+#### 技術團隊 vs 法務團隊的分工
+
+退出策略與供應商鎖定題常問「誰負責」，兩邊分工要清楚：
+
+| 角色 | 負責什麼 |
+|---|---|
+| **雲端資安人員**（資安架構師／工程師） | 定義**技術需求**：資料匯出格式、加密、IAM、介面、可移轉架構、security controls |
+| **法務長／總法律顧問** | 把需求**契約化**：合約條款、法律責任、適用法律、管轄法院、賠償、退出條款、資料移轉條件、終止後責任 |
+
+```text
+雲端資安人員
+「需要能在 48 小時內以標準格式匯出資料」
+             ↓
+法務長／總法律顧問
+「把這項要求寫成供應商有法律義務遵守的契約條款」
+```
+
+> **一句話：技術團隊定義要求；法務團隊契約化要求。**
+>
+> 註：「雲端資安代表」不是標準化的 NIST cloud actor，可理解為代表組織處理雲端資安與技術需求的人員。雙層退出模型見 [Domain 1 §1.5](../domain1-cloud-concepts/01-consolidated-lecture.md)。
 
 ```text
 Outsourcing 不等於責任全部轉移。
@@ -1154,6 +1254,17 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 107 | **MSA = relationship／rules；SOW = what work；SLA = how well service must perform。** |
 | 108 | SLA 的判準是 measurable／objective／repeatable；**jurisdiction for litigation 屬 MSA，不是 SLA**。 |
 | 109 | 但不要背「SLA 只能是數字」——residency／location 實務上也可能寫進 SLA 或 service schedule。 |
+| 110 | **eDiscovery = 法律程序中的電子資料識別、保存、蒐集、審閱、提交。** |
+| 111 | **eDiscovery 包含 collection，但不是 generic investigation 的唯一 collection phase**（題庫此處標 `[Q]`）。 |
+| 112 | **eDiscovery = 為法律程序找資料；Digital Forensics = 為事件調查分析證據。** |
+| 113 | Data discovery 問「資料在哪」；DLP 問「如何防外洩」；eDiscovery 問「哪些與案件相關」。 |
+| 114 | Evidence Custodian 的核心是 chain of custody：Evidence ID → hash → 接收 → 保存 → 領取紀錄 → 分析 → 歸還 → 法庭。 |
+| 115 | 題目出現 `evidence from collection until court` → **Evidence Custodian**。 |
+| 116 | **Data steward 管資料品質／定義／規則；data custodian 管技術保存與操作。** |
+| 117 | **FTC → consumer／commercial enforcement；HHS → health／HIPAA／PHI。** |
+| 118 | **HIPAA 是美國聯邦法律，不是 contractual standards**；含隱私、安全、電子醫療交易、全國識別碼四塊。 |
+| 119 | `SLA = 服務做到多好`；`Contract = 雙方法律關係怎麼規定`（準據法、管轄、賠償、責任限制、終止、資料返還）。 |
+| 120 | **技術團隊定義要求；法務團隊契約化要求。** |
 
 ---
 
@@ -1192,6 +1303,13 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | SLA | MSA／SOW | 可量測服務承諾 vs 整體關係／工作範圍 |
 | Sovereignty | Localization | 受誰管 vs 必須留在哪 |
 | Legal hold | eDiscovery | 先停止刪除 vs 找出並提交證據 |
+| eDiscovery | Digital forensics | 為法律程序找資料 vs 為事件調查分析證據 |
+| eDiscovery | DLP／Data discovery | 與案件相關的保存與提交 vs 防外洩／盤點分類 |
+| Data steward | Data custodian | 資料品質與規則 vs 技術保存與操作 |
+| Data custodian | Evidence custodian | 資料治理角色 vs 鑑識證據保管鏈 |
+| FTC | HHS | 消費者與商業行為執法 vs 醫療與 HIPAA |
+| SLA | 一般合約條款 | 可量測服務承諾 vs 準據法／管轄／賠償／終止 |
+| 技術團隊 | 法務團隊 | 定義技術需求 vs 把需求寫成契約義務 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
 | Court | Regulator | 鑑識報告最終接收者 vs 一般合規對象 |
 | Due care | Due diligence | DO／實作維持 vs KNOW／調查驗證 |
@@ -1346,6 +1464,10 @@ SAS 70     = legacy
 - Privacy Shield 是誰 administer、誰 enforce？現在被什麼取代？
 - 取證要接什麼裝置？TCB 是不是取證工具？
 - 「爭議須在某 jurisdiction 解決」該寫在 SLA 還是 MSA？
+- eDiscovery 與 digital forensics 各回答什麼問題？為什麼「investigation 的證據蒐集階段」不等於 eDiscovery？
+- Evidence custodian 要記錄哪六件事？與 data custodian 差在哪？
+- Data steward 與 data custodian 的分工是什麼？
+- 看到 PHI 要想哪個主管機關？看到欺騙性商業行為呢？
 - STAR 有幾個層級？第三方評估與最高層級各是哪一個？
 - 法庭作證時為什麼要主動提出 alternative explanations？
 - 「Alice 的帳號下載了檔案」能直接推論「Alice 偷了資料」嗎？要先排除哪些假設？
