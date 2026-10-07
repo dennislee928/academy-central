@@ -18,6 +18,7 @@
 | `by-test/09-practice-test-3-weakness-lecture.md` | §6 P1 D4（web service／測試／service model／IP／federation） | §1.3、§1.4、§1.5、§2.6 |
 | `by-test/learnzapp/01-...-lecture.md` | §3 應用安全與管理視角 | §1.1、§1.3、§1.4、§1.7 |
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `4.2` requirements、`4.5` shadow API、`4.7` federation | §1.2、§1.5、§2.7 |
+| 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | SCA、Shift Left + Security Throughout | §1.2、§1.3 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -57,13 +58,21 @@ D4 失分多半不是「完全不會」，而是一看到技術威脅就立刻�
 |---|---|
 | **Most important SDLC input** | **Business requirements** |
 | **Security first involved in SDLC** | **Define**（最早階段，不是 Design） |
-| Security controls in SDLC | 越早導入越有效、越便宜 |
+| Security controls in SDLC | 越早導入越有效、越便宜，**而且要貫穿整個 SDLC**，不是只在 testing 階段 |
 | Developer training 的理由 | 現代開發高度依賴 libraries／frameworks／components，開發者可能不了解底層安全風險 |
 | Legislation／regulation | 重要限制，但通常被 business requirements 吸收，不是最上位 input |
 
 **Business requirements 的定義（`daily` LO `4.2`）：** 該組織／該系統特定的功能、效能、安全需求，通常來自**使用者與業務 stakeholder**，不是一般市場智庫或 open data 可完全取代。題目的 `user involvement` 要理解成廣義的業務需求提供者，不一定是逐一訪談終端使用者。
 
 > 需求一開始定錯，測試只會確認做出了一個錯的東西，而且越晚發現修正成本越高。「使用者最關鍵」通常落在 **Define／requirements**，Test／beta 只能驗證是否符合已定需求。
+
+**記法：**
+
+```text
+Shift Left + Security Throughout
+```
+
+兩件事要同時成立——**越早介入**（shift left）**而且貫穿全程**（throughout）。只答「在測試階段做安全測試」或「只在設計階段審查」都不完整。
 
 **Nonfunctional requirement：** 非安全類產品中的安全缺陷，通常屬於 **nonfunctional requirement**。
 
@@ -76,11 +85,14 @@ D4 失分多半不是「完全不會」，而是一看到技術威脅就立刻�
 | **IAST** | 在執行中的應用內部做 instrumentation |
 | **RASP** | 部署於正式環境，執行期自我防護與主動阻擋 |
 | **Fuzz testing** | 餵入畸形／隨機輸入，偵測非預期行為 |
+| **SCA**（Software Composition Analysis） | 分析**第三方 dependencies／libraries**：CVE、license、**SBOM** |
 
 ```text
 black-box + running app + discover execution paths = DAST
 source code / no execution                          = SAST
 ```
+
+> **⭐ `SAST ≠ SCA`。** SAST 看的是**自己寫的程式**（source code／bytecode／data flow／insecure coding pattern）；SCA 看的是**引進來的第三方套件**。不要把 SCA、IaC scan、container image scan 全包進 SAST。
 
 **測試獨立性：** 開發人員測試自己寫的程式，問題不是「技術能力不足」，而是**既得利益（vested interest）造成的利益衝突與盲點**。考試要的是 conflict of interest／testing independence。公開玩家測試也需要中立主持人。
 
@@ -245,6 +257,9 @@ Application level  = 每個應用 1 個 ANF
 | 28 | Code signing 可作為軟體完整性與所有權證據。 |
 | 29 | 政策成本高、繞過率高 → 先修政策，再談執法。 |
 | 30 | Masking 的 best definition 是「similar but inauthentic dataset」，hide PII 只是效果之一。 |
+| 31 | **SCA 看第三方 dependencies／libraries（CVE、license、SBOM）。** |
+| 32 | **`SAST ≠ SCA`**——不要把 SCA、IaC scan、image scan 全包進 SAST。 |
+| 33 | **Shift Left ＋ Security Throughout**：越早介入，而且要貫穿整個 SDLC。 |
 
 ---
 
@@ -253,6 +268,7 @@ Application level  = 每個應用 1 個 ANF
 | A | B | 切法 |
 |---|---|---|
 | SAST | DAST | 看原始碼不執行 vs 黑箱測執行中的應用 |
+| SAST | SCA | 自己寫的程式 vs 引進來的第三方套件 |
 | DAST | IAST／RASP | 外部行為 vs 應用內部 instrumentation／執行期防護 |
 | 弱點掃描 | 原始碼審查 | 已知系統弱點 vs 程式邏輯錯誤 |
 | SOAP | REST | 嚴格 XML 協定 vs 輕量 URI resource |
@@ -304,3 +320,5 @@ Application level  = 每個應用 1 個 ANF
 - ATM card + PIN 為什麼算 MFA，password + PIN 為什麼不算？
 - ISO 27034 中組織有幾個 ONF？每個應用有幾個 ANF？
 - 為什麼 cloud sandbox 不適合做 malware analysis？
+- SCA 與 SAST 各看什麼？SBOM 屬於哪一邊？
+- 「安全越早介入越好」只對一半，另一半是什麼？
