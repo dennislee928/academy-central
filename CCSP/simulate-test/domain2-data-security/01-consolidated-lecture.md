@@ -31,6 +31,7 @@
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §7–§16 Backup vs Archive、forensic readiness | §1.1、§1.8 |
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存） | §1 PCI merchant tiers | §1.9 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 外部協作邊界、NAS/SMB 歸類、TPI threat model | §1.1、§1.3、§1.11 |
+| 2026-10-09 D1-D4 防守成果 ＋ D3 補強（內容已併入，原檔未封存） | TDE 的透明性判準、`PCI=true` 的 representation ≠ source | §1.2、§1.4 |
 
 ---
 
@@ -150,6 +151,18 @@ Internet / external service
 
 **關鍵切法：** 「結果存在哪裡」≠「判斷是怎麼做出來的」。Inheritance 常把結果寫進 metadata，但判斷來源是父物件關係，不是讀 payload。
 
+**同一原則的另一個案例：`PCI=true`（Representation ≠ Source）**
+
+```text
+Scanner → 讀取文件 payload → 找到大量信用卡號 → 設定 PCI=true
+```
+
+最終的 `PCI=true` **是一個 metadata 標籤**，但做出這個 classification 判斷的**來源是 content analysis**（讀了 payload）。
+
+> **最短記：標籤是 Metadata；來源可能是 Content。**
+>
+> 題目問「這個分類是用哪種分析做出來的」→ 答 **content analysis**；問「`PCI=true` 本身是什麼」→ 答 **metadata**。兩個問法不要混。
+
 **Frequency 為何算 content analysis：** 同一 pattern 出現 50,000 次與 1 次，對 classification 的意義不同 → payload-derived statistic。
 
 ### 1.3 儲存模型
@@ -226,7 +239,7 @@ Volume = virtual block device behaving like a disk
 | Encryption Type | 引擎位置 | 主要邏輯 |
 |---|---|---|
 | **Application-level encryption** | 存取資料庫的 application | App 在資料進 DB 前就加密 |
-| **TDE**（Transparent Database Encryption） | **Database／DBMS 層** | DB 透明加密 |
+| **TDE**（Transparent Database Encryption） | **Database／DBMS 層** | **由 DB／儲存層自動加密靜態資料，對 application 透明**（見下方判準） |
 | **Volume／disk encryption** | Storage／volume 層 | 保護媒體／儲存 |
 | **Transport encryption** | Network／session 層 | 保護傳輸中資料 |
 | **KMS** | 金鑰生命週期管理 | 管 key，**不等於** encryption engine |
@@ -247,6 +260,22 @@ Application → DBMS (TDE Engine) → Encrypted Data
 | **Key rotation** | 定期換 key 降低暴露風險 |
 | **Key escrow** | 第三方或受控方式保存 key |
 | **Envelope encryption** | data key 加密資料，master key 加密 data key |
+
+#### ⭐ TDE 的判準是「對 Application 透明」
+
+```text
+Application
+    ↓  正常 SQL / Data（不呼叫 encrypt()）
+Database Engine
+    ↓  TDE
+Encrypted Data Files
+```
+
+**判準：** 由**資料庫／儲存層自動加密靜態資料**，application 不需自己呼叫 `encrypt()`。
+
+> **常見誤解：以「加密引擎與 DB 在同一個 host」作為 TDE 的判準——這不是 TDE 的核心。** 金鑰完全可以放在**外部 KMS／HSM**，所以「同一 host」不是判斷條件。
+>
+> 對照 §1.4 的粒度四選一：**「對 app 透明」→ TDE；「只加密特定 table／column／field」→ Application-level。**
 
 #### Cryptographic key protection 原則（`by-test/13` Part 1 §1）
 
@@ -876,6 +905,9 @@ BEST    = 選最完整／最適當的答案
 | 64 | **NAS／SMB 屬 File Storage，不是 Volume。** |
 | 65 | **TPI 防的是 single point of control／single-person compromise**，不是 availability 的 SPOF。 |
 | 66 | TPI 可防叛變、帳號被攻陷、被脅迫、單人誤操作與 unilateral control。 |
+| 67 | **TDE 的判準是「對 application 透明」，不是「加密引擎與 DB 同一 host」。** |
+| 68 | TDE 的金鑰可以放在外部 KMS／HSM——host 位置不是判斷條件。 |
+| 69 | **`PCI=true` 標籤是 metadata，但判斷來源是 content analysis**——標籤是 Metadata；來源可能是 Content。 |
 
 ---
 
@@ -912,6 +944,8 @@ BEST    = 選最完整／最適當的答案
 | Controlled sharing | Public disclosure | 已驗證授權的有限資料集 vs 任何人皆可存取 |
 | NAS／SMB | Volume／Block | File storage（共享檔案系統） vs 區塊裝置 |
 | TPI 的 single point of control | Availability 的 SPOF | 控制權集中 vs 可用性單點故障 |
+| TDE（對 app 透明） | Application-level（選欄位） | 誰負責呼叫加密 vs 加密粒度 |
+| 分類結果的載體 | 分類判斷的來源 | metadata 標籤 vs content／metadata／context 分析 |
 | File-level | Object-level | 檔案系統中的檔案 vs 物件儲存中的物件 |
 | TDE | Application-level | 對 app 透明、保護 DB 檔案 vs app 先加密、可選欄位 |
 | Substitution | Shuffling | 換成不存在的假值 vs 重排既有真值 |
