@@ -3,6 +3,7 @@
 > **用途：** 考前速查。以 **2026 ISC2 CCSP official outline 明確點名 ＋ 題庫常出 ＋ 實際遇過**的項目為範圍，不是世界上所有 privacy law 的清單。
 > **定位：** 本檔刻意自成一體（與彙整講義有部分重疊），目的是查的時候不必跳檔。完整推導、錯題脈絡與邊界討論見 [`simulate-test/domain6-legal-compliance/01-consolidated-lecture.md`](simulate-test/domain6-legal-compliance/01-consolidated-lecture.md)。
 > **讀法：** 先看最後兩節（**Legacy／題庫陷阱表**與**trigger word 索引**），再回頭查分區。
+> **姊妹檔：** 若要查的是「這個名稱屬於哪一類」而非細節，用 [`domain6/Framework_Law_Standard_Map.md`](domain6/Framework_Law_Standard_Map.md)（名稱 → 類別的歸位地圖）。
 > **外部連結：** 均為官方頁面，供查證現行版本與定義之用。
 
 2026 Domain 6 官方範圍涵蓋 country-specific privacy laws、privacy standards、audit reports、regulated industries、risk frameworks、eDiscovery、forensics、contracts 與 supply-chain security（[ISC2 CCSP Exam Outline](https://www.isc2.org/certifications/ccsp/ccsp-certification-exam-outline)）。
