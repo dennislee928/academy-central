@@ -31,6 +31,7 @@
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §1 STAR 三層與無 Level 4、§3–§6 forensic testimony | §1.2、§1.5 |
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存；速查表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)） | 6 題錯題 ＋ A–M 法規／標準分區 | §1.1、§1.2、§1.4、§1.5、§1.6 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | eDiscovery 邊界、Evidence Custodian 保管鏈、data roles、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 | §1.1、§1.4、§1.5、§1.6 |
+| 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.7 |
 
 ---
 
@@ -1000,6 +1001,33 @@ Farm → USDA ； Patent → USPTO ； Worker → OSHA ； Stocks → SEC
 
 **Code signing** 可支援軟體完整性與**所有權**證明。
 
+### 1.7 四個治理角色：Legal／CISO／DPO／Compliance
+
+情境題常問「這件事該找誰」。四個角色回答的是不同問題：
+
+| 角色 | 中文 | 核心問題 | 常見觸發詞 |
+|---|---|---|---|
+| **General Counsel／CLO** | 法務長／總法律顧問 | 法律怎麼解釋？合約怎麼寫？責任怎麼分？訴訟怎麼處理？ | 合約條款、適用法律、管轄法院、賠償、退出條款、終止後責任 |
+| **CISO** | 資訊安全長 | 組織的資安計畫、控制、事件與資安風險怎麼管理？ | security program／governance／strategy、incident response、security controls、security risk、security operations |
+| **DPO** | 資料保護官 | 個人資料是否被**合法、適當、符合隱私義務**地處理？ | GDPR、個資處理、**DPIA**、資料當事人權利、隱私治理、與資料保護監管機關互動 |
+| **Compliance** | 合規職能／合規人員 | 組織是否**持續符合**適用的法規、標準、控制與政策？ | control requirements、ongoing compliance、compliance program、audit evidence、regulatory mapping、PCI DSS controls |
+
+**DPIA**（Data Protection Impact Assessment，資料保護影響評估）是 DPO 的典型職責產物。
+
+#### 兩組最常混的邊界
+
+```text
+CISO       = Security          ／  DPO        = Privacy
+Legal (GC) = 法律怎麼解釋        ／  Compliance = 有沒有做到
+```
+
+| 對照 | 切法 |
+|---|---|
+| **CISO vs DPO** | CISO 管 security、incident response、security controls、security risk；DPO 管 privacy、personal data、DPIA、data subject rights。**DPO 不等於一般「資料安全主管」**，它偏 privacy／data protection |
+| **Legal vs Compliance** | Legal 回答「法律怎麼解釋、合約怎麼寫、責任怎麼分、訴訟怎麼處理」；Compliance 回答「是否符合要求、控制是否落地、證據是否完整、是否持續監督」 |
+
+> 與 §1.4 的 data roles 七列（data subject／controller／processor／owner／steward／custodian／evidence custodian）併讀——那一組是**資料層級**的角色，這一組是**組織治理層級**的職位。技術團隊與法務團隊在退出策略上的分工見 §1.6。
+
 ### 1.8 風險管理
 
 **處置方式：**
@@ -1265,6 +1293,12 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 118 | **HIPAA 是美國聯邦法律，不是 contractual standards**；含隱私、安全、電子醫療交易、全國識別碼四塊。 |
 | 119 | `SLA = 服務做到多好`；`Contract = 雙方法律關係怎麼規定`（準據法、管轄、賠償、責任限制、終止、資料返還）。 |
 | 120 | **技術團隊定義要求；法務團隊契約化要求。** |
+| 121 | **CISO = Security；DPO = Privacy。** |
+| 122 | **Legal（GC）= 法律怎麼解釋；Compliance = 有沒有做到。** |
+| 123 | CISO 的觸發詞：security program／governance／incident response／security controls／security risk。 |
+| 124 | DPO 的觸發詞：GDPR、個資處理、**DPIA**、資料當事人權利、與監管機關互動。 |
+| 125 | Compliance 的觸發詞：control requirements、ongoing compliance、audit evidence、regulatory mapping。 |
+| 126 | **DPO 不等於一般「資料安全主管」**——它偏 privacy／data protection。 |
 
 ---
 
@@ -1310,6 +1344,9 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | FTC | HHS | 消費者與商業行為執法 vs 醫療與 HIPAA |
 | SLA | 一般合約條款 | 可量測服務承諾 vs 準據法／管轄／賠償／終止 |
 | 技術團隊 | 法務團隊 | 定義技術需求 vs 把需求寫成契約義務 |
+| CISO | DPO | Security／incident／controls vs Privacy／個資／DPIA |
+| Legal（GC） | Compliance | 法律怎麼解釋與合約怎麼寫 vs 有沒有做到與證據是否完整 |
+| 治理角色（CISO／DPO／Compliance） | 資料角色（controller／processor／custodian） | 組織職位 vs 資料處理關係中的角色 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
 | Court | Regulator | 鑑識報告最終接收者 vs 一般合規對象 |
 | Due care | Due diligence | DO／實作維持 vs KNOW／調查驗證 |
@@ -1468,6 +1505,8 @@ SAS 70     = legacy
 - Evidence custodian 要記錄哪六件事？與 data custodian 差在哪？
 - Data steward 與 data custodian 的分工是什麼？
 - 看到 PHI 要想哪個主管機關？看到欺騙性商業行為呢？
+- 題幹出現 incident response 該找誰？出現 DPIA 呢？出現 audit evidence 呢？
+- CISO 與 DPO、Legal 與 Compliance 的一句話切法各是什麼？
 - STAR 有幾個層級？第三方評估與最高層級各是哪一個？
 - 法庭作證時為什麼要主動提出 alternative explanations？
 - 「Alice 的帳號下載了檔案」能直接推論「Alice 偷了資料」嗎？要先排除哪些假設？
