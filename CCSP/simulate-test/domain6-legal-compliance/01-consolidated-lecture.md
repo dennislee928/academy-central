@@ -299,6 +299,46 @@ NIST SP 800-53A
 
 > **四選一範例：** 問「service organization 的 audit standard 是哪個」，選項為 SOC 1／**SSAE 18**／GAAP／SOC 2 時，正解是 **SSAE 18**——SOC 是 report，GAAP 是會計原則。
 
+#### ⭐ `NIST SP 800-92 = Logs`，不是 risk framework
+
+常見錯選：以 **NIST SP 800-92** 回答 design／implementation／management 的風險框架題。800-92 的主題是 **Guide to Computer Security Log Management**：
+
+```text
+NIST SP 800-92 = log generation / transmission / storage
+               + analysis / disposal
+               + log management infrastructure
+```
+
+NIST 另有 **SP 800-92 Rev.1** 的發展方向（聚焦組織層級的資安日誌管理規劃），但舊題庫最常見的仍是原始版；判斷類別時兩者都是 **Logs**。
+
+#### ISO 31000 的適用範圍（補強）
+
+它是**通用風險管理的原則、框架與流程**指南，可用於 risk identification／analysis／evaluation／treatment／monitoring／communication：
+
+```text
+ISO 31000 = Risk Management（Enterprise，general-purpose）
+  ✗ 不是 cloud-only
+  ✗ 不是 cybersecurity-only
+  ✗ 不是 certification standard（是 guidelines）
+```
+
+#### ISO/IEC 27017:2026 的定位（補強）
+
+它**建立在 ISO/IEC 27002 之上**，在既有控制之外增加 cloud-specific 的安全指引與控制，明確適用於 **CSP 與 CSC 雙方**，涵蓋 public／private／hybrid cloud。秒答 `27017 = Cloud`。
+
+#### ⭐ 四選一實戰：框架名稱 → 類別 mapping
+
+題目問 `which framework focuses on design, implementation and management?`，選項為 `ISO 31000:2009`／`HIPAA`／`ISO 27017`／`NIST SP 800-92`：
+
+| 選項 | 它其實是什麼 |
+|---|---|
+| **ISO 31000** | ✅ **風險管理**框架——正解（`:2009` 只是 legacy wording，概念不變） |
+| HIPAA | 醫療資料隱私的**美國法律**，不是框架 |
+| ISO 27017 | **雲端**安全控制指引 |
+| NIST SP 800-92 | **日誌管理**指南 |
+
+這題考的是**能否把名稱 mapping 到所屬類別**，分類 `[T]`。「名稱 → 類別」的一頁式歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
+
 #### 鄰近項目的切法（`by-test/13` Part 2 §2 Layer 2）
 
 | 對照 | 切法 |
