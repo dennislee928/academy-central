@@ -143,6 +143,64 @@ Never Hot → Cold
 
 ### 1.3 網路與儲存架構
 
+#### ⭐ OSI 七層
+
+| Layer | 中文 | 核心 | 典型關鍵字 |
+|---:|---|---|---|
+| **7** | 應用層 | 應用服務 | HTTP、DNS、SMTP |
+| **6** | 表示層 | 格式、編碼、表示 | Encoding、Serialization、Compression |
+| **5** | 會議層 | Session 管理 | Establish／Maintain／Terminate |
+| **4** | 傳輸層 | 端到端傳輸 | TCP、UDP、Port |
+| **3** | 網路層 | IP 與 Routing | IP、Router |
+| **2** | 資料連結層 | Frame／MAC | Ethernet Frame、MAC、Switch、VLAN |
+| **1** | **實體層** | **Bit／Signal／Medium** | **Fiber、Copper、Radio** |
+
+```text
+L1 = 線與訊號
+L2 = Frame + MAC
+L3 = IP + Router
+L4 = TCP/UDP + Port
+```
+
+D3 最常考的其實就是 **L1–L4**。
+
+#### 為什麼 fiber-optic line = Layer 1
+
+**常見質疑：** fiber 可能接 Ethernet，所以不一定是 Layer 1？
+
+關鍵是把**媒介**與**跑在媒介上的協定**拆開。光纖本身做的是傳送光訊號、表示 bits、physical medium、connector／wavelength／signal —— 所以 **fiber-optic line 本身 = Layer 1**。
+
+Ethernet 則**同時涉及 L1 與 L2**：
+
+```text
+Ethernet
+├─ Layer 1：光／電訊號、PHY、Fiber／Copper
+└─ Layer 2：Ethernet Frame、MAC Address、VLAN
+```
+
+> **「Ethernet 跑在 fiber 上」不會把 fiber 本身變成 Layer 2。**
+
+類比：
+
+```text
+道路           = Layer 1
+貨櫃格式       = Layer 2
+地址與路由     = Layer 3
+```
+
+車子開在道路上，不代表道路本身變成物流協定。
+
+**判題四條：**
+
+```text
+Fiber-optic line / cable / medium  → Layer 1
+MAC Address / Frame / VLAN         → Layer 2
+IP Address / Routing               → Layer 3
+TCP / UDP / Port                   → Layer 4
+```
+
+> 此題**不該降權**，分類是 `[T] 術語邊界`。
+
 | 名詞 | 它是什麼 | 解決什麼 | CCSP 關鍵字 |
 |---|---|---|---|
 | **FC**（Fibre Channel） | 儲存專屬網路 | 極致儲存效能與穩定度 | Dedicated storage network、lossless、expensive |
@@ -525,6 +583,10 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 53 | **必背關係式：`RTO + WRT ≤ MTD／MAO`**（舊寫法 `RTO < MAD` 漏了 WRT）。 |
 | 54 | 「DB 已恢復但財務還要 2 小時對帳」→ 那 2 小時是 **WRT**，不是 RTO。 |
 | 55 | 口訣：RPO 往前看資料、RTO 到 IT 恢復、WRT 到業務恢復、MTD/MAO 包住整段。 |
+| 56 | **`L1 = 線與訊號／L2 = Frame+MAC／L3 = IP+Router／L4 = TCP/UDP+Port`。** |
+| 57 | **Fiber-optic line 本身是 L1**；Ethernet 同時涉及 L1（PHY）與 L2（Frame／MAC／VLAN）。 |
+| 58 | 「Ethernet 跑在 fiber 上」不會讓 fiber 變成 L2——媒介與協定要拆開。 |
+| 59 | 判題：line/cable/medium → L1；MAC/Frame/VLAN → L2；IP/Routing → L3；TCP/UDP/Port → L4。 |
 
 ---
 
@@ -542,6 +604,7 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | RTO | RPO | 可停多久 vs 可丟多少資料 |
 | MAD／MTD／MAO | RTO ＋ WRT | 業務整體上限 vs IT 恢復＋業務恢復之和 |
 | RTO | WRT | 到 IT 恢復 vs IT 恢復後到業務恢復 |
+| Fiber（媒介） | Ethernet（協定） | L1 實體媒介 vs 同時涉及 L1＋L2 的協定 |
 | Restore | Resume | 修好主要站點 vs 切換回主要站點 |
 | Recover | Restore | 在備援站點起服務 vs 修復原站點 |
 | Tier III | Tier IV | 維護不停機 vs 無預警故障也不停機 |
