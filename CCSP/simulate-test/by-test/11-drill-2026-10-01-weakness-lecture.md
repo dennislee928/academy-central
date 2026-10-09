@@ -19,7 +19,7 @@
 | D2 §2 | Virtualization vs Multitenancy | D2 §1.10 |
 | D2 §3 | Egress Monitoring 雲端障礙 | D2 §1.2 |
 | D2 §4 | Two-Person Integrity 系列 | D2 §1.11 |
-| D5 §1–2 | ARO evidence／SLE／ALE | [D6 §1.8](../domain6-legal-compliance/01-consolidated-lecture.md) |
+| D5 §1–2 | ARO evidence／SLE／ALE | [D6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md) |
 | D5 §3 | Synthetic Monitoring vs RUM | [D5 §1.5](../domain5-operations/01-consolidated-lecture.md) |
 | D5 §4 | NIST RMF 7 steps | D6 §1.2 |
 | D5 §5 | Hot／Cold Aisle | [D3 §1.1](../domain3-infrastructure/01-consolidated-lecture.md) |
@@ -411,7 +411,7 @@ M-of-N             = threshold control
 
 ## 1. ARO
 
-> **彙整落點：[D6 §1.8](../domain6-legal-compliance/01-consolidated-lecture.md)**
+> **彙整落點：[D6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)**
 
 ARO：**Annualized Rate of Occurrence**，回答「一年預期發生幾次？」
 
@@ -685,7 +685,7 @@ Exhaust → Inlet = bad recirculation
 
 | # | Distinction | 彙整落點 |
 |---|---|---|
-| 1 | ARO vs Aggregation | D6 §1.8 |
+| 1 | ARO vs Aggregation | D6 §1.9 |
 | 2 | Synthetic vs RUM | D5 §1.5 |
 | 3 | Private Cloud vs Private Network | D1 §1.2 |
 | 4 | PaaS sandbox vs IaaS sandbox | D1 §1.7 |

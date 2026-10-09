@@ -613,7 +613,7 @@ BC/DR plan references laws/standards；it does not need to embed full copies.
 
 > **註：** 若題庫解析把 fire suppression 歸成 administrative，那是解析錯誤，但不影響本題唯一最佳答案。
 
-> 相關：Defense in Depth 是**根本原則**，MFA 只是其中一項控制——見 `by-test/learnzapp/01` §2.5 與 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md) 的 MFA factor 分類。風險處置（avoid／mitigate／transfer／accept）見 [Domain 6 §1.8](../domain6-legal-compliance/01-consolidated-lecture.md)。
+> 相關：Defense in Depth 是**根本原則**，MFA 只是其中一項控制——見 `by-test/learnzapp/01` §2.5 與 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md) 的 MFA factor 分類。風險處置（avoid／mitigate／transfer／accept）見 [Domain 6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
 ---
 

@@ -18,20 +18,20 @@
 | `by-test/03-custom-test-2-weakness-lecture.md` | Q2／Q3／Q7–Q9／Q11／Q16／Q17／Q21–Q24 | §1.1、§1.3、§1.4、§1.7、§2.3 |
 | `by-test/04-practice-test-1-weakness-lecture.md` | §10.1–10.6 | §1.2、§1.4、§1.5、§1.6 |
 | `by-test/06-d2-drill-1-weakness-lecture.md` | P0-4 法規 taxonomy | §1.1 |
-| `by-test/07-practice-test-2-weakness-lecture.md` | §8.4 ALE、§8.5 質性風險、§9.1–9.5 | §1.1、§1.2、§1.8 |
+| `by-test/07-practice-test-2-weakness-lecture.md` | §8.4 ALE、§8.5 質性風險、§9.1–9.5 | §1.1、§1.2、§1.9 |
 | `by-test/08-d4-drill-1-weakness-lecture.md` | P1-2 ISO 27034 邊界（交叉至 D4） | §1.2 |
 | `by-test/09-practice-test-3-weakness-lecture.md` | §7 P2 D6（隱私角色、框架、法規對映、契約誘因、IP） | §1.1、§1.2、§1.4、§1.6、§1.7 |
 | `by-test/10-drill-2026-09-30-weakness-lecture.md` | 下篇 §9 USDA／USPTO／OSHA／SEC | §1.7 |
 | `by-test/learnzapp/02-...-lecture.md` | §3 成熟度、訴訟與鑑識 | §1.2、§1.5 |
-| `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §9 BIA、§13 SOC／FIPS | §1.2、§1.8 |
-| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.8、§2.6 |
-| `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
-| 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.8、§5 |
+| `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §9 BIA、§13 SOC／FIPS | §1.2、§1.9 |
+| `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §5 ISO 27001、D5 §1 ARO evidence、D5 §4 NIST RMF | §1.2、§1.9、§2.6 |
+| `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 2 §1 OECD 深入、§2 備考方法、§3 A/D/E/F/G/H/I | §1.2、§1.3、§1.5、§1.6、§1.9、§5 |
+| 2026-10-04 recall 缺口分析（內容已併入，原檔未封存） | RMF 中文口訣與因果鏈、COBIT 三行對比、OECD scenario 反推、ALE 算例、Liability vs Reliability、forensics 五要素 | §1.2、§1.3、§1.5、§1.6、§1.9、§5 |
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | CSA ecosystem（CCM／CAIQ／STAR L1-L2、CCM ≠ enforcement）、GAAP、GLBA vs PCI DSS、Conflict of Laws | §1.1、§1.2、§1.4 |
 | 2026-10-05 D6 新錯題補強講義（內容已併入，原檔未封存） | §1 STAR 三層與無 Level 4、§3–§6 forensic testimony | §1.2、§1.5 |
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存；速查表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)） | 6 題錯題 ＋ A–M 法規／標準分區 | §1.1、§1.2、§1.4、§1.5、§1.6 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | eDiscovery 邊界、Evidence Custodian 保管鏈、data roles、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 | §1.1、§1.4、§1.5、§1.6 |
-| 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.7 |
+| 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.8 |
 | 2026-10-09 D6 測驗補強（內容已併入，原檔未封存；歸位地圖另存為 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)） | Argentina 25.326、US sectoral＋state patchwork、COPPA、800-92 = Logs、ISO 31000 範圍、public domain 與 DMCA notice | §1.1、§1.2、§1.7 |
 
 ---
@@ -1124,7 +1124,7 @@ Modern derivative / edition  → possibly copyrighted
 
 **Code signing** 可支援軟體完整性與**所有權**證明。
 
-### 1.7 四個治理角色：Legal／CISO／DPO／Compliance
+### 1.8 四個治理角色：Legal／CISO／DPO／Compliance
 
 情境題常問「這件事該找誰」。四個角色回答的是不同問題：
 
@@ -1151,7 +1151,7 @@ Legal (GC) = 法律怎麼解釋        ／  Compliance = 有沒有做到
 
 > 與 §1.4 的 data roles 七列（data subject／controller／processor／owner／steward／custodian／evidence custodian）併讀——那一組是**資料層級**的角色，這一組是**組織治理層級**的職位。技術團隊與法務團隊在退出策略上的分工見 §1.6。
 
-### 1.8 風險管理
+### 1.9 風險管理
 
 **處置方式：**
 
@@ -1284,7 +1284,7 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 
 ### 2.6 ARO 與 RMF 的 foundation 誤判（`by-test/11` D5 §1、§4）
 
-- 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.8）。
+- 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.9）。
 - 問 RMF 以什麼為 foundation 時誤選 **cost** 或 **threat**：RMF 是 risk-based framework，cost 與 threat 都只是 input（見 §1.2）。
 
 ---
