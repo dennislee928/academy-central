@@ -218,6 +218,69 @@ Fiber-optic lines            = OSI Layer 1（physical media）
 SDN control plane            = 定義邏輯網路，獨立於實體拓樸
 ```
 
+#### ⭐ Storage taxonomy：傳輸 vs 磁碟排列
+
+```text
+Storage Networking / Transport          Disk Organization
+│                                       │
+├─ iSCSI  → SCSI over TCP/IP            └─ RAID
+├─ Fibre Channel → storage fabric           ├─ Striping
+└─ FCoE   → FC frame over Ethernet          ├─ Mirroring
+                                            └─ Parity
+```
+
+```text
+FC / FCoE / iSCSI = 資料怎麼傳
+RAID              = 磁碟裡怎麼排
+```
+
+RAID 處理的是 striping／mirroring／parity／disk redundancy，**不是在回答「host 要怎麼把 storage command 傳到 storage array」**。
+
+> 題庫以 `storage protocols except RAID` 出題，**答案方向正確**，但把前三者粗略統稱 `storage protocols` 不夠精準——列為**中度 `[Q]`**，概念仍必須會（見 [README 的降權處理](../README.md)）。
+
+#### Fibre Channel vs FCP（更精確的區分）
+
+**常見質疑成立：** 直接說「Fibre Channel 是 storage protocol」過於粗糙。
+
+| 名稱 | 更精確的定位 |
+|---|---|
+| **Fibre Channel（FC）** | **高速儲存網路傳輸技術／協定族**，通常用來建立 SAN；不必依靠傳統 TCP/IP |
+| **FCP（Fibre Channel Protocol）** | 把 **SCSI command 映射／承載於 Fibre Channel 上**的協定 |
+
+```text
+SCSI commands → FCP → Fibre Channel fabric
+```
+
+#### ⭐ Converged Networking ≠ SDN ≠ HCI
+
+傳統機房常有**兩套 network fabric**：
+
+```text
+Server
+├─ Ethernet NIC → LAN / IP traffic
+└─ FC HBA       → SAN / Storage traffic
+```
+
+**Converged Networking** 的核心是：讓一般 IP traffic 與 storage traffic **共用相同的網路基礎設施**。
+
+```text
+                    ┌─ Web / API
+                    ├─ VM Traffic
+Server ─ Ethernet ──┼─ Management
+                    ├─ iSCSI
+                    └─ FCoE
+```
+
+目的：減少 adapters、減少 cabling、減少 switches、統一 fabric、簡化資料中心 networking。
+
+**三者回答的是不同問題，不要混：**
+
+| 技術 | 核心問題 |
+|---|---|
+| **Converged Networking** | Traffic 是否**共用 fabric**？ |
+| **SDN** | 網路**如何被控制**？（control plane 與 data plane 分離，可集中程式化控制） |
+| **HCI** | **Compute ＋ Storage ＋ Virtualization 如何整合**？ |
+
 #### GRE vs IPsec
 
 > **復現標記：** 已在 `by-test/10` 上篇 C 與 `by-test/12` §9 連續出現，屬 recurring terminology。
@@ -587,6 +650,10 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 57 | **Fiber-optic line 本身是 L1**；Ethernet 同時涉及 L1（PHY）與 L2（Frame／MAC／VLAN）。 |
 | 58 | 「Ethernet 跑在 fiber 上」不會讓 fiber 變成 L2——媒介與協定要拆開。 |
 | 59 | 判題：line/cable/medium → L1；MAC/Frame/VLAN → L2；IP/Routing → L3；TCP/UDP/Port → L4。 |
+| 60 | **`FC／FCoE／iSCSI = 資料怎麼傳`；`RAID = 磁碟裡怎麼排`。** |
+| 61 | **FC = 儲存網路傳輸技術／協定族；FCP 才是把 SCSI command 承載於 FC 上的協定。** |
+| 62 | **Converged Networking = traffic 共用同一套 fabric**（減 adapters／cabling／switches）。 |
+| 63 | `Converged → 是否共用 fabric`；`SDN → 網路如何被控制`；`HCI → compute+storage+虛擬化如何整合`。 |
 
 ---
 
@@ -605,6 +672,10 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | MAD／MTD／MAO | RTO ＋ WRT | 業務整體上限 vs IT 恢復＋業務恢復之和 |
 | RTO | WRT | 到 IT 恢復 vs IT 恢復後到業務恢復 |
 | Fiber（媒介） | Ethernet（協定） | L1 實體媒介 vs 同時涉及 L1＋L2 的協定 |
+| FC／FCoE／iSCSI | RAID | 資料怎麼傳 vs 磁碟裡怎麼排 |
+| Fibre Channel | FCP | 傳輸技術／協定族 vs 承載 SCSI command 的協定 |
+| Converged Networking | SDN | traffic 共用 fabric vs 網路如何被控制 |
+| Converged Networking | HCI | 網路 fabric 整合 vs compute＋storage＋虛擬化整合 |
 | Restore | Resume | 修好主要站點 vs 切換回主要站點 |
 | Recover | Restore | 在備援站點起服務 vs 修復原站點 |
 | Tier III | Tier IV | 維護不停機 vs 無預警故障也不停機 |
