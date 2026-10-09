@@ -19,6 +19,7 @@
 | `by-test/learnzapp/01-...-lecture.md` | §3 應用安全與管理視角 | §1.1、§1.3、§1.4、§1.7 |
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `4.2` requirements、`4.5` shadow API、`4.7` federation | §1.2、§1.5、§2.7 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | SCA、Shift Left + Security Throughout | §1.2、§1.3 |
+| 2026-10-09 D1-D4 防守成果（內容已併入，原檔未封存） | SCA ≠ IaC scanning、IAST=測／RASP=擋、CI/CD 階段對應 | §1.3 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -82,8 +83,8 @@ Shift Left + Security Throughout
 |---|---|
 | **SAST** | white-box／原始碼／靜態分析；**找程式邏輯錯誤靠 SAST／原始碼審查**，不是弱點掃描 |
 | **DAST** | black-box／執行中的應用／外部行為測試 |
-| **IAST** | 在執行中的應用內部做 instrumentation |
-| **RASP** | 部署於正式環境，執行期自我防護與主動阻擋 |
+| **IAST** | 在執行中的應用內部做 instrumentation——目的是**找漏洞（testing）** |
+| **RASP** | 部署於正式環境，執行期偵測甚至**阻擋**攻擊——目的是**protection** |
 | **Fuzz testing** | 餵入畸形／隨機輸入，偵測非預期行為 |
 | **SCA**（Software Composition Analysis） | 分析**第三方 dependencies／libraries**：CVE、license、**SBOM** |
 
@@ -93,6 +94,39 @@ source code / no execution                          = SAST
 ```
 
 > **⭐ `SAST ≠ SCA`。** SAST 看的是**自己寫的程式**（source code／bytecode／data flow／insecure coding pattern）；SCA 看的是**引進來的第三方套件**。不要把 SCA、IaC scan、container image scan 全包進 SAST。
+
+#### IAST vs RASP 的目的差異
+
+```text
+IAST = 測   （Running Application + Instrumentation + Security Test → 找漏洞）
+RASP = 擋   （執行時偵測甚至阻擋攻擊 → protection）
+```
+
+兩者都在執行期，但一個是**測試工具**、一個是**保護機制**。
+
+#### ⭐ SCA 的邊界：不等於所有 IaC／Kubernetes 掃描
+
+**常見錯誤：** 把 IaC／Kubernetes／SDN configuration 也全部歸進 SCA——不夠精確。
+
+```text
+第三方 library / dependency              → SCA
+Terraform / Kubernetes 設定錯誤          → Configuration／IaC scanning
+（例如 Terraform 寫出 public S3 bucket = true）
+```
+
+SCA 看的是**引入了什麼套件、有沒有 CVE、license 是什麼**；IaC scanning 看的是**組態本身有沒有寫錯**。
+
+#### CI/CD 各階段對應的掃描
+
+| 階段 | 掃描 |
+|---|---|
+| Development | **SAST** |
+| Development／Build | **SCA** |
+| Build | **Artifact／Image Scan** |
+| **Test／Staging** | **DAST** |
+| 全程 | **Secrets 不進 Source Repository** |
+
+> **注意：DAST 最典型的位置是 Test／Staging**，不是 Implementation 本身——因為 DAST 需要一個**跑得起來的應用**。
 
 **測試獨立性：** 開發人員測試自己寫的程式，問題不是「技術能力不足」，而是**既得利益（vested interest）造成的利益衝突與盲點**。考試要的是 conflict of interest／testing independence。公開玩家測試也需要中立主持人。
 
@@ -260,6 +294,11 @@ Application level  = 每個應用 1 個 ANF
 | 31 | **SCA 看第三方 dependencies／libraries（CVE、license、SBOM）。** |
 | 32 | **`SAST ≠ SCA`**——不要把 SCA、IaC scan、image scan 全包進 SAST。 |
 | 33 | **Shift Left ＋ Security Throughout**：越早介入，而且要貫穿整個 SDLC。 |
+| 34 | **IAST = 測（找漏洞）；RASP = 擋（protection）。** |
+| 35 | **第三方 library／dependency → SCA；Terraform／K8s 設定錯誤 → Configuration／IaC scanning。** |
+| 36 | CI/CD：`Development → SAST`、`Dev-Build → SCA`、`Build → Artifact/Image scan`、`Test/Staging → DAST`。 |
+| 37 | **DAST 的典型位置是 Test／Staging**（需要跑得起來的應用），不是 Implementation。 |
+| 38 | Secrets 全程不進 source repository。 |
 
 ---
 
@@ -269,6 +308,8 @@ Application level  = 每個應用 1 個 ANF
 |---|---|---|
 | SAST | DAST | 看原始碼不執行 vs 黑箱測執行中的應用 |
 | SAST | SCA | 自己寫的程式 vs 引進來的第三方套件 |
+| SCA | IaC／Configuration scanning | 第三方套件與 CVE vs 組態本身寫錯 |
+| IAST | RASP | 執行期測試找漏洞 vs 執行期偵測與阻擋 |
 | DAST | IAST／RASP | 外部行為 vs 應用內部 instrumentation／執行期防護 |
 | 弱點掃描 | 原始碼審查 | 已知系統弱點 vs 程式邏輯錯誤 |
 | SOAP | REST | 嚴格 XML 協定 vs 輕量 URI resource |
@@ -322,3 +363,6 @@ Application level  = 每個應用 1 個 ANF
 - 為什麼 cloud sandbox 不適合做 malware analysis？
 - SCA 與 SAST 各看什麼？SBOM 屬於哪一邊？
 - 「安全越早介入越好」只對一半，另一半是什麼？
+- IAST 與 RASP 都在執行期，目的差在哪？
+- Terraform 寫出 public S3 bucket 該用哪種掃描？為什麼不是 SCA？
+- DAST 在 CI/CD 的典型位置是哪一階段？為什麼？
