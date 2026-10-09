@@ -113,3 +113,14 @@ DPO 的核心職責？DPIA 是什麼？	確保個人資料被合法、適當、�
 Compliance 職能負責什麼？觸發詞？	確保組織持續符合適用的法規、標準、控制與政策。觸發詞：control requirements、ongoing compliance、compliance program、audit evidence、regulatory mapping、PCI DSS controls。
 CISO 與 DPO 的一句話切法？	CISO = Security（incident response、security controls、security risk）；DPO = Privacy（personal data、DPIA、data subject rights）。DPO 不等於一般「資料安全主管」。
 Legal（General Counsel）與 Compliance 的一句話切法？	Legal = 法律怎麼解釋、合約怎麼寫、責任怎麼分、訴訟怎麼處理；Compliance = 有沒有做到、控制是否落地、證據是否完整、是否持續監督。
+Argentina 有 comprehensive personal-data law 嗎？	有——Law 25.326（Ley de Protección de los Datos Personales）。第 1 條明示對公共／私人資料庫、登錄、檔案中的個人資料提供整體（integral）保護，並保障隱私、名譽與當事人存取權。絕對不要用 Argentina 回答「哪個沒有 comprehensive privacy law」。
+美國隱私法的完整一句話表述是什麼？	US = sectoral federal ＋ state patchwork。沒有單一、全面、一般適用於私人部門的聯邦個資法，但有 HIPAA（healthcare）、GLBA（financial）、FERPA（education）、COPPA（children）等 sector-specific 法律，加上大量州級 comprehensive privacy laws。錯誤理解：United States has no privacy laws。
+COPPA 管什麼？	美國兒童線上隱私保護法——針對兒童個資的收集與使用。Trigger：children／兒童個資。
+各國隱私法速答（EU／Argentina／Singapore／India／US）？	EU → GDPR（comprehensive regional regime）；Argentina → Law 25.326（comprehensive national law）；Singapore → PDPA；India → DPDP Act 2023；US → sectoral federal ＋ state patchwork。
+NIST SP 800-92 的主題是什麼？最常被誤選成什麼？	Guide to Computer Security Log Management：log generation／transmission／storage／analysis／disposal 與 log management infrastructure。最常被誤選成 design／implementation／management 的風險框架——它不是 risk framework，秒答 800-92 = Logs。
+ISO 31000 的適用範圍與三個「不是」？	通用風險管理的原則、框架與流程指南，可用於 risk identification／analysis／evaluation／treatment／monitoring／communication。不是 cloud-only、不是 cybersecurity-only、不是 certification standard（是 guidelines，現行 2018 版）。
+ISO/IEC 27017 建立在哪個標準之上？適用對象為何？	建立在 ISO/IEC 27002 之上，在既有控制外增加 cloud-specific 安全指引與控制；明確適用 CSP 與 CSC 雙方，涵蓋 public／private／hybrid cloud。秒答 27017 = Cloud。
+題目問「哪個框架聚焦 design、implementation 與 management」，選項 ISO 31000:2009／HIPAA／ISO 27017／NIST 800-92，怎麼選？	選 ISO 31000（風險管理框架；:2009 只是 legacy wording，概念不變）。HIPAA = 醫療資料隱私的美國法律；ISO 27017 = 雲端安全控制指引；NIST 800-92 = 日誌管理。考的是名稱 → 類別 mapping。
+框架／法規的六大歸位類別是哪些？	LAW／REGULATION、RISK／GOVERNANCE、ISMS／SECURITY CONTROLS、OPERATIONS／FORENSICS、CLOUD、AUDIT／ATTESTATION。看到名稱先歸類，再談細節。
+原始作品進入公有領域，是否代表所有版本都沒有版權？	不是。Original composition／text → public domain；但 modern arrangement、new orchestration、editorial content、annotation、具原創性的 edition elements 都可能另有著作權。要再問「手上這個版本是誰做的」。
+收到 DMCA notice 時的正確處理心法？	這是 procedural issue，不是「自行判斷為 public domain 就 ignore」。順序：確認作品／版本的權利狀態 → 確認 notice validity（形式要件） → 依適用程序處理（notice-and-counter-notice／takedown／回覆 claimant）。不要背 old music = ignore DMCA。

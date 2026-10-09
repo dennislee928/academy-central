@@ -4,7 +4,7 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **450 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **461 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
@@ -13,9 +13,9 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 | `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 72 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 34 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 115 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 126 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 450 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 461 |
 
 ### 歷次併入紀錄
 
@@ -99,6 +99,12 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 `MAD 是什麼？` 既有卡改為增補答案（補上 `RTO + WRT ≤ MTD／MAO`）。
 
+**2026-10-09 D6 測驗補強**（原檔未封存，知識點已併入彙整講義；「名稱 → 類別」歸位地圖另存為 `CCSP/domain6/Framework_Law_Standard_Map.md`，由其內容產出 11 張）：
+
+- ⭐ Argentina Law 25.326 是 comprehensive、美國 `sectoral federal ＋ state patchwork`、COPPA、各國隱私法速答 → **D6**（+4）
+- ⭐ `NIST SP 800-92 = Logs` 不是 risk framework、ISO 31000 的範圍與三個「不是」、ISO 27017 建立在 27002 之上、四選一 mapping 實戰、六大歸位類別 → **D6**（+5）
+- ⭐ public domain 的兩層細化（現代版本可能另有著作權）、DMCA notice 是 procedural issue → **D6**（+2）
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -125,7 +131,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 450 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 461 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 
