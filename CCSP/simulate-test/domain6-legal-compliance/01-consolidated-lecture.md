@@ -5,7 +5,7 @@
 > **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
-> **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)。
+> **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
 
 ---
 
@@ -32,6 +32,7 @@
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存；速查表見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)） | 6 題錯題 ＋ A–M 法規／標準分區 | §1.1、§1.2、§1.4、§1.5、§1.6 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | eDiscovery 邊界、Evidence Custodian 保管鏈、data roles、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 | §1.1、§1.4、§1.5、§1.6 |
 | 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.7 |
+| 2026-10-09 D6 測驗補強（內容已併入，原檔未封存；歸位地圖另存為 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)） | Argentina 25.326、US sectoral＋state patchwork、COPPA、800-92 = Logs、ISO 31000 範圍、public domain 與 DMCA notice | §1.1、§1.2、§1.7 |
 
 ---
 
@@ -53,6 +54,7 @@
 | **FISMA** | 美國聯邦資訊安全管理 | U.S. federal agency information systems |
 | **FedRAMP** | 美國聯邦雲端授權框架 | **聯邦機關使用的雲端服務**；民間企業預設不受其強制 |
 | **FERPA** | 美國教育資料隱私法 | student education records |
+| **COPPA** | 美國兒童線上隱私保護法 | children／兒童個資 |
 | **DMCA** | 數位千禧年著作權法 | **著作權／IP，不是隱私或資安控制來源** |
 
 **最小必背集合：**
@@ -123,6 +125,26 @@ FedRAMP = federal cloud security assessment／certification program
 
 **美國隱私法模式：** 美國是 **sectoral model**，沒有一部涵蓋全體國民個資的綜合聯邦隱私法；GDPR 則是廣泛的歐盟隱私規範。
 
+#### ⭐ 美國的完整表述：sectoral federal ＋ state patchwork
+
+```text
+US = sectoral federal + state patchwork
+```
+
+**沒有**單一、全面、一般適用於私人部門的**聯邦**個資法，但**不是沒有 privacy law**：
+
+```text
+Healthcare → HIPAA
+Financial  → GLBA
+Education  → FERPA
+Children   → COPPA
+＋ 大量州級 comprehensive privacy laws
+```
+
+聯邦層級仍持續有統一隱私法提案，但尚未形成單一全面性聯邦法。
+
+> **錯誤理解：`United States has no privacy laws.`** 正確說法是「**沒有單一、全面、一般適用於私人部門的聯邦個資法**」。
+
 #### 各國隱私法（2026 outline 明確涵蓋 country-specific privacy laws）
 
 | 地區 | 法規 | 要記什麼 |
@@ -135,12 +157,39 @@ FedRAMP = federal cloud security assessment／certification program
 | 地區 | 法規 |
 |---|---|
 | Australia | Privacy Act 1988 |
-| Argentina | Personal Data Protection Law 25.326 |
 | Brazil | **LGPD**（GDPR-like） |
 | Japan | **APPI** |
 | Singapore | **PDPA** |
 | UK | UK GDPR ＋ Data Protection Act 2018（post-Brexit） |
 | China | **PIPL** |
+
+> **註：Argentina 已從本清單移出**——它不是「認名即可」等級，見下方。
+
+#### ⭐ Argentina 有 comprehensive personal-data law（要修掉的誤記）
+
+```text
+Argentina → Law 25.326 → comprehensive personal-data protection law
+```
+
+《個人資料保護法第 25.326 號》（*Ley 25.326 de Protección de los Datos Personales*）第 1 條明示其目的是對**公共或私人資料庫、登錄、資料檔案及其他個人資料處理媒介**中的個人資料提供**整體（integral）保護**，並保障隱私、名譽與個人對自己資料的存取權。
+
+> **常見錯選：以 Argentina 回答「哪個沒有 comprehensive privacy law」——這是錯的，絕對不要再這樣記。**
+
+**各國隱私法速答：**
+
+```text
+EU        → GDPR（comprehensive regional regime）
+Argentina → Law 25.326（comprehensive national law）
+Singapore → PDPA（national personal-data law）
+India     → DPDP Act 2023
+US        → sectoral federal + state patchwork
+```
+
+#### 題目 wording 的 `[Q]` 判定
+
+題目問「哪個沒有 comprehensive **federal** privacy law」，選項卻放 United States／Europe／Singapore／Argentina——**Europe 不是 federal state、Singapore 不是 federation、Argentina 才是 federal republic**。它真正想問的是「哪個 jurisdiction 缺乏全國性的 comprehensive privacy law」。
+
+> **中度 `[Q]`**（措辭差但概念保留）：題幹 wording 降權，但 underlying fact——**美國仍無類 GDPR 的全面性聯邦私部門隱私法**——值得知道。降權層級見 [README 的 `[Q]` 降權處理](../README.md)。
 
 ### 1.2 標準、框架與審計報告
 
