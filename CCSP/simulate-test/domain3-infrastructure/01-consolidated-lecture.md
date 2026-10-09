@@ -300,7 +300,7 @@ GRE over IPsec = Tunnel + Security
 |---|---|
 | **Hypervisor** | 雲端底層攔截並協調硬體資源呼叫（orchestrating resource calls）的是 hypervisor，不是系統管理員 |
 | **Type 1 / Type 2** | 見 [Domain 1 §1.6](../domain1-cloud-concepts/01-consolidated-lecture.md) |
-| **Containerization** | **不模擬硬體**，共用 kernel |
+| **Containerization** | **不模擬硬體**，共用 kernel（完整架構對照見下方） |
 | **Live migration** | Host 維護期間搬移 VM 的正式名稱；要 **move VM as a live instance**，不是存 snapshot image |
 | **Snapshot** | point-in-time state／rollback／reference——**不是**維護期間搬移工作負載的手段 |
 | **管理平面隔離** | Virtualization management tools 必須放在隔離的管理網路，詳見下方 |
@@ -362,6 +362,37 @@ Management Plane → 管 Hypervisor / VM / Host（vCenter / ESXi mgmt / APIs）
 >
 > **不要死背「一定只能用 VLAN」**——subnet、VRF、admin zone 都是合法的隔離手段。
 
+#### VM vs Container 的架構對照
+
+```text
+VM                              Container
+Hardware                        Hardware
+  ↓                               ↓
+Hypervisor                      Host Kernel
+  ↓                               ↓
+Virtual Hardware                Container Runtime
+├─ vCPU                           ↓
+├─ vNIC                         Namespaces + cgroups
+├─ vDisk Controller             ├─ Container A
+└─ Virtual Memory               ├─ Container B
+  ↓                             └─ Container C
+Guest Kernel
+  ↓
+Guest OS
+```
+
+| | **VM** | **Container** |
+|---|---|---|
+| Kernel | **獨立 guest kernel** | **共享 host kernel** |
+| 硬體 | virtual hardware（hardware emulation） | 無硬體模擬 |
+| 可擁有 | 完整 guest OS | 自己的 network view、filesystem view、process namespace、userspace |
+
+**常見反駁：** container 也有自己的 storage／network 設定（network namespace、virtual interface、IP、route、mount namespace、overlay filesystem、volume、cgroups）——**這點成立，但那些都不是 hardware emulation。**
+
+> **WSL2 不適合當反例：** WSL2 底層實際涉及**輕量 VM／virtualization**（`WSL2 Linux environment → Lightweight VM → Virtualization`），不能用它證明「純 container 也有 hardware emulation」。
+>
+> 題庫選項的 `OS replication` 用詞也不佳——container 通常不會為每個實例複製完整 guest kernel，但確實有自己的 userspace、libraries、root filesystem。此題列為**中度 `[Q]`**，但架構模型必須會。
+
 #### Secure KVM
 
 > **復現標記：** 已在 `by-test/10` 上篇 A 與 `by-test/12` §10 連續出現。
@@ -396,6 +427,24 @@ Customer defines requirements and evaluates the provider
 ```
 
 **產品特定的安全組態：vendor guidance 通常優先**（storage controller 等），不是先套用泛用法規。
+
+#### Vendor guidance 的層級（不要過度推論）
+
+問「某個特定 storage controller 的 queue depth、firmware、cache、multipathing 怎麼設定」時，最精確的來源確實是**廠商產品指引**——因為它掌握 model-specific limits、firmware compatibility、supported topology、driver requirements。
+
+但完整的要求來源是疊加的：
+
+```text
+法律／監管要求
+        ＋
+內部安全政策
+        ＋
+產業標準
+        ＋
+產品特定廠商指引
+```
+
+> **Vendor guidance 不能凌駕 regulation／policy。** 題庫選 vendor guidance 合理，但不要推論成「廠商說什麼就做什麼」。分類 `[J]`。
 
 ### 1.6 BC/DR 與韌性
 
@@ -545,6 +594,27 @@ BC/DR plan references laws/standards；it does not need to embed full copies.
 
 > 風險處置（avoid／mitigate／transfer／accept）、ALE、質性／量化風險評估與 risk appetite 歸屬，見 [Domain 6 彙整講義](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
+### 1.8 三類 Security Controls
+
+| 類別 | 核心 | 典型項目 |
+|---|---|---|
+| **行政／管理控制**<br>Administrative／Management | 政策、流程、治理、人員 | Security Policy、**Configuration Procedures**、Change Management、Risk Assessment、Awareness Training、Personnel Screening、Vendor Management |
+| **技術／邏輯控制**<br>Technical／Logical | **由技術系統直接執行或強制** | Firewall、MFA、ACL、Encryption、IDS／IPS、DLP、**Audit Trail**、Logging、PAM |
+| **實體／環境控制**<br>Physical／Environmental | 保護人、設備、建築與環境 | Locks、Guards、Mantrap、CCTV、**Fire Suppression**、HVAC、UPS、Generator、Water Detection |
+
+**四選一範例** —— 問「下列哪一項是技術控制」：
+
+| 選項 | 分類 |
+|---|---|
+| Fire suppression equipment | 實體／環境 |
+| **Audit trails** | **技術** ← 正解 |
+| Security policies | 行政／管理 |
+| Configuration procedures | 行政／管理 |
+
+> **註：** 若題庫解析把 fire suppression 歸成 administrative，那是解析錯誤，但不影響本題唯一最佳答案。
+
+> 相關：Defense in Depth 是**根本原則**，MFA 只是其中一項控制——見 `by-test/learnzapp/01` §2.5 與 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md) 的 MFA factor 分類。風險處置（avoid／mitigate／transfer／accept）見 [Domain 6 §1.8](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -654,6 +724,12 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 61 | **FC = 儲存網路傳輸技術／協定族；FCP 才是把 SCSI command 承載於 FC 上的協定。** |
 | 62 | **Converged Networking = traffic 共用同一套 fabric**（減 adapters／cabling／switches）。 |
 | 63 | `Converged → 是否共用 fabric`；`SDN → 網路如何被控制`；`HCI → compute+storage+虛擬化如何整合`。 |
+| 64 | **VM = virtual hardware ＋ 獨立 guest kernel；Container = 共享 host kernel、無硬體模擬。** |
+| 65 | Container 有自己的 namespace／IP／mount／cgroups，但那些**不是 hardware emulation**。 |
+| 66 | WSL2 底層涉及輕量 VM，不能當「container 也有硬體模擬」的反例。 |
+| 67 | **三類控制：行政（政策流程人員）／技術（系統強制執行）／實體（人與設備環境）。** |
+| 68 | Audit trail = 技術控制；Security policy 與 configuration procedures = 行政控制；fire suppression = 實體控制。 |
+| 69 | 要求來源疊加：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引；**vendor guidance 不能凌駕 regulation／policy**。 |
 
 ---
 
@@ -676,6 +752,11 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Fibre Channel | FCP | 傳輸技術／協定族 vs 承載 SCSI command 的協定 |
 | Converged Networking | SDN | traffic 共用 fabric vs 網路如何被控制 |
 | Converged Networking | HCI | 網路 fabric 整合 vs compute＋storage＋虛擬化整合 |
+| VM | Container | 獨立 guest kernel ＋ 硬體模擬 vs 共享 host kernel |
+| Container 的 namespace | Hardware emulation | 隔離視圖 vs 模擬虛擬硬體 |
+| 行政控制 | 技術控制 | 政策流程人員 vs 系統直接執行強制 |
+| 技術控制 | 實體控制 | 系統強制 vs 保護人與設備環境 |
+| Vendor guidance | Regulation／Policy | 產品特定最精確 vs 不可被廠商指引凌駕 |
 | Restore | Resume | 修好主要站點 vs 切換回主要站點 |
 | Recover | Restore | 在備援站點起服務 vs 修復原站點 |
 | Tier III | Tier IV | 維護不停機 vs 無預警故障也不停機 |
@@ -736,3 +817,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - Hot-air recirculation 除了溫度升高，還會連帶造成哪四項後果？
 - Reservation、Limit、Shares 各回答什麼問題？看到 contention 該選哪個？
 - BC/DR 測試為什麼要換情境？為什麼 baseline 相反地要穩定？
+- 四個 BC/DR 指標的關係式是什麼？WRT 量的是哪一段？
+- Fiber-optic line 屬哪一層？為什麼 Ethernet 跑在 fiber 上不會改變這個答案？
+- `FC／FCoE／iSCSI` 與 `RAID` 回答的是不同問題——各是什麼？
+- Converged Networking、SDN、HCI 各回答什麼問題？
+- Audit trail 屬哪一類控制？Configuration procedures 呢？
