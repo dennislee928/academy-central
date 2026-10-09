@@ -25,6 +25,7 @@
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §1 management plane、§8 live migration、§11 raised floor、§9／§10 GRE／KVM（復現） | §1.1、§1.3、§1.4 |
 | `02-airflow-diagrams.md`（原 `CCSP_D5_Data_Center_Airflow_Mermaid.md`） | §5 hot-air recirculation 後果鏈 | §1.1 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 資源分配三機制、BC/DR 測試變數 | §1.4、§1.6 |
+| 2026-10-09 D1-D4 防守成果 ＋ D3 BC/DR 與 25 題錯題補強（內容已併入，原檔未封存） | BC/DR 四指標與公式、OSI 七層、FC/FCP、storage taxonomy、Converged ≠ SDN ≠ HCI、三類 controls、VM vs Container、vendor guidance 層級 | §1.3、§1.4、§1.5、§1.6、§1.8 |
 
 ---
 
@@ -279,14 +280,61 @@ Customer defines requirements and evaluates the provider
 
 #### 指標
 
-| 術語 | 全名 | 誰決定 | 意義 |
+| 指標 | 全稱 | 誰決定 | 核心問題 |
 |---|---|---|---|
-| **MAD／MTD** | Maximum Allowable Downtime | 業務 | 業務可容忍的停機上限 |
-| **RTO** | Recovery Time Objective | IT／DR 規劃 | 復原必須達成的時間目標 |
-| **RPO** | Recovery Point Objective | 業務／IT | **可容忍的資料流失量**（以時間計）。注意：不是商業價值的流失 |
+| **RPO** | Recovery **Point** Objective | 業務／IT | 最多能丟多久資料？（往事故**前**看）。注意：不是商業價值的流失 |
+| **RTO** | Recovery **Time** Objective | IT／DR 規劃 | **IT／服務**多久要恢復？ |
+| **WRT** | **Work Recovery Time** | 業務 | **IT 恢復後，業務還要多久才真正恢復？** |
+| **MTD／MAO** | Maximum Tolerable Downtime／**Maximum Acceptable Outage** | 業務 | **整體**最多能中斷多久？再久就造成不可接受的損害 |
+
+#### 完整時間軸
 
 ```text
-必背關係： RTO < MAD
+最後可接受的復原點 ──── 事故 ──── IT 恢復 ──── 業務恢復
+        │                │           │            │
+        └──── RPO ───────┤           │            │
+                         └── RTO ────┤            │
+                                     └─── WRT ────┤
+                         └────── MTD / MAO ────────┘
+```
+
+#### ⭐ 必背關係式
+
+```text
+RTO + WRT ≤ MTD / MAO
+```
+
+**IT 恢復所需時間 ＋ 業務恢復所需時間，不可超過業務最大可容忍中斷時間。**
+
+| 例 | RTO | WRT | MTD | 判定 |
+|---|---:|---:|---:|---|
+| 符合 | 4h | 2h | 8h | `4 + 2 = 6 ≤ 8` ✅ |
+| 不符合 | 7h | 2h | 8h | `7 + 2 = 9 > 8` ❌ |
+
+> **註：** 舊的簡化寫法 `RTO < MAD` **漏掉了 WRT**，在有可觀業務恢復工作的情境下會低估需求。以上式為準。
+
+#### WRT：IT 恢復 ≠ 業務恢復
+
+很多人誤以為「IT 系統恢復 = 業務恢復」，實務上通常不是：
+
+```text
+08:00  事故
+11:00  IT 系統恢復          ← RTO 到此為止（3h）
+11:00–12:30  驗證資料、對帳、重啟批次、補送交易、重新同步、員工重新登入
+12:30  業務真正恢復          ← WRT = 1.5h
+```
+
+**WRT 的典型活動：** 資料驗證、資料同步、對帳、補交易、工作流程重新啟動、使用者重新登入、應用程式重新連線、驗證業務流程、恢復 backlog。
+
+> **⭐ WRT 陷阱：** 題幹說「Database 已恢復，但 Finance team 還需要 2 小時確認交易與對帳」——**那 2 小時是 WRT，不是 RTO**。
+
+#### 四指標口訣
+
+```text
+RPO       = 往事故前看資料損失
+RTO       = 到 IT 恢復
+WRT       = IT 恢復後到業務恢復
+MTD / MAO = 包住整段最大可接受中斷
 ```
 
 #### BC/DR 執行四階段（4R）
@@ -472,6 +520,11 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 48 | Limit 即使在 host 閒置時也會封頂。 |
 | 49 | **BC/DR 測試要有變數（改變故障情境）；Baseline 要穩。** |
 | 50 | 劇本固定的演練只證明「會演習」，不代表有復原能力。 |
+| 51 | **WRT = Work Recovery Time：IT 恢復後業務還要多久才真正恢復。** |
+| 52 | **MAO = Maximum Acceptable Outage**，與 MTD 同義（整體最大可容忍中斷）。 |
+| 53 | **必背關係式：`RTO + WRT ≤ MTD／MAO`**（舊寫法 `RTO < MAD` 漏了 WRT）。 |
+| 54 | 「DB 已恢復但財務還要 2 小時對帳」→ 那 2 小時是 **WRT**，不是 RTO。 |
+| 55 | 口訣：RPO 往前看資料、RTO 到 IT 恢復、WRT 到業務恢復、MTD/MAO 包住整段。 |
 
 ---
 
@@ -487,7 +540,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | VLAN | SDN | Layer 2 分段 vs 控制平面與資料平面分離 |
 | Hypervisor | Container | 硬體虛擬化 vs 共用 kernel、不模擬硬體 |
 | RTO | RPO | 可停多久 vs 可丟多少資料 |
-| MAD／MTD | RTO | 業務上限 vs IT 目標（RTO < MAD） |
+| MAD／MTD／MAO | RTO ＋ WRT | 業務整體上限 vs IT 恢復＋業務恢復之和 |
+| RTO | WRT | 到 IT 恢復 vs IT 恢復後到業務恢復 |
 | Restore | Resume | 修好主要站點 vs 切換回主要站點 |
 | Recover | Restore | 在備援站點起服務 vs 修復原站點 |
 | Tier III | Tier IV | 維護不停機 vs 無預警故障也不停機 |
