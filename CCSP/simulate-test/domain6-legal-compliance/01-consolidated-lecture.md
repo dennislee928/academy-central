@@ -1088,6 +1088,40 @@ Farm → USDA ； Patent → USPTO ； Worker → OSHA ； Stocks → SEC
 
 **Public domain：** 著作權會到期，**非常古老的著作可能已進入公有領域，使用時不需另行取得授權**。遇到 DMCA／授權題，先確認作品是否仍受保護。
 
+#### ⭐ Public domain 的兩層細化
+
+**原始作品進入公有領域 ≠ 所有現代版本都沒有版權。**
+
+```text
+Original composition / text  → public domain
+Modern derivative / edition  → possibly copyrighted
+```
+
+同一首古典樂曲或一份古籍，下列元素都可能另有著作權：
+
+- **modern arrangement**（現代改編）
+- **new orchestration**（新配器）
+- **editorial content**（編輯內容）
+- **annotation**（註解、校勘）
+- 具足夠原創性的 **edition elements**（版本編排）
+
+所以「作品很古老」只回答了第一層，還要問「手上這個**版本**是誰做的」。
+
+#### ⭐ DMCA notice 是 procedural issue
+
+在適用 DMCA safe-harbor 的模型下，service provider 通常須依 **notice-and-counter-notice** 程序處理，而不是「自行判斷為 public domain 就 ignore」。
+
+```text
+收到 DMCA notice
+  ↓ ① 確認作品／版本的權利狀態
+  ↓ ② 確認 notice 的 validity（形式要件是否齊備）
+  ↓ ③ 依適用程序處理（takedown ／ counter-notice ／ 回覆 claimant）
+```
+
+常見實務判斷：作品確實為 public domain，但為避免爭訟仍可能回應 claimant——此判斷合理。
+
+> **強降權 `[Q]`：** 題庫答 `Nothing`（什麼都不用做）過度簡化，忽略了 DMCA 的程序義務。此誤區需直接修正：**不要背「old music = ignore DMCA」**，但正確 mental model 要留——**先確認權利狀態與 notice validity，再依程序處理**。降權層級見 [README 的 `[Q]` 降權處理](../README.md)。
+
 **Code signing** 可支援軟體完整性與**所有權**證明。
 
 ### 1.7 四個治理角色：Legal／CISO／DPO／Compliance
@@ -1296,6 +1330,11 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 35 | Copyright 保護具體表達；Patent 保護發明與製程；Trademark 保護品牌；Trade secret 保護未公開資訊。 |
 | 36 | 美國專利與商標申請機關是 **USPTO**。 |
 | 37 | 著作權會到期，公有領域作品不需另行取得授權。 |
+| 37a | 原始作品在公有領域 ≠ 現代版本無版權——modern arrangement／editorial／annotation 可能另有著作權。 |
+| 37b | 收到 DMCA notice 是 procedural issue：確認權利狀態 ＋ notice validity ＋ 依程序處理，不是 ignore。 |
+| 37c | `NIST SP 800-92 = Logs`，不是 risk framework。 |
+| 37d | `ISO 31000 = 通用風險管理 guidelines`，非 cloud-only、非 cyber-only、非 certification。 |
+| 37e | `US = sectoral federal ＋ state patchwork`；Argentina Law 25.326 是 comprehensive personal-data law。 |
 | 38 | Code signing 可支援軟體所有權與完整性證明。 |
 | 39 | Risk treatment = avoid／mitigate／transfer／accept；risk 不能被 reverse。 |
 | 40 | SLE = AV × EF；ALE = SLE × ARO；EF 受 threat vector 類型影響最大。 |
@@ -1434,6 +1473,9 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | SLA | 一般合約條款 | 可量測服務承諾 vs 準據法／管轄／賠償／終止 |
 | 技術團隊 | 法務團隊 | 定義技術需求 vs 把需求寫成契約義務 |
 | CISO | DPO | Security／incident／controls vs Privacy／個資／DPIA |
+| Public domain 原作 | Modern edition／arrangement | 著作權已消滅 vs 版本元素可能另有著作權 |
+| ISO 31000 | ISO 27017 | 通用風險管理 vs 雲端安全控制 |
+| 無 comprehensive 聯邦隱私法（US） | 無 privacy law | sectoral ＋ state patchwork vs 完全沒有（錯誤理解） |
 | Legal（GC） | Compliance | 法律怎麼解釋與合約怎麼寫 vs 有沒有做到與證據是否完整 |
 | 治理角色（CISO／DPO／Compliance） | 資料角色（controller／processor／custodian） | 組織職位 vs 資料處理關係中的角色 |
 | Evidence custodian | Incident handler | 證物保管鏈 vs 事件遏制調查 |
