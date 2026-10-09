@@ -130,3 +130,6 @@ PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant �
 外部協作與公開揭露差在哪？	Controlled sharing：external partner → authenticated／authorized／limited dataset；Public disclosure：anyone → can access。第三方存取 ≠ 公開存取，雲端協作風險要對準「送出傳統環境邊界」。
 NAS 與 SMB 屬於哪一種儲存？	File Storage（共享階層式 filesystem），不是 Volume／Block。
 TPI 防的是什麼威脅？是 availability 的 SPOF 嗎？	不是。TPI 防的是 single point of control／single-person compromise——叛變、帳號被攻陷、被脅迫、單人誤操作、unilateral control。它處理控制權集中，不是可用性。
+TDE 的判斷條件是什麼？	由資料庫／儲存層自動加密靜態資料、對 application 透明——application 不需自己呼叫 encrypt()。
+「加密引擎與 DB 在同一個 host」是 TDE 的判準嗎？	不是。金鑰可以放在外部 KMS／HSM，host 位置不是判斷條件。判準是「對 application 透明」。
+Scanner 讀 payload 找到卡號後設 PCI=true——這是哪種分析？	判斷來源是 content analysis（讀了 payload）；PCI=true 本身是 metadata 標籤。最短記：標籤是 Metadata；來源可能是 Content。

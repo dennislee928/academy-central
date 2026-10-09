@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **421 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **450 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
 | `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 40 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 132 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面） | 55 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security | 30 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 135 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 72 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security | 34 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 110 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 115 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 421 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 450 |
 
 ### 歷次併入紀錄
 
@@ -90,6 +90,15 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 - SCA vs SAST、Shift Left ＋ Security Throughout → **D4**（+2）
 - eDiscovery 流程與三組邊界、Evidence Custodian 保管鏈、Data steward、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 → **D6**（+9）
 
+**2026-10-09 D1-D4 防守成果 ＋ D3 BC/DR 與 25 題錯題補強**（原檔未封存，知識點已併入彙整講義，由其內容產出 29 張）：
+
+- BC/DR 四指標（WRT、MAO、`RTO+WRT≤MTD` 與算例、WRT 陷阱、口訣）、OSI L1–L4 與 fiber=L1、FC vs FCP、storage taxonomy 二分、Converged/SDN/HCI、VM vs Container 架構、WSL2、三類 controls 與四選一、vendor guidance 層級 → **D3**（+17）
+- TDE 的透明性判準、「同一 host」不是判準、`PCI=true` 的 representation ≠ source → **D2**（+3）
+- IAST=測／RASP=擋、SCA vs IaC scanning、CI/CD 階段對應、DAST 的位置 → **D4**（+4）
+- CISO、DPO 與 DPIA、Compliance、CISO vs DPO、Legal vs Compliance → **D6**（+5）
+
+`MAD 是什麼？` 既有卡改為增補答案（補上 `RTO + WRT ≤ MTD／MAO`）。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -116,7 +125,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 421 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 450 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

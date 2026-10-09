@@ -28,3 +28,7 @@ Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of
 做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
 SCA 看什麼？與 SAST 差在哪？	SCA 分析第三方 dependencies／libraries：CVE、license、SBOM。SAST 看自己寫的程式（source code／bytecode／data flow）。SAST ≠ SCA——不要把 SCA、IaC scan、image scan 全包進 SAST。
 SDLC 安全介入的完整說法是什麼？	Shift Left ＋ Security Throughout：越早介入越好，而且要貫穿整個 SDLC，不是只在 testing 階段。只答其中一半都不完整。
+IAST 與 RASP 都在執行期，目的差在哪？	IAST = 測：Running Application + Instrumentation + Security Test，目的是找漏洞；RASP = 擋：執行時偵測甚至阻擋攻擊，目的是 protection。
+Terraform 寫出 public S3 bucket 該用哪種掃描？	Configuration／IaC scanning，不是 SCA。SCA 看的是第三方 library／dependency（CVE、license、SBOM）。
+CI/CD 各階段對應哪種掃描？	Development → SAST；Development/Build → SCA；Build → Artifact／Image scan；Test/Staging → DAST；Secrets 全程不進 source repository。
+DAST 在 CI/CD 的典型位置是哪一階段？為什麼？	Test／Staging，不是 Implementation——DAST 需要一個跑得起來的應用才能做動態測試。

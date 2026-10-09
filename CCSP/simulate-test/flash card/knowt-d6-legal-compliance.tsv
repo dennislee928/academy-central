@@ -108,3 +108,8 @@ Data steward 與 data custodian 差在哪？	Data steward 維持資料品質、�
 FTC 與 HHS 的職掌各是什麼？	FTC → consumer／commercial enforcement（消費者保護、不公平與欺騙性商業行為、部分 privacy/data-security 執法）；HHS → health（HIPAA、healthcare、PHI）。
 HIPAA 是法律還是 contractual standards？涵蓋哪四塊？	是美國聯邦法律，不是 contractual standards。四塊：隱私（PHI 使用與揭露）、安全（ePHI 保護）、電子醫療交易、全國識別碼。
 退出需求是誰定義、誰寫進合約？	技術團隊定義要求（資料匯出格式、加密、IAM、介面、可移轉架構、security controls）；法務長／總法律顧問契約化要求（條款、責任、適用法律、管轄、賠償、退出條款、終止後責任）。
+CISO 的核心職責與觸發詞？	管組織的資安計畫、控制、事件與資安風險。觸發詞：security program／governance／strategy、incident response、security controls、security risk、security operations。
+DPO 的核心職責？DPIA 是什麼？	確保個人資料被合法、適當、符合隱私義務地處理：GDPR、個資處理、資料當事人權利、與監管機關互動。DPIA = Data Protection Impact Assessment（資料保護影響評估）。
+Compliance 職能負責什麼？觸發詞？	確保組織持續符合適用的法規、標準、控制與政策。觸發詞：control requirements、ongoing compliance、compliance program、audit evidence、regulatory mapping、PCI DSS controls。
+CISO 與 DPO 的一句話切法？	CISO = Security（incident response、security controls、security risk）；DPO = Privacy（personal data、DPIA、data subject rights）。DPO 不等於一般「資料安全主管」。
+Legal（General Counsel）與 Compliance 的一句話切法？	Legal = 法律怎麼解釋、合約怎麼寫、責任怎麼分、訴訟怎麼處理；Compliance = 有沒有做到、控制是否落地、證據是否完整、是否持續監督。

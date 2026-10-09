@@ -1,6 +1,6 @@
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
-MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
+MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
 RTO 與 MAD 的關係？	RTO 必須小於 MAD。IT 復原目標不能超過業務上限。
 RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery point）。
 誰負責攔截與協調硬體資源呼叫？	Hypervisor，不是一般系統管理員。
@@ -53,3 +53,20 @@ Reservation、Limit、Shares 三者各回答什麼問題？	Reservation = 保底
 題幹出現 contention 或 relative priority 要選哪個資源機制？	Shares（資源權重）。例 2000:1000 在爭用時約 2:1。Reservation 容易誤選——它回答「至少給多少」，不是「不夠分時誰優先」。
 「It is best to use variables in ___」答什麼？為什麼？	BC/DR tests。變數指改變測試情境與故障條件；劇本固定只證明「會演習」，不代表有復原能力。變化情境才能驗證人員是否真懂程序、備援有無未知依賴、RTO/RPO 能否達成。
 Baseline 與 BC/DR 測試對「變化」的要求為什麼相反？	Baseline 要穩——它是比對用的已核准參考狀態，自己一直變就無法偵測 configuration drift；BC/DR 測試要變——情境不變就只是照劇本演一次。
+WRT 是什麼？量的是哪一段時間？	Work Recovery Time（工作恢復時間）：IT 系統恢復後，業務還需要多久才真正恢復正常運作。量的是「IT 恢復 → 業務恢復」那一段。
+MAO 的全稱與意義？	Maximum Acceptable Outage（最大可接受中斷時間），與 MTD 同義：某項業務功能整體最多能中斷多久。
+BC/DR 四個時間指標的必背關係式？	RTO + WRT ≤ MTD／MAO。IT 恢復時間 ＋ 業務恢復時間不可超過業務最大可容忍中斷。舊寫法「RTO < MAD」漏掉了 WRT。
+RTO 4h、WRT 2h、MTD 8h 是否符合？7h/2h/8h 呢？	4+2=6 ≤ 8 符合；7+2=9 > 8 不符合。
+「DB 已恢復，但財務團隊還需 2 小時對帳」——那 2 小時算什麼？	WRT，不是 RTO。RTO 只到 IT／服務恢復為止；對帳、補交易、重新登入等屬 WRT。
+BC/DR 四指標的口訣？	RPO = 往事故前看資料損失；RTO = 到 IT 恢復；WRT = IT 恢復後到業務恢復；MTD／MAO = 包住整段最大可接受中斷。
+OSI L1 到 L4 的速記？	L1 = 線與訊號；L2 = Frame + MAC；L3 = IP + Router；L4 = TCP/UDP + Port。D3 最常考 L1–L4。
+為什麼 fiber-optic line 是 Layer 1，即使上面跑 Ethernet？	要把媒介與協定拆開。光纖本身傳光訊號、表示 bits，是 physical medium；Ethernet 同時涉及 L1（PHY）與 L2（Frame/MAC/VLAN）。「Ethernet 跑在 fiber 上」不會讓 fiber 變成 L2。
+Fibre Channel 與 FCP 的精確差別？	FC = 高速儲存網路傳輸技術／協定族（通常建 SAN）；FCP（Fibre Channel Protocol）才是把 SCSI command 承載於 FC 上的協定。鏈：SCSI → FCP → FC fabric。
+FC／FCoE／iSCSI 與 RAID 回答的是不同問題——各是什麼？	FC／FCoE／iSCSI = 資料怎麼傳（storage networking／transport）；RAID = 磁碟裡怎麼排（striping／mirroring／parity）。
+Converged Networking 的核心是什麼？	讓一般 IP traffic 與 storage traffic 共用相同的網路基礎設施，取代 Ethernet NIC ＋ FC HBA 兩套 fabric。目的：減少 adapters／cabling／switches、統一 fabric。
+Converged Networking、SDN、HCI 各回答什麼問題？	Converged → traffic 是否共用 fabric？SDN → 網路如何被控制（control/data plane 分離）？HCI → compute + storage + virtualization 如何整合？
+VM 與 Container 的架構差別？	VM：Hardware → Hypervisor → Virtual Hardware（vCPU/vNIC/vDisk）→ 獨立 Guest Kernel → Guest OS。Container：Hardware → Host Kernel → Container Runtime → Namespaces + cgroups，共享 host kernel、無硬體模擬。
+Container 有自己的 IP、mount、cgroups，算 hardware emulation 嗎？WSL2 能當反例嗎？	不算——那些是隔離視圖，不是硬體模擬。WSL2 不能當反例：它底層涉及輕量 VM／virtualization。
+三類 security controls 各管什麼？	行政／管理：政策、流程、治理、人員（policy、configuration procedures、change management、training、screening）；技術／邏輯：由系統直接強制（firewall、MFA、ACL、encryption、audit trail、DLP、PAM）；實體／環境：保護人與設備環境（locks、guards、mantrap、CCTV、fire suppression、HVAC、UPS）。
+Fire suppression、Audit trails、Security policies、Configuration procedures 各屬哪類控制？	Fire suppression = 實體／環境；Audit trails = 技術；Security policies 與 Configuration procedures = 行政／管理。問「哪個是技術控制」答 audit trails。
+Vendor guidance 可以凌駕 regulation 或 policy 嗎？	不行。產品特定設定（queue depth、firmware、cache、multipathing）以廠商指引最精確，但要求來源是疊加的：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引。

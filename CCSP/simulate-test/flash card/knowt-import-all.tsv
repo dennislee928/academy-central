@@ -170,9 +170,12 @@ PCI DSS 的適用範圍與 merchant tier 的關係？	所有適用的 merchant �
 外部協作與公開揭露差在哪？	Controlled sharing：external partner → authenticated／authorized／limited dataset；Public disclosure：anyone → can access。第三方存取 ≠ 公開存取，雲端協作風險要對準「送出傳統環境邊界」。
 NAS 與 SMB 屬於哪一種儲存？	File Storage（共享階層式 filesystem），不是 Volume／Block。
 TPI 防的是什麼威脅？是 availability 的 SPOF 嗎？	不是。TPI 防的是 single point of control／single-person compromise——叛變、帳號被攻陷、被脅迫、單人誤操作、unilateral control。它處理控制權集中，不是可用性。
+TDE 的判斷條件是什麼？	由資料庫／儲存層自動加密靜態資料、對 application 透明——application 不需自己呼叫 encrypt()。
+「加密引擎與 DB 在同一個 host」是 TDE 的判準嗎？	不是。金鑰可以放在外部 KMS／HSM，host 位置不是判斷條件。判準是「對 application 透明」。
+Scanner 讀 payload 找到卡號後設 PCI=true——這是哪種分析？	判斷來源是 content analysis（讀了 payload）；PCI=true 本身是 metadata 標籤。最短記：標籤是 Metadata；來源可能是 Content。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
-MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD）：業務決定的最大可容忍停機時間。
+MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
 RTO 與 MAD 的關係？	RTO 必須小於 MAD。IT 復原目標不能超過業務上限。
 RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery point）。
 誰負責攔截與協調硬體資源呼叫？	Hypervisor，不是一般系統管理員。
@@ -225,6 +228,23 @@ Reservation、Limit、Shares 三者各回答什麼問題？	Reservation = 保底
 題幹出現 contention 或 relative priority 要選哪個資源機制？	Shares（資源權重）。例 2000:1000 在爭用時約 2:1。Reservation 容易誤選——它回答「至少給多少」，不是「不夠分時誰優先」。
 「It is best to use variables in ___」答什麼？為什麼？	BC/DR tests。變數指改變測試情境與故障條件；劇本固定只證明「會演習」，不代表有復原能力。變化情境才能驗證人員是否真懂程序、備援有無未知依賴、RTO/RPO 能否達成。
 Baseline 與 BC/DR 測試對「變化」的要求為什麼相反？	Baseline 要穩——它是比對用的已核准參考狀態，自己一直變就無法偵測 configuration drift；BC/DR 測試要變——情境不變就只是照劇本演一次。
+WRT 是什麼？量的是哪一段時間？	Work Recovery Time（工作恢復時間）：IT 系統恢復後，業務還需要多久才真正恢復正常運作。量的是「IT 恢復 → 業務恢復」那一段。
+MAO 的全稱與意義？	Maximum Acceptable Outage（最大可接受中斷時間），與 MTD 同義：某項業務功能整體最多能中斷多久。
+BC/DR 四個時間指標的必背關係式？	RTO + WRT ≤ MTD／MAO。IT 恢復時間 ＋ 業務恢復時間不可超過業務最大可容忍中斷。舊寫法「RTO < MAD」漏掉了 WRT。
+RTO 4h、WRT 2h、MTD 8h 是否符合？7h/2h/8h 呢？	4+2=6 ≤ 8 符合；7+2=9 > 8 不符合。
+「DB 已恢復，但財務團隊還需 2 小時對帳」——那 2 小時算什麼？	WRT，不是 RTO。RTO 只到 IT／服務恢復為止；對帳、補交易、重新登入等屬 WRT。
+BC/DR 四指標的口訣？	RPO = 往事故前看資料損失；RTO = 到 IT 恢復；WRT = IT 恢復後到業務恢復；MTD／MAO = 包住整段最大可接受中斷。
+OSI L1 到 L4 的速記？	L1 = 線與訊號；L2 = Frame + MAC；L3 = IP + Router；L4 = TCP/UDP + Port。D3 最常考 L1–L4。
+為什麼 fiber-optic line 是 Layer 1，即使上面跑 Ethernet？	要把媒介與協定拆開。光纖本身傳光訊號、表示 bits，是 physical medium；Ethernet 同時涉及 L1（PHY）與 L2（Frame/MAC/VLAN）。「Ethernet 跑在 fiber 上」不會讓 fiber 變成 L2。
+Fibre Channel 與 FCP 的精確差別？	FC = 高速儲存網路傳輸技術／協定族（通常建 SAN）；FCP（Fibre Channel Protocol）才是把 SCSI command 承載於 FC 上的協定。鏈：SCSI → FCP → FC fabric。
+FC／FCoE／iSCSI 與 RAID 回答的是不同問題——各是什麼？	FC／FCoE／iSCSI = 資料怎麼傳（storage networking／transport）；RAID = 磁碟裡怎麼排（striping／mirroring／parity）。
+Converged Networking 的核心是什麼？	讓一般 IP traffic 與 storage traffic 共用相同的網路基礎設施，取代 Ethernet NIC ＋ FC HBA 兩套 fabric。目的：減少 adapters／cabling／switches、統一 fabric。
+Converged Networking、SDN、HCI 各回答什麼問題？	Converged → traffic 是否共用 fabric？SDN → 網路如何被控制（control/data plane 分離）？HCI → compute + storage + virtualization 如何整合？
+VM 與 Container 的架構差別？	VM：Hardware → Hypervisor → Virtual Hardware（vCPU/vNIC/vDisk）→ 獨立 Guest Kernel → Guest OS。Container：Hardware → Host Kernel → Container Runtime → Namespaces + cgroups，共享 host kernel、無硬體模擬。
+Container 有自己的 IP、mount、cgroups，算 hardware emulation 嗎？WSL2 能當反例嗎？	不算——那些是隔離視圖，不是硬體模擬。WSL2 不能當反例：它底層涉及輕量 VM／virtualization。
+三類 security controls 各管什麼？	行政／管理：政策、流程、治理、人員（policy、configuration procedures、change management、training、screening）；技術／邏輯：由系統直接強制（firewall、MFA、ACL、encryption、audit trail、DLP、PAM）；實體／環境：保護人與設備環境（locks、guards、mantrap、CCTV、fire suppression、HVAC、UPS）。
+Fire suppression、Audit trails、Security policies、Configuration procedures 各屬哪類控制？	Fire suppression = 實體／環境；Audit trails = 技術；Security policies 與 Configuration procedures = 行政／管理。問「哪個是技術控制」答 audit trails。
+Vendor guidance 可以凌駕 regulation 或 policy 嗎？	不行。產品特定設定（queue depth、firmware、cache、multipathing）以廠商指引最精確，但要求來源是疊加的：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -255,6 +275,10 @@ Web of trust 與 trusted third party 各自的擴充性取捨是什麼？	Web of
 做 4.5 shadow API／政策題時，『先修政策再談執法』指的判斷步驟是什麼？	先找出題幹裡指出根本原因的限定詞（例如成本遠高於 API、多數人繞過、生產力大增），再選處理該根因的選項；不要先跳到只強制執行既有流程。存量未審查 API 風險可保留為異議，但先對準題幹所問。（來源 M004 remediation）
 SCA 看什麼？與 SAST 差在哪？	SCA 分析第三方 dependencies／libraries：CVE、license、SBOM。SAST 看自己寫的程式（source code／bytecode／data flow）。SAST ≠ SCA——不要把 SCA、IaC scan、image scan 全包進 SAST。
 SDLC 安全介入的完整說法是什麼？	Shift Left ＋ Security Throughout：越早介入越好，而且要貫穿整個 SDLC，不是只在 testing 階段。只答其中一半都不完整。
+IAST 與 RASP 都在執行期，目的差在哪？	IAST = 測：Running Application + Instrumentation + Security Test，目的是找漏洞；RASP = 擋：執行時偵測甚至阻擋攻擊，目的是 protection。
+Terraform 寫出 public S3 bucket 該用哪種掃描？	Configuration／IaC scanning，不是 SCA。SCA 看的是第三方 library／dependency（CVE、license、SBOM）。
+CI/CD 各階段對應哪種掃描？	Development → SAST；Development/Build → SCA；Build → Artifact／Image scan；Test/Staging → DAST；Secrets 全程不進 source repository。
+DAST 在 CI/CD 的典型位置是哪一階段？為什麼？	Test／Staging，不是 Implementation——DAST 需要一個跑得起來的應用才能做動態測試。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
@@ -413,6 +437,11 @@ Data steward 與 data custodian 差在哪？	Data steward 維持資料品質、�
 FTC 與 HHS 的職掌各是什麼？	FTC → consumer／commercial enforcement（消費者保護、不公平與欺騙性商業行為、部分 privacy/data-security 執法）；HHS → health（HIPAA、healthcare、PHI）。
 HIPAA 是法律還是 contractual standards？涵蓋哪四塊？	是美國聯邦法律，不是 contractual standards。四塊：隱私（PHI 使用與揭露）、安全（ePHI 保護）、電子醫療交易、全國識別碼。
 退出需求是誰定義、誰寫進合約？	技術團隊定義要求（資料匯出格式、加密、IAM、介面、可移轉架構、security controls）；法務長／總法律顧問契約化要求（條款、責任、適用法律、管轄、賠償、退出條款、終止後責任）。
+CISO 的核心職責與觸發詞？	管組織的資安計畫、控制、事件與資安風險。觸發詞：security program／governance／strategy、incident response、security controls、security risk、security operations。
+DPO 的核心職責？DPIA 是什麼？	確保個人資料被合法、適當、符合隱私義務地處理：GDPR、個資處理、資料當事人權利、與監管機關互動。DPIA = Data Protection Impact Assessment（資料保護影響評估）。
+Compliance 職能負責什麼？觸發詞？	確保組織持續符合適用的法規、標準、控制與政策。觸發詞：control requirements、ongoing compliance、compliance program、audit evidence、regulatory mapping、PCI DSS controls。
+CISO 與 DPO 的一句話切法？	CISO = Security（incident response、security controls、security risk）；DPO = Privacy（personal data、DPIA、data subject rights）。DPO 不等於一般「資料安全主管」。
+Legal（General Counsel）與 Compliance 的一句話切法？	Legal = 法律怎麼解釋、合約怎麼寫、責任怎麼分、訴訟怎麼處理；Compliance = 有沒有做到、控制是否落地、證據是否完整、是否持續監督。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）
