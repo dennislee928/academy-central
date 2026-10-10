@@ -26,6 +26,7 @@
 | `02-airflow-diagrams.md`（原 `CCSP_D5_Data_Center_Airflow_Mermaid.md`） | §5 hot-air recirculation 後果鏈 | §1.1 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 資源分配三機制、BC/DR 測試變數 | §1.4、§1.6 |
 | 2026-10-09 D1-D4 防守成果 ＋ D3 BC/DR 與 25 題錯題補強（內容已併入，原檔未封存） | BC/DR 四指標與公式、OSI 七層、FC/FCP、storage taxonomy、Converged ≠ SDN ≠ HCI、三類 controls、VM vs Container、vendor guidance 層級 | §1.3、§1.4、§1.5、§1.6、§1.8 |
+| 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Hot aisle containment 四選項比較、LP gas 復現、BIA informs BC/DR 與 Secure Acquisition EXCEPT、BC/DR kit `[Q]` | §1.1、§1.6、§2.8、§2.9 |
 
 ---
 
@@ -44,7 +45,7 @@
 | **UPS** | 不只供電，也做 **line conditioning**；續航要能撐到交易完成／接上發電機 |
 | **Transfer switch** | 市電失效後，在 UPS／電池撐不住前快速切到 generator |
 | **Generator fuel** | 燃料存量至少可支撐 **12 hours** |
-| **LP gas** | 長期儲存較穩定，不像 gasoline／diesel 容易 spoil |
+| **LP gas** | 長期儲存較穩定，不像 gasoline／diesel 容易 spoil。**復現標記：** 2026-10-10 第二次出現，屬 `[R]`（已學過但閉卷未取回）；題庫只要求「備援燃料的價值之一 = 長期儲存穩定性」，記一句即可，不需深入發電機技術 |
 | **Generator 的風險** | 在各項冗餘中，**generators／fuel 對人身安全威脅最大**（燃料、火災、排氣、機電）|
 | **Ionization smoke detector** | 使用放射性物質 |
 | **Emergency egress** | 是 safety control，**不是** redundancy threat |
@@ -114,7 +115,23 @@ Never Hot → Cold
 
 > **視覺化：** 五張 Mermaid 流程圖（server 氣流、cold／hot aisle 配置、錯誤配置、後果鏈、完整機列配置）與俯視示意見 [02-airflow-diagrams.md](02-airflow-diagrams.md)。
 
-**復現標記：** hot／cold aisle 已在 `by-test/11` D5 §5、`by-test/12` §11 與 `02-airflow-diagrams.md` 連續三次出現，屬高頻考點。
+**復現標記：** hot／cold aisle 已在 `by-test/11` D5 §5、`by-test/12` §11 與 `02-airflow-diagrams.md` 連續三次出現，2026-10-10 再次以 containment 題型出現（`[R]` retention miss），屬高頻考點。
+
+#### Hot Aisle Containment 四選項秒判（來源：2026-10-10 D3 錯題補強）
+
+題幹線索：`backs of the devices face each other` ＋ `work area ambient temperature is cool` → **Hot aisle containment（熱通道封閉）**。熱排氣被集中並封閉在兩排機櫃背面之間，不與冷空氣混合，因此人員工作區域可維持較冷。
+
+| 選項 | 中文 | 判斷關鍵 | 本題地位 |
+|---|---|---|---|
+| **Hot aisle containment** | 熱通道封閉 | **Rear ↔ Rear**；封閉熱排氣區，避免冷熱混合，工作區維持較冷 | ✅ 正解 |
+| **Cold aisle containment** | 冷通道封閉 | **Front ↔ Front**；冷空氣集中於 server inlet 並封閉冷通道 | 題幹需為 `fronts face each other` 才選 |
+| Thermo-optimized | 熱管理最佳化 | 泛化形容詞，不是明確的 rack airflow topology | 干擾選項，不必另背 |
+| HVAC modulated | 暖通空調調節式 | HVAC = Heating, Ventilation, and Air Conditioning；`modulated` = 動態調節。描述 **cooling 怎麼控制**，不是 **rack 前後如何排列** | 干擾選項 |
+
+```text
+Containment 命名規則：封閉哪個 aisle，就叫哪個 containment。
+題幹描述 rack 朝向（backs／fronts face each other）→ 先判 aisle topology，不判 HVAC control method。
+```
 
 #### Uptime Institute Tier I–IV
 
@@ -507,6 +524,33 @@ WRT       = IT 恢復後到業務恢復
 MTD / MAO = 包住整段最大可接受中斷
 ```
 
+#### BIA：informs BC/DR，不等於 BC/DR plan（來源：2026-10-10 D3 錯題補強）
+
+**BIA（Business Impact Analysis，業務影響分析）** 主要產出：
+
+| 輸出 | 回答的問題 |
+|---|---|
+| **Criticality** | 哪些業務最重要？ |
+| **Impact** | 停掉會造成什麼損害？ |
+| **Dependencies** | 依賴哪些 system／people／data／supplier？ |
+| **Recovery priority** | 誰應該先恢復？ |
+| Tolerable interruption | 能停多久？（餵給 MTD／RTO） |
+
+```text
+BIA
+ ↓
+Criticality / Impact / Dependencies / Recovery requirements
+ ↓
+BC/DR planning、risk impact assessment、security control prioritization
+```
+
+- 精確說法是 **BIA informs／supports BC/DR planning**，不是 BIA 本身就是 BC/DR plan。題目寫 `provide information about BC/DR planning` 屬措辭鬆散，但最佳答案仍清楚。
+- **BIA 支援 risk analysis：** 例如 `Payment system outage → NT$20M／hour impact` 直接影響 risk impact 評估。
+- **BIA 支援 control selection：** critical national service 與 internal cafeteria app 理應投入不同等級的控制。
+- **EXCEPT 題：Secure Acquisition 不是 BIA output。** 安全採購處理的是要買什麼產品、supplier risk、procurement requirement、contract security requirements、supply-chain assurance，屬採購／供應鏈範疇。
+
+> Asset inventory（有什麼）vs BIA（什麼最重要）的邊界見 [Domain 6](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
 #### BC/DR 執行四階段（4R）
 
 1. **Respond（應變）** — 🚨 最高原則：**保護人員生命安全**，接著評估損害、宣告災難。
@@ -538,6 +582,13 @@ Local disaster               → sister facility / alternate site / joint operat
 
 ```text
 BC/DR plan references laws/standards；it does not need to embed full copies.
+```
+
+**BC/DR kit 沒有 universal 清單（來源：2026-10-10 D3 錯題補強，`[Q]`）：** 題庫以「`Hard drives` 不應放入 BC/DR kit」為答案，但不存在通用的 kit BOM。實務上 kit 可能包含 printed contact list、flashlight、chargers、radios、documentation tools、annotated inventory，也可能合理包含 encrypted USB／external SSD（offline configuration backup、golden image、emergency software、encrypted recovery documentation）。
+
+```text
+BC/DR kit 的內容由 recovery plan 決定（organization、threat model、site、recovery strategy），
+不存在 universal「hard drive 不該有」。
 ```
 
 - **執行紀律：** 災難當下要**按 plan／checklist 執行**，不是臨場 improvisation。
@@ -655,6 +706,14 @@ GDPR 有 99 條、ISO 27001 有數百頁，災難當下無人有時間翻閱。�
 
 RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic lines 屬 **OSI Layer 1**。
 
+### 2.8 BIA 可提供哪些資訊（2026-10-10 D3 錯題補強，`[T]`）
+
+選項含 BC/DR planning、risk analysis、security control selection 與 **Secure Acquisition**；EXCEPT 正解為 **Secure Acquisition**。失分原因是 terminology：把 `provide information about BC/DR planning` 讀成「BIA 直接產生 BC/DR plan」而產生質疑。修正：**BIA 產生 criticality、impact、dependency、recovery-priority 資訊，用來 inform BC/DR、risk analysis 與 control prioritization**；採購不是 BIA output。詳見 §1.6。
+
+### 2.9 BC/DR kit 不應包含什麼（2026-10-10 D3 錯題補強，`[Q]` 強降權）
+
+題庫答案 `Hard drives`。題目問題：不存在 universal kit BOM，external SSD／encrypted USB 承載 golden image 與 offline configuration backup 完全合理。處理：知道題庫期待 `Hard drives`，但不把「固定清單」放進高頻記憶；保留的正確模型是 **kit 內容由 recovery plan 決定**。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -730,6 +789,12 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 67 | **三類控制：行政（政策流程人員）／技術（系統強制執行）／實體（人與設備環境）。** |
 | 68 | Audit trail = 技術控制；Security policy 與 configuration procedures = 行政控制；fire suppression = 實體控制。 |
 | 69 | 要求來源疊加：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引；**vendor guidance 不能凌駕 regulation／policy**。 |
+| 70 | **Backs face each other ＋ 工作區偏冷 → Hot aisle containment**；封閉哪個 aisle 就叫哪個 containment。 |
+| 71 | Thermo-optimized 是泛稱；HVAC modulated 是空調控制方式——兩者都不是 rack orientation。 |
+| 72 | **BIA informs BC/DR：Criticality ＋ Impact ＋ Dependencies ＋ Recovery Priority。** |
+| 73 | Secure Acquisition（採購、supplier risk、合約安全要求）不是 BIA output。 |
+| 74 | BC/DR kit 內容由 recovery plan 決定，沒有 universal 清單。 |
+| 75 | LP gas／propane：題庫強調長期儲存穩定。 |
 
 ---
 
@@ -763,6 +828,9 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Multiple carriers | Diverse routing | 多家電信 vs 實體路徑分離 |
 | Tabletop 演練 | Full test | 最安全 vs 高營運中斷風險 |
 | Hot aisle | Cold aisle | 機櫃後方排氣相對 vs 機櫃前方進氣相對 |
+| Hot aisle containment | HVAC modulated／Thermo-optimized | rack airflow topology vs 空調控制方式／泛化形容詞 |
+| BIA | BC/DR plan | 提供重要度、影響、依賴與復原優先序 vs 依此制定的復原計畫 |
+| BIA | Secure Acquisition | 業務影響分析 vs 採購與供應鏈安全 |
 | Management plane | VMware Tools／guest agent | 管 hypervisor／VM／host vs 裝在 guest OS 內 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
 | Reservation | Shares | 保證最低量 vs 爭用時的相對優先級 |
