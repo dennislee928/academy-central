@@ -6,6 +6,19 @@
 > **姊妹檔：** 若要查的是「這個名稱屬於哪一類」而非細節，用 [`domain6/Framework_Law_Standard_Map.md`](domain6/Framework_Law_Standard_Map.md)（名稱 → 類別的歸位地圖）。
 > **外部連結：** 均為官方頁面，供查證現行版本與定義之用。
 
+> ### 🖍️ 易忘四項（反覆遺忘，考前必看）
+>
+> | 名稱 | 一句話 | 最常錯成 |
+> |---|---|---|
+> | <mark>**FISMA**</mark> | **Federal agency** 資訊安全**法律**（RMF／800-37 → 800-53 的上游） | FedRAMP（那是 federal **cloud** 授權計畫） |
+> | <mark>**NIST SP 800-92**</mark> | **Log management**（Guide to Computer Security Log Management） | risk framework（那是 800-37 RMF） |
+> | <mark>**NIST SP 800-88**</mark> | **Media sanitization**（clear／purge／destroy） | 800-92（logs） |
+> | <mark>**ISO 27017**</mark> | **Cloud security controls**（CSP ＋ CSC），建立在 27002 之上 | 27018（cloud **PII／privacy**） |
+>
+> ```text
+> FISMA = Federal 法   ｜ 800-92 = Logs ｜ 800-88 = 銷毀媒體 ｜ 27017 = Cloud security
+> ```
+
 2026 Domain 6 官方範圍涵蓋 country-specific privacy laws、privacy standards、audit reports、regulated industries、risk frameworks、eDiscovery、forensics、contracts 與 supply-chain security（[ISC2 CCSP Exam Outline](https://www.isc2.org/certifications/ccsp/ccsp-certification-exam-outline)）。
 
 ---
@@ -19,7 +32,7 @@
 | **GLBA** | Federal law | Financial institutions／NPI | bank、loan、financial privacy | PCI DSS |
 | **FERPA** | Federal law | Student education records | school／student records | HIPAA |
 | **SOX** | Federal law | Public companies／financial reporting | internal controls、CEO/CFO certification | SOC 1 |
-| **FISMA** | Federal law | Federal agencies／info systems | federal security program | FedRAMP |
+| <mark>**FISMA**</mark> 🖍️ | Federal law | Federal agencies／info systems | federal security program | FedRAMP |
 | **FedRAMP** | Federal cloud program | Federal cloud services | CSP authorization／certification | FISMA |
 | **NERC CIP** | Mandatory industry standards | Bulk electric system | electric grid、critical infrastructure | 泛用 NIST |
 | **PCI DSS** | **Industry standard，不是法律** | Cardholder data | PAN、payment cards | GLBA |
@@ -177,7 +190,7 @@ India + digital personal data → DPDP Act
 |---|---|---|
 | **ISO 27001** | ISMS requirements／可認證 | holistic security management |
 | **ISO 27002** | security controls guidance | how to implement controls |
-| **ISO 27017** | cloud 專屬安全控制 | CSP ＋ CSC cloud controls |
+| <mark>**ISO 27017**</mark> 🖍️ | cloud 專屬安全控制 | CSP ＋ CSC cloud controls |
 | **ISO 27018** | public cloud processor 的 PII 保護 | cloud privacy |
 | **ISO 27036** | supplier／supply-chain security | vendor、供應鏈 |
 | **ISO 27037** | 數位證據的 identify／collect／acquire／preserve | forensics（證據處理） |
@@ -230,7 +243,8 @@ India + digital personal data → DPDP Act
 | **NIST SP 800-37** | RMF（Prepare→Categorize→Select→Implement→Assess→Authorize→Monitor） |
 | **NIST SP 800-53** | Security／privacy controls catalog |
 | **NIST SP 800-53A** | **評估**上述 controls |
-| **NIST SP 800-88** | Media sanitization |
+| <mark>**NIST SP 800-88**</mark> 🖍️ | Media sanitization |
+| <mark>**NIST SP 800-92**</mark> 🖍️ | Computer security **log management**（不是 risk framework） |
 | **FIPS 199** | Security categorization |
 | **FIPS 200** | Minimum federal security requirements |
 | **FIPS 140-3** | Cryptographic module validation（140-2 為 legacy） |
@@ -410,7 +424,7 @@ Finance               → GLBA
 Payment card          → PCI DSS
 Student               → FERPA
 Public company        → SOX
-Federal security      → FISMA
+Federal security      → FISMA          🖍️
 Federal cloud         → FedRAMP
 Electric grid         → NERC CIP
 
@@ -421,7 +435,7 @@ India                 → DPDP Act
 
 ISMS                  → ISO 27001
 Controls guidance     → ISO 27002
-Cloud security        → ISO 27017
+Cloud security        → ISO 27017      🖍️
 Cloud PII             → ISO 27018
 Supplier              → ISO 27036
 Forensics             → ISO 27037 家族
@@ -431,7 +445,8 @@ IT governance         → COBIT
 Internal control      → COSO
 General risk          → ISO 31000
 US security RMF       → NIST 800-37
-Media sanitization    → NIST 800-88
+Media sanitization    → NIST 800-88    🖍️
+Log management        → NIST 800-92    🖍️
 IT service management → ITIL / ISO 20000-1
 
 Auditor rules         → SSAE
