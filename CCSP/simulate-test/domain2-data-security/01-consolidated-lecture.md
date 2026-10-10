@@ -32,6 +32,7 @@
 | 2026-10-06 D6 新錯題 ＋ 法律總表（內容已併入，原檔未封存） | §1 PCI merchant tiers | §1.9 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 外部協作邊界、NAS/SMB 歸類、TPI threat model | §1.1、§1.3、§1.11 |
 | 2026-10-09 D1-D4 防守成果 ＋ D3 補強（內容已併入，原檔未封存） | TDE 的透明性判準、`PCI=true` 的 representation ≠ source | §1.2、§1.4 |
+| 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Cryptographic entropy／CSPRNG 與 `social factors` `[Q]`、遺失／遭竊裝置 vs Dual Control | §1.7、§1.11、§2.11、§2.12 |
 
 ---
 
@@ -561,6 +562,35 @@ Purpose = secure communication and trust using public key cryptography
 
 **Certificate ≠ KMS ≠ HSM：** Certificate 做身分與 public key 綁定；KMS 管金鑰生命週期；HSM 是硬體保護容器。
 
+#### Cryptographic Entropy 與金鑰產生（來源：2026-10-10 D3 錯題補強）
+
+**Entropy（熵）= 不可預測性。** 金鑰品質取決於產生鏈：
+
+```text
+Reliable entropy source
+        ↓
+CSPRNG / DRBG
+        ↓
+Unpredictable cryptographic keys
+```
+
+理想的 entropy 來源：hardware noise、processor RNG、jitter、operating-system entropy pool、validated entropy source，再經 CSPRNG／DRBG 產生金鑰。
+
+**雲端／VM 的歷史問題與現代修正：**
+
+| 題庫常見選項 | 歷史上的真實問題 | 現代判讀 |
+|---|---|---|
+| Virtualization | entropy starvation、cloned RNG state、identical startup state | **Virtualization 本身 ≠ weak entropy** |
+| Uniform build | clone／identical initial state 可能造成 RNG state 重複 | 不是所有 uniform build 必然低 entropy |
+| Lack of direct input devices | 舊 VM 缺 keyboard／mouse timing 與 device events | 現代 cloud 有更可靠的 entropy source |
+| Social factors | 若人類行為（生日、`1234`、`0000` PIN、命名慣例、可預測排程）成為 input，分布高度偏斜 → effective entropy 降低 | 健全的 cryptographic RNG 不應主要依賴此類 input |
+
+```text
+User chooses PIN → 1234 / birthday / 0000 → distribution highly biased → effective entropy lower
+```
+
+> **規則：** Cloud／VM 不是天生低 entropy；真正的問題是 **entropy source 與 RNG design**。題庫把 `social factors` 當「不影響 entropy」的答案，本意大概是「social factors 不是典型 cloud RNG 技術限制」，但措辭過寬（見 §2.11）。
+
 ### 1.8 Archiving
 
 | 關注點 | 說明 |
@@ -760,6 +790,21 @@ SoD                              = 分離職權與職能
 
 把資料庫與應用拆成兩台機器並不構成 SoD；要看的是**誰有權做什麼**是否被拆開。這與 §1.4 誤選對照表中「compartmentalization 不是金鑰／資料職責分離的最佳標籤」是同一個邊界。
 
+**Dual Control 不是 lost-device control（來源：2026-10-10 D3 錯題補強）：** 遠端存取裝置已遺失、遭竊、無法實體取回時，優先控制是**遠端鎖定／停用／清除**：
+
+```text
+remote disable / remote lock / remote wipe
+revoke device certificate
+revoke session / token
+```
+
+```text
+Lost / stolen endpoint             → remote disable / wipe
+Sensitive action requires two people → Dual Control / TPI
+```
+
+TPI／Dual Control 回答的是「某個敏感操作（例如 HSM master-key operation）是否需要兩名 custodian 共同參與」，與「laptop 被偷」不是同一個問題。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -832,6 +877,14 @@ BEST    = 選最完整／最適當的答案
 此處 dashboard 指給管理層看的內部圖表，把 discovery 結果整理成圖形供決策。**風險是底下的人為了讓數字好看而美化畫面（例如 no red），主管因此下錯決策**，不是把 dashboard 當成對外公告欄＝disclosure。
 
 > 標記為 **Disputed**，只記用語對應，不當成已結案知識。
+
+### 2.11 Cloud key-generation entropy（2026-10-10 D3 錯題補強，`[Q]` 中高降權）
+
+題庫：`No social factors` 不影響 entropy，其餘 virtualization、uniform build、lack of direct input devices 皆為 cloud 環境的 entropy 問題。題目問題：`social factors` 定義過廣（人類選擇的 input 確實會降低 effective entropy）；virtualization 與 uniform build 的暗示過於絕對，帶有較舊的 VM entropy mental model。處理：知道題庫期待的答案，但保留現代模型——**key quality 依賴 reliable entropy source ＋ strong CSPRNG／DRBG**。詳見 §1.7。
+
+### 2.12 遺失／遭竊 remote device 的控制（2026-10-10 D3 錯題補強，`[Q]` 中度降權）
+
+題幹 `technique used to attenuate risks ... resulting in loss or theft of a device` 文法上把因果寫反（讀起來像「技術導致裝置遺失」）；應為 `mitigate risks resulting from the loss or theft of a remote-access device`。題目措辭差，但**底層概念照學**：lost／stolen → remote lock／disable／wipe、revoke certificate／session；Dual Control 是干擾選項。詳見 §1.11。
 
 ---
 
@@ -908,6 +961,9 @@ BEST    = 選最完整／最適當的答案
 | 67 | **TDE 的判準是「對 application 透明」，不是「加密引擎與 DB 同一 host」。** |
 | 68 | TDE 的金鑰可以放在外部 KMS／HSM——host 位置不是判斷條件。 |
 | 69 | **`PCI=true` 標籤是 metadata，但判斷來源是 content analysis**——標籤是 Metadata；來源可能是 Content。 |
+| 70 | **Key quality = reliable entropy source ＋ strong CSPRNG／DRBG**；VM 不是天生低 entropy。 |
+| 71 | 人類選擇的 input（生日、`1234`）會降低 effective entropy；健全 RNG 不依賴這類 input。 |
+| 72 | **Lost／stolen device → remote lock／disable／wipe ＋ revoke certificate／session**；不是 Dual Control。 |
 
 ---
 
@@ -958,6 +1014,8 @@ BEST    = 選最完整／最適當的答案
 | Object storage | 能存檔案的資料庫 | flat key + metadata 模型 vs 僅具備存 binary 的能力 |
 | Multitenancy | 同一 physical host | 共用邏輯平台 vs 共用實體主機（非定義） |
 | SoD | Segmentation／Compartmentalization | 分離職權與職能 vs 分離元件或資訊分艙 |
+| Remote wipe／disable | Dual Control | 裝置遺失後保護其上資料 vs 同一敏感操作需兩人 |
+| Entropy source | CSPRNG／DRBG | 提供不可預測的原始輸入 vs 由種子產生密碼學強度的亂數 |
 
 ---
 
