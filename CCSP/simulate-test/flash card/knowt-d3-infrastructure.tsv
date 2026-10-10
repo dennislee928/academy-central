@@ -70,3 +70,11 @@ Container 有自己的 IP、mount、cgroups，算 hardware emulation 嗎？WSL2 
 三類 security controls 各管什麼？	行政／管理：政策、流程、治理、人員（policy、configuration procedures、change management、training、screening）；技術／邏輯：由系統直接強制（firewall、MFA、ACL、encryption、audit trail、DLP、PAM）；實體／環境：保護人與設備環境（locks、guards、mantrap、CCTV、fire suppression、HVAC、UPS）。
 Fire suppression、Audit trails、Security policies、Configuration procedures 各屬哪類控制？	Fire suppression = 實體／環境；Audit trails = 技術；Security policies 與 Configuration procedures = 行政／管理。問「哪個是技術控制」答 audit trails。
 Vendor guidance 可以凌駕 regulation 或 policy 嗎？	不行。產品特定設定（queue depth、firmware、cache、multipathing）以廠商指引最精確，但要求來源是疊加的：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引。
+Hot aisle containment 的核心特徵？	兩排 server 後方（rear）相對，熱排氣集中於中央並封閉熱通道，避免冷熱混合，人員工作區可維持較冷。題幹 backs face each other ＋ work area cool → Hot aisle containment。
+Cold aisle containment 的核心特徵？	兩排 server 前方（front）相對，冷空氣集中於中央供 server inlet 吸入並封閉冷通道。封閉哪個 aisle，就叫哪個 containment。
+Thermo-optimized 和 Hot／Cold aisle containment 有何不同？	Thermo-optimized 只是熱管理最佳化的泛稱；Hot／Cold aisle containment 是明確的 rack airflow topology。在 containment 題中屬干擾選項。
+HVAC modulated 是什麼？	HVAC（Heating, Ventilation, and Air Conditioning，暖氣、通風與空調）的動態調節；描述 cooling 怎麼控制，不描述 rack 前後如何排列。
+BIA 的四個核心輸出？	Criticality、Impact、Dependencies、Recovery Priority（另含可容忍中斷時間）。
+BIA 與 BC/DR 的關係？為何 Secure Acquisition 是 EXCEPT？	BIA 提供業務重要度與影響資訊來支援／inform BC/DR planning、risk analysis 與 control prioritization，本身不是 BC/DR plan。Secure Acquisition（採購、supplier risk、合約安全要求）屬供應鏈範疇，不是 BIA output。
+BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery plan、環境、威脅與技術策略。題庫以 hard drives 為「不應包含」屬 [Q]——external SSD 承載 golden image、offline configuration backup 完全合理。
+LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。

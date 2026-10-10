@@ -173,6 +173,9 @@ TPI 防的是什麼威脅？是 availability 的 SPOF 嗎？	不是。TPI 防的
 TDE 的判斷條件是什麼？	由資料庫／儲存層自動加密靜態資料、對 application 透明——application 不需自己呼叫 encrypt()。
 「加密引擎與 DB 在同一個 host」是 TDE 的判準嗎？	不是。金鑰可以放在外部 KMS／HSM，host 位置不是判斷條件。判準是「對 application 透明」。
 Scanner 讀 payload 找到卡號後設 PCI=true——這是哪種分析？	判斷來源是 content analysis（讀了 payload）；PCI=true 本身是 metadata 標籤。最短記：標籤是 Metadata；來源可能是 Content。
+遠端存取裝置遺失或遭竊時，最直接的控制是什麼？	遠端鎖定／停用／清除（remote lock／disable／wipe），並撤銷 device certificate 與 session／token。不是 Dual Control——Dual Control／TPI 是同一敏感操作需要兩人參與。
+Cryptographic key 的品質真正應依賴什麼？	Reliable entropy source（hardware noise、processor RNG、jitter、OS entropy pool）＋ strong CSPRNG／DRBG。不要背「VM 天生 entropy 低」——virtualization 本身 ≠ weak entropy。
+Social factors 絕對不可能影響 entropy 嗎？	不是。若人類行為（生日、1234、0000 PIN、命名慣例）成為 RNG input，分布偏斜會降低 effective entropy；但健全的 cryptographic RNG 不應主要依賴此類 input。題庫以「social factors 不影響」為答案屬 [Q]。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -245,6 +248,14 @@ Container 有自己的 IP、mount、cgroups，算 hardware emulation 嗎？WSL2 
 三類 security controls 各管什麼？	行政／管理：政策、流程、治理、人員（policy、configuration procedures、change management、training、screening）；技術／邏輯：由系統直接強制（firewall、MFA、ACL、encryption、audit trail、DLP、PAM）；實體／環境：保護人與設備環境（locks、guards、mantrap、CCTV、fire suppression、HVAC、UPS）。
 Fire suppression、Audit trails、Security policies、Configuration procedures 各屬哪類控制？	Fire suppression = 實體／環境；Audit trails = 技術；Security policies 與 Configuration procedures = 行政／管理。問「哪個是技術控制」答 audit trails。
 Vendor guidance 可以凌駕 regulation 或 policy 嗎？	不行。產品特定設定（queue depth、firmware、cache、multipathing）以廠商指引最精確，但要求來源是疊加的：法律監管 ＋ 內部政策 ＋ 產業標準 ＋ 廠商指引。
+Hot aisle containment 的核心特徵？	兩排 server 後方（rear）相對，熱排氣集中於中央並封閉熱通道，避免冷熱混合，人員工作區可維持較冷。題幹 backs face each other ＋ work area cool → Hot aisle containment。
+Cold aisle containment 的核心特徵？	兩排 server 前方（front）相對，冷空氣集中於中央供 server inlet 吸入並封閉冷通道。封閉哪個 aisle，就叫哪個 containment。
+Thermo-optimized 和 Hot／Cold aisle containment 有何不同？	Thermo-optimized 只是熱管理最佳化的泛稱；Hot／Cold aisle containment 是明確的 rack airflow topology。在 containment 題中屬干擾選項。
+HVAC modulated 是什麼？	HVAC（Heating, Ventilation, and Air Conditioning，暖氣、通風與空調）的動態調節；描述 cooling 怎麼控制，不描述 rack 前後如何排列。
+BIA 的四個核心輸出？	Criticality、Impact、Dependencies、Recovery Priority（另含可容忍中斷時間）。
+BIA 與 BC/DR 的關係？為何 Secure Acquisition 是 EXCEPT？	BIA 提供業務重要度與影響資訊來支援／inform BC/DR planning、risk analysis 與 control prioritization，本身不是 BC/DR plan。Secure Acquisition（採購、supplier risk、合約安全要求）屬供應鏈範疇，不是 BIA output。
+BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery plan、環境、威脅與技術策略。題庫以 hard drives 為「不應包含」屬 [Q]——external SSD 承載 golden image、offline configuration backup 完全合理。
+LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
