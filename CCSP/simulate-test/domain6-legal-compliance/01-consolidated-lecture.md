@@ -607,7 +607,7 @@ Use Limitation        = Stay within why（之後不要拿去做別的）
 更口語的版本：
 
 ```text
-Purpose = 說我要拿來幹嘛
+Purpose = 先說明要拿來幹嘛
 Use     = 不要拿去幹別的
 ```
 
@@ -1252,6 +1252,8 @@ BIA           回答：What matters most?
 
 技術資產清單本身無法完整回答 business importance。
 
+> BIA 的完整輸出（Criticality／Impact／Dependencies／Recovery Priority）與「BIA informs BC/DR、Secure Acquisition 不是 BIA output」見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -1572,7 +1574,7 @@ D6 的 ROI 關鍵是**先建 taxonomy map，而不是通讀標準全文**。ISO 
 這個東西是什麼？
 它不是什麼？
 最容易跟誰混？
-題目出什麼 keyword 我會選它？
+題目出現什麼 keyword 時應選它？
 ```
 
 以 SOC 系列為例，能寫出下列四行才算材料有作用：
