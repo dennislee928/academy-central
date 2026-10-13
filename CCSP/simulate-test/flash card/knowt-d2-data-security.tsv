@@ -85,9 +85,9 @@ Authentication 與 confidentiality 各回答什麼？	Authentication：主體是
 在 CCSP data discovery 脈絡裡，dashboard 常被當成什麼風險？	管理層看到被美化（例如 no red）的指標而做出錯誤決策；不是把 dashboard 當成對外公告欄＝disclosure。（來源 M001／Disputed，對照教材確認）
 CCSP 教材慣例下，volume storage 通常指什麼？	掛給 VM 的虛擬磁碟（block storage）。（來源 M002／Disputed；對齊考試用語）
 CCSP 教材慣例下，object storage 通常指什麼？	以物件形式存放並帶 metadata，常經 API 存取。（來源 M002）
-考題出現哪些字眼時該選 object storage？哪些字眼選 volume storage？	file、hierarchy、metadata 選 object；attached drive、block 選 volume。（來源 Domain Tutor／2.2）
-M002 關於 object 與 hierarchy，題庫說法與技術說法各是什麼？應如何標記？	題庫說法：hierarchy／filesystem 敘述常對應 object（file tree）。技術說法：object 多為 flat namespace；有目錄階層的通常是 volume 或 file storage。兩者都標「待對照 OSG／CBK 確認」；關鍵字規則為 Unresolved／Requires Verification，M002 本身仍為 Disputed。（來源 mistake_log／群組 9/26）
-為什麼不能把『出現 hierarchy 就選 object』當絕對規則？	Tutor 已撤回該絕對說法。題庫常見寫法與技術實況不一致，且 ISC2 考試採用哪種描述尚未查證。（來源群組 9/26 carryover）
+考題出現哪些字眼時該選 object、file 或 volume storage？	metadata、key、API 選 object；hierarchy、directory tree、NFS／SMB 選 file；attached drive、block 選 volume。舊規則「hierarchy → object」已於 2026-10-13 定案取代。
+Block、File、Object 三者誰有真正的 directory hierarchy？	File = 真正的 directory tree；Block／Volume 本身沒有 hierarchy，filesystem 建在上層；Object = object＋key＋metadata，通常是 flat，只能用 prefix 模擬階層。
+為什麼不能把『出現 hierarchy 就選 object』當規則？	那是 LearnZapp 題庫關鍵字，與技術模型相反：hierarchy 屬 File storage；object store 的 `a/b/c` key 只是 flat namespace 上的 prefix。若題庫堅持 hierarchy → object，視為 [Q]。
 Block／File／Object 三種儲存的 looks like 與 access 各是什麼？	Block／Volume = 像 disk，走 block device；File = 像 folder／share，走 NFS／SMB；Object = object + metadata，走 API／HTTP。
 Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答「資源與資料如何被抽象／轉形」；Multitenancy 回答「誰共用基礎架構」。
 Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。

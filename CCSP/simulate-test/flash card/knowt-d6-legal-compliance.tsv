@@ -124,3 +124,4 @@ ISO/IEC 27017 建立在哪個標準之上？適用對象為何？	建立在 ISO/
 框架／法規的六大歸位類別是哪些？	LAW／REGULATION、RISK／GOVERNANCE、ISMS／SECURITY CONTROLS、OPERATIONS／FORENSICS、CLOUD、AUDIT／ATTESTATION。看到名稱先歸類，再談細節。
 原始作品進入公有領域，是否代表所有版本都沒有版權？	不是。Original composition／text → public domain；但 modern arrangement、new orchestration、editorial content、annotation、具原創性的 edition elements 都可能另有著作權。要再問「手上這個版本是誰做的」。
 收到 DMCA notice 時的正確處理心法？	這是 procedural issue，不是「自行判斷為 public domain 就 ignore」。順序：確認作品／版本的權利狀態 → 確認 notice validity（形式要件） → 依適用程序處理（notice-and-counter-notice／takedown／回覆 claimant）。不要背 old music = ignore DMCA。
+GLBA 由哪兩條核心規則組成？Safeguards Rule 要求什麼？	GLBA = Financial Privacy Rule ＋ Safeguards Rule。Financial Privacy Rule 規範客戶資訊蒐集與分享的告知；Safeguards Rule 要求金融機構建立 written information security program。

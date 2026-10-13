@@ -125,9 +125,9 @@ Authentication 與 confidentiality 各回答什麼？	Authentication：主體是
 在 CCSP data discovery 脈絡裡，dashboard 常被當成什麼風險？	管理層看到被美化（例如 no red）的指標而做出錯誤決策；不是把 dashboard 當成對外公告欄＝disclosure。（來源 M001／Disputed，對照教材確認）
 CCSP 教材慣例下，volume storage 通常指什麼？	掛給 VM 的虛擬磁碟（block storage）。（來源 M002／Disputed；對齊考試用語）
 CCSP 教材慣例下，object storage 通常指什麼？	以物件形式存放並帶 metadata，常經 API 存取。（來源 M002）
-考題出現哪些字眼時該選 object storage？哪些字眼選 volume storage？	file、hierarchy、metadata 選 object；attached drive、block 選 volume。（來源 Domain Tutor／2.2）
-M002 關於 object 與 hierarchy，題庫說法與技術說法各是什麼？應如何標記？	題庫說法：hierarchy／filesystem 敘述常對應 object（file tree）。技術說法：object 多為 flat namespace；有目錄階層的通常是 volume 或 file storage。兩者都標「待對照 OSG／CBK 確認」；關鍵字規則為 Unresolved／Requires Verification，M002 本身仍為 Disputed。（來源 mistake_log／群組 9/26）
-為什麼不能把『出現 hierarchy 就選 object』當絕對規則？	Tutor 已撤回該絕對說法。題庫常見寫法與技術實況不一致，且 ISC2 考試採用哪種描述尚未查證。（來源群組 9/26 carryover）
+考題出現哪些字眼時該選 object、file 或 volume storage？	metadata、key、API 選 object；hierarchy、directory tree、NFS／SMB 選 file；attached drive、block 選 volume。舊規則「hierarchy → object」已於 2026-10-13 定案取代。
+Block、File、Object 三者誰有真正的 directory hierarchy？	File = 真正的 directory tree；Block／Volume 本身沒有 hierarchy，filesystem 建在上層；Object = object＋key＋metadata，通常是 flat，只能用 prefix 模擬階層。
+為什麼不能把『出現 hierarchy 就選 object』當規則？	那是 LearnZapp 題庫關鍵字，與技術模型相反：hierarchy 屬 File storage；object store 的 `a/b/c` key 只是 flat namespace 上的 prefix。若題庫堅持 hierarchy → object，視為 [Q]。
 Block／File／Object 三種儲存的 looks like 與 access 各是什麼？	Block／Volume = 像 disk，走 block device；File = 像 folder／share，走 NFS／SMB；Object = object + metadata，走 API／HTTP。
 Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答「資源與資料如何被抽象／轉形」；Multitenancy 回答「誰共用基礎架構」。
 Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。
@@ -185,7 +185,7 @@ RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery po
 DR 計畫應該寫給誰執行？	任何具備基本技能的人。核心團隊災難時可能無法連線。
 MFA 是最根本的安全原則嗎？	不是。MFA 是控制項；Defense in Depth 才是涵蓋架構的根本原則。
 雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。
-Public cloud 資料中心控制治理通常由誰制定？	Cloud provider。不要直接選 regulator。
+Public cloud 資料中心控制治理通常由誰制定？customer 負責什麼？	Provider-owned data center → cloud provider 實作與治理控制，不要直接選 regulator；customer workload／data → customer governance。
 Uptime Tier I 到 IV 分別是什麼？	I Basic Capacity；II Redundant Capacity Components；III Concurrently Maintainable；IV Fault Tolerant。
 Uptime Tier-defined facilities 的燃油基準？	12 hours at N load。
 ASHRAE A1–A4 建議溫度範圍？	18–27°C。93°F 顯然過高。
@@ -256,6 +256,8 @@ BIA 的四個核心輸出？	Criticality、Impact、Dependencies、Recovery Prio
 BIA 與 BC/DR 的關係？為何 Secure Acquisition 是 EXCEPT？	BIA 提供業務重要度與影響資訊來支援／inform BC/DR planning、risk analysis 與 control prioritization，本身不是 BC/DR plan。Secure Acquisition（採購、supplier risk、合約安全要求）屬供應鏈範疇，不是 BIA output。
 BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery plan、環境、威脅與技術策略。題庫以 hard drives 為「不應包含」屬 [Q]——external SSD 承載 golden image、offline configuration backup 完全合理。
 LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。
+UPS 除了備援供電，還提供什麼功能？	Line conditioning（穩壓、濾除突波與雜訊）。UPS = backup power ＋ line conditioning；續航要撐到交易完成或接上發電機。
+Ionization 與 photoelectric 偵煙器的差別？	Ionization = 使用放射性物質（radioactive source）偵測煙霧粒子；Photoelectric = 使用光（light beam／光散射）偵測煙霧。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -464,6 +466,7 @@ ISO/IEC 27017 建立在哪個標準之上？適用對象為何？	建立在 ISO/
 框架／法規的六大歸位類別是哪些？	LAW／REGULATION、RISK／GOVERNANCE、ISMS／SECURITY CONTROLS、OPERATIONS／FORENSICS、CLOUD、AUDIT／ATTESTATION。看到名稱先歸類，再談細節。
 原始作品進入公有領域，是否代表所有版本都沒有版權？	不是。Original composition／text → public domain；但 modern arrangement、new orchestration、editorial content、annotation、具原創性的 edition elements 都可能另有著作權。要再問「手上這個版本是誰做的」。
 收到 DMCA notice 時的正確處理心法？	這是 procedural issue，不是「自行判斷為 public domain 就 ignore」。順序：確認作品／版本的權利狀態 → 確認 notice validity（形式要件） → 依適用程序處理（notice-and-counter-notice／takedown／回覆 claimant）。不要背 old music = ignore DMCA。
+GLBA 由哪兩條核心規則組成？Safeguards Rule 要求什麼？	GLBA = Financial Privacy Rule ＋ Safeguards Rule。Financial Privacy Rule 規範客戶資訊蒐集與分享的告知；Safeguards Rule 要求金融機構建立 written information security program。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

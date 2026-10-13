@@ -7,7 +7,7 @@ RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery po
 DR 計畫應該寫給誰執行？	任何具備基本技能的人。核心團隊災難時可能無法連線。
 MFA 是最根本的安全原則嗎？	不是。MFA 是控制項；Defense in Depth 才是涵蓋架構的根本原則。
 雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。
-Public cloud 資料中心控制治理通常由誰制定？	Cloud provider。不要直接選 regulator。
+Public cloud 資料中心控制治理通常由誰制定？customer 負責什麼？	Provider-owned data center → cloud provider 實作與治理控制，不要直接選 regulator；customer workload／data → customer governance。
 Uptime Tier I 到 IV 分別是什麼？	I Basic Capacity；II Redundant Capacity Components；III Concurrently Maintainable；IV Fault Tolerant。
 Uptime Tier-defined facilities 的燃油基準？	12 hours at N load。
 ASHRAE A1–A4 建議溫度範圍？	18–27°C。93°F 顯然過高。
@@ -78,3 +78,5 @@ BIA 的四個核心輸出？	Criticality、Impact、Dependencies、Recovery Prio
 BIA 與 BC/DR 的關係？為何 Secure Acquisition 是 EXCEPT？	BIA 提供業務重要度與影響資訊來支援／inform BC/DR planning、risk analysis 與 control prioritization，本身不是 BC/DR plan。Secure Acquisition（採購、supplier risk、合約安全要求）屬供應鏈範疇，不是 BIA output。
 BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery plan、環境、威脅與技術策略。題庫以 hard drives 為「不應包含」屬 [Q]——external SSD 承載 golden image、offline configuration backup 完全合理。
 LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。
+UPS 除了備援供電，還提供什麼功能？	Line conditioning（穩壓、濾除突波與雜訊）。UPS = backup power ＋ line conditioning；續航要撐到交易完成或接上發電機。
+Ionization 與 photoelectric 偵煙器的差別？	Ionization = 使用放射性物質（radioactive source）偵測煙霧粒子；Photoelectric = 使用光（light beam／光散射）偵測煙霧。
