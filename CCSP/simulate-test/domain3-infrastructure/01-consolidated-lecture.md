@@ -27,6 +27,7 @@
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 資源分配三機制、BC/DR 測試變數 | §1.4、§1.6 |
 | 2026-10-09 D1-D4 防守成果 ＋ D3 BC/DR 與 25 題錯題補強（內容已併入，原檔未封存） | BC/DR 四指標與公式、OSI 七層、FC/FCP、storage taxonomy、Converged ≠ SDN ≠ HCI、三類 controls、VM vs Container、vendor guidance 層級 | §1.3、§1.4、§1.5、§1.6、§1.8 |
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Hot aisle containment 四選項比較、LP gas 復現、BIA informs BC/DR 與 Secure Acquisition EXCEPT、BC/DR kit `[Q]` | §1.1、§1.6、§2.8、§2.9 |
+| 2026-10-13 補強（內容已併入，原檔未封存） | Public cloud 責任邊界兩行規則、UPS line conditioning（復現）、ionization vs photoelectric 偵煙 | §1.1、§1.5 |
 
 ---
 
@@ -42,12 +43,13 @@
 | **Raised floor 的承重** | raised floor **本身**必須被設計成能承受 rack 重量；它不是結構補強手段，而是需要被結構設計照顧的對象 |
 | **ASHRAE temperature** | Server inlet 應維持在合理 equipment operating range；93°F（約 34°C）明顯過高 |
 | **ASHRAE humidity** | 維持濕度標準可降低 static discharge 風險 |
-| **UPS** | 不只供電，也做 **line conditioning**；續航要能撐到交易完成／接上發電機 |
+| **UPS** | 不只供電，也做 **line conditioning**；續航要能撐到交易完成／接上發電機。**復現標記：** 2026-10-13 再次出現——`UPS = backup power ＋ line conditioning` |
 | **Transfer switch** | 市電失效後，在 UPS／電池撐不住前快速切到 generator |
 | **Generator fuel** | 燃料存量至少可支撐 **12 hours** |
 | **LP gas** | 長期儲存較穩定，不像 gasoline／diesel 容易 spoil。**復現標記：** 2026-10-10 第二次出現，屬 `[R]`（已學過但閉卷未取回）；題庫只要求「備援燃料的價值之一 = 長期儲存穩定性」，記一句即可，不需深入發電機技術 |
 | **Generator 的風險** | 在各項冗餘中，**generators／fuel 對人身安全威脅最大**（燃料、火災、排氣、機電）|
-| **Ionization smoke detector** | 使用放射性物質 |
+| **Ionization smoke detector** | 使用**放射性物質**（radioactive source）偵測煙霧粒子 |
+| **Photoelectric smoke detector** | 使用**光**（light beam／光散射）偵測煙霧；`Ionization = radioactive`、`Photoelectric = light` |
 | **Emergency egress** | 是 safety control，**不是** redundancy threat |
 
 #### 冷風路徑（來源：`by-test/12` §11）
@@ -443,6 +445,13 @@ Regulator only sets requirements；它不直接營運 provider 的機房控制
 Customer defines requirements and evaluates the provider
 ```
 
+**兩行規則（來源：2026-10-13 補強，復現）：**
+
+```text
+Provider-owned data center  → Provider controls implementation
+Customer workload / data    → Customer governance
+```
+
 **產品特定的安全組態：vendor guidance 通常優先**（storage controller 等），不是先套用泛用法規。
 
 #### Vendor guidance 的層級（不要過度推論）
@@ -795,6 +804,9 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 73 | Secure Acquisition（採購、supplier risk、合約安全要求）不是 BIA output。 |
 | 74 | BC/DR kit 內容由 recovery plan 決定，沒有 universal 清單。 |
 | 75 | LP gas／propane：題庫強調長期儲存穩定。 |
+| 76 | **UPS = backup power ＋ line conditioning。** |
+| 77 | **Ionization = radioactive；Photoelectric = light。** |
+| 78 | Provider-owned DC → provider 實作控制；customer workload／data → customer 治理。 |
 
 ---
 
@@ -831,6 +843,8 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Hot aisle containment | HVAC modulated／Thermo-optimized | rack airflow topology vs 空調控制方式／泛化形容詞 |
 | BIA | BC/DR plan | 提供重要度、影響、依賴與復原優先序 vs 依此制定的復原計畫 |
 | BIA | Secure Acquisition | 業務影響分析 vs 採購與供應鏈安全 |
+| Ionization smoke detector | Photoelectric smoke detector | 放射性物質 vs 光 |
+| Provider-owned DC 控制 | Customer workload／data | provider 實作 vs customer 治理 |
 | Management plane | VMware Tools／guest agent | 管 hypervisor／VM／host vs 裝在 guest OS 內 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
 | Reservation | Shares | 保證最低量 vs 爭用時的相對優先級 |
