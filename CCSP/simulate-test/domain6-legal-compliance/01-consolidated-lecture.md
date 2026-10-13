@@ -33,6 +33,7 @@
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | eDiscovery 邊界、Evidence Custodian 保管鏈、data roles、FTC vs HHS、HIPAA 分類、技術 vs 法務分工 | §1.1、§1.4、§1.5、§1.6 |
 | 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.8 |
 | 2026-10-09 D6 測驗補強（內容已併入，原檔未封存；歸位地圖另存為 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)） | Argentina 25.326、US sectoral＋state patchwork、COPPA、800-92 = Logs、ISO 31000 範圍、public domain 與 DMCA notice | §1.1、§1.2、§1.7 |
+| 2026-10-13 補強（內容已併入，原檔未封存） | GLBA = Financial Privacy Rule ＋ Safeguards Rule、EU transfer 有效機制（復現） | §1.1、§1.4 |
 
 ---
 
@@ -78,6 +79,16 @@ FISMA   = 美國聯邦資訊系統安全
 | 保護什麼 | **nonpublic／private personal financial information** | **payment card data（cardholder data）** |
 
 題幹若為「**federal law** controlling financial institutions' handling of private information」→ **GLBA**，不是 PCI DSS（PCI DSS 不是法律）。
+
+**GLBA 的兩條核心規則（來源：2026-10-13 補強，`[T/J]`）：**
+
+```text
+GLBA = Financial Privacy Rule + Safeguards Rule
+Financial Privacy Rule → 告知客戶資訊蒐集與分享做法（privacy notice）
+Safeguards Rule        → 要求建立 written information security program
+```
+
+題幹出現「financial institution 必須維持 **written information security program**」→ **GLBA Safeguards Rule**。
 
 #### 美國主管機關：FTC vs HHS
 
@@ -669,6 +680,8 @@ EU/EEA personal data
 EU → non-adequate third country  →  often SCCs
 EU → certified U.S. organization →  EU-U.S. Data Privacy Framework
 ```
+
+> **復現標記（2026-10-13，`[Q]` 強降權）：** EU transfer 題再次以 Privacy Shield 為選項出現。有效機制只有 **adequacy／SCC／BCR／其他 GDPR safeguards**（含 DPF）；**Privacy Shield = legacy**，以它為前提的題目降權，但 SCC／BCR 本身照學。
 
 #### ⭐ Privacy Shield → EU-U.S. DPF 的正確理解
 
@@ -1429,6 +1442,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 124 | DPO 的觸發詞：GDPR、個資處理、**DPIA**、資料當事人權利、與監管機關互動。 |
 | 125 | Compliance 的觸發詞：control requirements、ongoing compliance、audit evidence、regulatory mapping。 |
 | 126 | **DPO 不等於一般「資料安全主管」**——它偏 privacy／data protection。 |
+| 127 | **GLBA = Financial Privacy Rule ＋ Safeguards Rule；Safeguards Rule 要求 written information security program。** |
+| 128 | EU transfer 有效機制 = adequacy／SCC／BCR／GDPR safeguards；Privacy Shield = legacy。 |
 
 ---
 
