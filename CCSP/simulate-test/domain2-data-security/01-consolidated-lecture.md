@@ -33,6 +33,7 @@
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 外部協作邊界、NAS/SMB 歸類、TPI threat model | §1.1、§1.3、§1.11 |
 | 2026-10-09 D1-D4 防守成果 ＋ D3 補強（內容已併入，原檔未封存） | TDE 的透明性判準、`PCI=true` 的 representation ≠ source | §1.2、§1.4 |
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Cryptographic entropy／CSPRNG 與 `social factors` `[Q]`、遺失／遭竊裝置 vs Dual Control | §1.7、§1.11、§2.11、§2.12 |
+| 2026-10-13 補強（內容已併入，原檔未封存） | Object／File／Block 的 hierarchy 判準定案（取代 LearnZapp 題庫關鍵字規則） | §1.3 |
 
 ---
 
@@ -178,9 +179,21 @@ Scanner → 讀取文件 payload → 找到大量信用卡號 → 設定 PCI=tru
 | **Raw** | 未格式化／直接磁碟存取 | 不要當萬用答案 |
 | **Long-term** | 歸檔與長期保存 | 不是高效能區塊盤 |
 
-**答題關鍵字（`daily/2026-09-25` LO `2.2`）：** 題幹出現 file、hierarchy、metadata → object；出現 attached drive、block → volume。
+#### ⭐ Hierarchy 判準定案（來源：2026-10-13 補強）
 
-> **註（`daily/2026-09-26` 決議）：** 題庫寫法（hierarchy／filesystem ↔ object）與技術實況（object 多為 flat namespace）不一致，此關鍵字規則標記為 **Unresolved／待對照 OSG 與 CBK 確認**，不可當成絕對規則。
+| Storage | 核心 abstraction | 真正的 hierarchy |
+|---|---|---|
+| **Block／Volume** | Block／virtual disk | ❌ 本身沒有；filesystem 是在上層建立 |
+| **File** | File ＋ directory | ✅ **真正的 directory hierarchy** |
+| **Object** | Object ＋ key ＋ metadata | ▲ 通常是 flat；可用 prefix 模擬，或特殊實作支援 hierarchy |
+
+```text
+File   = 真 directory tree
+Block  = disk；filesystem 是上層建立
+Object = object / key / metadata；一般不是 filesystem
+```
+
+> **已取代的舊規則：** `daily/2026-09-25` LO `2.2` 的 LearnZapp 題庫關鍵字「題幹出現 file、hierarchy、metadata → object」與 `daily/2026-09-26` 的 Unresolved 標記，至此以上表定案——**hierarchy 指向 File，不指向 Object**；metadata 仍是 Object 的特徵，attached drive／block 仍指向 Volume。若題庫答案堅持 `hierarchy → object`，視為 `[Q]`，不改寫上述模型。
 
 **題幹若描述「配置給使用者的邏輯儲存區，實體上不一定接在 compute node」，答案通常是 Volume storage。**
 
@@ -198,7 +211,7 @@ Object = Key + Metadata + Object
 | **Object** | S3-style storage、images、backups、data lake、大量非結構化資料 |
 | **File** | NFS／SMB／NAS 等共享階層式 filesystem。**注意：NAS／SMB 屬 File Storage，不是 Volume** |
 
-> **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（與 §1.3 下方的 Unresolved 標記併讀）。有些產品能模擬 folder UX，但底層模型仍不同——**不是「特別設定之後就變成 traditional filesystem hierarchy」**。
+> **note：** object store 的 key 如 `finance/2026/report.pdf` 看起來像階層，但多數 object store 本質是 **flat key namespace + prefixes**（判準見上方「Hierarchy 判準定案」）。有些產品能模擬 folder UX，但底層模型仍不同——**不是「特別設定之後就變成 traditional filesystem hierarchy」**。
 
 **Object storage 的判準是模型，不是產品名：**
 
@@ -941,7 +954,7 @@ BEST    = 選最完整／最適當的答案
 | 47 | RAID 偏 availability；secure dispersion 另有 confidentiality 與 compromise isolation。 |
 | 48 | AONT-RS = All-or-Nothing Transform + Reed-Solomon，屬 dispersion，不是 quantum。 |
 | 49 | **Hash 回答 has this changed（integrity）；Backup 回答 can I recover（availability）。** |
-| 50 | Volume = Disk；File = Filesystem hierarchy；Object = Key + Metadata + Object。 |
+| 50 | Volume = Disk；File = **真正的 directory hierarchy**；Object = Key + Metadata + Object（通常 flat，prefix 只是模擬）。 |
 | 51 | **Object storage 的判準是 object + metadata + key 的 flat namespace 模型，不是「能不能存檔案」。** |
 | 52 | S3／MinIO 是 object store；MongoDB／GridFS 能存 binary 但不被分類為 object storage。 |
 | 53 | Multitenancy 共用的是 **logical platform／infrastructure**，不要求同一台 physical host。 |
@@ -964,6 +977,7 @@ BEST    = 選最完整／最適當的答案
 | 70 | **Key quality = reliable entropy source ＋ strong CSPRNG／DRBG**；VM 不是天生低 entropy。 |
 | 71 | 人類選擇的 input（生日、`1234`）會降低 effective entropy；健全 RNG 不依賴這類 input。 |
 | 72 | **Lost／stolen device → remote lock／disable／wipe ＋ revoke certificate／session**；不是 Dual Control。 |
+| 73 | **Hierarchy 指向 File，不指向 Object**；Block 本身沒有 hierarchy，filesystem 建在上層。 |
 
 ---
 
@@ -994,6 +1008,7 @@ BEST    = 選最完整／最適當的答案
 | TPI | Split Knowledge | 多人共同執行 vs 每人只有部分 secret |
 | Split Knowledge | M-of-N | 需全部拼齊 vs 達到門檻即可 |
 | Block storage | File storage | block device vs NFS／SMB 共享 |
+| File storage | Object storage | 真正 directory tree vs flat key namespace（prefix 只是模擬階層） |
 | Encryption（備份） | Mirroring | 機密性 vs 可用性與 RPO |
 | Backup | Archive | Recovery（primary） vs Retention（primary） |
 | Backup 的 forensic 價值 | 可採證據 | potential forensic source vs 需經鑑識流程建立完整性 |
