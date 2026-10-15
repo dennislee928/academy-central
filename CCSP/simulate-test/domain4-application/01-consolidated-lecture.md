@@ -20,6 +20,7 @@
 | `daily/2026-09-25`、`daily/2026-09-26` | §3 LO `4.2` requirements、`4.5` shadow API、`4.7` federation | §1.2、§1.5、§2.7 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | SCA、Shift Left + Security Throughout | §1.2、§1.3 |
 | 2026-10-09 D1-D4 防守成果（內容已併入，原檔未封存） | SCA ≠ IaC scanning、IAST=測／RASP=擋、CI/CD 階段對應 | §1.3 |
+| 2026-10-15 D4 測驗講義（內容已併入，原檔未封存） | SAST／DAST／IAST 兩軸、OWASP Intuition Testing、MFA factor 與 personal check `[Q]` | §1.3、§1.4、§1.5、§2.8–§2.10 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -93,6 +94,36 @@ black-box + running app + discover execution paths = DAST
 source code / no execution                          = SAST
 ```
 
+#### ⭐ 兩軸判斷：看得到內部？App 要執行？（來源：2026-10-15 D4 錯題補強）
+
+| 類型 | 看得到內部？ | App 要執行？ | 常見分類 |
+|---|---:|---:|---|
+| **SAST** | ✅ | ❌ | **白箱** |
+| **DAST** | ❌ 通常 | ✅ | **黑箱** |
+| **IAST** | ✅（instrumentation／agent） | ✅ | **混合／內部觀測** |
+
+> **口訣：** SAST「裡不跑」；DAST「外面打」；IAST「跑著看裡面」。
+
+**白箱／黑箱的判準：** 不是看「外部人士進不進得來」，而是看**測試時工具／測試者有沒有使用系統內部資訊**。因此在 **private GitLab repo 的 CI runner 跑 SAST，仍是白箱**——即使外部 pentester 完全看不到 repository。
+
+```text
+SAST → 讀 source code / bytecode → 追 data flow、找 injection path（source → sink）、找 dangerous API
+DAST → 對 running app 送 HTTP request／payload → 依外部輸入／輸出找漏洞，不需 source code
+IAST → running app 內的 agent 同時看到 request 與內部 function call、SQL query、runtime data flow
+```
+
+IAST 是 SAST 與 DAST 之間的橋樑：不像純 DAST 只看外部，也不像純 SAST 完全不執行。
+
+**五技術一行版：** SAST 看自己 code；SCA 看別人的 dependency；DAST 外面打；IAST 裡面看；RASP 執行時擋。
+
+#### 情境秒殺
+
+| 題幹關鍵字 | 答案 |
+|---|---|
+| source code、static、data flow、insecure API、不啟動 application | **SAST** |
+| running web application、HTTP request、attack payload、external interface | **DAST** |
+| runtime agent、instrumentation、observe internal code path while testing | **IAST** |
+
 > **⭐ `SAST ≠ SCA`。** SAST 看的是**自己寫的程式**（source code／bytecode／data flow／insecure coding pattern）；SCA 看的是**引進來的第三方套件**。不要把 SCA、IaC scan、container image scan 全包進 SAST。
 
 #### IAST vs RASP 的目的差異
@@ -151,6 +182,19 @@ SOAP 不是天生比 DCOM/CORBA 更安全。
 核心是：XML replacing binary messaging。
 ```
 
+#### OWASP 測試分類：Intuition Testing 不是正式類別（來源：2026-10-15 D4 錯題補強）
+
+| 項目 | OWASP Web Security Testing Guide 正式測試類別？ |
+|---|---:|
+| Information Gathering | ✅ |
+| Business Logic Testing | ✅ |
+| Client-side Testing | ✅ |
+| **Intuition Testing** | ❌ |
+
+**Intuition Testing（直覺式測試）** 作為一般軟體測試概念，最多是依測試者經驗與直覺臨時設計測試（接近 ad hoc／exploratory／經驗導向測試），例如「這個 API 很怪，以前遇過類似 access-control bug，試著改 object ID」。這在實務上有價值，但**不是 OWASP taxonomy 的正式章節**。
+
+> **口訣：** 資訊、邏輯、用戶端都是真的；「直覺測試」是假的 taxonomy。
+
 **Forklifting／Lift and shift：** 把傳統應用**不經修改**直接搬上雲端。不是 re-architect，也不是雲原生改造。
 
 **雲端開發者最容易失去的控制權：底層 logging 設施**（logging infrastructure 常由 CSP 營運）；應用欄位驗證仍在開發者手上。
@@ -183,7 +227,16 @@ SOAP 不是天生比 DCOM/CORBA 更安全。
 Password + PIN      = 同一因子（know）→ 不是 MFA
 Voice + fingerprint = 同一因子（are） → 不是 MFA
 ATM card + PIN      = have + know     → 是 MFA
+Credit card + SSN card = have + have  → 不是 MFA
 ```
+
+> **MFA 最短規則：** 至少兩個**不同類別**的因子，**而且兩者都實際參與 authentication**。
+
+**易混點（2026-10-15）：**
+
+- **社會安全號碼（SSN）是身分屬性，不是生物特徵。** 「SSN unique to the person」不代表 something you are。
+- **簽名 ≠ 已完成 biometric verification。** 只有動態簽名（筆壓、速度、stroke pattern）並與已登錄模板比對，才接近行為生物特徵驗證。
+- **持有 check 不等於可靠 authenticator**——可能是偷來、偽造、公司支票、聯名帳戶或空白支票。
 
 #### Federation 信任模型（`daily` LO `4.7`，複習最優先）
 
@@ -255,6 +308,39 @@ Application level  = 每個應用 1 個 ANF
 
 完整整理見 [Domain 2 §1.3](../domain2-data-security/01-consolidated-lecture.md)。此規則目前標記為 **Unresolved／待對照教材確認**。
 
+### 2.8 Private repo 的 SAST 是否仍是白箱（2026-10-15）
+
+**錯題：** SAST 在 private repository 執行、外部人士看不到 → 仍是 **white-box**。
+
+**錯因：** 把「外部能不能存取」當成 box classification 的判準。
+
+**分類：** `[T]`，**降權：無**。
+
+> **一句話規則：** SAST = 看程式內部 + 不執行 → 白箱；box 分類看測試工具是否使用內部資訊。詳見 §1.3。
+
+### 2.9 OWASP Intuition Testing（2026-10-15）
+
+**錯題：** 下列何者**不是** OWASP 測試類別 → 正解 **Intuition Testing**。
+
+**分類：** `[T]`，**降權：無**。
+
+> **一句話規則：** Information Gathering、Business Logic、Client-side 都是 OWASP 正式類別；Intuition Testing 不是。詳見 §1.4。
+
+### 2.10 Personal check + signature = MFA（2026-10-15，`[Q]` 高降權）
+
+**題庫意圖：** check = have、signature = are → Have + Are = MFA，選 signing a personal check。
+
+**題目問題：**
+
+1. 持有 check 本身不是可靠 authenticator（可能偷來、偽造、聯名帳戶）。
+2. 題幹沒有說 signature 與可信 biometric template 比對；單純寫下簽名不等於 biometric verification。
+
+**其餘選項的正確判斷仍可保留：** Password + PIN = know + know；Fingerprint + voice = are + are；Credit card + SSN card = have + have，且 SSN 不是 biometric。
+
+**分類：** `[Q]`，**降權：高**。只留下「MFA = 不同 factor 類別 + 實際參與 authentication」，**不要背「personal check = MFA」**。
+
+本輪 D4 錯題屬於 2 個小型 terminology remediation ＋ 1 個爛題降權，未顯示嚴重的 D4 architecture weakness。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -299,6 +385,13 @@ Application level  = 每個應用 1 個 ANF
 | 36 | CI/CD：`Development → SAST`、`Dev-Build → SCA`、`Build → Artifact/Image scan`、`Test/Staging → DAST`。 |
 | 37 | **DAST 的典型位置是 Test／Staging**（需要跑得起來的應用），不是 Implementation。 |
 | 38 | Secrets 全程不進 source repository。 |
+| 39 | **SAST = 裡面看、不執行、白箱；DAST = 外面打、要執行、黑箱；IAST = 邊執行邊看內部。** |
+| 40 | 白箱／黑箱看**測試是否使用內部資訊**，不看外部人士進不進得來——private repo 跑 SAST 仍是白箱。 |
+| 41 | 不啟動程式追 source → sink → SAST；running app 裝 agent 同時看 request 與內部 data flow → IAST。 |
+| 42 | **Intuition Testing 不是 OWASP 正式測試分類**；Information Gathering、Business Logic、Client-side 才是。 |
+| 43 | **MFA = 不同 factor 類別，而且都實際參與 authentication。** |
+| 44 | Credit card + SSN card = have + have；**SSN 是身分屬性，不是 biometric**。 |
+| 45 | 簽名只有經動態特徵與已登錄模板比對才算 biometric；「personal check = MFA」是 `[Q]` 高降權題。 |
 
 ---
 
@@ -311,6 +404,11 @@ Application level  = 每個應用 1 個 ANF
 | SCA | IaC／Configuration scanning | 第三方套件與 CVE vs 組態本身寫錯 |
 | IAST | RASP | 執行期測試找漏洞 vs 執行期偵測與阻擋 |
 | DAST | IAST／RASP | 外部行為 vs 應用內部 instrumentation／執行期防護 |
+| SAST | IAST | 看內部但不執行 vs 執行中同時看內部 |
+| 白箱 | 外部不可存取 | 測試使用內部資訊 vs 存取權限問題（兩者無關） |
+| OWASP 正式測試類別 | Intuition／exploratory testing | WSTG taxonomy vs 一般經驗導向測試概念 |
+| SSN | Something you are | 身分屬性 vs 生物特徵 |
+| 寫下簽名 | Behavioral biometric | 單純簽名 vs 動態特徵與已登錄模板比對 |
 | 弱點掃描 | 原始碼審查 | 已知系統弱點 vs 程式邏輯錯誤 |
 | SOAP | REST | 嚴格 XML 協定 vs 輕量 URI resource |
 | Define | Design | 最早的需求階段 vs 設計階段 |
@@ -366,3 +464,6 @@ Application level  = 每個應用 1 個 ANF
 - IAST 與 RASP 都在執行期，目的差在哪？
 - Terraform 寫出 public S3 bucket 該用哪種掃描？為什麼不是 SCA？
 - DAST 在 CI/CD 的典型位置是哪一階段？為什麼？
+- Private repo 裡跑 SAST 為什麼仍是白箱？
+- 舉出三個 OWASP 正式測試類別；Intuition Testing 為什麼不是？
+- Credit card + SSN card 為什麼不是 MFA？「signing a personal check = MFA」為什麼要降權？
