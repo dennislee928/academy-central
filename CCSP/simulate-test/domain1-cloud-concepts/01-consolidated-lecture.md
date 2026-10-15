@@ -23,6 +23,7 @@
 | `by-test/13-d2-d6-drill-2026-10-03-weakness-lecture.md` | Part 1 §8 Quantum computing | §1.8 |
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | §9 Cloud actors：Carrier vs Broker | §1.3 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 供應商鎖定雙層模型、media 分類、private cloud plane 區分 | §1.2、§1.5 |
+| 2026-10-15 D1 錯題補強（內容已併入，原檔未封存） | Common Criteria／EAL1–7、CEO 遷雲 = cost `[Q]` | §1.9、§2.8、§2.9 |
 
 ---
 
@@ -276,6 +277,71 @@ quantum interference
 
 **反例提醒：** **AONT-RS**（All-or-Nothing Transform + Reed-Solomon）屬於 data transformation／dispersion，**不是** quantum computing——詳見 [Domain 2 §1.5](../domain2-data-security/01-consolidated-lecture.md)。密碼學本身的整理在 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)。
 
+### 1.9 Common Criteria 與 EAL（來源：2026-10-15 D1 錯題補強）
+
+依 ISC2 outline，產品認證（**Common Criteria**、FIPS 140-2/3）屬於 1.5 Evaluate cloud service providers，歸在 Domain 1。
+
+**共同準則（Common Criteria, CC）：** 對 IT 產品的安全功能與安全保證進行標準化評估。
+
+**Evaluation Assurance Level（EAL，評估保證等級）** 衡量的**不是**產品「有多安全」，而是：
+
+> **對產品的安全設計、實作與測試，做了多嚴格、多深入的驗證。**
+
+```text
+EAL 越高
+   ↓
+評估證據更多
+設計分析更深入
+驗證更嚴格
+形式化程度更高
+```
+
+> **EAL7 ≠ 產品一定比 EAL4 更適合某個環境。** EAL 代表的是**保證／驗證嚴謹程度**。
+
+#### ⭐ EAL1–EAL7 對照表
+
+| EAL | 官方核心概念 | 中文理解 | Trigger |
+|---:|---|---|---|
+| **EAL1** | Functionally Tested | 功能測試 | Functional |
+| **EAL2** | Structurally Tested | 結構化測試 | Structural |
+| **EAL3** | Methodically Tested and Checked | 有系統地測試與檢查 | Tested + Checked |
+| **EAL4** | Methodically Designed, Tested and Reviewed | 有系統地設計、測試與審查 | Designed + Reviewed |
+| **EAL5** | Semiformally Designed and Tested | 半形式化設計與測試 | Semi-formal Design |
+| **EAL6** | Semiformally Verified Design and Tested | 半形式化驗證設計與測試 | Semi-formal Verification |
+| **EAL7** | Formally Verified Design and Tested | 形式化驗證設計與測試 | **Formal Verification** |
+
+#### 分界看動詞，不看數字
+
+```text
+EAL1 功能測試
+  ↓
+EAL2 結構化測試
+  ↓
+EAL3 有系統地「測試＋檢查」
+  ↓
+EAL4 有系統地「設計＋測試＋審查」
+  ↓
+EAL5 半形式化「設計」
+  ↓
+EAL6 半形式化「驗證」
+  ↓
+EAL7 形式化「驗證」
+```
+
+**口訣：** **1 功、2 構、3 測查、4 設測審、5 半設、6 半驗、7 全驗**
+
+#### ⭐ EAL5／6／7：最容易出選項陷阱的三個
+
+```text
+Semi-formally designed  → EAL5（半設）
+Semi-formally verified  → EAL6（半驗）
+Formally verified       → EAL7（全驗）
+```
+
+**EAL3 vs EAL4：** 3 = 測＋查（`methodically tested and checked`）；4 = 設＋測＋審（`methodically designed, tested and reviewed`）。
+
+> **答題 trigger：** 題幹出現 `formally verified` 即直接 **EAL7**。`independent third party` 不是決勝字眼——不要建立「third-party test → EAL7」的錯誤 association。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -346,6 +412,34 @@ strict governance
 - **Insider threat 的控制分類**（`by-test/11` D1 §4）→ [Domain 5 §1.6](../domain5-operations/01-consolidated-lecture.md)
 - **ISO 27001 technology-neutral**（`by-test/11` D1 §5）→ [Domain 6 §1.2](../domain6-legal-compliance/01-consolidated-lecture.md)
 
+### 2.8 EAL3 誤選為 formally verified（2026-10-15）
+
+**錯題：** 題幹 `formally verified in terms of design and tested`（並提到 independent third party）→ 正解 **EAL7**，誤選 EAL3。
+
+**錯因：** EAL3 是 `methodically tested and checked`，與 `formally verified` 差距極大；且被 `independent third party` 分散注意力。
+
+**分類：** `[T]`（terminology），**降權：無**——有效錯題，值得修。
+
+> **一句話規則：** Formal verification → EAL7；Semi-formal verification → EAL6；Semi-formal design → EAL5。詳見 §1.9。
+
+### 2.9 CEO 遷雲最大因素 = 成本（2026-10-15，`[Q]` 中高降權）
+
+**錯題：** CEO／senior management 遷雲的 biggest factor → 題庫答案 **Reduced overall cost**，誤選 Global accessibility。
+
+四個選項（network scalability、off-site backup、global accessibility、reduced cost）都是合理的 cloud benefits；題幹沒有提供 business objective、既有基礎架構成本、目標市場、人員分布、應用架構或既有備援能力，因此無法客觀證明 cost 一定是 biggest factor。
+
+**題庫邏輯：** 把 technical characteristics（scalability、backup、accessibility）與 business／financial outcome 做層級比較，依 ISC2 managerial-answer heuristic 選後者。這只是 **best-answer heuristic**，不是普遍事實。
+
+```text
+CEO / Board / Senior Management
+           ↓
+Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
+```
+
+**分類：** `[Q]`（題目品質），**降權：中高**。不代表不懂 cloud adoption benefits。
+
+> **一句話規則：** 高階管理者題 → 優先從 business outcome／organizational risk 思考；**不要背成「CEO = Cost」**。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -379,6 +473,11 @@ strict governance
 | 25 | 合約層：匯出權／格式／期限、轉移協助、終止條款、退出費用、終止後保留與刪除。 |
 | 26 | `industry-standard media` 是含糊措辭；JSON/YAML/HCL/K8s manifest 各有精確名稱，Vault secret 不是「媒介」。 |
 | 27 | Private cloud 可對外的是 web／API／application plane；**management／config／admin plane 要鎖死**。 |
+| 28 | **EAL 衡量驗證嚴謹程度，不是產品安全程度**；EAL7 ≠ 一定比 EAL4 更適合。 |
+| 29 | EAL 口訣：**1 功、2 構、3 測查、4 設測審、5 半設、6 半驗、7 全驗**。 |
+| 30 | **Formally verified → EAL7**；semi-formally verified → EAL6；semi-formally designed → EAL5。 |
+| 31 | `independent third party` 不是 EAL7 的判斷字眼，`formally verified` 才是。 |
+| 32 | 高階管理者題 → business outcome／organizational risk；**不要背成「CEO = Cost」**（`[Q]` 中高降權）。 |
 
 ---
 
@@ -400,6 +499,10 @@ strict governance
 | Cloud carrier | Cloud broker | 載送流量（連線與傳輸） vs 管理整合服務 |
 | 技術可移轉性 | 合約退出保障 | 搬得走 vs 法律上允許並協助搬 |
 | Application plane | Management plane | 可對外的服務介面 vs 必須鎖死的管理介面 |
+| EAL3 | EAL4 | 有系統地測試＋檢查 vs 有系統地設計＋測試＋審查 |
+| EAL5 | EAL6 | 半形式化**設計** vs 半形式化**驗證** |
+| EAL6 | EAL7 | **半**形式化驗證 vs **全**形式化驗證 |
+| EAL 等級 | 產品安全程度 | 驗證的嚴謹與深入程度 vs 產品本身多安全 |
 
 ### 決策流程
 
@@ -434,3 +537,6 @@ strict governance
 - Oversubscription 的定義中，被比較的兩個量各是什麼？
 - 降低供應商鎖定的兩層各包含哪些手段？為什麼不能只靠合約？
 - Private cloud 的哪一層可以對外、哪一層必須鎖死？
+- 不看表，默寫 EAL1–EAL7 的口訣與英文核心動詞。
+- 題幹 `formally verified` 對應哪個 EAL？為什麼 `independent third party` 不是判斷依據？
+- CEO 遷雲題為何選 reduced cost？這條 heuristic 的適用範圍在哪？
