@@ -32,3 +32,13 @@ IAST 與 RASP 都在執行期，目的差在哪？	IAST = 測：Running Applicat
 Terraform 寫出 public S3 bucket 該用哪種掃描？	Configuration／IaC scanning，不是 SCA。SCA 看的是第三方 library／dependency（CVE、license、SBOM）。
 CI/CD 各階段對應哪種掃描？	Development → SAST；Development/Build → SCA；Build → Artifact／Image scan；Test/Staging → DAST；Secrets 全程不進 source repository。
 DAST 在 CI/CD 的典型位置是哪一階段？為什麼？	Test／Staging，不是 Implementation——DAST 需要一個跑得起來的應用才能做動態測試。
+SAST、DAST、IAST 用「看得到內部？App 要執行？」兩軸怎麼分？	SAST：看內部、不執行 → 白箱；DAST：通常不看內部、要執行 → 黑箱；IAST：要執行，透過 instrumentation 觀察內部 execution → 混合／內部觀測。口訣：SAST 裡不跑；DAST 外面打；IAST 跑著看裡面。
+Private Git repo 裡跑 SAST，還算白箱嗎？	算。Box classification 看測試工具是否使用內部資訊，不看外部人士能不能進 repository。
+不啟動程式，追 source → sink 的 injection path，是哪種測試？	SAST。
+Running app 裡裝 agent，同時看到 request 與內部 data flow，是哪種測試？	IAST。
+OWASP 的 Intuition Testing 是正式測試分類嗎？	不是。Information Gathering、Business Logic Testing、Client-side Testing 才是 OWASP WSTG 正式類別；Intuition Testing 最多泛指依經驗／直覺做探索或臨機測試。
+真正 MFA 的最短規則？	至少兩個不同 factor 類別，而且兩者都實際參與 authentication。
+Password + PIN 是 MFA 嗎？	不是。Know + Know，同一類別。
+Fingerprint + voice biometric 是 MFA 嗎？	不是。Are + Are，同一類別。
+Credit card + Social Security card 通常是 MFA 嗎？	不是。通常都是 possession／身分證據（have + have）；SSN 是身分屬性，不是 biometric（something you are）。
+為什麼「signing a personal check = true MFA」要降權？	`[Q]` 高降權。題目沒有證明 check 是綁定的 authenticator，也沒說 signature 與已登錄 biometric template 比對；只能算題庫作者想像中的 Have + Are。不要背「personal check = MFA」。

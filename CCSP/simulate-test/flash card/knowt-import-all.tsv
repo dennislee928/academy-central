@@ -38,6 +38,13 @@ Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）�
 退出策略的合約面應明訂哪些？	資料匯出權、匯出格式、匯出期限、轉移協助、終止條款、退出費用、終止後資料保留期限、資料刪除、API／account termination timing。
 JSON、YAML、Terraform HCL、K8s manifest、Vault secret 的精確分類？	JSON = 資料交換格式；YAML = 設定表示格式；Terraform/OpenTofu HCL = IaC 設定語言；K8s manifests = 可移植的工作負載設定；Vault secret = 秘密資料，不是「媒介」。題庫的 industry-standard media 是含糊措辭。
 Private cloud 的哪一層可以對外、哪一層要鎖死？	Web／API／application plane 通常可對外；management plane、config plane、admin interface 應嚴格限制、不對公網開放。
+Common Criteria 的 EAL 衡量的是什麼？	對產品的安全設計、實作與測試做了多嚴格、多深入的驗證（保證／驗證嚴謹程度），不是產品「有多安全」。EAL7 ≠ 一定比 EAL4 更適合某個環境。產品認證歸 D1（1.5 Evaluate CSPs）。
+EAL1–EAL7 的中文口訣？	1 功、2 構、3 測查、4 設測審、5 半設、6 半驗、7 全驗。
+EAL1–EAL7 的英文核心概念？	EAL1 Functionally Tested；EAL2 Structurally Tested；EAL3 Methodically Tested and Checked；EAL4 Methodically Designed, Tested and Reviewed；EAL5 Semiformally Designed and Tested；EAL6 Semiformally Verified Design and Tested；EAL7 Formally Verified Design and Tested。
+Semi-formally designed、Semi-formally verified、Formally verified 各對應哪個 EAL？	Semi-formally designed → EAL5（半設）；Semi-formally verified → EAL6（半驗）；Formally verified → EAL7（全驗）。
+EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
+題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
+CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -292,6 +299,16 @@ IAST 與 RASP 都在執行期，目的差在哪？	IAST = 測：Running Applicat
 Terraform 寫出 public S3 bucket 該用哪種掃描？	Configuration／IaC scanning，不是 SCA。SCA 看的是第三方 library／dependency（CVE、license、SBOM）。
 CI/CD 各階段對應哪種掃描？	Development → SAST；Development/Build → SCA；Build → Artifact／Image scan；Test/Staging → DAST；Secrets 全程不進 source repository。
 DAST 在 CI/CD 的典型位置是哪一階段？為什麼？	Test／Staging，不是 Implementation——DAST 需要一個跑得起來的應用才能做動態測試。
+SAST、DAST、IAST 用「看得到內部？App 要執行？」兩軸怎麼分？	SAST：看內部、不執行 → 白箱；DAST：通常不看內部、要執行 → 黑箱；IAST：要執行，透過 instrumentation 觀察內部 execution → 混合／內部觀測。口訣：SAST 裡不跑；DAST 外面打；IAST 跑著看裡面。
+Private Git repo 裡跑 SAST，還算白箱嗎？	算。Box classification 看測試工具是否使用內部資訊，不看外部人士能不能進 repository。
+不啟動程式，追 source → sink 的 injection path，是哪種測試？	SAST。
+Running app 裡裝 agent，同時看到 request 與內部 data flow，是哪種測試？	IAST。
+OWASP 的 Intuition Testing 是正式測試分類嗎？	不是。Information Gathering、Business Logic Testing、Client-side Testing 才是 OWASP WSTG 正式類別；Intuition Testing 最多泛指依經驗／直覺做探索或臨機測試。
+真正 MFA 的最短規則？	至少兩個不同 factor 類別，而且兩者都實際參與 authentication。
+Password + PIN 是 MFA 嗎？	不是。Know + Know，同一類別。
+Fingerprint + voice biometric 是 MFA 嗎？	不是。Are + Are，同一類別。
+Credit card + Social Security card 通常是 MFA 嗎？	不是。通常都是 possession／身分證據（have + have）；SSN 是身分屬性，不是 biometric（something you are）。
+為什麼「signing a personal check = true MFA」要降權？	`[Q]` 高降權。題目沒有證明 check 是綁定的 authenticator，也沒說 signature 與已登錄 biometric template 比對；只能算題庫作者想像中的 Have + Are。不要背「personal check = MFA」。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。

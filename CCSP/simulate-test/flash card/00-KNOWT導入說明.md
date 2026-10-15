@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **475 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **492 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術） | 40 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL） | 47 |
 | `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 138 |
 | `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 82 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security | 34 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security | 44 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
 | `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 127 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 475 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 492 |
 
 ### 歷次併入紀錄
 
@@ -120,6 +120,13 @@ Front ↔ Front = Cold、Rear ↔ Rear = Hot 兩張卡既有卡已覆蓋，不�
 
 EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆蓋，不新增。
 
+**2026-10-15 D1 錯題補強 ＋ D4 測驗講義**（原檔未封存，知識點已併入彙整講義；D1 原檔閃卡區為空的 widget 佔位，D4 原檔 15 張卡去重後淨增 10 張，合計淨增 17 張）：
+
+- ⭐ EAL 衡量的是驗證嚴謹程度、EAL1–7 口訣與英文核心概念、EAL5/6/7 切法、EAL3 vs EAL4、formally verified → EAL7（third party 不是判斷字眼）、CEO 遷雲 = cost `[Q]` 中高降權 → **D1**（+7）
+- SAST／DAST／IAST 兩軸、private repo SAST 仍為白箱、source → sink = SAST、agent = IAST、OWASP Intuition Testing 非正式類別、MFA 最短規則、Password＋PIN、Fingerprint＋voice、Credit card＋SSN、personal check `[Q]` 高降權 → **D4**（+10）
+
+原檔 Card 1／2（SAST、DAST 最短模型）併入兩軸卡；Card 6（running app + HTTP request = DAST）、Card 8（SCA）、Card 9（RASP）既有卡已覆蓋，不新增。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -146,7 +153,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 475 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 492 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

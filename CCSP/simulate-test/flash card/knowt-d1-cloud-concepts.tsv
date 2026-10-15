@@ -38,3 +38,10 @@ Cloud broker 可能執行哪三種行為？	Aggregation（彙總多個服務）�
 退出策略的合約面應明訂哪些？	資料匯出權、匯出格式、匯出期限、轉移協助、終止條款、退出費用、終止後資料保留期限、資料刪除、API／account termination timing。
 JSON、YAML、Terraform HCL、K8s manifest、Vault secret 的精確分類？	JSON = 資料交換格式；YAML = 設定表示格式；Terraform/OpenTofu HCL = IaC 設定語言；K8s manifests = 可移植的工作負載設定；Vault secret = 秘密資料，不是「媒介」。題庫的 industry-standard media 是含糊措辭。
 Private cloud 的哪一層可以對外、哪一層要鎖死？	Web／API／application plane 通常可對外；management plane、config plane、admin interface 應嚴格限制、不對公網開放。
+Common Criteria 的 EAL 衡量的是什麼？	對產品的安全設計、實作與測試做了多嚴格、多深入的驗證（保證／驗證嚴謹程度），不是產品「有多安全」。EAL7 ≠ 一定比 EAL4 更適合某個環境。產品認證歸 D1（1.5 Evaluate CSPs）。
+EAL1–EAL7 的中文口訣？	1 功、2 構、3 測查、4 設測審、5 半設、6 半驗、7 全驗。
+EAL1–EAL7 的英文核心概念？	EAL1 Functionally Tested；EAL2 Structurally Tested；EAL3 Methodically Tested and Checked；EAL4 Methodically Designed, Tested and Reviewed；EAL5 Semiformally Designed and Tested；EAL6 Semiformally Verified Design and Tested；EAL7 Formally Verified Design and Tested。
+Semi-formally designed、Semi-formally verified、Formally verified 各對應哪個 EAL？	Semi-formally designed → EAL5（半設）；Semi-formally verified → EAL6（半驗）；Formally verified → EAL7（全驗）。
+EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
+題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
+CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
