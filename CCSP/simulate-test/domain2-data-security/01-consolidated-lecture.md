@@ -34,6 +34,7 @@
 | 2026-10-09 D1-D4 防守成果 ＋ D3 補強（內容已併入，原檔未封存） | TDE 的透明性判準、`PCI=true` 的 representation ≠ source | §1.2、§1.4 |
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Cryptographic entropy／CSPRNG 與 `social factors` `[Q]`、遺失／遭竊裝置 vs Dual Control | §1.7、§1.11、§2.11、§2.12 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | Object／File／Block 的 hierarchy 判準定案（取代 LearnZapp 題庫關鍵字規則） | §1.3 |
+| 2026-10-18 D3 補強（內容已併入，原檔未封存） | 推論攻擊 vs 資料直接揭露、Inference vs Aggregation、最短模型與閉卷防守題 | §1.12、§2.13、§3、§4、§5 Drill F |
 
 ---
 
@@ -818,6 +819,40 @@ Sensitive action requires two people → Dual Control / TPI
 
 TPI／Dual Control 回答的是「某個敏感操作（例如 HSM master-key operation）是否需要兩名 custodian 共同參與」，與「laptop 被偷」不是同一個問題。
 
+### 1.12 Inference vs 資料直接揭露（來源：2026-10-18 D3 補強）
+
+> **最短模型：`看到痕跡再猜 ＝ Inference`；`看到資料本身 ＝ Disclosure`。**
+
+| 類型 | 攻擊者實際取得什麼 | 敏感事實如何曝光 | 例子 |
+|---|---|---|---|
+| **Direct disclosure（直接揭露）** | 敏感資料**本身** | 直接讀到 | bucket 誤設 public、DB dump 外洩、錯寄含 PII 的報表、未遮罩的 log |
+| **Inference（推論）** | **非敏感**的資料、metadata、統計結果、行為痕跡 | 由痕跡**推導**出敏感事實 | 從加密流量的大小／時間判斷使用者在看哪種病歷頁；從高階主管行事曆與併購對象律師的會議推出併購案；從「部門平均薪資」在新人加入前後的差值推出新人薪資 |
+| **Aggregation（彙總）** | 多筆**各自低敏感**的資料 | 合併後整體敏感度**上升** | 郵遞區號＋出生日期＋性別組合起來即可 re-identify 多數個人 |
+
+```text
+Disclosure  = 敏感值本身被看到                → 控制重點：access control、encryption、DLP、masking
+Inference   = 敏感值沒被看到，但被「猜出來」  → 控制重點：限制能形成推論的痕跡
+Aggregation = 把多筆低敏感資料「拼起來」      → 常是 inference 的前置步驟
+```
+
+**Aggregation vs Inference 的切法：** aggregation 是**組合**的動作（拼資料），inference 是**推導**的動作（從結果猜出未被直接提供的事實）。題幹說「combining」「compiling」「multiple low-sensitivity sources」→ Aggregation；題幹說「deduce」「derive」「infer」「從 metadata／統計／pattern 判斷」→ Inference。
+
+**為什麼 encryption 擋不住 inference？** 加密保護的是**內容**的機密性；inference 用的是加密後仍可見的**痕跡**（流量大小、時間、頻率、存取 pattern、檔名、metadata、查詢結果的統計值）。因此「資料已加密」不是 inference 題的正解。
+
+**對應控制：**
+
+| 控制 | 作用 |
+|---|---|
+| Metadata 與統計結果也要分類與做 least privilege | 痕跡本身也是需要保護的資料 |
+| Query restriction（最小查詢集合大小、拒絕差分查詢） | 防止用多次查詢相減推出個人值 |
+| Noise／**differential privacy** | 在統計結果加入受控雜訊，單一個體的有無不影響結果 |
+| **k-anonymity**／generalization／suppression | 把 quasi-identifier 泛化，降低 re-identification |
+| **Polyinstantiation** | 不同授權等級看到不同版本的資料列，避免從「查無此列」推出存在 |
+| View-based access、cell suppression | 只暴露必要欄位，隱藏小樣本格 |
+| Traffic padding／固定大小回應 | 降低從流量大小與時間推論內容 |
+
+> **出題角度：** 題目描述「攻擊者沒有存取敏感欄位，卻知道了敏感事實」→ **Inference**，不是 disclosure、也不是 access control failure。題目描述「敏感資料被未授權者看到」→ disclosure。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -899,6 +934,10 @@ BEST    = 選最完整／最適當的答案
 
 題幹 `technique used to attenuate risks ... resulting in loss or theft of a device` 文法上把因果寫反（讀起來像「技術導致裝置遺失」）；應為 `mitigate risks resulting from the loss or theft of a remote-access device`。題目措辭差，但**底層概念照學**：lost／stolen → remote lock／disable／wipe、revoke certificate／session；Dual Control 是干擾選項。詳見 §1.11。
 
+### 2.13 推論攻擊誤判為直接揭露（2026-10-18 D3 補強，`[T]`）
+
+題幹描述攻擊者只取得 metadata／統計結果／流量痕跡，再據此判斷出敏感事實，卻誤選 data disclosure／data breach。判準是**攻擊者有沒有拿到敏感值本身**：有 → disclosure；沒有、靠痕跡推出 → **Inference**。分類 `[T] 術語邊界`，**降權：無**。詳見 §1.12。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -978,6 +1017,10 @@ BEST    = 選最完整／最適當的答案
 | 71 | 人類選擇的 input（生日、`1234`）會降低 effective entropy；健全 RNG 不依賴這類 input。 |
 | 72 | **Lost／stolen device → remote lock／disable／wipe ＋ revoke certificate／session**；不是 Dual Control。 |
 | 73 | **Hierarchy 指向 File，不指向 Object**；Block 本身沒有 hierarchy，filesystem 建在上層。 |
+| 74 | **看到痕跡再猜 ＝ Inference；看到資料本身 ＝ Disclosure。** |
+| 75 | Aggregation = 把多筆低敏感資料拼起來；Inference = 從結果推導出未被提供的敏感事實。 |
+| 76 | Encryption 保護內容，擋不住從 metadata／流量／統計痕跡做的 inference。 |
+| 77 | Inference 的控制：metadata 也做 least privilege、query restriction、differential privacy、k-anonymity、polyinstantiation。 |
 
 ---
 
@@ -1031,6 +1074,9 @@ BEST    = 選最完整／最適當的答案
 | SoD | Segmentation／Compartmentalization | 分離職權與職能 vs 分離元件或資訊分艙 |
 | Remote wipe／disable | Dual Control | 裝置遺失後保護其上資料 vs 同一敏感操作需兩人 |
 | Entropy source | CSPRNG／DRBG | 提供不可預測的原始輸入 vs 由種子產生密碼學強度的亂數 |
+| Inference | Direct disclosure | 由痕跡推導出敏感事實 vs 敏感值本身被看到 |
+| Inference | Aggregation | 推導的動作 vs 組合多筆低敏感資料的動作 |
+| Differential privacy | Masking | 統計結果加雜訊防推論 vs 遮蔽單筆欄位值 |
 
 ---
 
@@ -1080,6 +1126,16 @@ BEST    = 選最完整／最適當的答案
 1. Object storage 的判準是什麼？（答模型，不要答產品名）
 2. Multitenancy 共用的是哪一層？物理主機是必要條件嗎？
 3. SoD 分離的對象是什麼？把元件拆開算不算 SoD？
+
+### Drill F：Inference 閉卷防守（2026-10-18）
+
+1. 攻擊者從加密 HTTPS 流量的封包大小與時間序列，判斷出使用者正在查詢哪一種疾病資訊。這屬於什麼？
+2. 員工把含完整身分證號的報表誤寄給外部廠商。這屬於什麼？
+3. 三份各自標為 Internal 的資料集合併後，可以識別出特定病患。這個「合併」動作叫什麼？
+4. 為什麼「把資料庫加密」不是第 1 題的最佳控制？
+5. 統計查詢介面允許「全部門平均薪資」與「排除某人後的平均薪資」兩次查詢。應採哪一類控制？
+
+**參考答案：** ① Inference（只看到痕跡，沒看到內容） ② Direct disclosure ③ Aggregation（之後再 re-identify 是 inference） ④ 加密保護內容，流量大小與時間仍可見 ⑤ Query restriction／differential privacy（防差分查詢推論）
 
 ### Drill E：維持節奏
 
