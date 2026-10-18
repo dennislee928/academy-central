@@ -136,3 +136,8 @@ Scanner 讀 payload 找到卡號後設 PCI=true——這是哪種分析？	判�
 遠端存取裝置遺失或遭竊時，最直接的控制是什麼？	遠端鎖定／停用／清除（remote lock／disable／wipe），並撤銷 device certificate 與 session／token。不是 Dual Control——Dual Control／TPI 是同一敏感操作需要兩人參與。
 Cryptographic key 的品質真正應依賴什麼？	Reliable entropy source（hardware noise、processor RNG、jitter、OS entropy pool）＋ strong CSPRNG／DRBG。不要背「VM 天生 entropy 低」——virtualization 本身 ≠ weak entropy。
 Social factors 絕對不可能影響 entropy 嗎？	不是。若人類行為（生日、1234、0000 PIN、命名慣例）成為 RNG input，分布偏斜會降低 effective entropy；但健全的 cryptographic RNG 不應主要依賴此類 input。題庫以「social factors 不影響」為答案屬 [Q]。
+⭐ Inference 與 Direct disclosure 怎麼切？	看到痕跡再猜＝Inference；看到資料本身＝Disclosure。判準：攻擊者有沒有拿到敏感值本身。
+從加密流量的封包大小與時間判斷出使用者查詢的疾病資訊，屬於什麼？	Inference。內容沒有被解密，敏感事實是從可見痕跡推導出來的。
+Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組合起來（拼）；Inference＝從結果推導出未被直接提供的敏感事實（猜）。Aggregation 常是 inference 的前置步驟。
+為什麼 encryption 擋不住 inference？	Encryption 保護內容機密性；inference 用的是加密後仍可見的 metadata、流量大小、時間、存取 pattern 與統計結果。
+防止 inference 的控制有哪些？	Metadata 與統計結果也做分類與 least privilege、query restriction（防差分查詢）、differential privacy、k-anonymity／generalization、polyinstantiation、traffic padding。

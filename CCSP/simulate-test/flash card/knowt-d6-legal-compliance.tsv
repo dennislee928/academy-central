@@ -125,3 +125,8 @@ ISO/IEC 27017 建立在哪個標準之上？適用對象為何？	建立在 ISO/
 原始作品進入公有領域，是否代表所有版本都沒有版權？	不是。Original composition／text → public domain；但 modern arrangement、new orchestration、editorial content、annotation、具原創性的 edition elements 都可能另有著作權。要再問「手上這個版本是誰做的」。
 收到 DMCA notice 時的正確處理心法？	這是 procedural issue，不是「自行判斷為 public domain 就 ignore」。順序：確認作品／版本的權利狀態 → 確認 notice validity（形式要件） → 依適用程序處理（notice-and-counter-notice／takedown／回覆 claimant）。不要背 old music = ignore DMCA。
 GLBA 由哪兩條核心規則組成？Safeguards Rule 要求什麼？	GLBA = Financial Privacy Rule ＋ Safeguards Rule。Financial Privacy Rule 規範客戶資訊蒐集與分享的告知；Safeguards Rule 要求金融機構建立 written information security program。
+⭐ Risk transfer 移轉的是什麼？	Transfer 移走的是錢，不是責任：保險、合約賠償條款只移轉 financial impact；accountability 留在組織。
+Responsibility、Accountability、Liability 哪個可委派、哪個不可移轉、哪個只能部分分攤？	Responsibility（執行）可委派；Accountability（問責）不可移轉；Liability（法律責任）只能依合約與法律部分分攤，不能對抗主管機關與 data subject。
+買了 cyber insurance 後，資料外洩的 accountability 在誰身上？	仍在組織／data owner／controller。保險只賠錢；商譽與法規責任無法移轉，risk transfer 後仍有 residual risk。
+ENISA 是什麼性質的機構？	EU 網路安全機構（European Union Agency for Cybersecurity）：提供 guidance、risk assessment、起草 Cybersecurity Act 下的認證方案（如雲端的 EUCS）。不是法規本身，也不是稽核機構。
+ENISA 2009 雲端風險條列細節題為什麼降權？哪些概念要保留？	[Q] 中度降權：考單一舊文件的條列措辭。保留 ENISA 定位、top risks 主軸（loss of governance、lock-in、isolation failure、compliance、management interface compromise、data protection、insecure deletion、malicious insider）與 assurance＝取得 CSP 控制有效的證據。

@@ -6,7 +6,7 @@ RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery po
 誰負責攔截與協調硬體資源呼叫？	Hypervisor，不是一般系統管理員。
 DR 計畫應該寫給誰執行？	任何具備基本技能的人。核心團隊災難時可能無法連線。
 MFA 是最根本的安全原則嗎？	不是。MFA 是控制項；Defense in Depth 才是涵蓋架構的根本原則。
-雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。
+雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。成因：好建立＋難追蹤＋沒人刪。
 Public cloud 資料中心控制治理通常由誰制定？customer 負責什麼？	Provider-owned data center → cloud provider 實作與治理控制，不要直接選 regulator；customer workload／data → customer governance。
 Uptime Tier I 到 IV 分別是什麼？	I Basic Capacity；II Redundant Capacity Components；III Concurrently Maintainable；IV Fault Tolerant。
 Uptime Tier-defined facilities 的燃油基準？	12 hours at N load。

@@ -16,7 +16,7 @@ GLBA 是什麼？	Gramm-Leach-Bliley Act：美國聯邦法律，保護金融機�
 PCI DSS 是法律嗎？	不是。PCI DSS 是支付卡產業安全標準，不是聯邦隱私法。
 Privacy 需求如何影響 deployment model？	高隱私／專屬控制需求通常偏向 private 或 community；open public 不適合高度敏感專屬資料。
 FaaS／Serverless 的考試重點是什麼？	Event-driven function；客戶不管 server 管理，但仍要管程式、權限與資料。
-為什麼 cloud sprawl 不只是基礎設施帳單問題？	還可能增加 OS、資料庫、資安設備與企業軟體的授權、訂閱與管理成本。
+為什麼 cloud sprawl 不只是基礎設施帳單問題？	還可能增加 OS、資料庫、資安設備與企業軟體的授權、訂閱與管理成本；也帶來未修補攻擊面、可視性缺口與資料殘留（Sprawl＝好建立＋難追蹤＋沒人刪）。
 Asset inventory 回答什麼？BIA 回答什麼？	Inventory 回答「組織有什麼資產」；BIA 回答「什麼最重要、中斷會怎樣」。
 Business requirements 能補技術盤點缺的什麼？	Business usefulness／value／criticality，這些不一定能只靠客觀 technical inventory 得到。
 Production 在 CSP-A、backup 在 CSP-B，recovery 最直接的技術風險是什麼？	Interoperability／proprietary format incompatibility。這比泛稱 vendor lock-in 更直接卡住還原目標。
@@ -183,6 +183,11 @@ Scanner 讀 payload 找到卡號後設 PCI=true——這是哪種分析？	判�
 遠端存取裝置遺失或遭竊時，最直接的控制是什麼？	遠端鎖定／停用／清除（remote lock／disable／wipe），並撤銷 device certificate 與 session／token。不是 Dual Control——Dual Control／TPI 是同一敏感操作需要兩人參與。
 Cryptographic key 的品質真正應依賴什麼？	Reliable entropy source（hardware noise、processor RNG、jitter、OS entropy pool）＋ strong CSPRNG／DRBG。不要背「VM 天生 entropy 低」——virtualization 本身 ≠ weak entropy。
 Social factors 絕對不可能影響 entropy 嗎？	不是。若人類行為（生日、1234、0000 PIN、命名慣例）成為 RNG input，分布偏斜會降低 effective entropy；但健全的 cryptographic RNG 不應主要依賴此類 input。題庫以「social factors 不影響」為答案屬 [Q]。
+⭐ Inference 與 Direct disclosure 怎麼切？	看到痕跡再猜＝Inference；看到資料本身＝Disclosure。判準：攻擊者有沒有拿到敏感值本身。
+從加密流量的封包大小與時間判斷出使用者查詢的疾病資訊，屬於什麼？	Inference。內容沒有被解密，敏感事實是從可見痕跡推導出來的。
+Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組合起來（拼）；Inference＝從結果推導出未被直接提供的敏感事實（猜）。Aggregation 常是 inference 的前置步驟。
+為什麼 encryption 擋不住 inference？	Encryption 保護內容機密性；inference 用的是加密後仍可見的 metadata、流量大小、時間、存取 pattern 與統計結果。
+防止 inference 的控制有哪些？	Metadata 與統計結果也做分類與 least privilege、query restriction（防差分查詢）、differential privacy、k-anonymity／generalization、polyinstantiation、traffic padding。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -191,7 +196,7 @@ RPO 衡量什麼？	可容忍的資料損失量（以時間表示的 recovery po
 誰負責攔截與協調硬體資源呼叫？	Hypervisor，不是一般系統管理員。
 DR 計畫應該寫給誰執行？	任何具備基本技能的人。核心團隊災難時可能無法連線。
 MFA 是最根本的安全原則嗎？	不是。MFA 是控制項；Defense in Depth 才是涵蓋架構的根本原則。
-雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。
+雲端最常見的無意行為後果是什麼？	忘記關閉無用 VM，造成 resource sprawl。不是一定立刻變成 disaster。成因：好建立＋難追蹤＋沒人刪。
 Public cloud 資料中心控制治理通常由誰制定？customer 負責什麼？	Provider-owned data center → cloud provider 實作與治理控制，不要直接選 regulator；customer workload／data → customer governance。
 Uptime Tier I 到 IV 分別是什麼？	I Basic Capacity；II Redundant Capacity Components；III Concurrently Maintainable；IV Fault Tolerant。
 Uptime Tier-defined facilities 的燃油基準？	12 hours at N load。
@@ -357,6 +362,11 @@ Hardening 的典型動作有哪些？	移除不必要軟體、關閉不必要 se
 Personnel controls 治理什麼？包含哪些項目？	治理人的可信度、行為與 employment lifecycle：background check、reference check、security awareness／training、job rotation、SoD、termination／exit procedure。
 Mantrap 是 personnel control 嗎？	No。Mantrap 作用在人身上，但分類是 Physical Access Control。Personnel = govern the person；Physical Access = govern entry／movement。作用對象相同不代表 control category 相同。
 Patch 能解決 cloud interoperability 問題嗎？	不能。Patch 修 software defect／vulnerability／performance；interoperability 是 architecture／API／format／standard 層面的問題。
+⭐ Virtualization sprawl 的最短模型？	Sprawl＝好建立＋難追蹤＋沒人刪。Remediation 要逐一對準三個成因。
+VM sprawl 除了帳單還有哪些風險？	Dormant／orphaned VM 與舊 snapshot 收不到 patch（攻擊面）、不在 inventory 就不被監控（可視性缺口）、資料殘留、授權成本、無 owner 無法歸責。
+Sprawl「好建立」對應哪些控制？	Provisioning approval workflow、quota／budget limit、只允許 hardened golden image、IaC 作為唯一建立管道、policy-as-code 拒絕未帶必要 tag 的資源。
+Sprawl「難追蹤」與「沒人刪」各對應哪些控制？	難追蹤 → 強制 tagging（owner／cost center／environment／expiry）、CMDB／asset inventory、automated discovery。沒人刪 → lifecycle policy 與 expiry、定期 review／recertification、閒置偵測、正式 decommission 流程。
+發現一批無 tag、無 owner 的 VM，處理順序？	Discover → Attribute（找 owner）→ Secure（patch／隔離）→ Decide → Decommission（依 retention 與銷毀政策，含 snapshot／volume／image，並更新 CMDB）→ Prevent。不直接刪除。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。三個層級：L1 Self-Assessment、L2 Third-party certification、L3 Continuous auditing。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
@@ -484,9 +494,15 @@ ISO/IEC 27017 建立在哪個標準之上？適用對象為何？	建立在 ISO/
 原始作品進入公有領域，是否代表所有版本都沒有版權？	不是。Original composition／text → public domain；但 modern arrangement、new orchestration、editorial content、annotation、具原創性的 edition elements 都可能另有著作權。要再問「手上這個版本是誰做的」。
 收到 DMCA notice 時的正確處理心法？	這是 procedural issue，不是「自行判斷為 public domain 就 ignore」。順序：確認作品／版本的權利狀態 → 確認 notice validity（形式要件） → 依適用程序處理（notice-and-counter-notice／takedown／回覆 claimant）。不要背 old music = ignore DMCA。
 GLBA 由哪兩條核心規則組成？Safeguards Rule 要求什麼？	GLBA = Financial Privacy Rule ＋ Safeguards Rule。Financial Privacy Rule 規範客戶資訊蒐集與分享的告知；Safeguards Rule 要求金融機構建立 written information security program。
+⭐ Risk transfer 移轉的是什麼？	Transfer 移走的是錢，不是責任：保險、合約賠償條款只移轉 financial impact；accountability 留在組織。
+Responsibility、Accountability、Liability 哪個可委派、哪個不可移轉、哪個只能部分分攤？	Responsibility（執行）可委派；Accountability（問責）不可移轉；Liability（法律責任）只能依合約與法律部分分攤，不能對抗主管機關與 data subject。
+買了 cyber insurance 後，資料外洩的 accountability 在誰身上？	仍在組織／data owner／controller。保險只賠錢；商譽與法規責任無法移轉，risk transfer 後仍有 residual risk。
+ENISA 是什麼性質的機構？	EU 網路安全機構（European Union Agency for Cybersecurity）：提供 guidance、risk assessment、起草 Cybersecurity Act 下的認證方案（如雲端的 EUCS）。不是法規本身，也不是稽核機構。
+ENISA 2009 雲端風險條列細節題為什麼降權？哪些概念要保留？	[Q] 中度降權：考單一舊文件的條列措辭。保留 ENISA 定位、top risks 主軸（loss of governance、lock-in、isolation failure、compliance、management interface compromise、data protection、insecure deletion、malicious insider）與 assurance＝取得 CSP 控制有效的證據。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）
 T001 現在如何計入 fresh accuracy？	已確認 T001（2026-09-25）為首次作答（fresh）。原始 19/25（76%）；排除 M001、M002 兩題 Disputed 後 19/23（約 83%）。樣本一次測驗，非 readiness 指標。（來源 study_state）
 群組建議的錯題複習優先順序是什麼？M001／M002 怎麼用？	優先 M003（4.7 federation），其次 M004（4.5 先修政策再談執法），再次 M005（4.2 需求來自本組織 business stakeholder）。M001／M002 為 Disputed，只記用語對應，不當成已結案知識。（來源群組 9/26）
 Commander 建議把哪些錯題對照 §21？M003 建議怎麼練？	M004、M005 排入 §21 Software Assurance and Validation 對照；M003 可選 15 分鐘畫出 web of trust 與 trusted third party 兩種 federation model（IdP、SP／relying party、信任關係）。（來源群組 9/26／carryover）
+錯題分類標籤 [K/T/J/R/Q] 各代表什麼？哪些要降權？	K＝Knowledge 不知道、T＝Terminology 術語邊界、J＝ISC2 judgment 最佳解判斷、R＝Retention 學過沒取回、Q＝Question quality 題目問題。只有 Q 降權（中度或強），且只降權題目前提，概念照學。

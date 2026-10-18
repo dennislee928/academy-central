@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **492 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **508 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
 | `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL） | 47 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類） | 138 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類、inference） | 143 |
 | `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 82 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security | 44 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 48 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 127 |
-| `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度與群組決議紀錄 | 6 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 492 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 53 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 132 |
+| `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 508 |
 
 ### 歷次併入紀錄
 
@@ -127,6 +127,15 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 原檔 Card 1／2（SAST、DAST 最短模型）併入兩軸卡；Card 6（running app + HTTP request = DAST）、Card 8（SCA）、Card 9（RASP）既有卡已覆蓋，不新增。
 
+**2026-10-18 D3 補強**（原檔僅有 ChatGPT 回覆摘要，講義附件與閃卡 widget 未保存；知識點已併入彙整講義，由其內容產出 16 張）：
+
+- ⭐ Inference vs Direct disclosure、加密流量痕跡推論、Aggregation vs Inference、encryption 擋不住 inference、inference 控制 → **D2**（+5）
+- ⭐ Sprawl＝好建立＋難追蹤＋沒人刪、sprawl 風險、三成因對應控制 ×2、無主 VM 處理順序 → **D5**（+5）
+- ⭐ Risk transfer 移走的是錢、responsibility／accountability／liability 三分、cyber insurance 後的 accountability、ENISA 定位、ENISA 2009 條列題 `[Q]` 中度降權 → **D6**（+5）
+- 錯題分類標籤 `[K/T/J/R/Q]` → **study-progress**（+1）
+
+`為什麼 cloud sprawl 不只是基礎設施帳單問題？`（D1）與 `雲端最常見的無意行為後果是什麼？`（D3）兩張既有卡改為增補答案（補上安全風險與三成因）。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -153,7 +162,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 492 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 508 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 
