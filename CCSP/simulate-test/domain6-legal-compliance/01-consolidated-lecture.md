@@ -34,6 +34,7 @@
 | 2026-10-09 D3 BC/DR 與角色講義（內容已併入，原檔未封存） | 四治理角色：General Counsel／CISO／DPO／Compliance 與兩組邊界 | §1.8 |
 | 2026-10-09 D6 測驗補強（內容已併入，原檔未封存；歸位地圖另存為 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)） | Argentina 25.326、US sectoral＋state patchwork、COPPA、800-92 = Logs、ISO 31000 範圍、public domain 與 DMCA notice | §1.1、§1.2、§1.7 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | GLBA = Financial Privacy Rule ＋ Safeguards Rule、EU transfer 有效機制（復現） | §1.1、§1.4 |
+| 2026-10-18 D3 補強（內容已併入，原檔未封存） | 財務風險移轉 vs 責任／問責／法律責任、ENISA assurance 題 `[Q]` 降權、閉卷防守題 | §1.9、§2.7、§3、§4、§5 |
 
 ---
 
@@ -1252,6 +1253,33 @@ Historical data → Aggregation / average → Observed frequency → ARO estimat
 
 Aggregation 不是「不能用」，而是**必須先有 historical observations 才能 aggregate**。
 
+
+**Risk transfer 移轉的是什麼？（來源：2026-10-18 D3 補強）**
+
+> **最短模型：`Transfer 移走的是錢，不是責任`。** 保險、合約賠償條款、外包只把**財務衝擊**部分轉給第三方；accountability 留在組織，liability 只能依合約與法律**部分分攤**。
+
+| 概念 | 能否移轉 | 說明 |
+|---|---|---|
+| **Financial impact（財務衝擊）** | ✅ 可移轉 | 保險理賠、indemnification、penalty／service credit——這才是 risk transfer 的本體 |
+| **Responsibility（執行責任）** | ✅ 可委派 | 把**做事**交給 CSP／vendor（例如 patch hypervisor、維運機房） |
+| **Accountability（問責）** | ❌ 不可移轉 | 最終向董事會、主管機關、data subject **交代**的仍是組織／data owner／controller |
+| **Liability（法律責任）** | ⚠️ 只能部分分攤 | 合約可約定 limitation of liability 與賠償順序，但**不能對抗第三人與主管機關**；法規罰則與對 data subject 的責任仍可能落在 controller |
+| **Reputational impact（商譽）** | ❌ 實務上無法移轉 | 外洩新聞寫的是客戶的品牌，不是保險公司 |
+
+```text
+買 cyber insurance    → 移轉 financial impact
+外包給 CSP            → 委派 responsibility
+發生外洩              → accountability 仍在組織；liability 依合約＋法律分攤
+```
+
+**常見陷阱：**
+
+- 「購買保險後，資料外洩的責任轉給保險公司」→ ❌ 保險只賠錢。
+- 「合約寫明 CSP 負全責，因此客戶不再對主管機關負責」→ ❌ 合約不能約束主管機關。
+- 「Risk transfer 之後 residual risk = 0」→ ❌ 仍有未保範圍、自負額、商譽與法規責任，residual risk 仍須明示接受。
+
+> 責任三分（Due Care = DO、Due Diligence = CHECK、Liability = CONSEQUENCE）見 §1.6；`responsibility can be delegated, accountability cannot` 見 §1.3 OECD Accountability。
+
 **Risk appetite 由高階管理層／董事會決定。**
 
 **Asset inventory vs BIA：**
@@ -1301,6 +1329,23 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 
 - 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.9）。
 - 問 RMF 以什麼為 foundation 時誤選 **cost** 或 **threat**：RMF 是 risk-based framework，cost 與 threat 都只是 input（見 §1.2）。
+
+### 2.7 ENISA assurance 題（2026-10-18 D3 補強，`[Q]` 中度降權）
+
+題目以 ENISA 2009 年的雲端風險評估文件（*Cloud Computing: Benefits, Risks and Recommendations for Information Security*）與其附帶的 **Information Assurance Framework** 為前提，要求選出文件中的特定條列項目。
+
+**為什麼降權：** 題目考的是 2009 年單一文件的條列措辭，版本老舊且選項常與一般雲端風險高度重疊，難以用原則判斷；屬「措辭／版本問題，但底層概念保留」的**中度降權**，不需逐字背誦條列。
+
+**概念照學（不可降權）：**
+
+| 要記住的 | 內容 |
+|---|---|
+| ENISA 是什麼 | EU 的網路安全機構（European Union Agency for Cybersecurity），提供 **guidance、risk assessment、認證方案起草**；不是法規本身，也不是稽核機構 |
+| 2009 文件的 top risks 主軸 | Loss of governance、lock-in、isolation failure、compliance risks、management interface compromise、data protection、insecure／incomplete data deletion、malicious insider |
+| Assurance 的意思 | 客戶取得「CSP 控制有效」的**信心與證據**（問卷、第三方報告、認證），不是 CSP 自己的承諾 |
+| 現代對應 | EU Cybersecurity Act 下由 ENISA 起草雲端服務認證方案（EUCS）；看到「EU 雲端認證／assurance」想到 ENISA |
+
+> **答題原則：** 看到 ENISA 題先判斷它問的是「ENISA 是什麼／做什麼」（照學）還是「2009 文件第幾項條列」（降權、用常識挑最符合雲端特有風險者即可）。
 
 ---
 
@@ -1444,6 +1489,10 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 126 | **DPO 不等於一般「資料安全主管」**——它偏 privacy／data protection。 |
 | 127 | **GLBA = Financial Privacy Rule ＋ Safeguards Rule；Safeguards Rule 要求 written information security program。** |
 | 128 | EU transfer 有效機制 = adequacy／SCC／BCR／GDPR safeguards；Privacy Shield = legacy。 |
+| 129 | **Transfer 移走的是錢，不是責任**：保險／合約移轉 financial impact；accountability 不移轉。 |
+| 130 | Responsibility 可委派、accountability 不可移轉、liability 只能依合約與法律部分分攤。 |
+| 131 | 合約責任分攤不能對抗主管機關與 data subject；risk transfer 後仍有 residual risk。 |
+| 132 | ENISA = EU 網路安全機構，提供 guidance／risk assessment／認證方案起草；2009 條列細節題屬 `[Q]` 中度降權。 |
 
 ---
 
@@ -1517,6 +1566,9 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Professional opinion | Personal opinion | 基於證據與方法論 vs 主觀感受 |
 | Independent expert | Advocate for one side | 客觀技術專家 vs 某一方的技術說服者 |
 | ARO | ALE | 一年發生幾次 vs 一年預期損失多少錢 |
+| Risk transfer（financial） | Accountability | 移轉財務衝擊 vs 永遠留在組織的問責 |
+| Responsibility | Liability | 可委派的執行責任 vs 依合約與法律分攤的法律後果 |
+| ENISA | 法規／稽核機構 | EU 資安機構，出 guidance 與認證方案 vs 立法者或出具報告的 auditor |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
@@ -1661,3 +1713,7 @@ SAS 70     = legacy
 - RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
 - 問 ARO 的直接依據時，為什麼不能選 aggregation？
 - ISO 27001 偏好 cloud 還是 on-prem？
+- 買了 cyber insurance 後，資料外洩的 accountability 在誰身上？保險移轉的是什麼？
+- 合約寫「CSP 負全部責任」，客戶是否就不必對主管機關負責？
+- Responsibility、accountability、liability 三者哪一個可委派、哪一個不可移轉、哪一個只能部分分攤？
+- ENISA 是什麼性質的機構？ENISA 2009 條列細節題為什麼降權，哪些概念仍要學？
