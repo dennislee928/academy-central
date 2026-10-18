@@ -127,7 +127,7 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 原檔 Card 1／2（SAST、DAST 最短模型）併入兩軸卡；Card 6（running app + HTTP request = DAST）、Card 8（SCA）、Card 9（RASP）既有卡已覆蓋，不新增。
 
-**2026-10-18 D3 補強**（原檔僅有 ChatGPT 回覆摘要，講義附件與閃卡 widget 未保存；知識點已併入彙整講義，由其內容產出 16 張）：
+**2026-10-18 D3 補強**（原檔未封存，原檔閃卡區為空的 widget 佔位；知識點已併入彙整講義，由其內容產出 16 張）：
 
 - ⭐ Inference vs Direct disclosure、加密流量痕跡推論、Aggregation vs Inference、encryption 擋不住 inference、inference 控制 → **D2**（+5）
 - ⭐ Sprawl＝好建立＋難追蹤＋沒人刪、sprawl 風險、三成因對應控制 ×2、無主 VM 處理順序 → **D5**（+5）
