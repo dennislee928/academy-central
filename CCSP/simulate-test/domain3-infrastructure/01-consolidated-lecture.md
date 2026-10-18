@@ -28,6 +28,7 @@
 | 2026-10-09 D1-D4 防守成果 ＋ D3 BC/DR 與 25 題錯題補強（內容已併入，原檔未封存） | BC/DR 四指標與公式、OSI 七層、FC/FCP、storage taxonomy、Converged ≠ SDN ≠ HCI、三類 controls、VM vs Container、vendor guidance 層級 | §1.3、§1.4、§1.5、§1.6、§1.8 |
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Hot aisle containment 四選項比較、LP gas 復現、BIA informs BC/DR 與 Secure Acquisition EXCEPT、BC/DR kit `[Q]` | §1.1、§1.6、§2.8、§2.9 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | Public cloud 責任邊界兩行規則、UPS line conditioning（復現）、ionization vs photoelectric 偵煙 | §1.1、§1.5 |
+| 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl（主體併入 D5 §1.9，本檔留交叉參照）；推論攻擊、風險移轉分別併入 D2 §1.12、D6 §1.9 | §1.4 |
 
 ---
 
@@ -325,7 +326,7 @@ GRE over IPsec = Tunnel + Security
 | **管理平面隔離** | Virtualization management tools 必須放在隔離的管理網路，詳見下方 |
 | **VM configuration management tool** | 必須具備 **log generation 與 audit trail** |
 | **Snapshot／dormant VM** | 收不到 patch，是常見盲點 |
-| **Cloud sprawl** | 雲端最常見的無意行為後果是忘記關 VM，造成 resource sprawl，不一定是 disaster |
+| **Cloud sprawl** | 雲端最常見的無意行為後果是忘記關 VM，造成 resource sprawl，不一定是 disaster。成因（`好建立 ＋ 難追蹤 ＋ 沒人刪`）、風險與完整 targeted remediation 見 [Domain 5 §1.9](../domain5-operations/01-consolidated-lecture.md) |
 
 #### ⭐ 資源分配三機制：Reservation／Limit／Shares
 

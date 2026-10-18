@@ -22,6 +22,7 @@
 | `by-test/learnzapp/04-two-day-error-essence-lecture.md` | §6 responsibility、§7 supply chain、§10 cloud sprawl、§11–12 configuration/patch | §1.3、§1.7、§1.9 |
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §4 insider threat、D5 §3 Synthetic vs RUM、D5 §6 DHCP、D5 §7 HA | §1.4、§1.5、§1.6 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §2 hardening 清單、§3 ⭐ Audit vs Hardening、§4／§5 ⭐ personnel vs physical、§6 patch vs interoperability、§8 live migration | §1.2、§1.3、§1.4、§1.6 |
+| 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl 成因、風險與完整 targeted remediation、閉卷防守題 | §1.9、§3、§4、§5 Drill B |
 
 ---
 
@@ -388,6 +389,49 @@ license count、subscription fee、support cost、management overhead 同步增�
 
 > Cloud sprawl ≠ only infrastructure bill。雲端最常見的無意行為是忘記關 VM，造成 resource sprawl。
 
+#### ⭐ Virtualization sprawl：成因、風險與 targeted remediation（來源：2026-10-18 D3 補強）
+
+> **最短模型：`Sprawl ＝ 好建立 ＋ 難追蹤 ＋ 沒人刪`。** 三個條件各自對應一組控制；remediation 要逐一對準，不是只「關掉多餘 VM」。
+
+**成因鏈：**
+
+```text
+好建立：self-service、API、template 讓 VM 幾秒內就能開
+   ↓
+難追蹤：沒有 tag、沒有 owner、沒有 CMDB 紀錄，跨帳號／跨 region 散落
+   ↓
+沒人刪：專案結束、測試完、人員離職後無人負責 decommission
+   ↓
+結果：orphaned／dormant VM、snapshot、image、volume 持續累積
+```
+
+**風險不只帳單：**
+
+| 風險 | 說明 |
+|---|---|
+| **未修補的攻擊面** | Dormant／offline VM 與舊 snapshot 收不到 patch，重新啟動時帶著舊漏洞上線 |
+| **可視性缺口** | 不在 inventory 裡的 VM 不會被監控、掃描、納入 SIEM |
+| **資料殘留** | 遺棄的 VM、volume、snapshot 可能仍含敏感資料，違反 retention 與銷毀政策 |
+| **Licensing 與成本** | compute／storage 費用之外，OS、DB、資安設備的授權與訂閱同步增加（見上方） |
+| **合規與歸責** | 無 owner 的資源無法回答「誰核准、誰負責、資料在哪」 |
+
+**Targeted remediation（對準三個成因）：**
+
+| 成因 | Remediation |
+|---|---|
+| **好建立** | Provisioning **approval workflow**、quota／budget limit、只允許 hardened golden image、IaC 作為唯一建立管道、policy-as-code 拒絕未帶必要 tag 的資源 |
+| **難追蹤** | 強制 **tagging（owner／cost center／environment／expiry）**、**CMDB／asset inventory**、**automated discovery** 跨帳號與 region 掃描、與帳單及監控資料比對找出影子資源 |
+| **沒人刪** | **Lifecycle policy 與 expiry date**、定期 **review／recertification**（owner 確認仍需要）、閒置偵測（CPU／network 長期低於門檻）、**正式 decommission 流程**（先備份或依 retention 保存 → 刪除 VM、snapshot、volume、image → 依政策做 crypto-shredding → 更新 CMDB） |
+| **補救期間** | 先納入 inventory 與監控、補 patch 或隔離，確認無 owner 後才 decommission——不要直接刪除可能仍承載業務或證據的資源 |
+
+```text
+發現 sprawl 的處理順序：
+Discover（找出全部）→ Attribute（找到 owner）→ Secure（patch／隔離）
+→ Decide（保留或退役）→ Decommission（依 retention 與銷毀政策）→ Prevent（tag／approval／expiry）
+```
+
+> **出題角度：** 題目問「降低 VM sprawl 的**最佳**控制」→ 優先選 **lifecycle management／asset inventory 與 provisioning policy** 這類治理控制；「多買監控工具」「直接刪除所有閒置 VM」都不是完整答案。與 snapshot／dormant VM 收不到 patch 的盲點見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md)。
+
 ### 1.10 TLS 的維運面
 
 ```text
@@ -483,6 +527,10 @@ Redundancy = 可用性 / 容錯
 | 41 | Patch 修 defect／vulnerability／performance；interoperability 靠 architecture／API／format／standard。 |
 | 42 | 維護時要 live-migrate 執行中的 VM，不是存 snapshot image。 |
 | 43 | Management plane 的隔離手段不限 VLAN；VMware Tools 不是 management plane。 |
+| 44 | **Sprawl ＝ 好建立 ＋ 難追蹤 ＋ 沒人刪**；remediation 要逐一對準三個成因。 |
+| 45 | Sprawl 的風險包含未修補攻擊面、可視性缺口、資料殘留、授權成本與無法歸責，不只是帳單。 |
+| 46 | Sprawl remediation = approval／quota／golden image ＋ tagging／CMDB／discovery ＋ expiry／review／decommission。 |
+| 47 | 發現無主 VM 先 inventory、patch 或隔離，確認無 owner 後再依 retention 退役，不直接刪除。 |
 
 ---
 
@@ -513,6 +561,8 @@ Redundancy = 可用性 / 容錯
 | Classification（分類） | Effectiveness（有效性） | 題目問哪一類 vs 哪個更有用 |
 | Patch | Interoperability 修正 | 軟體缺陷 vs 架構與標準 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
+| VM sprawl | 單純成本問題 | 安全、可視性、資料殘留與歸責問題 vs 只看帳單 |
+| Decommission | 直接刪除 | 依 retention 與銷毀政策退役並更新 inventory vs 只把 VM 關掉或砍掉 |
 
 > **Boundary learning 提示：** Audit vs Hardening、Personnel vs Physical Access 這兩組都屬「兩個答案技術上都合理，但題目在問分類」的典型。處理流程見 [README 的錯題複習與 argue 流程](../README.md)。
 
@@ -554,6 +604,9 @@ Redundancy = 可用性 / 容錯
 16. 題幹出現 verify、review 時該選哪一類？出現 disable、restrict 時呢？
 17. Mantrap 控制的是人，為什麼分類不是 personnel control？
 18. Patch 能解決跨雲 interoperability 嗎？為什麼？
+19. `Sprawl ＝ 好建立 ＋ 難追蹤 ＋ 沒人刪` 三個成因各對應哪一組控制？
+20. 為什麼 dormant VM 是安全風險而不只是成本問題？
+21. 發現一批無 tag、無 owner 的 VM，處理順序是什麼？為什麼不能直接刪除？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
