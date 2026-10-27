@@ -911,7 +911,7 @@ Aggregation = 把多筆低敏感資料「拼起來」      → 常是 inference 
 
 > Egress monitoring observes outbound flow; it does not grant or deny access。
 
-**另一個 EXCEPT 變體（`by-test/11` D2 §3）：** 問「雲端 egress monitoring 的主要障礙，except」時，正解是 **redundancy／resilience**——它不是監控障礙。其餘六項障礙見 §1.2。
+**另一個 EXCEPT 變體（`by-test/11` D2 §3）：** 問「雲端 egress monitoring 的主要障礙，except」時，正解是 **redundancy／resilience**——它不是監控障礙。其餘六項障礙見 §1.2。此說法過度絕對（`[Q]` 高降權）：分散式、多路徑的 resilience architecture 會增加監控複雜度，見 [Domain 3 §1.7](../domain3-infrastructure/01-consolidated-lecture.md)。
 
 ### 2.5 Classification 的 lifecycle phase（`by-test/02` Q15、`lz04` Q1）
 

@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -29,6 +29,8 @@
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Hot aisle containment 四選項比較、LP gas 復現、BIA informs BC/DR 與 Secure Acquisition EXCEPT、BC/DR kit `[Q]` | §1.1、§1.6、§2.8、§2.9 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | Public cloud 責任邊界兩行規則、UPS line conditioning（復現）、ionization vs photoelectric 偵煙 | §1.1、§1.5 |
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl（主體併入 D5 §1.9，本檔留交叉參照）；推論攻擊、風險移轉分別併入 D2 §1.12、D6 §1.9 | §1.4 |
+| 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §1 四指標防呆、§2 BIA 邊界、§3 DR location、§4 實體韌性、§16 外部威脅 Redundant ISP vs Masking、§18 dropped ceiling／fiber 降權 | §1.6、§2.10、§2.11、§2.13 |
+| 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §1 Redundant／resilient architecture vs egress monitoring `[Q]`、§3 Returning to normal operations too late `[Q]`（§2 maintenance mode 併入 D5） | §1.6、§1.7、§2.12、§2.14 |
 
 ---
 
@@ -534,6 +536,31 @@ WRT       = IT 恢復後到業務恢復
 MTD / MAO = 包住整段最大可接受中斷
 ```
 
+最短模型（來源：2026-10-23 兩日錯題修復 §1）：**RPO = Data Loss；RTO = IT Back；WRT = Business Back；MTD = 整體上限。**
+
+> **防呆：** 看到 **Point** 不代表答案一定是 RPO——RPO 必須是「可接受往回丟多少資料」。RTO 看系統多久回來；WRT 看系統回來後業務還要整理多久；MTD 是整體不可超過的上限。
+
+#### Returning to normal operations too late：outcome，不是 root risk（來源：2026-10-26 錯題，`[Q]`）
+
+```text
+Recovery capability failure
+        ↓
+Cannot restore required service
+        ↓
+RTO exceeded
+        ↓
+MTD / MAD exceeded
+        ↓
+Unacceptable business impact
+```
+
+`Returning too late` 更像 **recovery failure 的 outcome／consequence**。BC/DR 強調 availability，但 `Availability > Confidentiality` 並非永遠成立：hospital、payment processor、HSM／key custodian、regulated financial institution 在 contingency 中若發生 confidentiality breach，同樣可能造成不可逆的法律、財務與安全影響。
+
+**Judgment rule：**
+
+- 題目問「如何避免超過最大停機時間」→ 優先想 `RTO / WRT / MTD`。
+- 題目問「greatest organizational risk」→ 先找 business context：產業、資料敏感度、法規、安全影響、RTO／MTD criticality。沒有 context 的絕對排名應提高警覺（見 §2.12）。
+
 #### BIA：informs BC/DR，不等於 BC/DR plan（來源：2026-10-10 D3 錯題補強）
 
 **BIA（Business Impact Analysis，業務影響分析）** 主要產出：
@@ -559,6 +586,18 @@ BC/DR planning、risk impact assessment、security control prioritization
 - **BIA 支援 control selection：** critical national service 與 internal cafeteria app 理應投入不同等級的控制。
 - **EXCEPT 題：Secure Acquisition 不是 BIA output。** 安全採購處理的是要買什麼產品、supplier risk、procurement requirement、contract security requirements、supply-chain assurance，屬採購／供應鏈範疇。
 
+| 項目 | 是否直接受 BIA 支援（來源：2026-10-23 兩日錯題修復 §2） | 原因 |
+|---|:-:|---|
+| 風險分析 | ✅ | 提供資產價值、業務衝擊 |
+| BC/DR 規劃 | ✅ | 提供 criticality 與復原優先順序 |
+| 安全控制選擇 | ✅ | 控制成本應與資產價值／風險匹配 |
+| 安全採購（secure acquisition） | ⚠️ 間接 | BIA 可影響需求，但不是 acquisition process 本身 |
+
+```text
+題目問「BIA 提供資訊給哪個流程」 → risk / control selection / BC/DR 都合理
+題目問「BIA 本身是否就是 acquisition 活動」 → 不是
+```
+
 > Asset inventory（有什麼）vs BIA（什麼最重要）的邊界見 [Domain 6](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
 #### BC/DR 執行四階段（4R）
@@ -580,6 +619,43 @@ Local disaster               → sister facility / alternate site / joint operat
 **Diverse Routing** 特別重要：即使採購兩家電信線路，若實體光纖埋在同一條地下管道，一次施工就會同時斷線。實體線路必須從建築物**不同方向**進入資料中心。
 
 **雲端 DR 的阿基里斯腱：ISP connectivity。** 連不上雲端，DR 計畫即失敗。
+
+**線路從建物不同側進入的精確定位（來源：2026-10-23 兩日錯題修復 §4）：** 目的是避免一次施工、挖斷、撞擊、局部火災同時切掉主線與備線——**不同路徑 ≠ 同一故障點**。但它不能解決洪水、區域性停電、大地震、上游 carrier failure；它是**降低特定共同失效風險**，不是萬能。
+
+**Redundant ISP vs Masking：先分 CIA 哪一面（來源：2026-10-23 兩日錯題修復 §16）：** 題庫以 redundant ISP 作為 external threat impact mitigation。它能對付 carrier outage、fiber cut、upstream network failure 與部分 DDoS resiliency 情境；但 external threat 還包括 physical intrusion、sabotage、theft、terrorism、regional disaster、upstream infrastructure failure。
+
+```text
+Redundant ISP        → Availability impact（網路／carrier 可用性）
+Masking / obfuscation → Confidentiality impact（資料竊取後的影響）
+```
+
+> 看題目是在問 **availability impact** 還是 **confidentiality impact**；masking 不是資料中心連線韌性的主要控制。
+
+#### DR／Backup 位置：不是只看法規（來源：2026-10-23 兩日錯題修復 §3）
+
+實體位置會影響：
+
+1. 法規／司法管轄（jurisdiction）
+2. 地理冗餘
+3. 共同失效域（common failure domain）
+4. 洪水／地震／颱風／高溫等環境風險
+5. 電力與上游電信
+6. 網路延遲與跨區複寫
+7. 支援人力與供應鏈
+8. 成本
+
+```text
+DR Location = 法律 + 災害 + 故障域 + 可達性 + 成本
+```
+
+> **`[Q]` 題庫陷阱：** `physical location matters because it may affect regulatory compliance` 是**合理答案之一**，但不能推導成 environmental／physical／redundancy 不重要（見 §2.13）。
+
+#### 實體韌性控制的地區依賴（來源：2026-10-23 兩日錯題修復 §4）
+
+耐震地基當然屬於實體韌性。若題庫說它不是「全球 universal best practice」，原因通常是**某些控制高度依地區威脅模型**。
+
+- 題目問「physical resiliency 控制」→ 耐震合理。
+- 題目問「所有資料中心都必須如此」→ 檢查是否過度絕對。
 
 #### 計畫內容與演練
 
@@ -648,6 +724,26 @@ BC/DR kit 的內容由 recovery plan 決定（organization、threat model、site
 ```text
 問 monitoring functionality 被什麼影響 → 優先想 encryption / visibility loss
 ```
+
+**Redundancy／resilience 與 egress monitoring（來源：2026-10-26 錯題，`[Q]` 高降權）：** 題庫暗示 redundancy／resilience 本身不構成 egress monitoring 障礙（[Domain 2 §2.4](../domain2-data-security/01-consolidated-lecture.md) 的 EXCEPT 變體），這太絕對。
+
+```text
+單純 HA：Application → One logical egress point → HA firewall pair → Internet
+          → 底層 redundancy 對監控複雜度影響很小
+
+分散式 resilience：Region A → Egress A；Region B → Egress B；Region C → Egress C
+          ＋ multi-account、multi-VPC／VNet、autoscaling、ephemeral instances、
+            multiple NAT gateways、multiple proxies、failover paths
+```
+
+後者會增加 sensor／agent deployment、policy synchronization、baseline consistency、log normalization、configuration drift、visibility gaps、failover-path coverage 與 privilege／access requirements。
+
+```text
+Egress monitoring difficulty
+≈ Number of egress paths × Visibility gaps × Policy/config copies × Privilege limitations
+```
+
+> **規則：** Redundancy 本身不一定造成監控困難；**分散式、多路徑的 resilience architecture 很可能會**。作答時知道題庫期待「redundancy 不是障礙」，但保留上述工程模型。
 
 **Control pairing：** **Data dispersion + encryption** 是強互補的分層保護組合。Training、inventory、firewall、fence 各有價值，但不一定是該題的最佳配對。
 
@@ -723,6 +819,31 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 ### 2.9 BC/DR kit 不應包含什麼（2026-10-10 D3 錯題補強，`[Q]` 強降權）
 
 題庫答案 `Hard drives`。題目問題：不存在 universal kit BOM，external SSD／encrypted USB 承載 golden image 與 offline configuration backup 完全合理。處理：知道題庫期待 `Hard drives`，但不把「固定清單」放進高頻記憶；保留的正確模型是 **kit 內容由 recovery plan 決定**。
+
+### 2.10 看到 Point 就選 RPO（2026-10-23 兩日錯題修復，`[T]`）
+
+BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「可接受往回丟多少資料」；判斷時先畫 `Disaster → RTO → IT back → WRT → Business back`，再對位。**降權：無**。詳見 §1.6。
+
+### 2.11 線路從不同側進入、耐震地基的過度絕對（2026-10-23 兩日錯題修復，`[Q]` 中度降權）
+
+不同側進線只降低單一路徑／單一施工事件的共同失效，不處理區域性災害；耐震屬實體韌性，但是否必要取決於地區威脅模型。題庫若把某個地區性控制寫成 universal，或寫成「完全無效」，皆屬過度絕對。概念照學。詳見 §1.6。
+
+### 2.12 Returning to normal operations too late = greatest risk（2026-10-26 錯題，`[Q]` 高降權）
+
+題庫在未給 business context 的情況下，把 `Returning to normal operations too late` 視為 most significant organizational risk。問題：它更像 recovery failure 的 outcome；且 BC/DR 情境下 confidentiality／compliance 不會自動降為次要。保留：`RTO + WRT ≤ MTD／MAD` 與「greatest-risk 題先找 business context」。詳見 §1.6。
+
+### 2.13 其他 D3 題庫陷阱（2026-10-23 兩日錯題修復）
+
+| 題目主題 | 分類 | 降權 | 保留的正確模型 |
+|---|---|---:|---|
+| Backup／DR location 幾乎只剩 regulatory compliance | `[Q]` | 中高 | 法律 + 災害 + 故障域 + 可達性 + 成本 |
+| Physical resiliency = 某個 universal 地震控制 | `[Q]` | 中 | 控制依地區威脅模型 |
+| Dropped ceiling 完全不是 security concern | `[Q]` | 中 | 天花板夾層可能成為繞過實體隔間、藏匿或佈線的路徑 |
+| Fiber-optic line 題若只問物理媒介 | `[T]` | 低 | Fiber = OSI Layer 1（見 §2.7） |
+
+### 2.14 Redundant／resilient architecture vs egress monitoring（2026-10-26 錯題，`[Q]` 高降權）
+
+題庫暗示 redundancy／resilience 一定不影響 egress monitoring。修正：單純 HA 影響小，但 multi-region、multi-egress、multi-account 或 failover paths 會增加監控複雜度。詳見 §1.7。
 
 ---
 
@@ -808,6 +929,13 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | 76 | **UPS = backup power ＋ line conditioning。** |
 | 77 | **Ionization = radioactive；Photoelectric = light。** |
 | 78 | Provider-owned DC → provider 實作控制；customer workload／data → customer 治理。 |
+| 79 | **RPO = Data Loss；RTO = IT Back；WRT = Business Back**；看到 Point 不代表一定是 RPO。 |
+| 80 | BIA 提供資訊給 risk analysis、control selection、BC/DR；secure acquisition 只受間接影響。 |
+| 81 | **DR Location = 法律 + 災害 + 故障域 + 可達性 + 成本**；不是只看 regulatory compliance。 |
+| 82 | 不同側進線：**不同路徑 ≠ 同一故障點**，但不解決區域性災害。 |
+| 83 | Redundant ISP → availability impact；Masking → confidentiality impact。 |
+| 84 | **分散式、多路徑 resilience 可能增加 egress monitoring 複雜度**；單純 HA 影響小（題庫說法 `[Q]`）。 |
+| 85 | `Returning too late` 是 recovery failure 的 outcome；greatest-risk 題沒有 business context 時，不把 availability 當絕對第一。 |
 
 ---
 
@@ -851,6 +979,9 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 | Reservation | Shares | 保證最低量 vs 爭用時的相對優先級 |
 | Reservation | Limit | 保底 vs 封頂 |
 | BC/DR 測試 | Baseline | 情境要變（驗證真實復原力） vs 要穩（作為比對基準） |
+| Redundant ISP | Masking | 降低可用性 impact vs 降低機密性 impact |
+| 單純 HA | 分散式 resilience | 單一邏輯 egress 點 vs 多 region／多 egress 路徑 |
+| Root risk | Outcome | 復原能力不足 vs 太晚恢復正常營運 |
 
 ---
 
@@ -905,3 +1036,7 @@ RAID 不是 storage protocol；iSCSI／Fibre Channel／FCoE 才是。Fiber-optic
 - `FC／FCoE／iSCSI` 與 `RAID` 回答的是不同問題——各是什麼？
 - Converged Networking、SDN、HCI 各回答什麼問題？
 - Audit trail 屬哪一類控制？Configuration procedures 呢？
+- DR physical location 為什麼重要？至少列 4 個面向。
+- Redundant ISP 與 Masking 分別主要保護 CIA 哪一面？
+- Redundancy 何時會增加 egress monitoring 的難度？
+- `Returning too late` 比較像 root risk 還是 consequence？greatest-risk 題沒有 business context 時怎麼處理？
