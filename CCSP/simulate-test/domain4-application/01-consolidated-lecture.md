@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 4 的內容，跨場次合併後依主題重組。
 > **考試權重：** 16%
-> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`
+> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh
 > **維護：** 新增測驗講義後，將該檔的 D4 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -21,6 +21,8 @@
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | SCA、Shift Left + Security Throughout | §1.2、§1.3 |
 | 2026-10-09 D1-D4 防守成果（內容已併入，原檔未封存） | SCA ≠ IaC scanning、IAST=測／RASP=擋、CI/CD 階段對應 | §1.3 |
 | 2026-10-15 D4 測驗講義（內容已併入，原檔未封存） | SAST／DAST／IAST 兩軸、OWASP Intuition Testing、MFA factor 與 personal check `[Q]` | §1.3、§1.4、§1.5、§2.8–§2.10 |
+| 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §7 Proxy federation vs Cross-certification、§9 SAST 白箱的 access prerequisite、§10 Open Redirect、§11 PaaS 後門 `[Q]`、§18 遊戲開發者排除測試 `[Q]` | §1.3、§1.5、§1.8、§2.13、§2.14 |
+| 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | Q1 cloud developer training：encryption vs regulation、Q3 brokered federation 的 SAML assertion | §1.5、§2.11、§2.12 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -93,6 +95,8 @@ Shift Left + Security Throughout
 black-box + running app + discover execution paths = DAST
 source code / no execution                          = SAST
 ```
+
+**白箱／黑箱不看「測試者是不是公司員工」（來源：2026-10-23 兩日錯題修復 §9）：** 判準是**測試方法是否取得內部實作資訊**。私有 Git repo 不影響 SAST 是白箱；外部人士若拿不到 source code 就根本無法執行真正的 SAST——這是 **access prerequisite**，不是分類規則。
 
 #### ⭐ 兩軸判斷：看得到內部？App 要執行？（來源：2026-10-15 D4 錯題補強）
 
@@ -245,6 +249,28 @@ Credit card + SSN card = have + have  → 不是 MFA
 | **Web of trust** | 成員彼此直接信任，每個組織同時是 IdP 與 SP | 成員一多就難以擴充 |
 | **Trusted third party（hub-and-spoke）** | 大家信任同一個第三方 IdP／broker，各組織只當 SP | 擴充容易，但第三方成為單點依賴 |
 | **Cross-certification** | 每個參與者各自審查並信任其他參與者 | 隨參與者數量增加而複雜 |
+| **Proxy federation**（題庫舊模型） | 一個第三方代表所有成員，審查／驗證各成員是否符合共同信任要求 | 中央第三方成為信任中介 |
+
+```text
+Proxy      = 中央第三方代審
+Cross-Cert = 成員彼此信（多個信任域交叉承認彼此的憑證／信任關係）
+```
+
+> 這裡的 proxy 不是「代理伺服器」，而是**信任代理人／中介者**（來源：2026-10-23 兩日錯題修復 §7）。
+
+#### Brokered federation：誰發 SAML assertion？（來源：2026-10-27 D1 Fresh Q3）
+
+```text
+User
+  ↓
+IdP
+  ↓ assertion
+Broker / Proxy IdP
+  ↓ assertion
+SP / RP
+```
+
+SAML assertion 由**扮演 IdP 的實體**發出；在 brokered federation 中，broker 可以扮演 **proxy IdP**。不要把 Cloud Provider（商業角色）和 Identity Provider／Broker（federation 角色）混成同一層——商業角色 vs 技術角色的拆法見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)。
 
 **要點：** TTP 中的第三方通常是 **IdP／broker**，不是 service provider。要分清 IdP 與 SP／relying party。**不要自動把每個 federation 角色都指派給 cloud provider**；角色取決於誰提供／消費／宣告 identity。
 
@@ -268,6 +294,23 @@ Credit card + SSN card = have + have  → 不是 MFA
 ```
 
 存量未審查 API 的風險可保留為異議，但先對準題幹所問。**先修政策，再談執法。**
+
+### 1.8 Open Redirect／Unvalidated Redirect（來源：2026-10-23 兩日錯題修復 §10）
+
+**真正的工程修補：** 不要把任意外部 URL 直接當 redirect target。
+
+- allowlist
+- server-side mapping：`id -> approved URL`
+- 嚴格驗證 redirect destination
+- 避免直接相信 user-supplied URL
+
+| 控制 | 角色 |
+|---|---|
+| **驗證／限制 redirect destination** | 根治（預防） |
+| User training | 降低 phishing／social engineering 成功率；**補償性／輔助控制**，不是根治 |
+| Audit logging | 偵測、追查、鑑識；**不是預防** |
+
+> **最短模型：** Open Redirect = 驗證 destination。
 
 ---
 
@@ -341,6 +384,45 @@ Application level  = 每個應用 1 個 ANF
 
 本輪 D4 錯題屬於 2 個小型 terminology remediation ＋ 1 個爛題降權，未顯示嚴重的 D4 architecture weakness。
 
+### 2.11 Cloud developer training：Encryption vs Additional regulatory mandates（2026-10-27 D1 Fresh Q1，`[Q]` 中度降權）
+
+**錯題：** 題庫答案 **The prevalent use of encryption in all data life-cycle phases**，誤選 Additional regulatory mandates。
+
+**誤選並非無據：** 移上 cloud 後確實可能增加 jurisdiction、data residency、CSP contract obligations、privacy／compliance requirements 與 shared responsibility。
+
+**但題目角色是 software developers。** Developer 直接處理 TLS、KMS、secrets、certificates、application-level encryption；regulation 多半先由 governance／compliance 轉成 requirements。從 developer-specific concern 看，encryption 更貼近。
+
+**題目問題：** `encryption in all data life-cycle phases` 太絕對——data in use 常需解密後處理。
+
+```text
+Developer question
+→ 優先找 developer directly handles 的技術責任
+→ crypto / keys / secrets 通常比 regulation 更直接
+```
+
+### 2.12 Centralized broker federation：誰產生／送出 SAML token？（2026-10-27 D1 Fresh Q3，`[T]` 輕度降權）
+
+**錯題：** 題庫答案 **The broker**，誤選 Cloud provider。錯因：把 cloud provider（商業角色）與 IdP／broker（federation 角色）混為一層。brokered federation 中 broker 可扮 proxy IdP 並發出 assertion。詳見 §1.5。
+
+```text
+誰產生 SAML assertion？
+→ 看誰扮 IdP
+→ brokered federation：broker 可作 proxy IdP
+```
+
+### 2.13 Open Redirect 用 user training 當主要保護（2026-10-23 兩日錯題修復，`[Q]` 中高降權）
+
+題庫以 user training 作為 open redirect 的保護。user training 只是補償性控制，audit logging 只是偵測；**根治是驗證 redirect destination（allowlist／server-side mapping）**。詳見 §1.8。
+
+### 2.14 PaaS 後門與遊戲開發者排除測試（2026-10-23 兩日錯題修復，`[Q]` 高降權）
+
+| 題庫說法 | 問題 | 保留的正確模型 |
+|---|---|---|
+| PaaS 因常用於軟體開發，所以更容易有後門 | 因果鏈 `PaaS → 常用開發 → 開發者常留後門 → PaaS 高風險` 太弱 | 後門風險來自不安全開發流程、遺留 debug／admin hooks、未移除的測試帳號、hard-coded credentials、CI/CD 發布治理差、third-party component compromise——**不是 PaaS 天生屬性** |
+| 遊戲測試一定要排除「遊戲開發者」 | 過度絕對 | 開發者測自己的程式是 conflict of interest（§3 規則 12），需要獨立測試；但不等於任何測試階段都必須完全排除開發者 |
+
+兩題只當題庫舊式敘事，不內化。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -392,6 +474,11 @@ Application level  = 每個應用 1 個 ANF
 | 43 | **MFA = 不同 factor 類別，而且都實際參與 authentication。** |
 | 44 | Credit card + SSN card = have + have；**SSN 是身分屬性，不是 biometric**。 |
 | 45 | 簽名只有經動態特徵與已登錄模板比對才算 biometric；「personal check = MFA」是 `[Q]` 高降權題。 |
+| 46 | **Proxy federation = 中央第三方代審；Cross-certification = 多個信任域彼此交叉承認。** |
+| 47 | **SAML assertion 由扮演 IdP 的實體發出**；brokered federation 中 broker 可扮 proxy IdP。 |
+| 48 | **Open Redirect = 驗證 destination**（allowlist／server-side mapping）；training 是補償、logging 是偵測。 |
+| 49 | 後門來自不安全的開發、測試與發布流程，不是 PaaS 天生屬性。 |
+| 50 | Developer 題問 cloud-specific challenge → 優先找 developer 直接處理的技術責任（crypto／keys／secrets）。 |
 
 ---
 
@@ -417,6 +504,9 @@ Application level  = 每個應用 1 個 ANF
 | SAML | OAuth／OIDC | 認證＋授權斷言 vs 委派授權／身分層 |
 | Web of trust | Trusted third party | 彼此直接信任 vs 共同信任第三方 IdP |
 | IdP | SP／relying party | 提供身分 vs 消費身分 |
+| Proxy federation | Cross-certification | 中央第三方代表成員審查 vs 成員彼此交叉承認 |
+| Cloud provider | Broker／proxy IdP | 商業角色 vs federation 中發 assertion 的角色 |
+| Open Redirect 修補 | User training／Audit logging | 預防根治 vs 補償／偵測 |
 | ONF | ANF | 組織層級（1 個） vs 應用層級（每應用 1 個） |
 | Forklifting | Re-architect | 不修改搬遷 vs 雲原生改造 |
 | Masking | Tokenization | 相似但不真實的資料集 vs vault 映射替代值 |
@@ -467,3 +557,6 @@ Application level  = 每個應用 1 個 ANF
 - Private repo 裡跑 SAST 為什麼仍是白箱？
 - 舉出三個 OWASP 正式測試類別；Intuition Testing 為什麼不是？
 - Credit card + SSN card 為什麼不是 MFA？「signing a personal check = MFA」為什麼要降權？
+- Proxy federation 與 Cross-certification 各一句話？
+- Brokered federation 中誰通常發 SAML assertion？
+- Open Redirect 最主要的工程修補是什麼？user training 與 audit logging 各扮演什麼角色？
