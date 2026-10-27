@@ -28,7 +28,7 @@ simulate-test/
 
 | Domain | 權重 | 檔案 | 主要內容 |
 |---|---:|---|---|
-| **D1** Cloud Concepts, Architecture and Design | 17% | [`domain1-cloud-concepts/01-consolidated-lecture.md`](domain1-cloud-concepts/01-consolidated-lecture.md) | service／deployment model、cloud actors、interoperability／portability／lock-out、虛擬化與 hypervisor |
+| **D1** Cloud Concepts, Architecture and Design | 17% | [`domain1-cloud-concepts/01-consolidated-lecture.md`](domain1-cloud-concepts/01-consolidated-lecture.md) | service／deployment model、cloud actors、interoperability／portability／lock-out、虛擬化與 hypervisor、題目判讀模型（量詞／角色／抽象層級） |
 | **D2** Cloud Data Security | 20% | [`domain2-data-security/01-consolidated-lecture.md`](domain2-data-security/01-consolidated-lecture.md) | 資料生命週期、治理工具邊界、儲存模型、加密層級與金鑰管理、資料保護技術、銷毀、密碼學與 PKI、archiving、PCI DSS |
 | **D3** Cloud Platform & Infrastructure Security | 17% | [`domain3-infrastructure/01-consolidated-lecture.md`](domain3-infrastructure/01-consolidated-lecture.md) | 機房設施與 Uptime Tier、實體存取分層、網路與儲存架構、虛擬化與容器、責任邊界、BC/DR、監控可視性 |
 | **D4** Cloud Application Security | 16% | [`domain4-application/01-consolidated-lecture.md`](domain4-application/01-consolidated-lecture.md) | ISC2 最佳解邏輯、Secure SDLC、應用測試、SOAP/REST/API、身分與 federation、雲端應用風險 |
@@ -85,7 +85,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 508 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 540 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度、群組決議紀錄與錯題分類標籤），不計入任何 domain。
 
