@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 1 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`
+> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh
 > **維護：** 新增測驗講義後，將該檔的 D1 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -24,6 +24,7 @@
 | 2026-10-04 D6 補強講義（內容已併入，原檔未封存） | §9 Cloud actors：Carrier vs Broker | §1.3 |
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 供應商鎖定雙層模型、media 分類、private cloud plane 區分 | §1.2、§1.5 |
 | 2026-10-15 D1 錯題補強（內容已併入，原檔未封存） | Common Criteria／EAL1–7、CEO 遷雲 = cost `[Q]` | §1.9、§2.8、§2.9 |
+| 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | §0–§1 量詞／角色／抽象層級判讀、§2 Q2 all cloud models、Q5 metered service、§3 檢查表、§4 最短模型；Q1 → D4、Q3 → D4、Q4 → D6 | §1.10、§2.7、§2.10、§2.11 |
 
 ---
 
@@ -342,6 +343,91 @@ Formally verified       → EAL7（全驗）
 
 > **答題 trigger：** 題幹出現 `formally verified` 即直接 **EAL7**。`independent third party` 不是決勝字眼——不要建立「third-party test → EAL7」的錯誤 association。
 
+### 1.10 D1 題目判讀模型：量詞、角色、抽象層級（來源：2026-10-27 D1 Fresh）
+
+高投報率的 ISC2 解題順序：**先判讀題目的量詞、角色、抽象層級，再進入技術細節。** D1 fresh 題優先掃描：
+
+- `all / always / every`
+- `most / best / primarily / typically`
+- provider / customer / consumer / broker / carrier / auditor
+- IdP / SP / RP / broker
+- control 本身 vs 促成因素（enabler）
+- technical role vs commercial／legal role
+
+#### 量詞 `all / always / every` → 算交集
+
+不要先找現實世界反例，先算集合：
+
+```text
+IaaS ∩ PaaS ∩ SaaS
+```
+
+判斷依據：哪一個選項在**所有 service model 的預設語義下**都成立？`all` 題的核心不是「能不能想出一個反例」，而是「哪個選項最接近 universal common denominator」。例：`In all cloud models, the customer will be given access and ability to modify ...` → **Data**（見 §2.10）。
+
+#### 量詞 `most / best / primarily / typically` → 找預設語義
+
+```text
+Default / normal semantics
+    >
+common architecture
+    >
+edge case
+```
+
+`best` 不代表其他選項完全沒用，而是問：哪個答案對題幹目標**最直接、最一般、假設最少**。技術上兩個答案都合理時，比較直接性、一般性與需要的額外假設。
+
+#### 角色：先拆商業角色與技術角色
+
+| 類別 | 角色 |
+|---|---|
+| 商業角色 | CSP（Cloud Service Provider）、CSC（Cloud Service Customer） |
+| 技術角色 | IdP（Identity Provider）、SP／RP（Service Provider／Relying Party）、Broker（federation intermediary）、Carrier（connectivity／transport）、Auditor（assessment／assurance） |
+
+一個實體可能同時扮演多個角色：
+
+```text
+某 CSP
+├─ 是 cloud provider
+├─ 也可能是 IdP
+└─ 也可能提供 broker service
+```
+
+題目若明確說 centralized broker federation，優先依 **federation role** 解（SAML assertion 題見 [Domain 4 §2.12](../domain4-application/01-consolidated-lecture.md)）。CSP ≠ IdP；Broker（federation）≠ Carrier。
+
+#### 抽象層級：先問選項在哪一層
+
+```text
+1. Technical mechanism
+2. Security control
+3. Service characteristic / architecture
+4. Business / economic / governance enabler
+```
+
+BC/DR 例：
+
+```text
+Replication       → 直接技術能力
+Backup            → 直接復原能力
+Geo-distribution  → 直接 resiliency
+Metered service   → 經濟／營運促成因素
+```
+
+**Abstraction mismatch：** 把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比（見 §2.11）。
+
+#### D1 Fresh 解題檢查表
+
+| Step | 先判斷什麼 | 快速例子 |
+|---|---|---|
+| 1 | 有沒有 `all / always / every`？ | 算交集，不先找反例 |
+| 2 | 有沒有 `most / best / primarily / typically`？ | 找 default，不選 edge case |
+| 3 | 是商業角色還是技術角色？ | CSP ≠ IdP；Broker ≠ Carrier |
+| 4 | 題目在哪個 abstraction level？ | mechanism／control／architecture／governance／economics |
+| 5 | 哪個答案假設最少？ | 不補題目沒說的架構條件 |
+
+**錯題紀錄欄位：** `Q# / Quantifier / Role / Level / 作答 / 理由 / Confidence`，答錯後再貼 `[K/T/J/R/Q]` 標籤（見 [README](../README.md)）。
+
+> **口訣：量詞看交集，角色看職責，最佳看預設，答案看層級。**
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -411,6 +497,9 @@ strict governance
 
 - **Insider threat 的控制分類**（`by-test/11` D1 §4）→ [Domain 5 §1.6](../domain5-operations/01-consolidated-lecture.md)
 - **ISO 27001 technology-neutral**（`by-test/11` D1 §5）→ [Domain 6 §1.2](../domain6-legal-compliance/01-consolidated-lecture.md)
+- **Cloud developer training：encryption vs regulatory mandates**（2026-10-27 D1 Fresh Q1，`[Q]` 中度）→ [Domain 4 §2.11](../domain4-application/01-consolidated-lecture.md)
+- **Brokered federation 中誰發 SAML assertion**（2026-10-27 D1 Fresh Q3，`[T]`）→ [Domain 4 §2.12](../domain4-application/01-consolidated-lecture.md)
+- **PCI SSC 能否處罰／是否為 regulator**（2026-10-27 D1 Fresh Q4，`[Q]` 重度）→ [Domain 6 §2.8](../domain6-legal-compliance/01-consolidated-lecture.md)
 
 ### 2.8 EAL3 誤選為 formally verified（2026-10-15）
 
@@ -439,6 +528,41 @@ Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
 **分類：** `[Q]`（題目品質），**降權：中高**。不代表不懂 cloud adoption benefits。
 
 > **一句話規則：** 高階管理者題 → 優先從 business outcome／organizational risk 思考；**不要背成「CEO = Cost」**。
+
+### 2.10 In all cloud models, customer can modify what?（2026-10-27 D1 Fresh Q2，`[J]` 輕度降權）
+
+**錯題：** 題庫答案 **Data**，誤選 Security controls。
+
+**反駁在技術上成立：** 以 Cloudflare 為例，customer 可以設定 WAF、managed rules、bot controls、ZTNA policy、IAM。
+
+**但題目寫 `in all cloud models`**，所以要算 `IaaS ∩ PaaS ∩ SaaS`：security controls 的 customer control 隨 service model 改變；**data responsibility／control 是最穩定的共同交集**。
+
+**題庫措辭仍太絕對：** `access and ability to modify data` 在真實世界有 immutable logs、WORM、password hash、object lock、legal hold 等例外。精確說法是：customer retains responsibility／control over its data，subject to service capability、policy、immutability 等限制；不代表所有 data object 都可任意修改。
+
+```text
+all service models
+→ 找共同交集
+→ Data 最穩
+```
+
+### 2.11 BC/DR benefit EXCEPT：Metered service（2026-10-27 D1 Fresh Q5，`[J]` 中度降權）
+
+**錯題：** 題庫答案 **Metered service**，誤選 Regular backups offered by cloud providers。
+
+**反駁在技術上成立：** metered service 可以讓 pilot light、warm standby、on-demand DR capacity 更有成本可行性。
+
+**但題庫在考 abstraction level：**
+
+```text
+Replication             → direct mechanism
+Backup                  → direct recovery mechanism
+Distributed processing  → direct resiliency
+Metered service         → economic / operational enabler
+```
+
+題目若問「which makes DR more cost-effective」，metered service 可能是答案；若問「directly enhances recovery capability」，replication／backup 更直接。
+
+> **一句話規則：** Direct mechanism ＞ enabling condition ＞ economic benefit。
 
 ---
 
@@ -478,6 +602,12 @@ Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
 | 30 | **Formally verified → EAL7**；semi-formally verified → EAL6；semi-formally designed → EAL5。 |
 | 31 | `independent third party` 不是 EAL7 的判斷字眼，`formally verified` 才是。 |
 | 32 | 高階管理者題 → business outcome／organizational risk；**不要背成「CEO = Cost」**（`[Q]` 中高降權）。 |
+| 33 | `all / always / every` → 算 **IaaS ∩ PaaS ∩ SaaS** 交集，不先用 edge case 找反例。 |
+| 34 | `most / best / primarily / typically` → default semantics，選最直接、最少假設的答案。 |
+| 35 | CSP／CSC 是商業角色；IdP／SP／RP／Broker 是 federation 角色；同一家公司可兼任，但概念不同。 |
+| 36 | `In all cloud models` 的 customer 共同控制面 → **Data**（security controls 隨 service model 改變）。 |
+| 37 | **Direct mechanism ＞ enabling condition ＞ economic benefit**；metered service 是 BC/DR 的經濟促成因素，不是復原機制。 |
+| 38 | 口訣：**量詞看交集，角色看職責，最佳看預設，答案看層級。** |
 
 ---
 
@@ -503,6 +633,9 @@ Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
 | EAL5 | EAL6 | 半形式化**設計** vs 半形式化**驗證** |
 | EAL6 | EAL7 | **半**形式化驗證 vs **全**形式化驗證 |
 | EAL 等級 | 產品安全程度 | 驗證的嚴謹與深入程度 vs 產品本身多安全 |
+| CSP（商業角色） | IdP（技術角色） | 提供 cloud service vs 發出 identity assertion |
+| `all` 題 | `best` 題 | 算共同交集 vs 找預設語義下最直接的答案 |
+| Replication／Backup | Metered service | 直接復原機制 vs 經濟／營運促成因素 |
 
 ### 決策流程
 
@@ -540,3 +673,6 @@ Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
 - 不看表，默寫 EAL1–EAL7 的口訣與英文核心動詞。
 - 題幹 `formally verified` 對應哪個 EAL？為什麼 `independent third party` 不是判斷依據？
 - CEO 遷雲題為何選 reduced cost？這條 heuristic 的適用範圍在哪？
+- 看到 `all / always / every service model`，第一步做什麼？
+- 什麼叫 abstraction mismatch？舉 BC/DR 的例子。
+- `In all cloud models` 題，為何 Data 比 Security controls 共同性高？`customer can modify data` 要怎麼精確化？
