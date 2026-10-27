@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 2 的內容，跨場次合併後依主題重組。
 > **考試權重：** 20%（六域最高）
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復
 > **維護：** 新增測驗講義後，將該檔的 D2 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -35,6 +35,7 @@
 | 2026-10-10 D3 錯題補強（內容已併入，原檔未封存） | Cryptographic entropy／CSPRNG 與 `social factors` `[Q]`、遺失／遭竊裝置 vs Dual Control | §1.7、§1.11、§2.11、§2.12 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | Object／File／Block 的 hierarchy 判準定案（取代 LearnZapp 題庫關鍵字規則） | §1.3 |
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | 推論攻擊 vs 資料直接揭露、Inference vs Aggregation、最短模型與閉卷防守題 | §1.12、§2.13、§3、§4、§5 Drill F |
+| 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §6 遺失裝置 Tracking vs Revocation、§8 Brewer–Nash／Chinese Wall、§14 shared secret key、§16 Masking 的 impact 面、§18 object storage／CDN `[Q]` | §1.7、§1.11、§1.13、§2.14–§2.16、§3、§4、§5 Drill G |
 
 ---
 
@@ -507,6 +508,8 @@ PCI DSS 場景看到 tokenization → 降低 cardholder data exposure / complian
 
 **核心正確說法：** Symmetric cryptography requires **secure establishment／distribution of shared secret keying material**。OOB 是其中一種方法，DH／ECDH 是另一種建立方法——不要把「Passing keys out of band」當成 universal truth。
 
+**精確術語（來源：2026-10-23 兩日錯題修復 §14）：** 對稱式加密 = 加密與解密雙方使用**同一把共享秘密金鑰（shared secret key）**。不要簡化成 `shared secret`——在其他協定裡（例如 DH 的輸出），shared secret 不一定直接當資料加密金鑰，通常還要經過 KDF。若選項只有 `two key pairs／signed certificates／unknown parties／a shared secret`，題庫多半以 `a shared secret` 指 shared secret key，作答時照選，但腦中保留精確模型（見 §2.14）。
+
 #### Key agreement vs key distribution
 
 > **復現標記：** DH vs OOB 已在 `by-test/10` 上篇 B 與 `by-test/12` §12 連續出現，屬高頻考點。
@@ -819,6 +822,30 @@ Sensitive action requires two people → Dual Control / TPI
 
 TPI／Dual Control 回答的是「某個敏感操作（例如 HSM master-key operation）是否需要兩名 custodian 共同參與」，與「laptop 被偷」不是同一個問題。
 
+**Tracking vs Credential Revocation（來源：2026-10-23 兩日錯題修復 §6）：** 題幹 `A process for ______ can aid in protecting against data disclosure due to lost devices.`
+
+| 控制 | 作用 | 限制 |
+|---|---|---|
+| **裝置追蹤（device tracking）** | 找回設備、定位、協助 incident response | 找得到 ≠ 阻止攻擊者使用裝置上的 session／token／credential |
+| **憑證撤銷（credential revocation）** | revoke session、disable token、revoke cert、disable user／device credential，切斷存取 | — |
+
+```text
+Tracking   = 找設備
+Revocation = 切斷存取
+```
+
+題目動詞是 `protect against data disclosure` → 優先選直接控制：**撤銷憑證**（見 §2.15）。
+
+### 1.13 Brewer–Nash Model／Chinese Wall（來源：2026-10-23 兩日錯題修復 §8）
+
+**Brewer–Nash 利益衝突隔離模型＝中國牆模型（Chinese Wall Model）。** 核心：防止同一使用者**依序**存取彼此具有商業利益衝突的資料集合。
+
+例：顧問先存取銀行 A 的客戶資料 → 後續不得再存取直接競爭的銀行 B 客戶資料。
+
+它是一種**動態存取控制（dynamic access control）**：存取決策依「使用者先前看過什麼」與「是否形成利益衝突」而改變。
+
+> **最短模型：** Chinese Wall = 防利益衝突，不是防火牆產品。**考試重要度：P2，認得即可。**
+
 ### 1.12 Inference vs 資料直接揭露（來源：2026-10-18 D3 補強）
 
 > **最短模型：`看到痕跡再猜 ＝ Inference`；`看到資料本身 ＝ Disclosure`。**
@@ -938,6 +965,23 @@ BEST    = 選最完整／最適當的答案
 
 題幹描述攻擊者只取得 metadata／統計結果／流量痕跡，再據此判斷出敏感事實，卻誤選 data disclosure／data breach。判準是**攻擊者有沒有拿到敏感值本身**：有 → disclosure；沒有、靠痕跡推出 → **Inference**。分類 `[T] 術語邊界`，**降權：無**。詳見 §1.12。
 
+### 2.14 對稱式加密只寫 `shared secret`（2026-10-23 兩日錯題修復，`[T]` 中度降權）
+
+題庫正解 `a shared secret`。精確術語應為 **shared secret key**：shared secret 在 DH 等協定中可能只是 KDF 的輸入，不直接當資料加密金鑰。作答時依題庫選 `a shared secret`，概念保留「雙方使用同一把共享秘密金鑰」。詳見 §1.7。
+
+### 2.15 遺失裝置：Tracking vs Revocation（2026-10-23 兩日錯題修復，`[J]`）
+
+題目問 `protect against data disclosure due to lost devices`，誤選 tracking。Tracking 協助找回與 incident response，但不能阻止攻擊者使用裝置上已存在的 credential；**直接切斷存取的是 credential revocation**。**降權：無**。詳見 §1.11。
+
+### 2.16 儲存類型題庫陷阱（2026-10-23 兩日錯題修復，`[Q]` 高降權）
+
+| 題庫說法 | 問題 | 保留的正確模型 |
+|---|---|---|
+| Object storage = 真正 filesystem hierarchy | 與 §1.3 定案相反 | **Hierarchy 指向 File**；Object 通常為 flat key namespace + prefix |
+| CDN 是 SaaS 最典型的 storage type | CDN 是內容快取／派送，不是 SaaS 的通用儲存類型 | SaaS 儲存多為 provider 管理的 information storage／database；CDN 見 §1.3 |
+
+兩題皆為強降權：知道題庫可能期待的答案即可，不改寫 §1.3 的模型。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -1021,6 +1065,10 @@ BEST    = 選最完整／最適當的答案
 | 75 | Aggregation = 把多筆低敏感資料拼起來；Inference = 從結果推導出未被提供的敏感事實。 |
 | 76 | Encryption 保護內容，擋不住從 metadata／流量／統計痕跡做的 inference。 |
 | 77 | Inference 的控制：metadata 也做 least privilege、query restriction、differential privacy、k-anonymity、polyinstantiation。 |
+| 78 | **對稱式加密 = 雙方使用同一把 shared secret key**；題庫寫 `a shared secret` 時照選，但術語保留「秘密金鑰」。 |
+| 79 | **Tracking = 找設備；Revocation = 切斷存取**；防 lost device 的 data disclosure → credential revocation。 |
+| 80 | **Brewer–Nash = Chinese Wall**：依使用者已存取過的資料動態決定存取，防利益衝突（P2，認得即可）。 |
+| 81 | Masking／obfuscation 主要降低**機密性** impact；redundant ISP 主要降低**可用性** impact（見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)）。 |
 
 ---
 
@@ -1077,6 +1125,9 @@ BEST    = 選最完整／最適當的答案
 | Inference | Direct disclosure | 由痕跡推導出敏感事實 vs 敏感值本身被看到 |
 | Inference | Aggregation | 推導的動作 vs 組合多筆低敏感資料的動作 |
 | Differential privacy | Masking | 統計結果加雜訊防推論 vs 遮蔽單筆欄位值 |
+| Device tracking | Credential revocation | 找回與定位設備 vs 切斷 session／token／cert 存取 |
+| Shared secret | Shared secret key | 協定中雙方共有的秘密值（可能再經 KDF） vs 直接用於對稱加解密的金鑰 |
+| Brewer–Nash／Chinese Wall | 防火牆 | 防利益衝突的動態存取控制模型 vs 網路流量過濾設備 |
 
 ---
 
@@ -1136,6 +1187,14 @@ BEST    = 選最完整／最適當的答案
 5. 統計查詢介面允許「全部門平均薪資」與「排除某人後的平均薪資」兩次查詢。應採哪一類控制？
 
 **參考答案：** ① Inference（只看到痕跡，沒看到內容） ② Direct disclosure ③ Aggregation（之後再 re-identify 是 inference） ④ 加密保護內容，流量大小與時間仍可見 ⑤ Query restriction／differential privacy（防差分查詢推論）
+
+### Drill G：2026-10-23 閉卷防守
+
+1. Lost device：Tracking vs Revocation，題目問 protect against disclosure 時選哪個？
+2. 對稱式加密的精確術語是 shared secret 還是 shared secret key？
+3. Brewer–Nash 防什麼？為什麼屬於動態存取控制？
+
+**參考答案：** ① Credential revocation（tracking 只找設備） ② Shared secret key ③ 防同一使用者跨越互相競爭的資料集合；決策依使用者先前存取紀錄改變
 
 ### Drill E：維持節奏
 
