@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 6 的內容，跨場次合併後依主題重組。
 > **考試權重：** 13%
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 > **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
@@ -35,6 +35,8 @@
 | 2026-10-09 D6 測驗補強（內容已併入，原檔未封存；歸位地圖另存為 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)） | Argentina 25.326、US sectoral＋state patchwork、COPPA、800-92 = Logs、ISO 31000 範圍、public domain 與 DMCA notice | §1.1、§1.2、§1.7 |
 | 2026-10-13 補強（內容已併入，原檔未封存） | GLBA = Financial Privacy Rule ＋ Safeguards Rule、EU transfer 有效機制（復現） | §1.1、§1.4 |
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | 財務風險移轉 vs 責任／問責／法律責任、ENISA assurance 題 `[Q]` 降權、閉卷防守題 | §1.9、§2.7、§3、§4、§5 |
+| 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §12 PCI merchant level、§13 SOC 2 vs SOC 3 `[Q]`、§15 風險處置與殘餘風險、§17 過度控制比例原則 `[Q]` | §1.1、§1.2、§1.9、§2.9–§2.12 |
+| 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | Q4 PCI SSC 能否處罰 `[Q]` | §1.1、§2.8 |
 
 ---
 
@@ -121,6 +123,36 @@ Merchant tier   → validation / reporting rigor
 ```
 
 > **兩個都不要背：** ❌「tier 越高只是 audit 做得比較多」（過度簡化）、❌「不同 tier 有不同的 control sets」（錯）。
+
+**最短只背（來源：2026-10-23 兩日錯題修復 §12）：** 商家等級通常主要看**一定期間內的交易量**。精確 Level 1／2／3／4 門檻、各 card brand 細節、merchant／service provider 驗證方法差異，對 CCSP 屬低 CP 值（見 §2.10）。
+
+**必須掌握：**
+
+- PCI DSS = 支付卡產業資料安全標準，**不是法律**
+- cardholder data／PAN／CDE（cardholder data environment）
+- 外包不會讓責任自動消失
+- merchant tier 主要影響**驗證方式與報告嚴謹程度**
+
+#### PCI SSC ≠ regulator（來源：2026-10-27 D1 Fresh Q4）
+
+```text
+PCI SSC
+→ 發展／維護標準
+→ assessor / training ecosystem
+
+Payment brands / acquirers
+→ compliance programs
+→ validation / reporting
+→ financial / operational consequences
+```
+
+PCI SSC 本身不是 police、court、regulator、acquiring bank 或 payment network enforcement body。
+
+```text
+PCI DSS = industry security standard
+PCI SSC = standards body
+≠ government regulator
+```
 
 #### FISMA vs FedRAMP 與 data residency
 
@@ -263,6 +295,8 @@ US        → sectoral federal + state patchwork
 | **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL |
 | **FIPS 140-2／140-3** | 密碼模組驗證 | **140-2 = legacy；140-3 = current** |
 | **GAAP** | 會計原則 | Generally Accepted Accounting Principles——**不是** cloud security audit standard，是 distractor |
+
+> **SOC 2 vs SOC 3 最短模型（來源：2026-10-23 兩日錯題修復 §13）：** **SOC 2 = 客戶深度看**（客戶／合作夥伴做 detailed due diligence；詳細、常受限制散布、有控制描述與查核內容）；**SOC 3 = 大眾公開看**（general-use、細節少、可公開作 assurance statement）。題庫若硬選「cloud customer 最可能收到 SOC 3」應降權——認真做供應商風險／採購盡職調查時，**SOC 2 Type 2 往往更有用**（見 §2.9）。
 
 **易混淆規則：**
 
@@ -1175,6 +1209,14 @@ Risk 不能被「reverse（逆轉）」。
 Residual risk 必須被明示接受。
 ```
 
+**Mitigation ≠ Acceptance（來源：2026-10-23 兩日錯題修復 §15）：** 更精確的說法是——**降低風險後通常仍會有殘餘風險；若組織決定保留它，才是 risk acceptance。** Mitigation 後可能：accept residual risk（在容忍範圍內）、再 mitigate、transfer 或 avoid。題目若寫 `Risk mitigation must always entail risk acceptance`，這句太絕對；考試想法可能是「完美安全不存在 → 仍有 residual risk → 最終管理層要接受某個剩餘量」，但嚴格的風險管理語義不應寫成「每次 mitigation 都必然等同 acceptance」（見 §2.11）。
+
+**過度安全控制：比例原則（來源：2026-10-23 兩日錯題修復 §17）：** 題庫正解 `is an unnecessary expense` 可以接受作為管理層視角，但不能背成唯一後果。過度控制也可能造成延遲、CPU／memory／storage 消耗、認證流程過重、服務可用性下降、複雜度上升、管理面 attack surface 擴大、能源消耗增加、使用者繞過控制。
+
+```text
+控制效益要大於成本、複雜度與營運負擔。
+```
+
 **量化 vs 質性：**
 
 ```text
@@ -1347,6 +1389,26 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 
 > **答題原則：** 看到 ENISA 題先判斷它問的是「ENISA 是什麼／做什麼」（照學）還是「2009 文件第幾項條列」（降權、用常識挑最符合雲端特有風險者即可）。
 
+### 2.8 PCI SSC 不能採取哪種 legal enforcement（2026-10-27 D1 Fresh Q4，`[Q]` 重度降權）
+
+題目問 PCI Security Standards Council 不能採取哪種 legal enforcement，題庫答案 **Jail time**。問題：題幹暗示 PCI SSC 具有其他執法權，但 PCI SSC 只是 standards body；compliance programs 與財務／營運後果來自 payment brands／acquirers。保留：**PCI SSC = standards body ≠ regulator**。詳見 §1.1。
+
+### 2.9 SOC 3 是 cloud customer 最可能收到的報告（2026-10-23 兩日錯題修復，`[Q]` 中高降權）
+
+SOC 3 確實可公開散布，但認真做供應商風險與採購盡職調查時，客戶通常要求 SOC 2 Type 2（常需 NDA）。保留：SOC 2 = 客戶深度盡調；SOC 3 = 一般公開散布。詳見 §1.2。
+
+### 2.10 PCI merchant level 精確門檻（2026-10-23 兩日錯題修復，`[Q]` 高降權）
+
+精確交易量門檻依 card brand 而異，對 CCSP 屬低 CP 值。只保留「merchant level 主要看交易量、影響 validation／reporting rigor」。詳見 §1.1。
+
+### 2.11 Mitigation 必然 = Acceptance（2026-10-23 兩日錯題修復，`[J]` 中度）
+
+題庫 `Risk mitigation must always entail risk acceptance` 以「必有 residual risk、管理層終須接受剩餘量」為邏輯；但 mitigation 後仍可再降低、移轉或避免。作答時理解題庫期待，概念保留 mitigation ≠ acceptance。詳見 §1.9。
+
+### 2.12 過度安全控制只是不必要支出（2026-10-23 兩日錯題修復，`[Q]` 高降權）
+
+題庫把 `adverse environmental effects` 完全排除，又沒說明 environmental 是否指 physical datacenter environment，語意模糊。保留比例原則：控制效益要大於成本、複雜度與營運負擔。詳見 §1.9。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -1493,6 +1555,11 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | 130 | Responsibility 可委派、accountability 不可移轉、liability 只能依合約與法律部分分攤。 |
 | 131 | 合約責任分攤不能對抗主管機關與 data subject；risk transfer 後仍有 residual risk。 |
 | 132 | ENISA = EU 網路安全機構，提供 guidance／risk assessment／認證方案起草；2009 條列細節題屬 `[Q]` 中度降權。 |
+| 133 | **PCI SSC = standards body ≠ regulator**；後果來自 payment brands／acquirers。 |
+| 134 | PCI merchant level 通常主要看交易量；精確門檻低優先。 |
+| 135 | **SOC 2 = 客戶深度看；SOC 3 = 大眾公開看**；採購盡調實務上 SOC 2 Type 2 更有用。 |
+| 136 | **Mitigation ≠ Acceptance**：殘餘風險可再降低、移轉、避免，或在容忍範圍內接受。 |
+| 137 | 過度控制的後果不只成本：延遲、可用性下降、複雜度、攻擊面、使用者繞過——比例原則。 |
 
 ---
 
@@ -1569,6 +1636,9 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 | Risk transfer（financial） | Accountability | 移轉財務衝擊 vs 永遠留在組織的問責 |
 | Responsibility | Liability | 可委派的執行責任 vs 依合約與法律分攤的法律後果 |
 | ENISA | 法規／稽核機構 | EU 資安機構，出 guidance 與認證方案 vs 立法者或出具報告的 auditor |
+| PCI SSC | Payment brands／acquirers | 制定與維護標準 vs 執行 compliance program 與後果 |
+| SOC 2 | SOC 3 | 客戶深度盡調、限制散布 vs general-use 公開摘要 |
+| Risk mitigation | Risk acceptance | 降低風險的動作 vs 決定保留殘餘風險 |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
@@ -1717,3 +1787,7 @@ SAS 70     = legacy
 - 合約寫「CSP 負全部責任」，客戶是否就不必對主管機關負責？
 - Responsibility、accountability、liability 三者哪一個可委派、哪一個不可移轉、哪一個只能部分分攤？
 - ENISA 是什麼性質的機構？ENISA 2009 條列細節題為什麼降權，哪些概念仍要學？
+- PCI SSC 是 regulator 嗎？PCI DSS 的後果由誰執行？
+- SOC 2 與 SOC 3 各給誰看？為什麼「cloud customer 最可能收到 SOC 3」要降權？
+- Mitigation 後還有 residual risk，下一步一定是 acceptance 嗎？
+- 過度安全控制除了成本，還可能造成哪些後果？
