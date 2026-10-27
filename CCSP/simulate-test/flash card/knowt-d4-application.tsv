@@ -42,3 +42,9 @@ Password + PIN 是 MFA 嗎？	不是。Know + Know，同一類別。
 Fingerprint + voice biometric 是 MFA 嗎？	不是。Are + Are，同一類別。
 Credit card + Social Security card 通常是 MFA 嗎？	不是。通常都是 possession／身分證據（have + have）；SSN 是身分屬性，不是 biometric（something you are）。
 為什麼「signing a personal check = true MFA」要降權？	`[Q]` 高降權。題目沒有證明 check 是綁定的 authenticator，也沒說 signature 與已登錄 biometric template 比對；只能算題庫作者想像中的 Have + Are。不要背「personal check = MFA」。
+Proxy federation 與 Cross-certification 各是什麼？	Proxy federation＝一個中央第三方代表所有成員，審查成員是否符合共同信任要求（proxy 指信任中介，不是代理伺服器）；Cross-certification＝多個信任域彼此交叉承認對方的憑證／信任關係。
+Brokered federation 中誰通常產生／送出 SAML assertion？	扮演 proxy IdP 的 broker。判斷法：誰扮 IdP 誰發 assertion；不要把 cloud provider（商業角色）與 IdP／broker（federation 角色）混為一層（[T] 輕度）。
+Open Redirect 最主要的工程修補？	驗證／限制 redirect destination：allowlist、server-side mapping（id → approved URL）、不直接相信 user-supplied URL。最短模型：Open Redirect = 驗證 destination。
+Open Redirect 情境中，user training 與 audit logging 各扮演什麼角色？	User training＝降低 phishing／social engineering 的補償性控制，不是根治；Audit logging＝偵測、追查、鑑識，不是預防。題庫以 training 為主要保護屬 [Q] 中高。
+為何不能直接推論 PaaS 較容易有後門？	後門主要來自不安全的開發、測試與發布流程：遺留 debug／admin hooks、未移除測試帳號、hard-coded credentials、CI/CD 治理差、third-party component compromise，不是 PaaS 天生屬性（題庫敘事 [Q] 高降權）。
+Cloud developer 題問 cloud-specific challenge 時，encryption 為何常比 regulation 更貼 developer？	Developer 直接處理 TLS、KMS、secrets、certificates、application encryption；regulation 多半先由 governance／compliance 轉成 requirements。但「encryption in all data life-cycle phases」太絕對（data in use 常需解密），屬 [Q] 中度。

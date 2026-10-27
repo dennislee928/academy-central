@@ -45,3 +45,11 @@ Semi-formally designed、Semi-formally verified、Formally verified 各對應哪
 EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
 題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
 CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
+看到 all／always／every service model，第一步是什麼？	算 IaaS ∩ PaaS ∩ SaaS 的共同交集，找最接近 universal common denominator 的選項；不要先用 edge case 找反例。
+看到 most／best／primarily／typically，或兩個答案技術上都合理時，怎麼選？	找一般／預設語義下最直接、最一般、需要額外假設最少、最符合題幹 abstraction level 的答案。優先序：default semantics ＞ common architecture ＞ edge case。
+CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 identity protocol 的技術角色。兩者可由同一家公司扮演，但概念不同。題目明說 brokered federation 時依 federation role 解。
+「In all cloud models」題，Security controls 和 Data 哪個共同性較高？	Data。Security controls 的 customer control 隨 SaaS／PaaS／IaaS 改變；data responsibility／control 是所有 service model 最穩定的共同交集（[J] 輕度降權）。
+「customer can modify data」應如何精確化？	Customer retains responsibility／control over its data，subject to service capability、policy、immutability 等限制；immutable logs、WORM、object lock、legal hold 等不代表可任意修改。
+Replication、Backup、Metered service 對 BC/DR 屬哪個 abstraction level？	Replication＝direct mechanism；Backup＝direct recovery mechanism；Metered service＝economic／operational enabler。問「directly enhances recovery」選前兩者；問「more cost-effective」metered service 才可能是答案。
+什麼叫 abstraction mismatch？	把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比。規則：Direct mechanism ＞ enabling condition ＞ economic benefit。
+D1 題目判讀的一句口訣？	量詞看交集，角色看職責，最佳看預設，答案看層級。

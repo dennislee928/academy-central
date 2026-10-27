@@ -13,7 +13,7 @@ Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍�
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
 SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
-Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險最終必須被適當接受。
+Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險在容忍範圍內才被適當接受，否則再降低、移轉或避免；mitigation ≠ acceptance。
 ITIL 是什麼？	IT service management 框架。不要當成資安控制目錄或法律。
 COBIT 偏向什麼？	IT 治理與控制目標，不是單純技術組態基準。
 Golden image 為何是修補風險？	映像檔若過期，之後大量克隆會複製未修補狀態。
@@ -51,3 +51,8 @@ VM sprawl 除了帳單還有哪些風險？	Dormant／orphaned VM 與舊 snapsho
 Sprawl「好建立」對應哪些控制？	Provisioning approval workflow、quota／budget limit、只允許 hardened golden image、IaC 作為唯一建立管道、policy-as-code 拒絕未帶必要 tag 的資源。
 Sprawl「難追蹤」與「沒人刪」各對應哪些控制？	難追蹤 → 強制 tagging（owner／cost center／environment／expiry）、CMDB／asset inventory、automated discovery。沒人刪 → lifecycle policy 與 expiry、定期 review／recertification、閒置偵測、正式 decommission 流程。
 發現一批無 tag、無 owner 的 VM，處理順序？	Discover → Attribute（找 owner）→ Secure（patch／隔離）→ Decide → Decommission（依 retention 與銷毀政策，含 snapshot／volume／image，並更新 CMDB）→ Prevent。不直接刪除。
+Baseline、Vulnerability scan、Remediation 怎麼分？	Baseline＝已核准、可重複部署的安全狀態；Scan＝驗證目前狀態是否有弱點；Remediation＝修正 scan 找到的問題後重新核准 baseline。Scan 不是 baseline 本身。
+Golden image 的寫入保護主要保護什麼？	保護核准的 master image artifact 不被未授權修改；不是讓每台正常執行中的 VM 都無法寫入。
+Maintenance mode 的最短定義與口訣？	停止或移出正常 production workload、避免新的正常 workload placement，同時保留管理能力與 logging 進行維護。口訣：停業務，不停管理。
+Maintenance mode 會阻止 admin access 嗎？	不會。管理員必須保留 access 才能 patch、upgrade、diagnose、repair、做 hypervisor／硬體維護與 service restart。
+「Generation of new instances is prevented」為何太絕對？	真正意義是避免正常 production workload placement 到該節點；maintenance／system／admin workload、agent、DaemonSet-like workload 仍可能產生（題庫措辭 [Q] 中度，概念照學）。

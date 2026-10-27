@@ -45,6 +45,14 @@ Semi-formally designed、Semi-formally verified、Formally verified 各對應哪
 EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
 題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
 CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
+看到 all／always／every service model，第一步是什麼？	算 IaaS ∩ PaaS ∩ SaaS 的共同交集，找最接近 universal common denominator 的選項；不要先用 edge case 找反例。
+看到 most／best／primarily／typically，或兩個答案技術上都合理時，怎麼選？	找一般／預設語義下最直接、最一般、需要額外假設最少、最符合題幹 abstraction level 的答案。優先序：default semantics ＞ common architecture ＞ edge case。
+CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 identity protocol 的技術角色。兩者可由同一家公司扮演，但概念不同。題目明說 brokered federation 時依 federation role 解。
+「In all cloud models」題，Security controls 和 Data 哪個共同性較高？	Data。Security controls 的 customer control 隨 SaaS／PaaS／IaaS 改變；data responsibility／control 是所有 service model 最穩定的共同交集（[J] 輕度降權）。
+「customer can modify data」應如何精確化？	Customer retains responsibility／control over its data，subject to service capability、policy、immutability 等限制；immutable logs、WORM、object lock、legal hold 等不代表可任意修改。
+Replication、Backup、Metered service 對 BC/DR 屬哪個 abstraction level？	Replication＝direct mechanism；Backup＝direct recovery mechanism；Metered service＝economic／operational enabler。問「directly enhances recovery」選前兩者；問「more cost-effective」metered service 才可能是答案。
+什麼叫 abstraction mismatch？	把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比。規則：Direct mechanism ＞ enabling condition ＞ economic benefit。
+D1 題目判讀的一句口訣？	量詞看交集，角色看職責，最佳看預設，答案看層級。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -140,7 +148,7 @@ Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答�
 Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。
 Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leakage、shared resource 爭用。
 雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
-「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。它本身不是 egress monitoring 的障礙。
+「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。題庫視其本身不是 egress monitoring 的障礙；但此說法 [Q] 高降權——分散式、多路徑的 resilience architecture 會增加監控複雜度。
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
 SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
@@ -188,6 +196,9 @@ Social factors 絕對不可能影響 entropy 嗎？	不是。若人類行為（�
 Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組合起來（拼）；Inference＝從結果推導出未被直接提供的敏感事實（猜）。Aggregation 常是 inference 的前置步驟。
 為什麼 encryption 擋不住 inference？	Encryption 保護內容機密性；inference 用的是加密後仍可見的 metadata、流量大小、時間、存取 pattern 與統計結果。
 防止 inference 的控制有哪些？	Metadata 與統計結果也做分類與 least privilege、query restriction（防差分查詢）、differential privacy、k-anonymity／generalization、polyinstantiation、traffic padding。
+Lost device：Tracking vs Credential revocation？題目問 protect against data disclosure 選哪個？	Tracking＝找設備、定位、協助 incident response；Revocation＝revoke session／token／cert、停用 credential，切斷存取。防 data disclosure 優先選 credential revocation——找得到設備不代表能阻止攻擊者使用裝置上的 credential。
+Brewer–Nash Model 的另一個名稱？防什麼？	Chinese Wall Model（中國牆模型）。防同一使用者依序存取彼此有利益衝突的資料集合（例：看過銀行 A 客戶資料後不得再看競爭者銀行 B）；屬動態存取控制，決策依使用者先前看過什麼而改變。P2，認得即可。
+對稱式加密最精確的定義？題庫寫 a shared secret 代表什麼？	雙方使用同一把共享秘密金鑰（shared secret key）進行加密與解密。題庫的 a shared secret 通常就是指 shared secret key，照選即可；但 shared secret 在 DH 等協定中可能只是 KDF 輸入，術語要保留「秘密金鑰」（[T] 中度）。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -270,6 +281,13 @@ BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery
 LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。
 UPS 除了備援供電，還提供什麼功能？	Line conditioning（穩壓、濾除突波與雜訊）。UPS = backup power ＋ line conditioning；續航要撐到交易完成或接上發電機。
 Ionization 與 photoelectric 偵煙器的差別？	Ionization = 使用放射性物質（radioactive source）偵測煙霧粒子；Photoelectric = 使用光（light beam／光散射）偵測煙霧。
+看到題幹有「Point」就選 RPO 嗎？	不行。RPO 必須是「可接受往回丟多少資料」。最短模型：RPO = Data Loss；RTO = IT Back；WRT = Business Back；MTD = 整體上限。
+DR／backup site location 的最短模型？只背 regulatory compliance 對嗎？	法律 ＋ 災害 ＋ 故障域 ＋ 可達性 ＋ 成本。只背 regulatory 不對；還要想到地理冗餘、共同失效域、洪水地震等環境風險、電力與上游電信、延遲、支援人力與成本（題庫只剩 regulatory 屬 [Q] 中高）。
+線路從建物不同側進入的核心目的？能解決什麼、不能解決什麼？	降低單一路徑／單一施工事件（挖斷、撞擊、局部火災）的共同失效風險：不同路徑 ≠ 同一故障點。不能解決洪水、區域性停電、大地震、上游 carrier failure。
+Redundant ISP 與 Masking 各最直接降低哪一類 impact？	Redundant ISP → availability impact（carrier outage、fiber cut、upstream failure）；Masking／obfuscation → confidentiality impact（資料竊取後的影響）。先判斷題目問 CIA 的哪一面。
+Redundant／resilient architecture 一定不影響 egress monitoring 嗎？	不一定（題庫說法 [Q] 高降權）。單純 HA（單一邏輯 egress 點）影響小；multi-region、multi-egress、multi-account、failover paths 會增加 sensor 部署、policy sync、baseline 一致性、log normalization 與 visibility gap。最短模型：Egress paths × Visibility gaps × Policy/config copies × Privilege limitations。
+「Returning to normal operations too late」是 root risk 還是 outcome？	通常更接近 recovery failure 的 outcome／consequence：Recovery capability failure → 無法恢復服務 → RTO 超過 → MTD／MAD 超過 → 不可接受的業務衝擊。題庫無 context 就稱其為 greatest risk 屬 [Q] 高降權。
+BC/DR 情境下 Availability 一定比 Confidentiality 重要嗎？greatest organizational risk 題先找什麼？	不一定。醫院、支付處理商、HSM／金鑰保管者、受監管金融機構在 contingency 中發生機密性外洩同樣可能不可逆。先找 business context：產業、資料敏感度、法規、安全影響、RTO／MTD criticality。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -314,6 +332,12 @@ Password + PIN 是 MFA 嗎？	不是。Know + Know，同一類別。
 Fingerprint + voice biometric 是 MFA 嗎？	不是。Are + Are，同一類別。
 Credit card + Social Security card 通常是 MFA 嗎？	不是。通常都是 possession／身分證據（have + have）；SSN 是身分屬性，不是 biometric（something you are）。
 為什麼「signing a personal check = true MFA」要降權？	`[Q]` 高降權。題目沒有證明 check 是綁定的 authenticator，也沒說 signature 與已登錄 biometric template 比對；只能算題庫作者想像中的 Have + Are。不要背「personal check = MFA」。
+Proxy federation 與 Cross-certification 各是什麼？	Proxy federation＝一個中央第三方代表所有成員，審查成員是否符合共同信任要求（proxy 指信任中介，不是代理伺服器）；Cross-certification＝多個信任域彼此交叉承認對方的憑證／信任關係。
+Brokered federation 中誰通常產生／送出 SAML assertion？	扮演 proxy IdP 的 broker。判斷法：誰扮 IdP 誰發 assertion；不要把 cloud provider（商業角色）與 IdP／broker（federation 角色）混為一層（[T] 輕度）。
+Open Redirect 最主要的工程修補？	驗證／限制 redirect destination：allowlist、server-side mapping（id → approved URL）、不直接相信 user-supplied URL。最短模型：Open Redirect = 驗證 destination。
+Open Redirect 情境中，user training 與 audit logging 各扮演什麼角色？	User training＝降低 phishing／social engineering 的補償性控制，不是根治；Audit logging＝偵測、追查、鑑識，不是預防。題庫以 training 為主要保護屬 [Q] 中高。
+為何不能直接推論 PaaS 較容易有後門？	後門主要來自不安全的開發、測試與發布流程：遺留 debug／admin hooks、未移除測試帳號、hard-coded credentials、CI/CD 治理差、third-party component compromise，不是 PaaS 天生屬性（題庫敘事 [Q] 高降權）。
+Cloud developer 題問 cloud-specific challenge 時，encryption 為何常比 regulation 更貼 developer？	Developer 直接處理 TLS、KMS、secrets、certificates、application encryption；regulation 多半先由 governance／compliance 轉成 requirements。但「encryption in all data life-cycle phases」太絕對（data in use 常需解密），屬 [Q] 中度。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
@@ -329,7 +353,7 @@ Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍�
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
 SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
-Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險最終必須被適當接受。
+Risk treatment 四種？	Avoid、mitigate、transfer／share、accept。殘餘風險在容忍範圍內才被適當接受，否則再降低、移轉或避免；mitigation ≠ acceptance。
 ITIL 是什麼？	IT service management 框架。不要當成資安控制目錄或法律。
 COBIT 偏向什麼？	IT 治理與控制目標，不是單純技術組態基準。
 Golden image 為何是修補風險？	映像檔若過期，之後大量克隆會複製未修補狀態。
@@ -367,13 +391,18 @@ VM sprawl 除了帳單還有哪些風險？	Dormant／orphaned VM 與舊 snapsho
 Sprawl「好建立」對應哪些控制？	Provisioning approval workflow、quota／budget limit、只允許 hardened golden image、IaC 作為唯一建立管道、policy-as-code 拒絕未帶必要 tag 的資源。
 Sprawl「難追蹤」與「沒人刪」各對應哪些控制？	難追蹤 → 強制 tagging（owner／cost center／environment／expiry）、CMDB／asset inventory、automated discovery。沒人刪 → lifecycle policy 與 expiry、定期 review／recertification、閒置偵測、正式 decommission 流程。
 發現一批無 tag、無 owner 的 VM，處理順序？	Discover → Attribute（找 owner）→ Secure（patch／隔離）→ Decide → Decommission（依 retention 與銷毀政策，含 snapshot／volume／image，並更新 CMDB）→ Prevent。不直接刪除。
+Baseline、Vulnerability scan、Remediation 怎麼分？	Baseline＝已核准、可重複部署的安全狀態；Scan＝驗證目前狀態是否有弱點；Remediation＝修正 scan 找到的問題後重新核准 baseline。Scan 不是 baseline 本身。
+Golden image 的寫入保護主要保護什麼？	保護核准的 master image artifact 不被未授權修改；不是讓每台正常執行中的 VM 都無法寫入。
+Maintenance mode 的最短定義與口訣？	停止或移出正常 production workload、避免新的正常 workload placement，同時保留管理能力與 logging 進行維護。口訣：停業務，不停管理。
+Maintenance mode 會阻止 admin access 嗎？	不會。管理員必須保留 access 才能 patch、upgrade、diagnose、repair、做 hypervisor／硬體維護與 service restart。
+「Generation of new instances is prevented」為何太絕對？	真正意義是避免正常 production workload placement 到該節點；maintenance／system／admin workload、agent、DaemonSet-like workload 仍可能產生（題庫措辭 [Q] 中度，概念照學）。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。三個層級：L1 Self-Assessment、L2 Third-party certification、L3 Continuous auditing。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
 Chain of custody 證明什麼？	證物從收集到呈堂過程中的保管、移轉與完整性未被破壞。
-SOC 2 與 SOC 3 差在哪？	SOC 2 詳細且通常 restricted use；SOC 3 較高階、較常可公開。
+SOC 2 與 SOC 3 差在哪？	SOC 2 詳細且通常 restricted use；SOC 3 較高階、較常可公開。最短模型：SOC 2 = 客戶深度盡調；SOC 3 = 大眾公開看。採購盡調實務上 SOC 2 Type 2 往往更有用，「cloud customer 最可能收到 SOC 3」屬 [Q] 中高。
 看到「公開摘要」與「詳細控制」分別偏向哪份 SOC？	公開摘要偏 SOC 3；詳細控制與受限分發偏 SOC 2。
 ISO／IEC 是法律嗎？	不是。它是制定國際標準的組織／標準體系。
 FedRAMP 是什麼？	美國聯邦雲端安全授權計畫，針對雲端服務給政府使用的授權路徑。
@@ -449,7 +478,7 @@ Professional opinion 與 personal opinion 差在哪？	Professional opinion 基�
 Forensic examiner 在法庭上的角色定位是什麼？	Independent technical expert，不是 plaintiff 或 defense 的 technical salesman。ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side／win the argument。
 鑑識取證時為什麼要接 write blocker？	避免 acquisition／examination 過程改動 source evidence。它允許 READ、阻擋 WRITE，防止 filesystem metadata 改動、timestamp 改動、OS auto-mount 寫入與調查者誤改原始媒體。
 Trusted Computing Base（TCB）是什麼？是取證工具嗎？	是執行 security policy 所依賴的 hardware／software／firmware components 集合。不是 forensic acquisition tool。秒答：evidence media → write blocker；security-enforcement components → TCB。
-PCI DSS 的 merchant tier 改變了什麼？	改變 compliance validation／reporting 的方法與 rigor（L1 ROC by QSA＋AOC；L2/3 SAQ＋AOC；L4 SAQ 或 acquirer-defined）。所有適用 merchant 都須符合 PCI DSS。
+PCI DSS 的 merchant tier 改變了什麼？	改變 compliance validation／reporting 的方法與 rigor（L1 ROC by QSA＋AOC；L2/3 SAQ＋AOC；L4 SAQ 或 acquirer-defined）。所有適用 merchant 都須符合 PCI DSS。Level 通常主要依一定期間內的交易量劃分；精確門檻屬低優先，不必死背。
 PCI merchant levels 是誰定義的？	Payment brands／acquirers，不是 PCI SSC 統一規定。不要背「不同 tier 有不同 control sets」或「tier 越高只是 audit 數量較多」。
 Privacy Shield 是誰 administer、誰 enforce？	U.S. Department of Commerce administered；FTC enforced 參與企業的承諾。題庫把「FTC administer」當正解並不準確。
 Privacy Shield 現在還有效嗎？被什麼取代？	無效。2020 Schrems II（CJEU）判定 invalid。2023 起由 EU-U.S. Data Privacy Framework (DPF) 取代，Commerce／ITA 管理、FTC／DOT 依管轄執法。
@@ -499,6 +528,9 @@ Responsibility、Accountability、Liability 哪個可委派、哪個不可移轉
 買了 cyber insurance 後，資料外洩的 accountability 在誰身上？	仍在組織／data owner／controller。保險只賠錢；商譽與法規責任無法移轉，risk transfer 後仍有 residual risk。
 ENISA 是什麼性質的機構？	EU 網路安全機構（European Union Agency for Cybersecurity）：提供 guidance、risk assessment、起草 Cybersecurity Act 下的認證方案（如雲端的 EUCS）。不是法規本身，也不是稽核機構。
 ENISA 2009 雲端風險條列細節題為什麼降權？哪些概念要保留？	[Q] 中度降權：考單一舊文件的條列措辭。保留 ENISA 定位、top risks 主軸（loss of governance、lock-in、isolation failure、compliance、management interface compromise、data protection、insecure deletion、malicious insider）與 assurance＝取得 CSP 控制有效的證據。
+PCI SSC 的最短定位？	PCI DSS 標準制定／維護組織（standards body），不是政府 regulator，也不是法院或警察。Compliance program 與財務／營運後果來自 payment brands／acquirers。「PCI SSC 不能判 jail time」題屬 [Q] 重度降權。
+風險降低後還有 residual risk，下一步一定是 acceptance 嗎？	不一定。Mitigation ≠ acceptance：殘餘風險可再降低、移轉、避免，或在容忍範圍內由管理層接受。「Risk mitigation must always entail risk acceptance」太絕對（[J]）。
+過度安全控制的後果只有「不必要支出」嗎？	不只。還可能造成延遲、資源消耗、認證流程過重、可用性下降、複雜度上升、管理面攻擊面擴大、能源消耗、使用者繞過控制。比例原則：控制效益要大於成本、複雜度與營運負擔（題庫唯一答案屬 [Q] 高）。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

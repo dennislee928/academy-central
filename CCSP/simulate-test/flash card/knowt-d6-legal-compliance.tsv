@@ -4,7 +4,7 @@ CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry 
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
 Chain of custody 證明什麼？	證物從收集到呈堂過程中的保管、移轉與完整性未被破壞。
-SOC 2 與 SOC 3 差在哪？	SOC 2 詳細且通常 restricted use；SOC 3 較高階、較常可公開。
+SOC 2 與 SOC 3 差在哪？	SOC 2 詳細且通常 restricted use；SOC 3 較高階、較常可公開。最短模型：SOC 2 = 客戶深度盡調；SOC 3 = 大眾公開看。採購盡調實務上 SOC 2 Type 2 往往更有用，「cloud customer 最可能收到 SOC 3」屬 [Q] 中高。
 看到「公開摘要」與「詳細控制」分別偏向哪份 SOC？	公開摘要偏 SOC 3；詳細控制與受限分發偏 SOC 2。
 ISO／IEC 是法律嗎？	不是。它是制定國際標準的組織／標準體系。
 FedRAMP 是什麼？	美國聯邦雲端安全授權計畫，針對雲端服務給政府使用的授權路徑。
@@ -80,7 +80,7 @@ Professional opinion 與 personal opinion 差在哪？	Professional opinion 基�
 Forensic examiner 在法庭上的角色定位是什麼？	Independent technical expert，不是 plaintiff 或 defense 的 technical salesman。ISC2 偏好 objective／evidence-based／documented／considers alternatives，不偏好 defend your side／win the argument。
 鑑識取證時為什麼要接 write blocker？	避免 acquisition／examination 過程改動 source evidence。它允許 READ、阻擋 WRITE，防止 filesystem metadata 改動、timestamp 改動、OS auto-mount 寫入與調查者誤改原始媒體。
 Trusted Computing Base（TCB）是什麼？是取證工具嗎？	是執行 security policy 所依賴的 hardware／software／firmware components 集合。不是 forensic acquisition tool。秒答：evidence media → write blocker；security-enforcement components → TCB。
-PCI DSS 的 merchant tier 改變了什麼？	改變 compliance validation／reporting 的方法與 rigor（L1 ROC by QSA＋AOC；L2/3 SAQ＋AOC；L4 SAQ 或 acquirer-defined）。所有適用 merchant 都須符合 PCI DSS。
+PCI DSS 的 merchant tier 改變了什麼？	改變 compliance validation／reporting 的方法與 rigor（L1 ROC by QSA＋AOC；L2/3 SAQ＋AOC；L4 SAQ 或 acquirer-defined）。所有適用 merchant 都須符合 PCI DSS。Level 通常主要依一定期間內的交易量劃分；精確門檻屬低優先，不必死背。
 PCI merchant levels 是誰定義的？	Payment brands／acquirers，不是 PCI SSC 統一規定。不要背「不同 tier 有不同 control sets」或「tier 越高只是 audit 數量較多」。
 Privacy Shield 是誰 administer、誰 enforce？	U.S. Department of Commerce administered；FTC enforced 參與企業的承諾。題庫把「FTC administer」當正解並不準確。
 Privacy Shield 現在還有效嗎？被什麼取代？	無效。2020 Schrems II（CJEU）判定 invalid。2023 起由 EU-U.S. Data Privacy Framework (DPF) 取代，Commerce／ITA 管理、FTC／DOT 依管轄執法。
@@ -130,3 +130,6 @@ Responsibility、Accountability、Liability 哪個可委派、哪個不可移轉
 買了 cyber insurance 後，資料外洩的 accountability 在誰身上？	仍在組織／data owner／controller。保險只賠錢；商譽與法規責任無法移轉，risk transfer 後仍有 residual risk。
 ENISA 是什麼性質的機構？	EU 網路安全機構（European Union Agency for Cybersecurity）：提供 guidance、risk assessment、起草 Cybersecurity Act 下的認證方案（如雲端的 EUCS）。不是法規本身，也不是稽核機構。
 ENISA 2009 雲端風險條列細節題為什麼降權？哪些概念要保留？	[Q] 中度降權：考單一舊文件的條列措辭。保留 ENISA 定位、top risks 主軸（loss of governance、lock-in、isolation failure、compliance、management interface compromise、data protection、insecure deletion、malicious insider）與 assurance＝取得 CSP 控制有效的證據。
+PCI SSC 的最短定位？	PCI DSS 標準制定／維護組織（standards body），不是政府 regulator，也不是法院或警察。Compliance program 與財務／營運後果來自 payment brands／acquirers。「PCI SSC 不能判 jail time」題屬 [Q] 重度降權。
+風險降低後還有 residual risk，下一步一定是 acceptance 嗎？	不一定。Mitigation ≠ acceptance：殘餘風險可再降低、移轉、避免，或在容忍範圍內由管理層接受。「Risk mitigation must always entail risk acceptance」太絕對（[J]）。
+過度安全控制的後果只有「不必要支出」嗎？	不只。還可能造成延遲、資源消耗、認證流程過重、可用性下降、複雜度上升、管理面攻擊面擴大、能源消耗、使用者繞過控制。比例原則：控制效益要大於成本、複雜度與營運負擔（題庫唯一答案屬 [Q] 高）。

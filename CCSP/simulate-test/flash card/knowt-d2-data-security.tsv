@@ -93,7 +93,7 @@ Virtualization 與 Multitenancy 各回答什麼問題？	Virtualization 回答�
 Virtualization 為什麼會影響 data classification？	資料會改變 representation／container（file→VM disk→snapshot→image→backup→object），classification 與控制必須一路跟著資料走。
 Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leakage、shared resource 爭用。
 雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
-「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。它本身不是 egress monitoring 的障礙。
+「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。題庫視其本身不是 egress monitoring 的障礙；但此說法 [Q] 高降權——分散式、多路徑的 resilience architecture 會增加監控複雜度。
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
 SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
@@ -141,3 +141,6 @@ Social factors 絕對不可能影響 entropy 嗎？	不是。若人類行為（�
 Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組合起來（拼）；Inference＝從結果推導出未被直接提供的敏感事實（猜）。Aggregation 常是 inference 的前置步驟。
 為什麼 encryption 擋不住 inference？	Encryption 保護內容機密性；inference 用的是加密後仍可見的 metadata、流量大小、時間、存取 pattern 與統計結果。
 防止 inference 的控制有哪些？	Metadata 與統計結果也做分類與 least privilege、query restriction（防差分查詢）、differential privacy、k-anonymity／generalization、polyinstantiation、traffic padding。
+Lost device：Tracking vs Credential revocation？題目問 protect against data disclosure 選哪個？	Tracking＝找設備、定位、協助 incident response；Revocation＝revoke session／token／cert、停用 credential，切斷存取。防 data disclosure 優先選 credential revocation——找得到設備不代表能阻止攻擊者使用裝置上的 credential。
+Brewer–Nash Model 的另一個名稱？防什麼？	Chinese Wall Model（中國牆模型）。防同一使用者依序存取彼此有利益衝突的資料集合（例：看過銀行 A 客戶資料後不得再看競爭者銀行 B）；屬動態存取控制，決策依使用者先前看過什麼而改變。P2，認得即可。
+對稱式加密最精確的定義？題庫寫 a shared secret 代表什麼？	雙方使用同一把共享秘密金鑰（shared secret key）進行加密與解密。題庫的 a shared secret 通常就是指 shared secret key，照選即可；但 shared secret 在 DH 等協定中可能只是 KDF 輸入，術語要保留「秘密金鑰」（[T] 中度）。

@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **508 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **540 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL） | 47 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類、inference） | 143 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 82 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security | 44 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 53 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 132 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL、題目判讀模型） | 55 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類、inference） | 146 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 89 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security | 50 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 58 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 135 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 508 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 540 |
 
 ### 歷次併入紀錄
 
@@ -136,6 +136,19 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 `為什麼 cloud sprawl 不只是基礎設施帳單問題？`（D1）與 `雲端最常見的無意行為後果是什麼？`（D3）兩張既有卡改為增補答案（補上安全風險與三成因）。
 
+**2026-10-23 兩日錯題修復 ＋ 2026-10-26 錯題 ＋ 2026-10-27 D1 Fresh**（三份原檔未封存，知識點已併入彙整講義；原檔共 57 張卡，去重、合併並改寫為中性語氣後淨增 32 張）：
+
+- ⭐ `all` 題算交集、`best` 題找預設語義、CSP vs IdP、`In all cloud models` → Data、customer modify data 精確化、BC/DR abstraction level、abstraction mismatch、D1 判讀口訣 → **D1**（+8）
+- Tracking vs Credential revocation、Brewer–Nash／Chinese Wall、shared secret key → **D2**（+3）
+- 看到 Point 不一定是 RPO、DR location 五面向、不同側進線、Redundant ISP vs Masking、分散式 resilience vs egress monitoring `[Q]`、Returning too late = outcome `[Q]`、Availability 不必然高於 Confidentiality → **D3**（+7）
+- Proxy federation vs Cross-certification、brokered SAML assertion、Open Redirect 修補、training／logging 角色、PaaS 後門 `[Q]`、developer encryption vs regulation `[Q]` → **D4**（+6）
+- Baseline／Scan／Remediation、golden image 寫入保護、maintenance mode 停業務不停管理、不阻 admin access、`new instances prevented` `[Q]` → **D5**（+5）
+- PCI SSC ≠ regulator `[Q]`、mitigation ≠ acceptance、過度控制比例原則 `[Q]` → **D6**（+3）
+
+**既有卡增補答案：** `PCI DSS 的 merchant tier 改變了什麼？`（補交易量與精確門檻低優先）、`SOC 2 與 SOC 3 差在哪？`（補最短模型與 `[Q]`）、`Risk treatment 四種？`（D5，mitigation ≠ acceptance）、`「雲端 egress monitoring 障礙，EXCEPT」要選什麼？`（D2，補 `[Q]` 與工程模型）。
+
+**不新增：** RPO／RTO／WRT 定義、`RTO + WRT ≤ MTD`、BIA 三類決策、SAST／DAST／IAST 三要素等既有卡已覆蓋；「今天三題的降權」屬時效性紀錄，不保留。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -162,7 +175,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 508 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 540 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

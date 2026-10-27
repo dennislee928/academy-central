@@ -80,3 +80,10 @@ BC/DR kit 有固定 universal inventory 嗎？	沒有；內容取決於 recovery
 LPG／propane 在題庫中作為備援發電機燃料的優勢？	長期儲存穩定，不像 gasoline／diesel 容易因長期存放而劣化（spoil）。
 UPS 除了備援供電，還提供什麼功能？	Line conditioning（穩壓、濾除突波與雜訊）。UPS = backup power ＋ line conditioning；續航要撐到交易完成或接上發電機。
 Ionization 與 photoelectric 偵煙器的差別？	Ionization = 使用放射性物質（radioactive source）偵測煙霧粒子；Photoelectric = 使用光（light beam／光散射）偵測煙霧。
+看到題幹有「Point」就選 RPO 嗎？	不行。RPO 必須是「可接受往回丟多少資料」。最短模型：RPO = Data Loss；RTO = IT Back；WRT = Business Back；MTD = 整體上限。
+DR／backup site location 的最短模型？只背 regulatory compliance 對嗎？	法律 ＋ 災害 ＋ 故障域 ＋ 可達性 ＋ 成本。只背 regulatory 不對；還要想到地理冗餘、共同失效域、洪水地震等環境風險、電力與上游電信、延遲、支援人力與成本（題庫只剩 regulatory 屬 [Q] 中高）。
+線路從建物不同側進入的核心目的？能解決什麼、不能解決什麼？	降低單一路徑／單一施工事件（挖斷、撞擊、局部火災）的共同失效風險：不同路徑 ≠ 同一故障點。不能解決洪水、區域性停電、大地震、上游 carrier failure。
+Redundant ISP 與 Masking 各最直接降低哪一類 impact？	Redundant ISP → availability impact（carrier outage、fiber cut、upstream failure）；Masking／obfuscation → confidentiality impact（資料竊取後的影響）。先判斷題目問 CIA 的哪一面。
+Redundant／resilient architecture 一定不影響 egress monitoring 嗎？	不一定（題庫說法 [Q] 高降權）。單純 HA（單一邏輯 egress 點）影響小；multi-region、multi-egress、multi-account、failover paths 會增加 sensor 部署、policy sync、baseline 一致性、log normalization 與 visibility gap。最短模型：Egress paths × Visibility gaps × Policy/config copies × Privilege limitations。
+「Returning to normal operations too late」是 root risk 還是 outcome？	通常更接近 recovery failure 的 outcome／consequence：Recovery capability failure → 無法恢復服務 → RTO 超過 → MTD／MAD 超過 → 不可接受的業務衝擊。題庫無 context 就稱其為 greatest risk 屬 [Q] 高降權。
+BC/DR 情境下 Availability 一定比 Confidentiality 重要嗎？greatest organizational risk 題先找什麼？	不一定。醫院、支付處理商、HSM／金鑰保管者、受監管金融機構在 contingency 中發生機密性外洩同樣可能不可逆。先找 business context：產業、資料敏感度、法規、安全影響、RTO／MTD criticality。
