@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 5 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`
+> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題
 > **維護：** 新增測驗講義後，將該檔的 D5 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -23,6 +23,8 @@
 | `by-test/11-drill-2026-10-01-weakness-lecture.md` | D1 §4 insider threat、D5 §3 Synthetic vs RUM、D5 §6 DHCP、D5 §7 HA | §1.4、§1.5、§1.6 |
 | `by-test/12-d5-drill-2026-10-02-weakness-lecture.md` | §2 hardening 清單、§3 ⭐ Audit vs Hardening、§4／§5 ⭐ personnel vs physical、§6 patch vs interoperability、§8 live migration | §1.2、§1.3、§1.4、§1.6 |
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl 成因、風險與完整 targeted remediation、閉卷防守題 | §1.9、§3、§4、§5 Drill B |
+| 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §5 Baseline image vs vulnerability scan vs remediation、golden image 寫入保護 | §1.2、§2.6 |
+| 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：停業務不停管理、`new instances prevented` `[Q]` | §1.4、§2.7 |
 
 ---
 
@@ -68,6 +70,22 @@ Document → Assess → Authorize / Remediate → 若屬合理則透過變更流
 **不要**發現 deviation 就直接改回去，因為它可能是 approved change、emergency change、unauthorized change、drift 或 compromise——必須先判斷。
 
 **Social engineering 不屬於 configuration maintenance**，它是 human-layer 的攻擊／測試活動。
+
+#### Baseline vs Vulnerability Scan vs Remediation（來源：2026-10-23 兩日錯題修復 §5）
+
+| 概念 | 定義 |
+|---|---|
+| **Baseline（基準映像）** | 一個**已核准、可重複部署的安全狀態**：OS hardened settings、必要 agent、logging、endpoint protection、patch baseline、account policy、approved packages |
+| **Vulnerability scan** | 驗證目前狀態是否存在弱點——**不是 baseline 本身** |
+| **Remediation** | 把 scan 找到的問題修掉，再重新核准 baseline |
+
+```text
+Baseline    = 核准狀態
+Scan        = 驗證
+Remediation = 修正
+```
+
+**Golden image 的寫入保護：** write protection／immutable 適合保護**核准的 master image artifact** 不被未授權修改，而不是讓每個正常執行中的 VM 都無法寫入。
 
 #### Hardening 的典型動作（`by-test/12` §2）
 
@@ -192,6 +210,22 @@ Drain / migrate workload
 | **搬移方式** | 要 **move VM as a live instance**（live migration），**不是**存 snapshot image；snapshot 的用途是 point-in-time state／rollback／reference |
 | **管理平面** | 必須隔離（isolated management network），因為它是最高權限入口。隔離手段不限 VLAN，可為 subnet／VRF／admin zone，並搭配 MFA／bastion／logging；**VMware Tools 這類 guest agent 不是 management plane**——完整對照見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md) |
 | **多租戶隔離** | 雲端是多租戶環境，isolation 是關鍵控制 |
+
+#### 停業務，不停管理（來源：2026-10-26 錯題）
+
+```text
+Stop / evacuate normal production workloads
+→ Prevent normal new workload placement
+→ KEEP administrative access
+→ KEEP logging
+→ Perform maintenance
+```
+
+管理員可能需要 patch、upgrade、diagnostics、hardware／hypervisor maintenance、service restart，所以 `Admin access is prevented` 明顯不合理。
+
+**題庫措辭 `Generation of new instances is prevented` 太絕對。** 精確說法是 **normal production workload placement onto the node is prevented／avoided**——maintenance／system／admin workload、service restart、agent、DaemonSet-like workload 仍可能在該節點產生（見 §2.7）。
+
+> **最短模型：停業務，不停管理。**
 
 #### High Availability（`by-test/11` D5 §7）
 
@@ -474,6 +508,14 @@ Redundancy = 可用性 / 容錯
 
 `Whose advice should receive most weight about patching a production system?` → **Vendor**。但 vendor ≠ final decision maker，見 §1.3 的治理模型。
 
+### 2.6 Baseline image 與 vulnerability scan 混為一談（2026-10-23 兩日錯題修復，`[T]`）
+
+把「掃描找弱點」當成 baseline 本身。修正：baseline 是核准狀態、scan 是驗證、remediation 是修正後重新核准。golden image 的寫入保護針對 master artifact，不針對執行中的 VM。**降權：無**。詳見 §1.2。
+
+### 2.7 Maintenance mode：`Generation of new instances is prevented`（2026-10-26 錯題，`[Q]` 中度降權）
+
+題庫答案措辭太絕對；真正意義是避免正常 production workload placement，maintenance／system／admin workload 仍可能產生。題目措辭差，但**底層概念照學**：maintenance mode 停正常 workload、保留 admin access 與 logging。詳見 §1.4。
+
 ### 2.5 BC/DR 模型（`by-test/03` Q10）
 
 常見雲端 BC/DR 模型：private architecture + cloud backup、同一 provider 的雲端備份、另一家 cloud provider。**「cloud provider 由 private provider 備援」不是典型模式。** BC/DR 的完整整理見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)。
@@ -531,6 +573,10 @@ Redundancy = 可用性 / 容錯
 | 45 | Sprawl 的風險包含未修補攻擊面、可視性缺口、資料殘留、授權成本與無法歸責，不只是帳單。 |
 | 46 | Sprawl remediation = approval／quota／golden image ＋ tagging／CMDB／discovery ＋ expiry／review／decommission。 |
 | 47 | 發現無主 VM 先 inventory、patch 或隔離，確認無 owner 後再依 retention 退役，不直接刪除。 |
+| 48 | **Baseline = 核准狀態；Scan = 驗證；Remediation = 修正。** |
+| 49 | Golden image 寫入保護保護的是核准的 master artifact，不是讓每台執行中的 VM 唯讀。 |
+| 50 | **Maintenance mode：停業務，不停管理**——阻止正常 production placement，保留 admin access 與 logging。 |
+| 51 | Prevent normal production placement ≠ prohibit every possible new instance。 |
 
 ---
 
@@ -562,6 +608,8 @@ Redundancy = 可用性 / 容錯
 | Patch | Interoperability 修正 | 軟體缺陷 vs 架構與標準 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
 | VM sprawl | 單純成本問題 | 安全、可視性、資料殘留與歸責問題 vs 只看帳單 |
+| Baseline | Vulnerability scan | 已核准的安全狀態 vs 驗證目前狀態是否有弱點 |
+| Golden image 寫入保護 | 執行中 VM 唯讀 | 保護 master artifact vs 不合理地阻止正常運作 |
 | Decommission | 直接刪除 | 依 retention 與銷毀政策退役並更新 inventory vs 只把 VM 關掉或砍掉 |
 
 > **Boundary learning 提示：** Audit vs Hardening、Personnel vs Physical Access 這兩組都屬「兩個答案技術上都合理，但題目在問分類」的典型。處理流程見 [README 的錯題複習與 argue 流程](../README.md)。
@@ -607,6 +655,8 @@ Redundancy = 可用性 / 容錯
 19. `Sprawl ＝ 好建立 ＋ 難追蹤 ＋ 沒人刪` 三個成因各對應哪一組控制？
 20. 為什麼 dormant VM 是安全風險而不只是成本問題？
 21. 發現一批無 tag、無 owner 的 VM，處理順序是什麼？為什麼不能直接刪除？
+22. Baseline、vulnerability scan、remediation 各是什麼？
+23. Maintenance mode 真正阻止的是什麼？為什麼 `Generation of new instances is prevented` 太絕對？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
@@ -622,5 +672,5 @@ Redundancy = 可用性 / 容錯
 | ITIL = IT service management | 醫院一定是 Tier IV |
 | NAS vs SAN | SIEM 一定要等三週 |
 | SLE = AV × EF | 特定 HVAC airflow 用詞 |
-| 風險處置：avoid／mitigate／transfer／accept；residual risk 必須被接受 | |
+| 風險處置：avoid／mitigate／transfer／accept；residual risk 在容忍範圍內才接受，否則再處置（見 [Domain 6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)） | |
 | 集中日誌必須時鐘同步 | |
