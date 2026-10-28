@@ -43,3 +43,4 @@ scripts/auto_commit.sh
 /conference/hitcon/scripts/__pycache__
 /.tmp-test
 /CCSP/simulate-test/learnzapp
+CCSP/temp.md
