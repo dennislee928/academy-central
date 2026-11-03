@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 4 的內容，跨場次合併後依主題重組。
 > **考試權重：** 16%
-> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh
+> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D4 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -23,6 +23,8 @@
 | 2026-10-15 D4 測驗講義（內容已併入，原檔未封存） | SAST／DAST／IAST 兩軸、OWASP Intuition Testing、MFA factor 與 personal check `[Q]` | §1.3、§1.4、§1.5、§2.8–§2.10 |
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §7 Proxy federation vs Cross-certification、§9 SAST 白箱的 access prerequisite、§10 Open Redirect、§11 PaaS 後門 `[Q]`、§18 遊戲開發者排除測試 `[Q]` | §1.3、§1.5、§1.8、§2.13、§2.14 |
 | 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | Q1 cloud developer training：encryption vs regulation、Q3 brokered federation 的 SAML assertion | §1.5、§2.11、§2.12 |
+| 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.4 Secure software development 題為何選 process isolation（概念 → D3 §1.4） | §1.6、§2.15 |
+| 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §7 IdP vs SP／RP、third-party federation 的 third party = IdP、NIST RP 用語 | §1.5、§2.6 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -272,6 +274,25 @@ SP / RP
 
 SAML assertion 由**扮演 IdP 的實體**發出；在 brokered federation 中，broker 可以扮演 **proxy IdP**。不要把 Cloud Provider（商業角色）和 Identity Provider／Broker（federation 角色）混成同一層——商業角色 vs 技術角色的拆法見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)。
 
+#### IdP asserts；RP／SP consumes（來源：2026-11-03，`[T]`）
+
+```text
+User
+  ↓
+IdP     「證明 Alice 是 Alice」
+  ↓ assertion
+SP / RP 「接受 assertion，讓 Alice 使用服務」
+```
+
+| 角色 | 核心工作 | 考場 trigger |
+|---|---|---|
+| **IdP**（Identity Provider） | authenticate／代表驗證結果、issue assertion、提供 identity attributes | identity assertion、authentication assertion、claims、identity attributes |
+| **SP／RP**（Service Provider／Relying Party） | consume assertion、trust IdP、提供 application／resource／service | consume assertion、rely on assertion、provide protected service |
+
+**SAML 的 `SP` 是正式角色**——依賴 IdP assertion 並提供實際服務的一方，**不是「提供 federation service 的第三方公司」**。NIST SP 800-63C-4（2025）等現代用語常稱 **Relying Party（RP）**，federation 角色判斷上可直接當 `RP ≈ SP`。
+
+> **口訣：IdP asserts. RP/SP consumes.**（IdP 證明身份；RP／SP 提供服務。）
+
 **要點：** TTP 中的第三方通常是 **IdP／broker**，不是 service provider。要分清 IdP 與 SP／relying party。**不要自動把每個 federation 角色都指派給 cloud provider**；角色取決於誰提供／消費／宣告 identity。
 
 ### 1.6 雲端應用的特殊風險
@@ -279,6 +300,7 @@ SAML assertion 由**扮演 IdP 的實體**發出；在 brokered federation 中�
 | 主題 | 規則 |
 |---|---|
 | **Side-channel** | 共享雲端資源帶來 side-channel 疑慮；cloud 的 secure SDLC 必須考量 co-tenancy、資源隔離與 side-channel 洩漏 |
+| **Process isolation** | 設計／開發 cloud software 時必須考慮 shared-resource runtime isolation；定義與「不是什麼」見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md)，判讀題見 §2.15 |
 | **Cloud sandbox** | 可用於 application security testing、interoperability testing；**不宜用於 malware analysis**（涉及惡意程式執行、第三方基礎設施、法律與供應商條款風險） |
 | **Code signing** | 可作為軟體完整性與**所有權**的證據 |
 
@@ -346,6 +368,15 @@ Application level  = 每個應用 1 個 ANF
 ### 2.6 Federation 角色誤派（`by-test/09` §6.1）
 
 在參與者之間的 federation 中，**參與實體本身可以是 federated service provider**。不要自動把角色指派給 cloud provider。
+
+**再現（2026-11-03，`[T]` P0）：** third-party certification federation 舊題型中：
+
+```text
+Third party         → identity / trust function → IdP
+Federation members  → actual applications/resources → SP
+```
+
+誤區是把 `Service Provider` 理解成「提供 federation service 的第三方公司」。判斷規則：`creates / sends assertion → IdP`；`consumes assertion + offers resource → RP／SP`（見 §1.5）。
 
 ### 2.7 Object vs volume 的考試用語（`daily` LO `2.2`，D4 場次錯題但屬 D2 知識）
 
@@ -423,6 +454,25 @@ Developer question
 
 兩題只當題庫舊式敘事，不內化。
 
+### 2.15 Secure software development for the cloud → Process isolation（2026-10-31 錯題，`[T]`）
+
+**錯題：** 題目寫 `secure software development for the cloud`，選項含泛稱 `enhancement mechanisms` 與明確的 `process isolation`；題庫答案 **Process isolation**。
+
+**容易卡住的點：** `process isolation` 聽起來是 runtime 概念，不像「開發」。但題目想測的是：**設計／開發 cloud software 時，必須考慮 shared-resource runtime isolation**（co-tenancy、side channel、workload separation）。
+
+**題型判斷規則：**
+
+1. 先看選項是否是**正式、可驗證的安全概念**。
+2. 再看是否直接回答題幹的 security property。
+3. 泛稱若沒有明確定義，不因為「比較上位」就勝出。
+
+```text
+Enhancement mechanisms = 太泛，沒有分類能力
+Process isolation      = 明確 security mechanism，直接對 shared-resource / side-channel / workload separation
+```
+
+> **一句話規則：** 上位詞不是自動優先；「可驗證、可映射題幹」才優先（見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -479,6 +529,10 @@ Developer question
 | 48 | **Open Redirect = 驗證 destination**（allowlist／server-side mapping）；training 是補償、logging 是偵測。 |
 | 49 | 後門來自不安全的開發、測試與發布流程，不是 PaaS 天生屬性。 |
 | 50 | Developer 題問 cloud-specific challenge → 優先找 developer 直接處理的技術責任（crypto／keys／secrets）。 |
+| 51 | **IdP asserts；RP／SP consumes**；SAML 的 SP 是依賴 assertion 並提供服務的一方，不是提供 federation 的第三方公司。 |
+| 52 | Third-party federation：third party = IdP（identity／trust function）；federation members = SP。 |
+| 53 | NIST 現代用語 Relying Party（RP）≈ SAML Service Provider（SP）。 |
+| 54 | Secure software development 題：泛稱 vs 正式可驗證機制 → 選 **process isolation** 這類正式概念，上位詞不自動優先。 |
 
 ---
 
@@ -506,6 +560,8 @@ Developer question
 | IdP | SP／relying party | 提供身分 vs 消費身分 |
 | Proxy federation | Cross-certification | 中央第三方代表成員審查 vs 成員彼此交叉承認 |
 | Cloud provider | Broker／proxy IdP | 商業角色 vs federation 中發 assertion 的角色 |
+| SAML Service Provider | 提供 federation 的第三方 | 消費 assertion 並提供服務的正式角色 vs 商業意義的服務商 |
+| Enhancement mechanisms（泛稱） | Process isolation | 無明確定義的上位詞 vs 正式、可驗證的 security mechanism |
 | Open Redirect 修補 | User training／Audit logging | 預防根治 vs 補償／偵測 |
 | ONF | ANF | 組織層級（1 個） vs 應用層級（每應用 1 個） |
 | Forklifting | Re-architect | 不修改搬遷 vs 雲原生改造 |
@@ -560,3 +616,5 @@ Developer question
 - Proxy federation 與 Cross-certification 各一句話？
 - Brokered federation 中誰通常發 SAML assertion？
 - Open Redirect 最主要的工程修補是什麼？user training 與 audit logging 各扮演什麼角色？
+- IdP 與 RP／SP 各做什麼？Third-party certification federation 中 third party 是哪個角色？
+- Secure software development 題為什麼選 process isolation 而不是 enhancement mechanisms？
