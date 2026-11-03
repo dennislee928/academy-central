@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -31,6 +31,9 @@
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl（主體併入 D5 §1.9，本檔留交叉參照）；推論攻擊、風險移轉分別併入 D2 §1.12、D6 §1.9 | §1.4 |
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §1 四指標防呆、§2 BIA 邊界、§3 DR location、§4 實體韌性、§16 外部威脅 Redundant ISP vs Masking、§18 dropped ceiling／fiber 降權 | §1.6、§2.10、§2.11、§2.13 |
 | 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §1 Redundant／resilient architecture vs egress monitoring `[Q]`、§3 Returning to normal operations too late `[Q]`（§2 maintenance mode 併入 D5） | §1.6、§1.7、§2.12、§2.14 |
+| 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §6 Isolation = boundary + controlled flow、DNSSEC／IPsec／TLS 各自功能 `[Q]` | §1.3、§2.15 |
+| 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.1–§1.3 Process isolation 定義、「不是什麼」與實作層次；§3 Secure KVM 與 TPM（§1.4 判讀題 → D4） | §1.4 |
+| 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §3 Uptime Tier 決策模型、§4 小型 surgical center 自建 DC `[Q]`、§6 Compute = CPU + RAM、§8 Loosely vs tightly coupled storage cluster `[Q]` | §1.1、§1.3、§1.4、§2.16、§2.17 |
 
 ---
 
@@ -150,6 +153,24 @@ Containment 命名規則：封閉哪個 aisle，就叫哪個 containment。
 **考場關鍵字：** Tier III = `concurrently maintainable`、`multiple paths, only one active`、`no shutdowns for maintenance`；Tier IV = `fault tolerant`、`multiple active paths`、`compartmentalized`、`autonomous response`。
 
 > **判斷精神：** 依業務需求選最適當的等級，不是盲選最貴的。題幹若限定預算且只要求「維護時不中斷」→ Tier III，不是 Tier IV。
+
+**Tier 不是「產業名稱 → 固定 Tier」（來源：2026-11-03，`[J]`）：** Tier II 有冗餘的 UPS／generator／cooling capacity components，但仍可能因 maintenance、distribution path 或 infrastructure failure 造成 IT interruption；Tier III 讓 capacity component 或 distribution path 做 planned maintenance 時不需關閉 IT service；Tier IV 單一 failure 不應中斷 IT operation。
+
+```text
+Business criticality
++ RTO/RPO
++ patient-safety dependency
++ regulatory constraints
++ risk tolerance
++ budget
++ staffing
++ geographic redundancy
++ DR design
+        ↓
+Select architecture / Tier / cloud / colo
+```
+
+不能推成 `Healthcare → Tier II 不夠 → 必須自建新 data center`。Tier 選擇是 **business-case and risk-tolerance driven**（題庫例見 §2.16）。
 
 ### 1.2 實體存取控制分層
 
@@ -273,6 +294,27 @@ RAID 處理的是 striping／mirroring／parity／disk redundancy，**不是在�
 SCSI commands → FCP → Fibre Channel fabric
 ```
 
+#### Loosely vs Tightly Coupled Storage Cluster（來源：2026-11-03，`[Q]`）
+
+```text
+Tight coupling                       Loose coupling
+shared controller / chassis /        Node 1 ─┐
+shared bus / backplane               Node 2 ─┼─ network/fabric ─ cluster
+→ bottleneck 集中在共享元件           Node 3 ─┘
+                                     每個 node 有自己的 CPU／RAM／storage／NIC
+                                     → node = scale-out building block
+```
+
+題庫答案 `performance and capacity in each node` 比 `physical backplane` 更符合 loosely coupled（backplane 屬 tightly coupled）。但**不要背「node count 不影響 performance／capacity」**：
+
+- Aggregate raw capacity ≈ node count × per-node capacity；usable capacity 還受 replication、erasure coding、metadata overhead、reserved capacity、failure domain 影響。
+- Performance 與 node count、per-node CPU／storage、NIC bandwidth、network topology、coordination overhead、workload type 都有關。
+
+```text
+Loose coupling → independent nodes → scale-out
+Tight coupling → shared components → shared bottleneck
+```
+
 #### ⭐ Converged Networking ≠ SDN ≠ HCI
 
 傳統機房常有**兩套 network fabric**：
@@ -315,6 +357,30 @@ GRE over IPsec = Tunnel + Security
 ```
 
 題目問 `most associated with tunneling` → **GRE**。
+
+#### Isolation 精確模型：boundary + controlled flow（來源：2026-10-30 錯題，`[Q]`）
+
+> **Isolation = security boundary + controlled information flow**
+
+典型工具：VPC／VNet、VLAN、subnet、firewall、security group／NACL、VRF、namespace、hypervisor tenant isolation、physical separation，特定情境下 VPN／encrypted logical separation。
+
+**Isolation ≠ 不能接 Internet：**
+
+```text
+Internet → WAF / FW → DMZ → App subnet → DB subnet
+```
+
+這仍是具 isolation／segmentation 的架構。**Internet-facing ≠ not isolated。**
+
+| 技術 | 最短功能 | 本身是 Isolation？ |
+|---|---|---|
+| DNSSEC | DNS authenticity + integrity | ❌ |
+| IPsec | L3 confidentiality／integrity／authentication；可做 VPN | ⚠️ 可支援 logical isolation |
+| TLS | secure transport channel | ❌ 不是 segmentation |
+
+三者組合更自然描述的是 **secure／protected communications**，不是單純 isolation（題庫例見 §2.15）。
+
+> **口訣：Isolation 看 boundary；TLS／IPsec 看 channel；DNSSEC 看 DNS integrity／authenticity。**
 
 ### 1.4 虛擬化、容器與管理平面
 
@@ -415,6 +481,52 @@ Guest OS
 >
 > 題庫選項的 `OS replication` 用詞也不佳——container 通常不會為每個實例複製完整 guest kernel，但確實有自己的 userspace、libraries、root filesystem。此題列為**中度 `[Q]`**，但架構模型必須會。
 
+#### Compute = CPU + RAM（來源：2026-11-03，`[T]`）
+
+題目 `Compute is made up of ___ and ___` → **CPU + RAM**。問的是 **resource components**：
+
+```text
+Compute resources
+├─ CPU / vCPU
+├─ Memory / RAM
+└─ Accelerators（完整模型）
+   ├─ GPU
+   ├─ TPU
+   └─ FPGA
+```
+
+典型 sizing：`8 vCPU / 32 GiB RAM`。SSD、HDD、NVMe、object／block storage 屬 **storage**；`virtualized / physical` 描述的是**實作形式**，不是 compute 的構成資源——選它們是 abstraction level error（見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+
+> **口訣：Compute = processing + working memory = CPU + RAM。**
+
+#### Process Isolation（程序隔離）（來源：2026-10-31，`[T]`）
+
+> **Process isolation = 每個執行中的 process 維持獨立執行域（execution domain），避免一個 process 任意讀寫、修改或影響另一個 process。**
+
+NIST SC-39 的核心：不同 process 有分離的 address space／execution domain，process 之間的互動經過受控機制。
+
+**它「不是」什麼：**
+
+```text
+Process isolation  → 隔離執行域 / memory / process state
+Network isolation  → 隔離 network path / zone / segment / traffic
+```
+
+- **不是 network isolation：** process isolation 完全可以存在於一台直接連 Internet 的主機內；有 TLS、DNSSEC、VPN 也不代表有 process isolation。
+- **不是 complete hardware isolation、不保證防住所有 side channel：** 可防直接 memory access、直接 code modification、部分 IPC 越權與某些 escape 路徑；但 CPU cache timing、speculative execution、shared hardware contention、hypervisor／container escape 仍可能存在。
+
+| 層次 | 例子 | 隔離重點 |
+|---|---|---|
+| OS Process | virtual address space、privilege boundary | process ↔ process |
+| Sandbox | restricted process／capability | untrusted code ↔ host resources |
+| Container | namespace + capability + cgroup 等 | workload ↔ workload／host |
+| VM | hypervisor mediated isolation | guest ↔ guest |
+| Hardware-assisted | MMU／IOMMU、hardware separation | 更強的 memory／device boundary |
+
+> Container 是一種 process isolation 技術，但「container = 完整 security boundary」不能無條件成立。Secure software development 題的判讀見 [Domain 4 §2.15](../domain4-application/01-consolidated-lecture.md)。
+
+**口訣：Process isolation = 隔執行域，不是隔網路。**
+
 #### Secure KVM
 
 > **復現標記：** 已在 `by-test/10` 上篇 A 與 `by-test/12` §10 連續出現。
@@ -432,6 +544,12 @@ Secure KVM 要避免的是**不同 security domains 透過 peripherals 發生 cr
 ```
 
 `Welded chipsets` 理解成 hardware tamper resistance 即可。
+
+**最短模型（來源：2026-10-31）：** `One peripheral set → one selected computer at a time → no cross-computer data leakage`。官方 Secure KVM／Peripheral Sharing Device 評估重點是 data isolation、user data protection、prevention of unintended cross-domain flow；常見能力另含 filtering／emulation of keyboard and mouse、audio／video data-flow control。
+
+**TPM 不是 Secure KVM 的必要特徵（`[T]`）：** TPM 的用途是 device／platform trust、secure key storage、measured／verified boot、attestation——屬 **endpoint／platform security primitive**，不是 **peripheral-sharing isolation primitive**。Windows Hello／Touch ID 使用 TPM／Secure Enclave 只代表 `connected endpoint may use TPM`，不能推論 `Secure KVM itself must contain TPM`。
+
+> **口訣：TPM 保主機；Secure KVM 保跨主機周邊路徑。** 背到「cross-domain peripheral isolation、explicit selector、buffer／data-path isolation、TPM 非必備」即可，不用背 PCB layout 或 Protection Profile 細項。
 
 ### 1.5 責任邊界：Provider／Customer／Regulator
 
@@ -845,6 +963,26 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 
 題庫暗示 redundancy／resilience 一定不影響 egress monitoring。修正：單純 HA 影響小，但 multi-region、multi-egress、multi-account 或 failover paths 會增加監控複雜度。詳見 §1.7。
 
+### 2.15 DNSSEC + IPsec + TLS → Isolation（2026-10-30 錯題，`[Q]` 中度降權）
+
+**錯題：** `In order to ensure proper ______ in a secure cloud network environment, consider the use of DNSSEC, IPsec, and TLS.` → 題庫答案 **Isolation**，誤選 Multitenancy。
+
+**問題：** 三者主要保護 communications；只有 IPsec／VPN 可支援 logical isolation。題庫把 encryption／secure communications 與 isolation 混成同義詞。保留 §1.3 的模型：**Isolation = boundary + controlled flow；Encryption ≠ automatically isolation。**
+
+### 2.16 小型 surgical center 升級 on-prem DC → 自建全新 DC（2026-11-03 錯題，`[Q]` 低優先）
+
+**錯題：** 小型手術中心要升級 on-premises data center，哪個方案最好？→ 題庫答案 **Building a completely new data center**。質疑「太貴」合理。
+
+**資訊不足：** 真正判斷至少需要 RTO、RPO、current facility condition、CapEx／OpEx budget、staffing、24×7 operations requirement、regulatory constraints、patient-safety dependency、cloud／colo availability、network dependency、DR site——題目都沒給。
+
+**「控制最大」≠「最佳」：** 自建新 DC 提供最大 physical／infrastructure control，但 CapEx、facility operations、staffing、maintenance、power／cooling responsibility、DR complexity 全部上升；對 small organization 甚至可能最不合理。
+
+**處理：** 題庫硬選時，知道它偏好 maximum control／ownership；但不要內化成「healthcare organization → should build its own DC」。架構直覺不修（見 §1.1 Tier 決策模型）。
+
+### 2.17 Loosely coupled storage cluster 的 explanation（2026-11-03 錯題，`[Q]`）
+
+題庫答案 `performance and capacity in each node`（相對於 physical backplane）可以學；但 explanation 若暗示「node count 不影響 performance／capacity」則錯——node count 是 aggregate scale 的重要變數之一。背 scale-out 模型，不背錯誤 explanation（見 §1.3）。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -936,6 +1074,15 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 83 | Redundant ISP → availability impact；Masking → confidentiality impact。 |
 | 84 | **分散式、多路徑 resilience 可能增加 egress monitoring 複雜度**；單純 HA 影響小（題庫說法 `[Q]`）。 |
 | 85 | `Returning too late` 是 recovery failure 的 outcome；greatest-risk 題沒有 business context 時，不把 availability 當絕對第一。 |
+| 86 | **Isolation = security boundary + controlled information flow**；Internet-facing ≠ not isolated。 |
+| 87 | DNSSEC = DNS authenticity／integrity；IPsec = L3 secure channel／VPN；TLS = transport secure channel；三者 ≠ isolation（`[Q]`）。 |
+| 88 | **Process isolation = 隔執行域，不是隔網路**；不保證防住所有 side channel。 |
+| 89 | Container 是一種 process isolation 技術，但不是無條件的完整 security boundary。 |
+| 90 | **TPM 保主機；Secure KVM 保跨主機周邊路徑**；TPM 不是 Secure KVM 必要特徵。 |
+| 91 | **Compute = CPU + RAM**；GPU = compute accelerator；SSD／HDD = storage；virtual／physical = 實作形式。 |
+| 92 | Tier II = Redundant Capacity Components；III = Concurrently Maintainable；IV = Fault Tolerant；**產業名稱不決定 Tier**。 |
+| 93 | 「控制最大」≠「最佳」；小型組織自建 DC 題資訊不足時屬 `[Q]`。 |
+| 94 | **Loose coupling = independent nodes + scale-out；Tight coupling = shared components + shared bottleneck**；node count 會影響 aggregate。 |
 
 ---
 
@@ -982,6 +1129,13 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | Redundant ISP | Masking | 降低可用性 impact vs 降低機密性 impact |
 | 單純 HA | 分散式 resilience | 單一邏輯 egress 點 vs 多 region／多 egress 路徑 |
 | Root risk | Outcome | 復原能力不足 vs 太晚恢復正常營運 |
+| Isolation | Secure communications | boundary + controlled flow vs 保護傳輸通道（TLS／IPsec／DNSSEC） |
+| Process isolation | Network isolation | 隔執行域／memory vs 隔 network path／segment |
+| Process isolation | Hardware isolation | 限制直接 process interference vs 連 cache／speculative side channel 都隔開 |
+| TPM | Secure KVM | endpoint／platform trust primitive vs peripheral-sharing isolation primitive |
+| Compute（CPU + RAM） | Storage（SSD／HDD） | 處理與工作記憶體 vs 持久儲存 |
+| Tier II | Tier III | 冗餘 capacity components（維護仍可能中斷） vs concurrently maintainable |
+| Loosely coupled cluster | Tightly coupled cluster | 獨立 node scale-out vs 共享 controller／backplane bottleneck |
 
 ---
 
@@ -1040,3 +1194,9 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - Redundant ISP 與 Masking 分別主要保護 CIA 哪一面？
 - Redundancy 何時會增加 egress monitoring 的難度？
 - `Returning too late` 比較像 root risk 還是 consequence？greatest-risk 題沒有 business context 時怎麼處理？
+- Isolation 的兩個核心詞？TLS 能不能單獨建立 network segmentation？DNSSEC 保護什麼？
+- Process isolation 和 network isolation 的差別？能不能保證消除所有 side-channel attack？
+- Secure KVM 真正保護的是什麼 boundary？TPM 為什麼不是必要特徵？
+- Compute 的基礎抽象資源是什麼？SSD 與 `virtualized` 為什麼不是答案？
+- Tier III 最重要的關鍵詞？Healthcare 是否自動對應某個 Tier？
+- Loose vs tight coupling 最大的概念差別？node count 會不會影響 aggregate capacity？

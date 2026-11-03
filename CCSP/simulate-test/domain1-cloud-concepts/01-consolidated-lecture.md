@@ -454,7 +454,7 @@ Metered service   → 經濟／營運促成因素
 
 **上位詞不自動優先：** 題目同時出現上位概念（security、risk management、enhancement mechanisms）與精確 property／stage（confidentiality、assess、process isolation）時，依題幹的 abstraction level 作答——問 property 就選 property，問特定 stage 就選該 stage；優先選**正式、可驗證、能直接映射題幹**的概念（process isolation 例見 [Domain 4 §2.15](../domain4-application/01-consolidated-lecture.md)）。
 
-**資源本體 vs 實作形式（來源：2026-11-03）：** `Compute is made up of ___ and ___` 問的是資源構成（**CPU + RAM**），`virtualized / physical` 描述的是實作形式，SSD／HDD 屬 storage——同樣是 abstraction level error（概念見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)）。
+**資源本體 vs 實作形式（來源：2026-11-03）：** `Compute is made up of ___ and ___` 問的是資源構成（**CPU + RAM**），`virtualized / physical` 描述的是實作形式，SSD／HDD 屬 storage——同樣是 abstraction level error（概念見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md)）。
 
 #### D1 Fresh 解題檢查表
 
