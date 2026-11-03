@@ -31,7 +31,7 @@ Dynamic masking 與 static masking 差在哪？	Dynamic：查詢／顯示時依�
 Format-Preserving Encryption 的特點？	加密後仍保持原資料格式，例如看起來仍像信用卡號。
 分類是否永久不變？	不是。時間、用途改變、所有權移轉、法規狀態都可能觸發 reclassification。
 哪一項通常不是 reclassification 的理由？	Color change。顏色改變通常與敏感度分類無關。
-Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。
+Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。判準是決定 purposes + means（GDPR Art. 4(7)），不是看誰 collect／create；Subject = 資料描述的對象。
 PII 放在 CSP，CSP 發生 breach，customer 的 accountability 消失嗎？	不會。責任可共享或委外，歸責通常仍在 data owner／controller。
 CSA CCM 是什麼？	雲端控制框架：定義有哪些 cloud security controls，並 cross-map 到 ISO／NIST／FedRAMP。它不是 enforcement tool——CCM 說明哪些 controls 重要，實際套用與檢查靠 tooling。
 CAIQ 是什麼？	CSA 的評估問卷：CCM = What controls?；CAIQ = Do you implement them?。CAIQ 不是 control catalog 本身。
@@ -95,7 +95,7 @@ Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leaka
 雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
 「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。題庫視其本身不是 egress monitoring 的障礙；但此說法 [Q] 高降權——分散式、多路徑的 resilience architecture 會增加監控複雜度。
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
-SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
+SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。口訣：TPI＝兩人一起做；SoD＝工作拆開做；Split Knowledge＝秘密拆開知道。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
 E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
 Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
@@ -144,3 +144,12 @@ Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組
 Lost device：Tracking vs Credential revocation？題目問 protect against data disclosure 選哪個？	Tracking＝找設備、定位、協助 incident response；Revocation＝revoke session／token／cert、停用 credential，切斷存取。防 data disclosure 優先選 credential revocation——找得到設備不代表能阻止攻擊者使用裝置上的 credential。
 Brewer–Nash Model 的另一個名稱？防什麼？	Chinese Wall Model（中國牆模型）。防同一使用者依序存取彼此有利益衝突的資料集合（例：看過銀行 A 客戶資料後不得再看競爭者銀行 B）；屬動態存取控制，決策依使用者先前看過什麼而改變。P2，認得即可。
 對稱式加密最精確的定義？題庫寫 a shared secret 代表什麼？	雙方使用同一把共享秘密金鑰（shared secret key）進行加密與解密。題庫的 a shared secret 通常就是指 shared secret key，照選即可；但 shared secret 在 DH 等協定中可能只是 KDF 輸入，術語要保留「秘密金鑰」（[T] 中度）。
+題目寫 public-key cryptography + much smaller keys，先想到誰？	ECC（Elliptic Curve Cryptography）。同等 security strength 下 key 較短，簡化對照 ECC 256-bit ≈ RSA 3072-bit（概念對照，非固定一一對應）。
+AES 和 ECC 最短差異？	AES＝symmetric；ECC＝public-key／asymmetric。題幹寫 public key 時先刪 AES。RSA＝非對稱；MD5＝hash（不適合安全用途）；SSL＝protocol family，不是 crypto primitive。
+「TPI forces collusion」真正想表達什麼？	單一惡意內部人員不夠；要未授權完成動作，至少還要另一名授權者一起作弊。
+TPI 是否需要兩套 IAM 或兩個 IAM matrix？	不需要。TPI 是 policy／authorization condition，一套 IAM 即可透過 dual authorization／two-person rule 實作（Action X requires approver A + approver B）。
+TPI 和 SoD 的關係？	TPI 可視為 dynamic separation of duty／dual authorization 的一種實作，但兩者不同義：TPI＝同一動作兩人一起做；SoD＝衝突職責拆給不同角色。
+Classification scheme 何時定義？實際 data object 何時被 classify？	Scheme（類別、handling rules、retention、labeling 等）在 lifecycle 之前的 governance／policy 階段定義；實際資料在 Create 時被指派分類。Define 不是 lifecycle 正式 phase。口訣：規則先定義；資料生成時貼標。
+Lost key／bad backup／overwrite 對 data loss 的最短映射？	Lost key＝data inaccessible；bad backup＝cannot recover；overwrite＝original data destroyed。
+「Improper policy 不會造成 data loss」可以當原則背嗎？	不可以。錯誤 retention／deletion policy 本身就可能造成 data loss；該題只能理解為 direct mechanism vs indirect governance cause（[Q]）。
+CSA Notorious Nine 的 exact wording 值得背嗎？	不值得高頻背。它是 2013 舊 threat taxonomy；現行準備重點放 common cloud threats 與底層機制（[Q]）。

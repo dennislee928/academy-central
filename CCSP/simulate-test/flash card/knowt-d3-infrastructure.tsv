@@ -87,3 +87,19 @@ Redundant ISP 與 Masking 各最直接降低哪一類 impact？	Redundant ISP �
 Redundant／resilient architecture 一定不影響 egress monitoring 嗎？	不一定（題庫說法 [Q] 高降權）。單純 HA（單一邏輯 egress 點）影響小；multi-region、multi-egress、multi-account、failover paths 會增加 sensor 部署、policy sync、baseline 一致性、log normalization 與 visibility gap。最短模型：Egress paths × Visibility gaps × Policy/config copies × Privilege limitations。
 「Returning to normal operations too late」是 root risk 還是 outcome？	通常更接近 recovery failure 的 outcome／consequence：Recovery capability failure → 無法恢復服務 → RTO 超過 → MTD／MAD 超過 → 不可接受的業務衝擊。題庫無 context 就稱其為 greatest risk 屬 [Q] 高降權。
 BC/DR 情境下 Availability 一定比 Confidentiality 重要嗎？greatest organizational risk 題先找什麼？	不一定。醫院、支付處理商、HSM／金鑰保管者、受監管金融機構在 contingency 中發生機密性外洩同樣可能不可逆。先找 business context：產業、資料敏感度、法規、安全影響、RTO／MTD criticality。
+Isolation 最短定義？	Security boundary + controlled information flow。典型工具：VPC／VNet、VLAN、subnet、firewall、security group／NACL、VRF、namespace、hypervisor tenant isolation、physical separation。
+Internet-facing 是否代表沒有 isolation？	否。Internet → WAF／FW → DMZ → App subnet → DB subnet 仍是具 isolation／segmentation 的架構；Internet-facing ≠ no isolation。
+DNSSEC／IPsec／TLS 最短功能？	DNSSEC＝DNS authenticity／integrity；IPsec＝L3 confidentiality／integrity／authentication，可做 VPN；TLS＝transport secure channel。
+DNSSEC + IPsec + TLS 是否等於 isolation？	不等於。三者主要保護 communications；IPsec／VPN 可支援 logical isolation，但 isolation 核心仍是 boundary + controlled flow。題庫答 Isolation 屬 [Q]。口訣：Isolation 看 boundary；TLS／IPsec 看 channel；DNSSEC 看 DNS integrity。
+Process isolation 最短定義？	每個執行中的 process 維持獨立 execution domain／address space，使一個 process 不能任意讀寫或修改另一個 process（NIST SC-39）。
+Process isolation 是否等於不能連 Internet？與 network segmentation 怎麼分？	不是。Process isolation＝隔執行域（execution／memory boundary）；Network isolation／segmentation＝隔通訊路徑（network path／segment／traffic）。有 TLS、VPN 也不代表有 process isolation。
+Process isolation 能否保證防住所有 side-channel attack？	不能。它限制直接 process interference，但 CPU cache timing、speculative execution、shared hardware contention、hypervisor／container escape 仍可能存在。Container 是 process isolation 技術，但不是無條件的完整 security boundary。
+Secure KVM 的核心 security goal？	共享 keyboard／video／mouse，但只連到目前選定的 computer，並防止不同 computer 透過共享周邊互相洩漏資料：one peripheral set → one selected computer → no cross-domain leakage。
+Secure KVM 常見的安全能力？	Data-path separation、explicit channel selection（常見實體按鈕）、selected-channel indication、keyboard／mouse filtering／emulation、buffer clearing、restricted data flow、tamper resistance。
+TPM 為什麼不是 Secure KVM 的必要特徵？	TPM 保護 endpoint／platform trust、keys、measured boot、attestation；Secure KVM 的核心是 peripheral sharing 與 cross-computer data isolation。Windows Hello／Touch ID 用 TPM／Secure Enclave 是 connected endpoint 的機制，不能推論 KVM 本身要含 TPM。口訣：TPM 保主機；Secure KVM 保跨主機周邊路徑。
+Compute 在 CCSP 基礎模型主要由什麼構成？	CPU／vCPU + RAM／memory（processing + working memory），典型 sizing 如 8 vCPU／32 GiB RAM。
+SSD／HDD、GPU、virtualized／physical 在 resource model 各屬什麼？	SSD／HDD／NVMe＝storage；GPU（及 TPU、FPGA）＝compute accelerator；virtualized／physical＝implementation form，不是 compute resource components——選它是 abstraction level error。
+Healthcare 是否自動對應某個固定 Uptime Tier？	否。Tier 依 business criticality、RTO／RPO、patient-safety dependency、法規、risk tolerance、budget、staffing、geographic redundancy、DR design 決定；產業名稱不決定 Tier。
+小型 surgical center 升級 on-prem DC，題庫選「自建全新 DC」，怎麼處理？	[Q] 低優先。題目缺 RTO／RPO、設施現況、CapEx／OpEx、staffing、法規、cloud／colo 選項等資訊；「控制最大」≠「最佳」，對小型組織甚至可能最不合理。知道題庫偏好 maximum control 即可，不修架構直覺。
+Loosely coupled 與 tightly coupled storage cluster 怎麼分？	Loose＝independent nodes（各有 CPU／RAM／storage／NIC）透過 network／fabric 組成，scale-out；Tight＝shared controller／chassis／bus／backplane，bottleneck 集中在共享元件。題庫答 performance and capacity in each node（相對於 physical backplane）。
+Loosely coupled cluster 的 node count 會不會影響 aggregate capacity／performance？	會。Raw capacity ≈ node count × per-node capacity（usable 還受 replication、erasure coding、metadata、failure domain 影響）；performance 也與 node count、NIC bandwidth、topology、coordination overhead 有關。題庫 explanation 若說不影響屬 [Q]。

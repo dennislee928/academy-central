@@ -44,7 +44,7 @@ EAL1–EAL7 的英文核心概念？	EAL1 Functionally Tested；EAL2 Structurall
 Semi-formally designed、Semi-formally verified、Formally verified 各對應哪個 EAL？	Semi-formally designed → EAL5（半設）；Semi-formally verified → EAL6（半驗）；Formally verified → EAL7（全驗）。
 EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
 題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
-CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
+CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。2026-11-03 再現：先看 business value、risk、cost／TCO、strategy、governance，再看技術答案；cost 只是 heuristic，cloud 不保證比較便宜。
 看到 all／always／every service model，第一步是什麼？	算 IaaS ∩ PaaS ∩ SaaS 的共同交集，找最接近 universal common denominator 的選項；不要先用 edge case 找反例。
 看到 most／best／primarily／typically，或兩個答案技術上都合理時，怎麼選？	找一般／預設語義下最直接、最一般、需要額外假設最少、最符合題幹 abstraction level 的答案。優先序：default semantics ＞ common architecture ＞ edge case。
 CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 identity protocol 的技術角色。兩者可由同一家公司扮演，但概念不同。題目明說 brokered federation 時依 federation role 解。
@@ -53,6 +53,13 @@ CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 iden
 Replication、Backup、Metered service 對 BC/DR 屬哪個 abstraction level？	Replication＝direct mechanism；Backup＝direct recovery mechanism；Metered service＝economic／operational enabler。問「directly enhances recovery」選前兩者；問「more cost-effective」metered service 才可能是答案。
 什麼叫 abstraction mismatch？	把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比。規則：Direct mechanism ＞ enabling condition ＞ economic benefit。
 D1 題目判讀的一句口訣？	量詞看交集，角色看職責，最佳看預設，答案看層級。
+Cloud provider 題目問最核心的 architecture trait，優先想到什麼？	Automation → repeatability → scalability（standardization、self-service、API-driven）。題庫答案 Automating service enablement；MTTR／MTBF 是 reliability metrics，重要但不是 provider 的核心 operating model（[J]）。
+Common Criteria 的產品證書是 ISO 直接發的嗎？	不是。ISO/IEC 出版 15408（評估準則）與 18045（CEM）；CCRA 提供國際互認架構；實際 certification 由 participating national schemes／certification bodies 執行，licensed labs 做評估。口訣：ISO 寫規格，CCRA 做互認，各國 scheme 發證。
+為什麼「Common Criteria certification program 由 ISO 發布維護」題要降權？	題目把 standards publisher 與 certification scheme 混為一談（[Q]）。選項只有 NIST／ISO／NATO／UNESCO 且在問標準來源時照選 ISO，但不能建立「ISO = 全球 CC 發證機關」的模型。
+題目同時出現上位概念與精確 security property／stage 時怎麼選？	依題幹 abstraction level 作答：問 property 就選 property，問特定 stage 就選該 stage。上位詞不因較廣而自動優先；優先選正式、可驗證、能直接映射題幹的概念。
+為什麼 security controls 會降低 cloud migration 的實際財務效益？	Actual TCO 還包含 WAF、KMS／HSM、SIEM／logging、DLP、backup／replication、private connectivity、audit／compliance 等安全與營運 overhead。最短模型：Cloud list price ≠ actual TCO（[J]）。
+遷雲 TCO 題的「Security controls and countermeasures」只代表 network／software controls 嗎？	不是。它是廣義集合，含 technical、administrative、physical controls；但 cloud-TCO 語境通常主要指 customer 額外負擔的 technical／operational／compliance costs。
+`best / biggest / most` 題要先警戒什麼？	Context 是否足夠（RTO／RPO、預算、規模、business objective）。資訊不足時先找 management／risk／business perspective；題庫答案可能只是 heuristic（[J]／[Q]），不當 universal truth。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -86,7 +93,7 @@ Dynamic masking 與 static masking 差在哪？	Dynamic：查詢／顯示時依�
 Format-Preserving Encryption 的特點？	加密後仍保持原資料格式，例如看起來仍像信用卡號。
 分類是否永久不變？	不是。時間、用途改變、所有權移轉、法規狀態都可能觸發 reclassification。
 哪一項通常不是 reclassification 的理由？	Color change。顏色改變通常與敏感度分類無關。
-Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。
+Data Controller 與 Processor 差在哪？	Controller 決定 why + how；Processor 依指示處理。CSP 常可能是 processor／subprocessor。判準是決定 purposes + means（GDPR Art. 4(7)），不是看誰 collect／create；Subject = 資料描述的對象。
 PII 放在 CSP，CSP 發生 breach，customer 的 accountability 消失嗎？	不會。責任可共享或委外，歸責通常仍在 data owner／controller。
 CSA CCM 是什麼？	雲端控制框架：定義有哪些 cloud security controls，並 cross-map 到 ISO／NIST／FedRAMP。它不是 enforcement tool——CCM 說明哪些 controls 重要，實際套用與檢查靠 tooling。
 CAIQ 是什麼？	CSA 的評估問卷：CCM = What controls?；CAIQ = Do you implement them?。CAIQ 不是 control catalog 本身。
@@ -150,7 +157,7 @@ Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leaka
 雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
 「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。題庫視其本身不是 egress monitoring 的障礙；但此說法 [Q] 高降權——分散式、多路徑的 resilience architecture 會增加監控複雜度。
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
-SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。
+SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。口訣：TPI＝兩人一起做；SoD＝工作拆開做；Split Knowledge＝秘密拆開知道。
 3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
 E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
 Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
@@ -199,6 +206,15 @@ Aggregation 與 Inference 差在哪？	Aggregation＝把多筆低敏感資料組
 Lost device：Tracking vs Credential revocation？題目問 protect against data disclosure 選哪個？	Tracking＝找設備、定位、協助 incident response；Revocation＝revoke session／token／cert、停用 credential，切斷存取。防 data disclosure 優先選 credential revocation——找得到設備不代表能阻止攻擊者使用裝置上的 credential。
 Brewer–Nash Model 的另一個名稱？防什麼？	Chinese Wall Model（中國牆模型）。防同一使用者依序存取彼此有利益衝突的資料集合（例：看過銀行 A 客戶資料後不得再看競爭者銀行 B）；屬動態存取控制，決策依使用者先前看過什麼而改變。P2，認得即可。
 對稱式加密最精確的定義？題庫寫 a shared secret 代表什麼？	雙方使用同一把共享秘密金鑰（shared secret key）進行加密與解密。題庫的 a shared secret 通常就是指 shared secret key，照選即可；但 shared secret 在 DH 等協定中可能只是 KDF 輸入，術語要保留「秘密金鑰」（[T] 中度）。
+題目寫 public-key cryptography + much smaller keys，先想到誰？	ECC（Elliptic Curve Cryptography）。同等 security strength 下 key 較短，簡化對照 ECC 256-bit ≈ RSA 3072-bit（概念對照，非固定一一對應）。
+AES 和 ECC 最短差異？	AES＝symmetric；ECC＝public-key／asymmetric。題幹寫 public key 時先刪 AES。RSA＝非對稱；MD5＝hash（不適合安全用途）；SSL＝protocol family，不是 crypto primitive。
+「TPI forces collusion」真正想表達什麼？	單一惡意內部人員不夠；要未授權完成動作，至少還要另一名授權者一起作弊。
+TPI 是否需要兩套 IAM 或兩個 IAM matrix？	不需要。TPI 是 policy／authorization condition，一套 IAM 即可透過 dual authorization／two-person rule 實作（Action X requires approver A + approver B）。
+TPI 和 SoD 的關係？	TPI 可視為 dynamic separation of duty／dual authorization 的一種實作，但兩者不同義：TPI＝同一動作兩人一起做；SoD＝衝突職責拆給不同角色。
+Classification scheme 何時定義？實際 data object 何時被 classify？	Scheme（類別、handling rules、retention、labeling 等）在 lifecycle 之前的 governance／policy 階段定義；實際資料在 Create 時被指派分類。Define 不是 lifecycle 正式 phase。口訣：規則先定義；資料生成時貼標。
+Lost key／bad backup／overwrite 對 data loss 的最短映射？	Lost key＝data inaccessible；bad backup＝cannot recover；overwrite＝original data destroyed。
+「Improper policy 不會造成 data loss」可以當原則背嗎？	不可以。錯誤 retention／deletion policy 本身就可能造成 data loss；該題只能理解為 direct mechanism vs indirect governance cause（[Q]）。
+CSA Notorious Nine 的 exact wording 值得背嗎？	不值得高頻背。它是 2013 舊 threat taxonomy；現行準備重點放 common cloud threats 與底層機制（[Q]）。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -288,6 +304,22 @@ Redundant ISP 與 Masking 各最直接降低哪一類 impact？	Redundant ISP �
 Redundant／resilient architecture 一定不影響 egress monitoring 嗎？	不一定（題庫說法 [Q] 高降權）。單純 HA（單一邏輯 egress 點）影響小；multi-region、multi-egress、multi-account、failover paths 會增加 sensor 部署、policy sync、baseline 一致性、log normalization 與 visibility gap。最短模型：Egress paths × Visibility gaps × Policy/config copies × Privilege limitations。
 「Returning to normal operations too late」是 root risk 還是 outcome？	通常更接近 recovery failure 的 outcome／consequence：Recovery capability failure → 無法恢復服務 → RTO 超過 → MTD／MAD 超過 → 不可接受的業務衝擊。題庫無 context 就稱其為 greatest risk 屬 [Q] 高降權。
 BC/DR 情境下 Availability 一定比 Confidentiality 重要嗎？greatest organizational risk 題先找什麼？	不一定。醫院、支付處理商、HSM／金鑰保管者、受監管金融機構在 contingency 中發生機密性外洩同樣可能不可逆。先找 business context：產業、資料敏感度、法規、安全影響、RTO／MTD criticality。
+Isolation 最短定義？	Security boundary + controlled information flow。典型工具：VPC／VNet、VLAN、subnet、firewall、security group／NACL、VRF、namespace、hypervisor tenant isolation、physical separation。
+Internet-facing 是否代表沒有 isolation？	否。Internet → WAF／FW → DMZ → App subnet → DB subnet 仍是具 isolation／segmentation 的架構；Internet-facing ≠ no isolation。
+DNSSEC／IPsec／TLS 最短功能？	DNSSEC＝DNS authenticity／integrity；IPsec＝L3 confidentiality／integrity／authentication，可做 VPN；TLS＝transport secure channel。
+DNSSEC + IPsec + TLS 是否等於 isolation？	不等於。三者主要保護 communications；IPsec／VPN 可支援 logical isolation，但 isolation 核心仍是 boundary + controlled flow。題庫答 Isolation 屬 [Q]。口訣：Isolation 看 boundary；TLS／IPsec 看 channel；DNSSEC 看 DNS integrity。
+Process isolation 最短定義？	每個執行中的 process 維持獨立 execution domain／address space，使一個 process 不能任意讀寫或修改另一個 process（NIST SC-39）。
+Process isolation 是否等於不能連 Internet？與 network segmentation 怎麼分？	不是。Process isolation＝隔執行域（execution／memory boundary）；Network isolation／segmentation＝隔通訊路徑（network path／segment／traffic）。有 TLS、VPN 也不代表有 process isolation。
+Process isolation 能否保證防住所有 side-channel attack？	不能。它限制直接 process interference，但 CPU cache timing、speculative execution、shared hardware contention、hypervisor／container escape 仍可能存在。Container 是 process isolation 技術，但不是無條件的完整 security boundary。
+Secure KVM 的核心 security goal？	共享 keyboard／video／mouse，但只連到目前選定的 computer，並防止不同 computer 透過共享周邊互相洩漏資料：one peripheral set → one selected computer → no cross-domain leakage。
+Secure KVM 常見的安全能力？	Data-path separation、explicit channel selection（常見實體按鈕）、selected-channel indication、keyboard／mouse filtering／emulation、buffer clearing、restricted data flow、tamper resistance。
+TPM 為什麼不是 Secure KVM 的必要特徵？	TPM 保護 endpoint／platform trust、keys、measured boot、attestation；Secure KVM 的核心是 peripheral sharing 與 cross-computer data isolation。Windows Hello／Touch ID 用 TPM／Secure Enclave 是 connected endpoint 的機制，不能推論 KVM 本身要含 TPM。口訣：TPM 保主機；Secure KVM 保跨主機周邊路徑。
+Compute 在 CCSP 基礎模型主要由什麼構成？	CPU／vCPU + RAM／memory（processing + working memory），典型 sizing 如 8 vCPU／32 GiB RAM。
+SSD／HDD、GPU、virtualized／physical 在 resource model 各屬什麼？	SSD／HDD／NVMe＝storage；GPU（及 TPU、FPGA）＝compute accelerator；virtualized／physical＝implementation form，不是 compute resource components——選它是 abstraction level error。
+Healthcare 是否自動對應某個固定 Uptime Tier？	否。Tier 依 business criticality、RTO／RPO、patient-safety dependency、法規、risk tolerance、budget、staffing、geographic redundancy、DR design 決定；產業名稱不決定 Tier。
+小型 surgical center 升級 on-prem DC，題庫選「自建全新 DC」，怎麼處理？	[Q] 低優先。題目缺 RTO／RPO、設施現況、CapEx／OpEx、staffing、法規、cloud／colo 選項等資訊；「控制最大」≠「最佳」，對小型組織甚至可能最不合理。知道題庫偏好 maximum control 即可，不修架構直覺。
+Loosely coupled 與 tightly coupled storage cluster 怎麼分？	Loose＝independent nodes（各有 CPU／RAM／storage／NIC）透過 network／fabric 組成，scale-out；Tight＝shared controller／chassis／bus／backplane，bottleneck 集中在共享元件。題庫答 performance and capacity in each node（相對於 physical backplane）。
+Loosely coupled cluster 的 node count 會不會影響 aggregate capacity／performance？	會。Raw capacity ≈ node count × per-node capacity（usable 還受 replication、erasure coding、metadata、failure domain 影響）；performance 也與 node count、NIC bandwidth、topology、coordination overhead 有關。題庫 explanation 若說不影響屬 [Q]。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -338,6 +370,11 @@ Open Redirect 最主要的工程修補？	驗證／限制 redirect destination�
 Open Redirect 情境中，user training 與 audit logging 各扮演什麼角色？	User training＝降低 phishing／social engineering 的補償性控制，不是根治；Audit logging＝偵測、追查、鑑識，不是預防。題庫以 training 為主要保護屬 [Q] 中高。
 為何不能直接推論 PaaS 較容易有後門？	後門主要來自不安全的開發、測試與發布流程：遺留 debug／admin hooks、未移除測試帳號、hard-coded credentials、CI/CD 治理差、third-party component compromise，不是 PaaS 天生屬性（題庫敘事 [Q] 高降權）。
 Cloud developer 題問 cloud-specific challenge 時，encryption 為何常比 regulation 更貼 developer？	Developer 直接處理 TLS、KMS、secrets、certificates、application encryption；regulation 多半先由 governance／compliance 轉成 requirements。但「encryption in all data life-cycle phases」太絕對（data in use 常需解密），屬 [Q] 中度。
+Secure software development 題出現泛稱 `enhancement mechanisms` 與明確 `process isolation`，如何判？	選 process isolation。題目在測設計／開發 cloud software 時要考慮 shared-resource runtime isolation（co-tenancy、side channel）；上位詞不因較廣就勝出，優先選正式定義、能直接映射題幹 security property 的概念。
+IdP、RP／SP、Broker 在 federation 中各做什麼？	IdP＝authenticate 並 issue assertion、提供 identity attributes；RP／SP＝consume assertion、信任 IdP、提供 application／resource／service；Broker＝中介 trust／federation（可扮 proxy IdP）。口訣：IdP asserts; RP/SP consumes.
+SAML 的 Service Provider 是「提供 federation 服務的第三方公司」嗎？	不是。SP 是 federation 的正式角色：依賴 IdP assertion 並提供實際服務的一方。
+NIST 現代 federation 用語中，SP 的近義角色是什麼？	Relying Party（RP），如 NIST SP 800-63C-4（2025）。Federation 角色判斷上可當 RP ≈ SP。
+Third-party certification federation 中，third party 與 federation members 各是什麼角色？	Third party＝identity／trust function → IdP；federation members＝實際 applications／resources → SP。判斷：creates／sends assertion → IdP；consumes assertion + offers resource → RP／SP。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
@@ -397,7 +434,7 @@ Maintenance mode 的最短定義與口訣？	停止或移出正常 production wo
 Maintenance mode 會阻止 admin access 嗎？	不會。管理員必須保留 access 才能 patch、upgrade、diagnose、repair、做 hypervisor／硬體維護與 service restart。
 「Generation of new instances is prevented」為何太絕對？	真正意義是避免正常 production workload placement 到該節點；maintenance／system／admin workload、agent、DaemonSet-like workload 仍可能產生（題庫措辭 [Q] 中度，概念照學）。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
-CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。三個層級：L1 Self-Assessment、L2 Third-party certification、L3 Continuous auditing。
+CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。現行官方路徑：L1 Self-Assessment、L2 Third-party assurance（Certification／Attestation／C-STAR）；L3 Continuous 屬舊資料描述（legacy）。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
 Legal hold 時要暫停威脅建模嗎？	通常不是優先動作。優先是保全可能相關的資料與日誌。
 出庭前負責監管證物完整性的人是誰？	Evidence Custodian。不要選 Data Controller。
@@ -408,7 +445,7 @@ ISO／IEC 是法律嗎？	不是。它是制定國際標準的組織／標準體
 FedRAMP 是什麼？	美國聯邦雲端安全授權計畫，針對雲端服務給政府使用的授權路徑。
 NIST SP 800-53 是什麼？	安全與隱私控制目錄，不是稽核報告，也不是成熟度模型。
 HIPAA 主要保護什麼？	美國健康資訊（PHI）的隱私與安全要求。不要和 GLBA（金融）或 PCI（支付卡）搞混。
-Common Criteria 是什麼？	IT 產品安全評估與保證等級框架（EAL 等），不是雲端營運稽核報告。
+Common Criteria 是什麼？	IT 產品安全評估與保證等級框架（EAL 等），不是雲端營運稽核報告。標準為 ISO/IEC 15408（CEM = 18045）；ISO 寫規格、CCRA 做互認、各國 scheme 發證。
 Auditability 強調什麼？	活動可被記錄、追蹤與獨立驗證。沒有 log／clock sync／custody 就很難審計。
 eDiscovery 與一般 backup 差在哪？	eDiscovery 是為訴訟／調查識別、保存、產出電子證據；backup 是復原營運資料。
 EU privacy adequacy 大致在問什麼？	第三方國家是否被認定提供足夠個資保護，以支持跨境傳輸。
@@ -463,14 +500,14 @@ ARO、SLE、ALE 的單位各是什麼？	ARO = 次數／year（frequency）；SL
 ARO 是不是「年度總損失」？	不是。年度總損失是 ALE；ARO 只是頻率（一年發生幾次）。把 ARO 誤認為年度總損失是常見 factual error。
 Liability 與 Reliability 差在哪？	Liability = legal responsibility（法律責任）；Reliability = 可靠性。兩個英文字容易混，把 Liability 誤記為「可依賴性」是常見錯誤。
 證據完整性的五要素是什麼？	Original preservation ＋ Hash／integrity verification ＋ Chain of custody ＋ Documentation ＋ Repeatable／validated process。
-CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（controls：有哪些 controls）→ CAIQ（questions：有沒有實作）→ STAR（assurance／registry：L1 自評、L2 第三方、L3 持續稽核）。
+CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？	CSA → CCM（controls：有哪些 controls）→ CAIQ（questions：有沒有實作）→ STAR（assurance／registry：L1 自評、L2 第三方；L3 持續稽核為舊資料描述）。
 「Ensuring baseline configuration is applied」算 CCM 的 benefit 嗎？	不算。CCM tells you what controls matter；tooling（Ansible／CSPM／Policy-as-Code）verifies／enforces them。這是 framework vs enforcement 的邊界。
-CSA STAR 的三個層級各是什麼？	Level 1 = Self-Assessment；Level 2 = Third-party certification／attestation；Level 3 = Continuous auditing／monitoring。沒有 Level 4。
+CSA STAR 現行的層級各是什麼？Level 3 怎麼處理？	現行官方 assurance path：Level 1 = Self-Assessment；Level 2 = Independent／third-party assurance（STAR Certification、STAR Attestation、C-STAR）。Level 3 = Continuous auditing／monitoring 是舊資料描述（legacy），不要干擾 L1／L2 核心 mapping。沒有 Level 4。
 GAAP 是 cloud security audit standard 嗎？	不是。GAAP = Generally Accepted Accounting Principles，是會計原則。問 service organization 的 audit standard 時正解是 SSAE 18（SOC 是 report）。
 Jurisdiction 與 Choice of Law 差在哪？	Jurisdiction = Which court can hear?（哪個法院有權受理）；Choice of Law = Which law applies?（應適用哪個地方的實體法）。
 Restatement (Second) of Conflict of Laws 用來做什麼？	案件涉及多個 jurisdiction 時，用來判斷應適用哪個 jurisdiction 的 substantive law，偏 choice of law 一側。CCSP 不要求 law-school 深度。
-STAR 的三層 mnemonic 怎麼記？	1 自己看 → 2 別人看 → 3 一直看（Self → Third party → Continuous）。
-問 STAR 的 highest level 與 third-party assessment 各答什麼？	Highest level → 3（Continuous）；third-party assessment → 2。常見錯誤是兩題都答 Level 4——STAR 沒有 Level 4。
+STAR 的 mnemonic 怎麼記？	STAR 1 → 自己看；STAR 2 → 別人看（Self → Third party）。舊資料另有 3 一直看（Continuous），屬 legacy。
+問 STAR 的 third-party assessment 與 highest level 各答什麼？	Third-party／independent assessment、certification、attestation → Level 2。現行官方路徑只有 L1／L2；舊題庫問 highest level 可能期待 3（Continuous，legacy [Q]）。STAR 沒有 Level 4。
 STAR Level 1 和 CAIQ 的關係是什麼？	L1 是 CSP 自我揭露 security posture，直接以 CAIQ 作答：CCM controls → CAIQ questionnaire → STAR Level 1 self-assessment。
 法庭上提出鑑識證據作證時，應盡可能包含什麼？	Alternative explanations。它測的是 forensic examiner 的客觀性——應提出合理的競爭假設並用證據逐一排除，而不是替某一方 advocacy。
 「Alice 的帳號下載了檔案」能推論「Alice 偷了資料」嗎？	不能。證據只證明該 account 執行過 download。要先列出並排除：credential 被盜、malware 使用其 session、automated process 使用相同 credential 等假設（用 MFA records、source IP、EDR telemetry、service configuration 驗證）。
@@ -531,6 +568,14 @@ ENISA 2009 雲端風險條列細節題為什麼降權？哪些概念要保留？
 PCI SSC 的最短定位？	PCI DSS 標準制定／維護組織（standards body），不是政府 regulator，也不是法院或警察。Compliance program 與財務／營運後果來自 payment brands／acquirers。「PCI SSC 不能判 jail time」題屬 [Q] 重度降權。
 風險降低後還有 residual risk，下一步一定是 acceptance 嗎？	不一定。Mitigation ≠ acceptance：殘餘風險可再降低、移轉、避免，或在容忍範圍內由管理層接受。「Risk mitigation must always entail risk acceptance」太絕對（[J]）。
 過度安全控制的後果只有「不必要支出」嗎？	不只。還可能造成延遲、資源消耗、認證流程過重、可用性下降、複雜度上升、管理面攻擊面擴大、能源消耗、使用者繞過控制。比例原則：控制效益要大於成本、複雜度與營運負擔（題庫唯一答案屬 [Q] 高）。
+Data Controller 的判準是看誰 collect／create personal data 嗎？	不是。Controller＝決定 personal data 處理目的（purposes）與方式（means）的實體——WHY + HOW（GDPR Art. 4(7)）。Controller 不必親自 collect：Company 決定 purpose + means、SaaS vendor 實際處理，Company 仍是 Controller。口訣：Subject＝誰；Controller＝為何＋怎麼；Processor＝代做。
+Personal data 是否一定由 Data Subject 產生？	否。只要 relates to identifiable person 即可；醫院的 diagnosis、lab result、clinical risk score，或 merchant、SaaS 產生的紀錄，都是關於 Subject 的 personal data。
+NIST SP 800 的「Price」題真正能背什麼？	NIST publications 公開可取得，文件取得成本低；但 implementation／compliance（controls、tooling、people、assessment、evidence、continuous monitoring）仍有成本。選項為 ease／international acceptance／speed 時 Price 是 best available answer，但不要建立「NIST = cheap compliance」（[Q]）。
+ISO/IEC 27018 的三個 trigger？現行版本？	Public cloud + PII + cloud provider acting as PII processor。現行為 ISO/IEC 27018:2025，2019 版已被取代。
+ISO 27017 vs ISO 27018？	27017＝Cloud security controls（建立在 27002 之上）；27018＝public cloud PII privacy protection when CSP is processor。口訣：17 雲安全，18 雲隱私。
+ISO 27001／27002／27017／27018／27701 最短怎麼分？	27001＝ISMS requirements（可認證）；27002＝security controls guidance；27017＝cloud security；27018＝public-cloud PII processor privacy；27701＝Privacy Information Management System（PIMS）。
+ISO 27018 是 law 嗎？	不是，是國際標準／指南；不要和 GDPR、PIPEDA 等法律混淆。它也不是只適用 controller，不要背成「ISO 27018 = 每年 audit」。
+CSA STAR、Uptime Tier、Common Criteria 的數字各是哪一套？	STAR Level 1–2（self → third party）；Uptime Tier I–IV（data-center resiliency）；Common Criteria EAL1–EAL7（evaluation assurance depth）。有 7 個 assurance levels 的是 Common Criteria，不是 STAR。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）

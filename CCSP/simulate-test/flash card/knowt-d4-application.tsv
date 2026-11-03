@@ -48,3 +48,8 @@ Open Redirect 最主要的工程修補？	驗證／限制 redirect destination�
 Open Redirect 情境中，user training 與 audit logging 各扮演什麼角色？	User training＝降低 phishing／social engineering 的補償性控制，不是根治；Audit logging＝偵測、追查、鑑識，不是預防。題庫以 training 為主要保護屬 [Q] 中高。
 為何不能直接推論 PaaS 較容易有後門？	後門主要來自不安全的開發、測試與發布流程：遺留 debug／admin hooks、未移除測試帳號、hard-coded credentials、CI/CD 治理差、third-party component compromise，不是 PaaS 天生屬性（題庫敘事 [Q] 高降權）。
 Cloud developer 題問 cloud-specific challenge 時，encryption 為何常比 regulation 更貼 developer？	Developer 直接處理 TLS、KMS、secrets、certificates、application encryption；regulation 多半先由 governance／compliance 轉成 requirements。但「encryption in all data life-cycle phases」太絕對（data in use 常需解密），屬 [Q] 中度。
+Secure software development 題出現泛稱 `enhancement mechanisms` 與明確 `process isolation`，如何判？	選 process isolation。題目在測設計／開發 cloud software 時要考慮 shared-resource runtime isolation（co-tenancy、side channel）；上位詞不因較廣就勝出，優先選正式定義、能直接映射題幹 security property 的概念。
+IdP、RP／SP、Broker 在 federation 中各做什麼？	IdP＝authenticate 並 issue assertion、提供 identity attributes；RP／SP＝consume assertion、信任 IdP、提供 application／resource／service；Broker＝中介 trust／federation（可扮 proxy IdP）。口訣：IdP asserts; RP/SP consumes.
+SAML 的 Service Provider 是「提供 federation 服務的第三方公司」嗎？	不是。SP 是 federation 的正式角色：依賴 IdP assertion 並提供實際服務的一方。
+NIST 現代 federation 用語中，SP 的近義角色是什麼？	Relying Party（RP），如 NIST SP 800-63C-4（2025）。Federation 角色判斷上可當 RP ≈ SP。
+Third-party certification federation 中，third party 與 federation members 各是什麼角色？	Third party＝identity／trust function → IdP；federation members＝實際 applications／resources → SP。判斷：creates／sends assertion → IdP；consumes assertion + offers resource → RP／SP。

@@ -44,7 +44,7 @@ EAL1–EAL7 的英文核心概念？	EAL1 Functionally Tested；EAL2 Structurall
 Semi-formally designed、Semi-formally verified、Formally verified 各對應哪個 EAL？	Semi-formally designed → EAL5（半設）；Semi-formally verified → EAL6（半驗）；Formally verified → EAL7（全驗）。
 EAL3 與 EAL4 怎麼分？	EAL3 = 有系統地測試＋檢查（methodically tested and checked）；EAL4 = 有系統地設計＋測試＋審查（methodically designed, tested and reviewed）。
 題幹寫 formally verified design and tested，並提到 independent third party，選哪個 EAL？	EAL7。決勝字眼是 formally verified；independent third party 不是判斷依據，不要建立「third-party test → EAL7」的 association。
-CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。
+CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？	`[Q]` 中高降權。只留 managerial heuristic：高階管理者題優先從 business outcome／organizational risk 思考（technical characteristics vs business／financial outcome 選後者）。不要背成「CEO = Cost」。2026-11-03 再現：先看 business value、risk、cost／TCO、strategy、governance，再看技術答案；cost 只是 heuristic，cloud 不保證比較便宜。
 看到 all／always／every service model，第一步是什麼？	算 IaaS ∩ PaaS ∩ SaaS 的共同交集，找最接近 universal common denominator 的選項；不要先用 edge case 找反例。
 看到 most／best／primarily／typically，或兩個答案技術上都合理時，怎麼選？	找一般／預設語義下最直接、最一般、需要額外假設最少、最符合題幹 abstraction level 的答案。優先序：default semantics ＞ common architecture ＞ edge case。
 CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 identity protocol 的技術角色。兩者可由同一家公司扮演，但概念不同。題目明說 brokered federation 時依 federation role 解。
@@ -53,3 +53,10 @@ CSP 與 IdP 最大差別？	CSP 是 cloud service 的商業角色；IdP 是 iden
 Replication、Backup、Metered service 對 BC/DR 屬哪個 abstraction level？	Replication＝direct mechanism；Backup＝direct recovery mechanism；Metered service＝economic／operational enabler。問「directly enhances recovery」選前兩者；問「more cost-effective」metered service 才可能是答案。
 什麼叫 abstraction mismatch？	把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比。規則：Direct mechanism ＞ enabling condition ＞ economic benefit。
 D1 題目判讀的一句口訣？	量詞看交集，角色看職責，最佳看預設，答案看層級。
+Cloud provider 題目問最核心的 architecture trait，優先想到什麼？	Automation → repeatability → scalability（standardization、self-service、API-driven）。題庫答案 Automating service enablement；MTTR／MTBF 是 reliability metrics，重要但不是 provider 的核心 operating model（[J]）。
+Common Criteria 的產品證書是 ISO 直接發的嗎？	不是。ISO/IEC 出版 15408（評估準則）與 18045（CEM）；CCRA 提供國際互認架構；實際 certification 由 participating national schemes／certification bodies 執行，licensed labs 做評估。口訣：ISO 寫規格，CCRA 做互認，各國 scheme 發證。
+為什麼「Common Criteria certification program 由 ISO 發布維護」題要降權？	題目把 standards publisher 與 certification scheme 混為一談（[Q]）。選項只有 NIST／ISO／NATO／UNESCO 且在問標準來源時照選 ISO，但不能建立「ISO = 全球 CC 發證機關」的模型。
+題目同時出現上位概念與精確 security property／stage 時怎麼選？	依題幹 abstraction level 作答：問 property 就選 property，問特定 stage 就選該 stage。上位詞不因較廣而自動優先；優先選正式、可驗證、能直接映射題幹的概念。
+為什麼 security controls 會降低 cloud migration 的實際財務效益？	Actual TCO 還包含 WAF、KMS／HSM、SIEM／logging、DLP、backup／replication、private connectivity、audit／compliance 等安全與營運 overhead。最短模型：Cloud list price ≠ actual TCO（[J]）。
+遷雲 TCO 題的「Security controls and countermeasures」只代表 network／software controls 嗎？	不是。它是廣義集合，含 technical、administrative、physical controls；但 cloud-TCO 語境通常主要指 customer 額外負擔的 technical／operational／compliance costs。
+`best / biggest / most` 題要先警戒什麼？	Context 是否足夠（RTO／RPO、預算、規模、business objective）。資訊不足時先找 management／risk／business perspective；題庫答案可能只是 heuristic（[J]／[Q]），不當 universal truth。

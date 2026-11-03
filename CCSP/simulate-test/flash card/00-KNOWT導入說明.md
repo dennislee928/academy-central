@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **540 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **585 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL、題目判讀模型） | 55 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學、金鑰、PKI／憑證、masking 技術分類、inference） | 146 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標） | 89 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security | 50 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、題目判讀模型、cloud TCO） | 62 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI） | 155 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、Secure KVM、compute、storage coupling） | 105 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security（含 federation 角色 IdP vs RP／SP） | 55 |
 | `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 58 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance | 135 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、CSA STAR） | 143 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 540 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 585 |
 
 ### 歷次併入紀錄
 
@@ -149,6 +149,20 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 **不新增：** RPO／RTO／WRT 定義、`RTO + WRT ≤ MTD`、BIA 三類決策、SAST／DAST／IAST 三要素等既有卡已覆蓋；「今天三題的降權」屬時效性紀錄，不保留。
 
+**2026-10-30 今日錯題 ＋ 2026-10-31 今日講義／閃卡 ＋ 2026-11-03 今日講義與閃卡**（四份原檔未封存，知識點已併入彙整講義；原檔共 73 張卡，去重、合併並改寫為中性語氣後淨增 45 張）：
+
+- Provider automation vs MTTR、CC 證書不是 ISO 直接發、CC 發布者題 `[Q]`、上位詞 vs 精確 property、security controls 侵蝕遷雲 TCO ×2、`best / biggest / most` 先警戒 context → **D1**（+7）
+- ECC 快篩、AES vs ECC、TPI forces collusion、TPI 不需兩套 IAM、TPI vs SoD、define scheme vs classify at Create、data loss 映射、improper policy `[Q]`、Notorious Nine `[Q]` → **D2**（+9）
+- Isolation 定義、Internet-facing ≠ no isolation、DNSSEC／IPsec／TLS 功能、三者 ≠ isolation `[Q]`、process isolation ×3、Secure KVM ×3（含 TPM 非必要）、Compute = CPU + RAM、SSD／GPU／virtualized 歸類、healthcare ≠ 固定 Tier、surgical center 自建 DC `[Q]`、loose vs tight coupling、node count 影響 aggregate `[Q]` → **D3**（+16）
+- Secure software development → process isolation、IdP／RP／Broker、SAML SP ≠ 第三方公司、RP ≈ SP、third-party federation 角色 → **D4**（+5）
+- Controller 判準 WHY + HOW、personal data 不必由 Subject 產生、NIST Price `[Q]`、27018 trigger 與 2025 版、27017 vs 27018、27001／27002／27017／27018／27701、27018 ≠ law、STAR／Tier／EAL 三套數字 → **D6**（+8）
+
+**既有卡修正：** CSA STAR 依 2026 CSA 官方 assurance path 改為 **Level 1／2 為現行、Level 3 Continuous = legacy**——`CSA STAR 用來做什麼？`、`CSA 的 CCM、CAIQ、STAR 怎麼串成一條線？`、`CSA STAR 的三個層級各是什麼？`（改名為 `CSA STAR 現行的層級各是什麼？Level 3 怎麼處理？`）、`STAR 的三層 mnemonic 怎麼記？`（改名為 `STAR 的 mnemonic 怎麼記？`）、`問 STAR 的 highest level 與 third-party assessment 各答什麼？`（改為 third-party 優先、highest = 3 標為 legacy `[Q]`）。
+
+**既有卡增補答案：** `Common Criteria 是什麼？`（D6，補 ISO/IEC 15408／CCRA／national scheme）、`Data Controller 與 Processor 差在哪？`（D2，補 GDPR Art. 4(7) 判準）、`SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？`（D2，補口訣）、`CEO 遷雲的 biggest factor 題庫答 reduced cost，該怎麼記？`（D1，補 11-03 再現）。
+
+**不新增：** Data lifecycle 六階段、Uptime Tier II／III／IV 關鍵詞、TPI 定義、`all service models` 算交集、`most / best` 快篩、Brokered federation 等既有卡已覆蓋；ISO 27018 版本卡併入 trigger 卡；「今日四個 P0」屬時效性紀錄，不保留。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -175,7 +189,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 540 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 585 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 
