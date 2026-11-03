@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 6 的內容，跨場次合併後依主題重組。
 > **考試權重：** 13%
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 > **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
@@ -37,6 +37,9 @@
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | 財務風險移轉 vs 責任／問責／法律責任、ENISA assurance 題 `[Q]` 降權、閉卷防守題 | §1.9、§2.7、§3、§4、§5 |
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §12 PCI merchant level、§13 SOC 2 vs SOC 3 `[Q]`、§15 風險處置與殘餘風險、§17 過度控制比例原則 `[Q]` | §1.1、§1.2、§1.9、§2.9–§2.12 |
 | 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | Q4 PCI SSC 能否處罰 `[Q]` | §1.1、§2.8 |
+| 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Data Controller = WHY + HOW、§4 NIST SP 800 Price `[Q]`；§1 Common Criteria 生態 → D1（本檔 §1.2 交叉註） | §1.2、§1.4、§2.5、§2.13 |
+| 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §2 ISO/IEC 27018:2025 定位、與 27001／27002／27017／27701 關係、「不是什麼」 | §1.2、§2.14 |
+| 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §2 CSA STAR 現行 Level 1／2、Level 3 = legacy；STAR／Tier／EAL 三套數字 | §1.2、§2.15、§3、§4 |
 
 ---
 
@@ -267,7 +270,7 @@ US        → sectoral federal + state patchwork
 | **ISO/IEC 27001** | ISMS **認證**標準 | 可被認證；**technology-neutral**：非 cloud-specific、非 on-prem-specific、非 vendor-specific、非 open-source-specific |
 | **ISO/IEC 27002** | 控制實務指引 | 控制目錄／guidance，不是認證主體。**2022 版有 93 controls**，分 organizational／people／physical／technological 四大主題 |
 | **ISO/IEC 27017** | 雲端安全控制指引 | cloud security controls |
-| **ISO/IEC 27018** | 公有雲個資保護 | PII protection in public cloud |
+| **ISO/IEC 27018** | 公有雲個資保護 | PII protection in public cloud **when CSP acts as PII processor**；現行 **2025** 版 |
 | **ISO/IEC 27034** | 應用安全框架 | 組織 1 個 ONF、每應用 1 個 ANF（見 [Domain 4](../domain4-application/01-consolidated-lecture.md)） |
 | **ISO/IEC 27036** | 供應商／供應鏈安全 | vendor、supply chain |
 | **ISO/IEC 27037** | **數位證據處理** | identify／collect／acquire／**preserve** digital evidence |
@@ -290,9 +293,9 @@ US        → sectoral federal + state patchwork
 | **NIST SP 800-92** | 日誌管理 | Log management |
 | **CSA CCM** | 雲端控制矩陣 | 把控制對映到各種要求 |
 | **CAIQ** | 問卷 | 搭配 CCM 使用的 CSA 問卷 |
-| **CSA STAR** | 保證／登錄計畫 | **三個層級：Level 1 = Self-Assessment；Level 2 = Third-party certification／attestation；Level 3 = Continuous auditing／monitoring**。**沒有 Level 4。**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1） |
+| **CSA STAR** | 保證／登錄計畫 | **現行官方路徑：Level 1 = Self-Assessment；Level 2 = Third-party assurance（STAR Certification／Attestation／C-STAR）**。Level 3 = Continuous 是**舊資料描述（legacy）**；**沒有 Level 4。**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1）詳見下方「STAR 的層級」 |
 | **CMM** | 能力成熟度模型 | 流程的**嚴謹度、細節、可重複性（repeatability）** |
-| **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL |
+| **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL。**ISO/IEC 出版標準；CCRA 做國際互認；national scheme 實際發證**（見 [Domain 1 §1.9](../domain1-cloud-concepts/01-consolidated-lecture.md)） |
 | **FIPS 140-2／140-3** | 密碼模組驗證 | **140-2 = legacy；140-3 = current** |
 | **GAAP** | 會計原則 | Generally Accepted Accounting Principles——**不是** cloud security audit standard，是 distractor |
 
@@ -372,6 +375,39 @@ ISO 31000 = Risk Management（Enterprise，general-purpose）
 
 它**建立在 ISO/IEC 27002 之上**，在既有控制之外增加 cloud-specific 的安全指引與控制，明確適用於 **CSP 與 CSC 雙方**，涵蓋 public／private／hybrid cloud。秒答 `27017 = Cloud`。
 
+#### ISO/IEC 27018:2025 的定位（來源：2026-10-31，`[K]`）
+
+現行版本為 **ISO/IEC 27018:2025**，2019 版已被取代。
+
+> **ISO/IEC 27018 = 公有雲中，CSP 以 PII processor 身分處理個資時的隱私保護指南。**
+
+```text
+Public cloud
++ PII
++ cloud provider acting as processor
+→ ISO 27018
+```
+
+| Standard | 最短定位 |
+|---|---|
+| ISO/IEC 27001 | ISMS requirements，可做認證主體 |
+| ISO/IEC 27002 | Security controls guidance |
+| ISO/IEC 27017 | Cloud security controls guidance |
+| **ISO/IEC 27018** | **PII in public cloud when CSP is processor** |
+| ISO/IEC 27701 | Privacy Information Management System（PIMS）擴充 |
+
+```text
+27001 = 管理系統要求
+27002 = 一般 controls
+27017 = Cloud
+27018 = Cloud PII
+27701 = Privacy management
+```
+
+**口訣：17 雲安全，18 雲隱私。**
+
+**它「不是」什麼：** 不是 privacy law（不要和 GDPR、PIPEDA 混）、不是只適用 controller、不是所有雲都自動適用、不是 PCI DSS、不是 NIST RMF；**不要背成「ISO 27018 = 每年 audit」**。題目問 `first international privacy standard specifically for cloud providers` → 題庫對應 ISO 27018；首發年份與版本 trivia 不必背。
+
 #### ⭐ 四選一實戰：框架名稱 → 類別 mapping
 
 題目問 `which framework focuses on design, implementation and management?`，選項為 `ISO 31000:2009`／`HIPAA`／`ISO 27017`／`NIST SP 800-92`：
@@ -421,8 +457,8 @@ CSA
  │
  └─ STAR   → assurance / registry program
       ├─ Level 1 = Self-Assessment
-      ├─ Level 2 = Third-party certification / attestation
-      └─ Level 3 = Continuous auditing / monitoring
+      ├─ Level 2 = Third-party assurance（Certification / Attestation / C-STAR）
+      └─（Level 3 = Continuous：舊資料描述，legacy）
 ```
 
 **一句話版：**
@@ -433,32 +469,27 @@ CAIQ = questions     （這些 controls 做了嗎？）
 STAR = assurance maturity / registry
 ```
 
-#### STAR 的三個層級
+#### STAR 的層級：現行 Level 1／2，Level 3 = legacy（2026-11-03 修正）
+
+**以 2026 CSA 官方公開的 STAR assurance path 為準，核心 mapping 只有兩層：**
 
 ```text
 STAR Level 1   SELF        → Self-Assessment
-STAR Level 2   THIRD PARTY → Third-party Certification / Attestation
-STAR Level 3   CONTINUOUS  → Continuous Auditing / Monitoring
+STAR Level 2   THIRD PARTY → Independent / third-party assurance
+                             （STAR Certification / STAR Attestation / C-STAR）
 ```
 
-> **建議的 mnemonic：1 自己看 → 2 別人看 → 3 一直看**
+> **mnemonic：STAR 1 → 自己看；STAR 2 → 別人看**
 
 | 層級 | 內容 |
 |---|---|
 | **Level 1 — Self-Assessment** | 由 CSP 自己揭露、回答 security posture，**直接對應 CAIQ**：`CSP → CCM controls → CAIQ questionnaire → STAR Level 1` |
-| **Level 2 — Third-Party Assurance** | 有獨立第三方介入：`Cloud Provider → Independent third party → Certification／Attestation`。問 `STAR level requiring third-party assessment?` → **Level 2** |
-| **Level 3 — Continuous** | 持續性的 monitoring／auditing／assurance。問 `highest STAR level?` → **3** |
+| **Level 2 — Third-Party Assurance** | 有獨立第三方介入：`Cloud Provider → Independent third party → Certification／Attestation／C-STAR`。題幹出現 `third-party assessment／independent assessment／certification／attestation` → **Level 2** |
+| **（Level 3 — Continuous）** | **舊資料曾描述**為 continuous monitoring／continuous certification；不屬現行官方主要 assurance path。舊題庫若問 `highest STAR level?` 可能期待 **3**——當作 legacy 題庫對應（`[Q]`），不要讓它干擾 L1／L2 核心 mapping |
 
-**⭐ 不要自行發明 Level 4：**
+**⭐ 不要自行發明 Level 4**（不論新舊資料都沒有）。
 
-```text
-1 = Self
-2 = Third party
-3 = Continuous
-4 = ❌（不存在）
-```
-
-> **常見錯誤：** third-party assessment 與 highest level 兩題都誤選 Level 4。
+> **常見錯誤：** third-party assessment 題誤選 Level 4；把 Common Criteria 的「EAL1–7 共 7 級」誤套到 STAR。三套數字：**STAR 1–2、Uptime Tier I–IV、EAL1–7**（見 §4）。
 
 **CCM 的兩個角色：**
 
@@ -672,6 +703,20 @@ Use     = 不要拿去幹別的
 | **Evidence custodian** | **證據保管人** | 誰維持**證據與保管鏈**？（鑑識角色，見 §1.5） |
 
 > **⭐ 不要把 Evidence Custodian 和資料治理角色混在一起。** 前者屬鑑識證據鏈，後者屬資料治理。題目出現 `evidence from collection until court` → **Evidence Custodian**。
+
+**Data Controller = WHY + HOW，不是「誰產生資料」（來源：2026-10-30，`[T]`）：** GDPR Art. 4(7)：controller = **決定 personal data 處理目的（purposes）與方式（means）的實體**。
+
+```text
+Controller = WHY + HOW
+Processor  = DO it for Controller（on behalf of）
+Subject    = WHO the data is about
+Regulator  = OVERSIGHT / enforcement
+```
+
+- **資料「描述誰」≠「由誰產生」：** 醫院建立的 diagnosis、lab result、prescription、billing code、clinical risk score 都是 about patient（Subject），但由醫院／醫師產生。**Personal data 不必由 Data Subject 親自輸入或產生**，只要 relates to identifiable person 即可。
+- **Controller 也不必親自 collect／create：** `Company（決定 purpose + means）→ SaaS vendor（實際 collect／store／process）`，Company 仍是 Controller。
+
+> **口訣：Subject = 誰；Controller = 為何＋怎麼；Processor = 代做。**
 
 > **核心原則：** Cloud provider 常是 data processor，但 **cloud customer／data owner／controller 仍負最終法律責任**。Outsourcing 不會完全轉移 accountability。
 
@@ -1367,6 +1412,8 @@ FedRAMP 是美國聯邦雲端授權計畫，**聯邦機關**使用經授權的�
 
 Data subject／controller／processor／custodian 四者必須分清；不要把 custodian（日常維護者）與 controller（決定目的與方式）混用。
 
+**再現（2026-10-30，`[T]`）：** `In regard to most privacy guidance, the data controller is ______.` → 題庫答案 `The entity that collects or creates the privacy data`。四選項中它是最佳答案，但 wording 不精確——controller 的判準是**決定 WHY + HOW**，不是誰 collect／create（見 §1.4）。不要背成「Controller = 產生 personal data 的人」。
+
 ### 2.6 ARO 與 RMF 的 foundation 誤判（`by-test/11` D5 §1、§4）
 
 - 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.9）。
@@ -1408,6 +1455,34 @@ SOC 3 確實可公開散布，但認真做供應商風險與採購盡職調查�
 ### 2.12 過度安全控制只是不必要支出（2026-10-23 兩日錯題修復，`[Q]` 高降權）
 
 題庫把 `adverse environmental effects` 完全排除，又沒說明 environmental 是否指 physical datacenter environment，語意模糊。保留比例原則：控制效益要大於成本、複雜度與營運負擔。詳見 §1.9。
+
+### 2.13 為什麼選擇遵循 NIST SP 800-series？Price（2026-10-30 錯題，`[Q]` 降權）
+
+**錯題：** `Why might an organization choose to comply with NIST SP 800-series standards?` → 題庫答案 **Price**（其他選項 Ease of implementation、International acceptance、Speed）。
+
+**題庫想表達：** NIST SP 800 publications 可公開免費取得，「取得標準文件」成本低。但：
+
+```text
+document acquisition cost ≠ implementation cost ≠ compliance cost
+```
+
+實際導入的 controls、tooling、people、assessment、evidence、continuous monitoring 都可能非常昂貴。另外 NIST 是美國 guidance，不是「國際 acceptance」取向的 ISO framework。
+
+**考場：** 選項如上時 Price 是 best available answer；但不要建立「NIST = cheap compliance」的錯誤模型。
+
+> **一句話規則：** NIST SP 800 是公開、成熟、廣泛引用的美國資安 guidance；文件容易取得，**implementation 並不免費**。
+
+### 2.14 ISO 27018 定位不穩（2026-10-31，`[K]`）
+
+**錯題主題：** `first international privacy standard specifically for cloud providers` → ISO 27018。修正重點：三個 trigger（public cloud + PII + CSP as processor）、現行 2025 版、27017 雲安全 vs 27018 雲隱私、它不是 law。詳見 §1.2。
+
+### 2.15 CSA STAR：third-party 題與 Level 3 的處理（2026-11-03 錯題，`[T]` P0）
+
+**錯誤來源：** 誤以為 STAR 有 7 個等級——那是 **Common Criteria EAL1–EAL7**，不是 STAR。
+
+**固定 mapping：** `third-party／independent assessment／certification／attestation` → **STAR Level 2**；self-assessment → **Level 1**。
+
+**Level 3：** 舊資料描述為 continuous；以 2026 CSA 官方 assurance path 為主時只需牢記 L1／L2。**不要背「STAR 一定有 Level 1／2／3，Level 3 就是現行正式 continuous certification」**（見 §1.2）。
 
 ---
 
@@ -1498,9 +1573,9 @@ SOC 3 確實可公開散布，但認真做供應商風險與採購盡職調查�
 | 76 | **CCM tells you what controls matter; tooling verifies／enforces them.** |
 | 77 | 「ensuring baseline configuration is applied」不是 CCM 的 benefit，是 Ansible／CSPM 的職責。 |
 | 78 | `CCM = What controls?`；`CAIQ = Do you implement them?` |
-| 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party certification；Level 3 = Continuous auditing。** |
-| 79a | **STAR 沒有 Level 4**；問 highest level 答 **3**，問 third-party 答 **2**。 |
-| 79b | STAR mnemonic：**1 自己看 → 2 別人看 → 3 一直看**。 |
+| 79 | **STAR Level 1 = Self-Assessment；Level 2 = Third-party assurance（Certification／Attestation／C-STAR）**；Level 3 = Continuous 屬舊資料描述（legacy）。 |
+| 79a | **STAR 沒有 Level 4**；問 third-party 答 **2**；舊題庫問 highest level 可能期待 3（`[Q]` legacy 對應）。 |
+| 79b | STAR mnemonic：**1 自己看 → 2 別人看**。 |
 | 79c | STAR Level 1 直接對應 CAIQ：`CCM controls → CAIQ questionnaire → STAR L1 self-assessment`。 |
 | 80 | **GAAP 是會計原則，不是 cloud security audit standard**（四選一的 distractor）。 |
 | 81 | GLBA 是**美國聯邦法**、管金融機構的 **nonpublic personal information**；PCI DSS 是產業標準、管支付卡資料。 |
@@ -1560,6 +1635,12 @@ SOC 3 確實可公開散布，但認真做供應商風險與採購盡職調查�
 | 135 | **SOC 2 = 客戶深度看；SOC 3 = 大眾公開看**；採購盡調實務上 SOC 2 Type 2 更有用。 |
 | 136 | **Mitigation ≠ Acceptance**：殘餘風險可再降低、移轉、避免，或在容忍範圍內接受。 |
 | 137 | 過度控制的後果不只成本：延遲、可用性下降、複雜度、攻擊面、使用者繞過——比例原則。 |
+| 138 | **Controller = WHY + HOW**（purposes + means）；不是看誰 collect／create。 |
+| 139 | **Subject = 誰；Controller = 為何＋怎麼；Processor = 代做**；personal data 不必由 Subject 親自產生。 |
+| 140 | NIST SP 800 文件公開可取得，但 **implementation／compliance 仍有成本**；「Price」題屬 `[Q]`。 |
+| 141 | **ISO 27018 = Public cloud + PII + CSP acting as processor**；現行 **27018:2025**。 |
+| 142 | **17 雲安全，18 雲隱私**；27701 = PIMS；ISO 27018 不是 law。 |
+| 143 | **STAR 1–2、Uptime Tier I–IV、EAL1–7**：三套數字不要混。 |
 
 ---
 
@@ -1577,7 +1658,12 @@ SOC 3 確實可公開散布，但認真做供應商風險與採購盡職調查�
 | CSA CCM | CAIQ | 控制矩陣（有哪些 controls） vs 問卷（有沒有實作） |
 | CSA CCM | Ansible／CSPM／policy engine | 定義與對映 controls vs 實際套用與檢查 |
 | STAR Level 1 | STAR Level 2 | 自我評估 vs 第三方認證／證明 |
-| STAR Level 2 | STAR Level 3 | 第三方一次性認證 vs 持續稽核與監控 |
+| STAR Level 2 | STAR Level 3 | 現行第三方 assurance vs 舊資料描述的 continuous（legacy） |
+| CSA STAR（1–2） | Uptime Tier（I–IV）／EAL（1–7） | 雲端控制保證 vs 機房韌性 vs 產品評估保證深度 |
+| Data Controller | 資料產生者 | 決定 purposes + means vs 實際 collect／create 的人（可能是 processor 或第三方） |
+| ISO 27017 | ISO 27701 | 雲端安全控制 vs 隱私資訊管理系統（PIMS） |
+| NIST 文件取得成本 | Compliance 實作成本 | 公開免費 vs controls／people／assessment／monitoring 仍昂貴 |
+| ISO/IEC 15408 | CCRA／national scheme | CC 標準出版 vs 互認與實際發證 |
 | SSAE 18 | GAAP | 審計 attestation 標準 vs 會計原則 |
 | CMM | CSA STAR | 流程成熟度 vs 雲端控制保證 |
 | Auditability | Regulated | 就緒狀態 vs 受監管 |
@@ -1777,7 +1863,7 @@ SAS 70     = legacy
 - 看到 PHI 要想哪個主管機關？看到欺騙性商業行為呢？
 - 題幹出現 incident response 該找誰？出現 DPIA 呢？出現 audit evidence 呢？
 - CISO 與 DPO、Legal 與 Compliance 的一句話切法各是什麼？
-- STAR 有幾個層級？第三方評估與最高層級各是哪一個？
+- STAR 現行官方有哪幾個層級？第三方評估是哪一個？Level 3 該怎麼處理？
 - 法庭作證時為什麼要主動提出 alternative explanations？
 - 「Alice 的帳號下載了檔案」能直接推論「Alice 偷了資料」嗎？要先排除哪些假設？
 - RMF 七步驟的順序是什麼？RMF 以什麼為 foundation？
@@ -1791,3 +1877,7 @@ SAS 70     = legacy
 - SOC 2 與 SOC 3 各給誰看？為什麼「cloud customer 最可能收到 SOC 3」要降權？
 - Mitigation 後還有 residual risk，下一步一定是 acceptance 嗎？
 - 過度安全控制除了成本，還可能造成哪些後果？
+- Controller 的判準是 collect／create 還是什麼？Subject 是否一定親自產生 personal data？
+- NIST SP 800 的「Price」題真正能背什麼？
+- ISO 27018 的三個 trigger？27017 與 27018 最短怎麼分？ISO 27018 是 law 嗎？
+- STAR、Uptime Tier、Common Criteria 各是哪一套數字？
