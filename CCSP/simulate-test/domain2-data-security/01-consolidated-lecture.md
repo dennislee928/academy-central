@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 2 的內容，跨場次合併後依主題重組。
 > **考試權重：** 20%（六域最高）
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D2 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -36,6 +36,9 @@
 | 2026-10-13 補強（內容已併入，原檔未封存） | Object／File／Block 的 hierarchy 判準定案（取代 LearnZapp 題庫關鍵字規則） | §1.3 |
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | 推論攻擊 vs 資料直接揭露、Inference vs Aggregation、最短模型與閉卷防守題 | §1.12、§2.13、§3、§4、§5 Drill F |
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §6 遺失裝置 Tracking vs Revocation、§8 Brewer–Nash／Chinese Wall、§14 shared secret key、§16 Masking 的 impact 面、§18 object storage／CDN `[Q]` | §1.7、§1.11、§1.13、§2.14–§2.16、§3、§4、§5 Drill G |
+| 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §5 ECC：public-key + 短 key、AES vs ECC 分類表 | §1.7、§2.17、§3、§4、§5 Drill H |
+| 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §4 TPI：forces collusion、單一 IAM 即可、TPI／SoD／Split Knowledge 口訣；§6 CSA Notorious Nine／data loss `[Q]` | §1.11、§2.18、§3、§4、§5 Drill H |
+| 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §1 Define scheme（lifecycle 前）vs Classify at Create | §1.1、§2.5、§3、§4、§5 Drill H |
 
 ---
 
@@ -51,12 +54,29 @@ Create → Store → Use → Share → Archive → Destroy
 
 | 階段 | 核心活動 |
 |---|---|
-| **Create** | **Classification**（分類與標籤應在此階段完成） |
+| **Create** | **Classification**（實際資料物件在此階段被指派分類與標籤） |
 | **Store** | 儲存 + 加密 + 備份 + 存取控制 |
 | **Use** | 授權處理、使用控制 |
 | **Share** | 傳輸、共享、第三方揭露、接收方控制 |
 | **Archive** | 保存、長期保護、retention |
 | **Destroy** | 安全刪除／crypto-erasure／sanitization |
+
+**Define scheme vs Classify at Create（來源：2026-11-03，`[T]`）：** classification 的「規則」與「貼標」是兩層：
+
+```text
+Governance / Policy 層（lifecycle 之前）
+  Define classification scheme：Public／Internal／Confidential／Restricted
+  ＋ handling rules、retention、encryption、access control、DLP、labeling、disposal
+        ↓
+Data object / Runtime 層
+  Create：patients.csv → classification = Restricted
+        ↓
+Store → Use → Share → Archive → Destroy
+```
+
+`Define` 不是 Cloud Secure Data Lifecycle 的正式 phase。題目問 scheme／policy／categories 怎麼設計 → lifecycle 之前的 governance；問「這筆 data 何時被 classify／categorize」→ **Create**。
+
+> **口訣：規則先定義；資料生成時貼標。**（Define the scheme BEFORE lifecycle; assign the classification AT Create.）
 
 **致命陷阱：** Encryption、Tokenization、DLP、Protect、Validate 都是 **control**，不是 lifecycle phase。題目問「Share 的前一個 phase」時答 **Use**，不是 Encrypt。
 
@@ -577,6 +597,18 @@ Purpose = secure communication and trust using public key cryptography
 
 **ECC：** Elliptic Curve Cryptography，以較小金鑰提供與傳統公鑰密碼相當的安全強度。
 
+**ECC 快篩（來源：2026-10-30 錯題，`[K]`）：** 題幹 `public key cryptography` + `much smaller keys ... same level of security` → **ECC**。先用 `public key` 刪掉 AES（symmetric）。簡化對照 `ECC 256-bit ≈ RSA 3072-bit`（security-strength 概念對照，不是固定一一對應；參考 NIST SP 800-186）。
+
+| 名稱 | 類型 |
+|---|---|
+| AES | 對稱式加密 |
+| RSA | 非對稱式加密 |
+| ECC | 非對稱／公鑰密碼學 |
+| MD5 | Hash，且已不適合安全用途 |
+| SSL | 傳輸安全 protocol family，不是 crypto primitive |
+
+> **口訣：Public key + smaller key → ECC。**
+
 **Certificate ≠ KMS ≠ HSM：** Certificate 做身分與 public key 綁定；KMS 管金鑰生命週期；HSM 是硬體保護容器。
 
 #### Cryptographic Entropy 與金鑰產生（來源：2026-10-10 D3 錯題補強）
@@ -796,6 +828,30 @@ Split Knowledge    = nobody knows full secret
 M-of-N             = threshold control
 ```
 
+**口訣（來源：2026-10-31）：**
+
+```text
+TPI = 兩人一起做
+SoD = 工作拆開做
+Split Knowledge = 秘密拆開知道
+```
+
+TPI 可視為 dynamic separation of duty／dual authorization 的一種實作，但三個詞不要當同義詞。NIST／CNSSI 的定義重點：至少兩名 authorized persons，且彼此能察覺錯誤或未授權程序。
+
+**`TPI forces collusion` 的意思：** 英文讀起來彆扭，但安全含義是——**單一惡意內部人員不夠，要完成未授權動作，至少還要拉另一名授權者一起作弊**：
+
+```text
+One person cannot do it alone
+→ attacker / insider must collude with another authorized person
+```
+
+**TPI 不需要兩套 IAM：** TPI 是 **policy／authorization condition**，不是「必須部署兩套 IAM system」或「two different IAM matrices」。一套 IAM 即可實作：
+
+```text
+One IAM platform
+Rule: Action X requires approver A + approver B
+```
+
 > 對照：`by-test/06` P0-2 的金鑰管理題中，**separation of duties** 是「金鑰管理與被加密資料分離」的正解標籤；two-person integrity 則是「關鍵動作需兩人」的標籤。兩者不可互換（見 §1.4 的誤選對照表）。
 
 **SoD 分離的對象是 authority／functions，不是元件：**
@@ -917,6 +973,8 @@ Aggregation = 把多筆低敏感資料「拼起來」      → 常是 inference 
 
 正解 **Create**，誤選 Store。錯因：把分類標籤視為儲存時治理。後續 encryption、access control、DLP、retention、sharing restriction、destruction 都可能依賴 classification。
 
+**再現（2026-11-03，`[T]` terminology／timing）：** `According to the ISC2 Cloud Secure Data Life Cycle, in which phase should categorization/classification of data occur?` → **Create**。常見質疑「classification 應該更早 define」本身沒錯，但混了兩件事：**define schema（lifecycle 前的 governance）vs assign label（Create）**。這不是 knowledge gap，而是時點區分（見 §1.1）。
+
 ### 2.6 TDE 引擎位置（`by-test/03` Q25、`by-test/07` §7.4）
 
 正解：引擎位於 **database／DBMS 層**。KMS 管金鑰、HSM 保護金鑰，**兩者都不是 TDE 引擎**。
@@ -981,6 +1039,29 @@ BEST    = 選最完整／最適當的答案
 | CDN 是 SaaS 最典型的 storage type | CDN 是內容快取／派送，不是 SaaS 的通用儲存類型 | SaaS 儲存多為 provider 管理的 information storage／database；CDN 見 §1.3 |
 
 兩題皆為強降權：知道題庫可能期待的答案即可，不改寫 §1.3 的模型。
+
+### 2.17 Public-key + much smaller keys 誤選 AES（2026-10-30 錯題，`[K]`）
+
+**錯題：** `This approach to public key cryptography uses much smaller keys than traditional cryptography to provide the same level of security.` → 正解 **Elliptical curve**（即 ECC），誤選 AES。
+
+**錯因：** 忽略題幹已明示 `public key cryptography`；AES 是 symmetric，第一步就該刪除（見 §1.7）。
+
+> **一句話規則：** Public key + smaller key → ECC；AES = symmetric。
+
+### 2.18 CSA Notorious Nine：哪個不是 data loss 的直接原因（2026-10-31 錯題，`[Q]`）
+
+**題型：** 題目引用 CSA **Notorious Nine**（2013 舊版 threat taxonomy），比較各選項是否直接造成 data loss：
+
+```text
+Lost crypto key       → data inaccessible
+Bad backup            → cannot recover
+Accidental overwrite  → original data lost
+Improper policy       → 題庫認為較「間接」
+```
+
+**問題：** `Improper retention policy → delete data too early` 本身就可能直接造成 data loss。題庫實際上在比較 **direct mechanism vs indirect governance cause**。
+
+**處理：** 2013 九項名稱不值得高頻背；現行準備重點放 common cloud threats 與底層機制。**不要背「improper policy 不會造成 data loss」。**
 
 ---
 
@@ -1069,6 +1150,13 @@ BEST    = 選最完整／最適當的答案
 | 79 | **Tracking = 找設備；Revocation = 切斷存取**；防 lost device 的 data disclosure → credential revocation。 |
 | 80 | **Brewer–Nash = Chinese Wall**：依使用者已存取過的資料動態決定存取，防利益衝突（P2，認得即可）。 |
 | 81 | Masking／obfuscation 主要降低**機密性** impact；redundant ISP 主要降低**可用性** impact（見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)）。 |
+| 82 | **Public key + smaller key → ECC**；AES = symmetric，看到 `public key` 先刪。 |
+| 83 | **TPI = 兩人一起做；SoD = 工作拆開做；Split Knowledge = 秘密拆開知道。** |
+| 84 | `TPI forces collusion` = 單一 insider 不夠，必須拉另一名授權者共謀。 |
+| 85 | TPI 是 authorization condition，**一套 IAM 即可實作**（Action X requires approver A + B），不需要兩套 IAM matrix。 |
+| 86 | **Classification scheme 在 lifecycle 前定義；實際 data object 在 Create 時分類。** |
+| 87 | Lost key = data inaccessible；bad backup = cannot recover；overwrite = original destroyed；錯誤 retention policy 也可能直接造成 data loss。 |
+| 88 | CSA Notorious Nine exact wording = legacy／低優先（`[Q]`）。 |
 
 ---
 
@@ -1128,6 +1216,10 @@ BEST    = 選最完整／最適當的答案
 | Device tracking | Credential revocation | 找回與定位設備 vs 切斷 session／token／cert 存取 |
 | Shared secret | Shared secret key | 協定中雙方共有的秘密值（可能再經 KDF） vs 直接用於對稱加解密的金鑰 |
 | Brewer–Nash／Chinese Wall | 防火牆 | 防利益衝突的動態存取控制模型 vs 網路流量過濾設備 |
+| AES | ECC | 對稱式 bulk encryption vs 公鑰密碼學（較短 key 達同等強度） |
+| Define classification scheme | Classify at Create | lifecycle 前的 governance 規則 vs 實際資料物件生成時貼標 |
+| TPI（兩人一起做） | 兩套 IAM | authorization condition vs 部署架構；一套 IAM 即可實作 TPI |
+| Direct data-loss mechanism | Indirect governance cause | lost key／bad backup／overwrite vs improper policy（但錯誤 retention 也可直接導致 loss） |
 
 ---
 
@@ -1195,6 +1287,17 @@ BEST    = 選最完整／最適當的答案
 3. Brewer–Nash 防什麼？為什麼屬於動態存取控制？
 
 **參考答案：** ① Credential revocation（tracking 只找設備） ② Shared secret key ③ 防同一使用者跨越互相競爭的資料集合；決策依使用者先前存取紀錄改變
+
+### Drill H：2026-10-30／10-31／11-03 閉卷防守
+
+1. 題幹 `public key cryptography + much smaller keys` → 選什麼？AES 為何先刪？
+2. TPI、SoD、Split Knowledge 各用一句話區分。
+3. 一套 IAM 能不能實作 TPI？
+4. `TPI forces collusion` 的安全含義？
+5. Classification scheme 何時 define？實際資料何時 classify？
+6. 為什麼 Notorious Nine 那題不值得高頻背？`improper policy 不會造成 data loss` 可以當原則嗎？
+
+**參考答案：** ① ECC；AES 是 symmetric ② 兩人一起做／工作拆開做／秘密拆開知道 ③ 可以，rule：Action X requires approver A + B ④ 單一 insider 不夠，至少要另一名授權者共謀 ⑤ Scheme 在 lifecycle 前；資料在 Create ⑥ 2013 舊 taxonomy；不可以，錯誤 retention policy 也可能直接刪掉資料
 
 ### Drill E：維持節奏
 
