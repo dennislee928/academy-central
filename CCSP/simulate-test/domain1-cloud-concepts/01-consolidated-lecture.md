@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 1 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh
+> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D1 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -25,6 +25,9 @@
 | 2026-10-07 D3 ＋ D6 錯題補強與本輪 recall（內容已併入，原檔未封存） | 供應商鎖定雙層模型、media 分類、private cloud plane 區分 | §1.2、§1.5 |
 | 2026-10-15 D1 錯題補強（內容已併入，原檔未封存） | Common Criteria／EAL1–7、CEO 遷雲 = cost `[Q]` | §1.9、§2.8、§2.9 |
 | 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | §0–§1 量詞／角色／抽象層級判讀、§2 Q2 all cloud models、Q5 metered service、§3 檢查表、§4 最短模型；Q1 → D4、Q3 → D4、Q4 → D6 | §1.10、§2.7、§2.10、§2.11 |
+| 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §1 Common Criteria publisher、§3 provider automation、§7 D1 操題模型（已由 §1.10 涵蓋）；§2 Data Controller → D6、§4 NIST Price → D6、§5 ECC → D2、§6 Isolation → D3 | §1.9、§2.7、§2.12、§2.13 |
+| 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §5 security controls vs cloud TCO；§1 process isolation → D3／D4、§2 ISO 27018 → D6、§3 Secure KVM → D3、§4 TPI → D2、§6 Notorious Nine → D2 | §2.7、§2.14 |
+| 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §5 CEO reduced cost 再現、§10.6 `best / biggest / most` 警戒、§6 compute 抽象層級（概念 → D3）；§1 → D2、§2 → D6、§3／§4／§8 → D3、§7 → D4 | §1.10、§2.7、§2.9 |
 
 ---
 
@@ -343,6 +346,32 @@ Formally verified       → EAL7（全驗）
 
 > **答題 trigger：** 題幹出現 `formally verified` 即直接 **EAL7**。`independent third party` 不是決勝字眼——不要建立「third-party test → EAL7」的錯誤 association。
 
+#### 標準出版者 vs 認證體系：ISO/IEC、CCRA、National Scheme（來源：2026-10-30 錯題，`[Q]`）
+
+Common Criteria 的技術標準對應 **ISO/IEC 15408**（IT security evaluation criteria）與 **ISO/IEC 18045**（Common Evaluation Methodology，CEM）。ISO/IEC 出版並維護這些標準，但**不直接運作全球 CC certification program、也不直接發產品證書**。
+
+```text
+ISO/IEC
+   └── publishes ISO/IEC 15408 / 18045
+             │
+             ▼
+Common Criteria / CCRA ecosystem
+     ┌───────┴────────┐
+     ▼                ▼
+National Scheme    Licensed Labs
+     │
+     ▼
+Certificate
+```
+
+- **CCRA**（Common Criteria Recognition Arrangement）：國際互認架構。
+- **National schemes／Certification Bodies**：各國實際執行認證、發證。
+- **Licensed labs**：執行評估。
+
+> **口訣：ISO 寫規格，CCRA 做互認，各國 scheme 發證。**
+
+STAR、Uptime Tier、EAL 三套數字的對照見 [Domain 6 §4](../domain6-legal-compliance/01-consolidated-lecture.md)（STAR 1–2、Tier I–IV、EAL1–7）。
+
 ### 1.10 D1 題目判讀模型：量詞、角色、抽象層級（來源：2026-10-27 D1 Fresh）
 
 高投報率的 ISC2 解題順序：**先判讀題目的量詞、角色、抽象層級，再進入技術細節。** D1 fresh 題優先掃描：
@@ -375,6 +404,15 @@ edge case
 ```
 
 `best` 不代表其他選項完全沒用，而是問：哪個答案對題幹目標**最直接、最一般、假設最少**。技術上兩個答案都合理時，比較直接性、一般性與需要的額外假設。
+
+```text
+Direct control
+> enabling condition
+> supporting capability
+> downstream consequence
+```
+
+**`best / biggest / most` 先警戒 context 是否足夠（來源：2026-11-03）：** 題幹沒給 RTO／RPO、預算、規模、business objective 等必要條件時，題庫答案往往是 heuristic（例：CEO 遷雲 → cost、小型醫療中心 → 自建 DC，見 §2.9 與 [Domain 3 §2.16](../domain3-infrastructure/01-consolidated-lecture.md)）。處理方式：先找 ISC2 management／risk／business perspective；**不要把題庫 heuristic 當 universal truth**，此類題標 `[J]` 或 `[Q]`。
 
 #### 角色：先拆商業角色與技術角色
 
@@ -413,6 +451,10 @@ Metered service   → 經濟／營運促成因素
 ```
 
 **Abstraction mismatch：** 把不同層級的正確敘述互相比較，例如拿「Metered service 有助 DR 成本」和「Replication 直接提供 DR 能力」相比（見 §2.11）。
+
+**上位詞不自動優先：** 題目同時出現上位概念（security、risk management、enhancement mechanisms）與精確 property／stage（confidentiality、assess、process isolation）時，依題幹的 abstraction level 作答——問 property 就選 property，問特定 stage 就選該 stage；優先選**正式、可驗證、能直接映射題幹**的概念（process isolation 例見 [Domain 4 §2.15](../domain4-application/01-consolidated-lecture.md)）。
+
+**資源本體 vs 實作形式（來源：2026-11-03）：** `Compute is made up of ___ and ___` 問的是資源構成（**CPU + RAM**），`virtualized / physical` 描述的是實作形式，SSD／HDD 屬 storage——同樣是 abstraction level error（概念見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)）。
 
 #### D1 Fresh 解題檢查表
 
@@ -500,6 +542,10 @@ strict governance
 - **Cloud developer training：encryption vs regulatory mandates**（2026-10-27 D1 Fresh Q1，`[Q]` 中度）→ [Domain 4 §2.11](../domain4-application/01-consolidated-lecture.md)
 - **Brokered federation 中誰發 SAML assertion**（2026-10-27 D1 Fresh Q3，`[T]`）→ [Domain 4 §2.12](../domain4-application/01-consolidated-lecture.md)
 - **PCI SSC 能否處罰／是否為 regulator**（2026-10-27 D1 Fresh Q4，`[Q]` 重度）→ [Domain 6 §2.8](../domain6-legal-compliance/01-consolidated-lecture.md)
+- **Data Controller = WHY + HOW**（2026-10-30，`[T]`）、**NIST SP 800 = Price**（2026-10-30，`[Q]`）、**ISO 27018:2025**（2026-10-31，`[K]`）、**CSA STAR Level 1／2**（2026-11-03，`[T]`）→ [Domain 6](../domain6-legal-compliance/01-consolidated-lecture.md)
+- **ECC = public-key + 短 key**（2026-10-30，`[K]`）、**TPI 增補**、**Notorious Nine／data loss**（2026-10-31）、**classification 在 Create**（2026-11-03，`[T]`）→ [Domain 2](../domain2-data-security/01-consolidated-lecture.md)
+- **DNSSEC＋IPsec＋TLS ≠ Isolation**（2026-10-30，`[Q]`）、**Process isolation 概念**、**Secure KVM 與 TPM**（2026-10-31）、**Compute = CPU + RAM**、**Uptime Tier 與小型醫療中心自建 DC**、**Loosely coupled storage cluster**（2026-11-03）→ [Domain 3](../domain3-infrastructure/01-consolidated-lecture.md)
+- **Secure software development → Process isolation**（2026-10-31，`[T]`）、**IdP vs RP/SP**（2026-11-03，`[T]`）→ [Domain 4](../domain4-application/01-consolidated-lecture.md)
 
 ### 2.8 EAL3 誤選為 formally verified（2026-10-15）
 
@@ -526,6 +572,16 @@ Business objectives、Risk、Financial impact、Compliance、Strategy、Agility
 ```
 
 **分類：** `[Q]`（題目品質），**降權：中高**。不代表不懂 cloud adoption benefits。
+
+**再現（2026-11-03）：** 同題再出現，題庫答案 `reduced overall cost due to outsourcing administration`。真實世界的遷雲驅動因素還包括 elasticity、time-to-market、resilience、global reach、CapEx → OpEx、modernization、skill shortage、M&A、managed services——**cloud 不保證比較便宜**（另見 §2.14：list price ≠ TCO）。考場 heuristic：
+
+```text
+CEO / senior management
++ 沒有 technical constraints
++ 問 biggest / primary / most important
+→ 先看 business value、risk、cost／TCO、strategy、governance
+→ 再看 technical feature／protocol／implementation detail
+```
 
 > **一句話規則：** 高階管理者題 → 優先從 business outcome／organizational risk 思考；**不要背成「CEO = Cost」**。
 
@@ -563,6 +619,58 @@ Metered service         → economic / operational enabler
 題目若問「which makes DR more cost-effective」，metered service 可能是答案；若問「directly enhances recovery capability」，replication／backup 更直接。
 
 > **一句話規則：** Direct mechanism ＞ enabling condition ＞ economic benefit。
+
+### 2.12 Common Criteria certification program 的發布者 = ISO（2026-10-30 錯題，`[Q]` 中度降權）
+
+**錯題：** `What is the organization that publishes and maintains the Common Criteria certification program for IT products?` → 題庫答案 **ISO**（其他選項 NIST、NATO、UNESCO）。
+
+**問題：** 題目把 **standards publisher** 與 **certification scheme** 混為一談。ISO/IEC 出版 15408／18045；CCRA 負責互認；national schemes 實際發證（見 §1.9）。
+
+**考場：** 選項只有 NIST／ISO／NATO／UNESCO、且 wording 明顯在問「標準來源」→ 選 **ISO**。但不要背成「ISO = 全球 CC 發證機關」。
+
+> **一句話規則：** ISO/IEC = CC 標準；CCRA = 國際互認；national scheme = 實際 certification。
+
+### 2.13 Cloud provider 最應關注的 architecture trait（2026-10-30 錯題，`[J]`）
+
+**錯題：** 題庫答案 **Automating service enablement**，誤選 MTTR。
+
+**判讀：** 題目不是說 MTTR 不重要，而是問哪一個最像 **cloud provider 的核心 operating model**。Provider 要處理大量 tenants、重複 provisioning、elasticity、self-service、標準化部署、API-driven operations、低 marginal operational cost：
+
+```text
+Automation
+  ↓
+Repeatability
+  ↓
+Scalability
+  ↓
+Lower manual cost
+  ↓
+Cloud operating model
+```
+
+MTTR／MTBF 是 reliability metrics，重要但不是 provider 最具代表性的 architecture trait。
+
+> **一句話規則：** Provider 題先想 **automation／scale／standardization**。
+
+### 2.14 什麼會侵蝕遷雲的實際財務效益？Security controls and countermeasures（2026-10-31 錯題，`[J]`）
+
+**錯題：** Cloud migration 可能省錢，但什麼會侵蝕實際 financial benefit？→ 題庫答案 **Security controls and countermeasures**。
+
+**`Security controls` 不只代表 network／software controls：** 它是上位集合，含技術／邏輯控制（WAF、MFA、KMS、DLP、SIEM）、network controls（firewall、segmentation、VPN、ZTNA）、管理控制（policy、training、audit、change management）、physical／environmental controls。但在 CSC migration TCO 語境中，題庫主要指 **customer 額外負擔的 technical／operational／compliance security overhead**：
+
+```text
+Cloud base price
++ WAF
++ KMS/HSM
++ SIEM/logging
++ DLP
++ backup/replication
++ private connectivity
++ audit/compliance
+= Real TCO
+```
+
+> **一句話規則：** **Cloud list price ≠ Cloud TCO。**
 
 ---
 
@@ -608,6 +716,12 @@ Metered service         → economic / operational enabler
 | 36 | `In all cloud models` 的 customer 共同控制面 → **Data**（security controls 隨 service model 改變）。 |
 | 37 | **Direct mechanism ＞ enabling condition ＞ economic benefit**；metered service 是 BC/DR 的經濟促成因素，不是復原機制。 |
 | 38 | 口訣：**量詞看交集，角色看職責，最佳看預設，答案看層級。** |
+| 39 | **ISO 寫規格（15408／18045），CCRA 做互認，各國 scheme 發證**；ISO ≠ 全球 CC 發證機關（`[Q]`）。 |
+| 40 | Provider architecture 題 → **automation → repeatability → scalability**；MTTR／MTBF 是 reliability metric，不是 provider 核心 trait。 |
+| 41 | **Cloud list price ≠ actual TCO**；security controls／compliance／operations overhead 會侵蝕遷雲財務效益。 |
+| 42 | `best / biggest / most` 但 context 不足 → 找 management／risk／business perspective，不把題庫 heuristic 當 universal truth。 |
+| 43 | 上位詞不自動優先；**正式、可驗證、可直接映射題幹**的概念才優先。 |
+| 44 | CEO 題 → business outcome first；cost 只是 heuristic，**cloud 不保證比較便宜**。 |
 
 ---
 
@@ -636,6 +750,10 @@ Metered service         → economic / operational enabler
 | CSP（商業角色） | IdP（技術角色） | 提供 cloud service vs 發出 identity assertion |
 | `all` 題 | `best` 題 | 算共同交集 vs 找預設語義下最直接的答案 |
 | Replication／Backup | Metered service | 直接復原機制 vs 經濟／營運促成因素 |
+| ISO/IEC 15408 | CCRA／National scheme | 標準出版 vs 國際互認／實際發證 |
+| Automation（provider trait） | MTTR／MTBF | 雲端營運模式核心 vs reliability metric |
+| Cloud list price | Cloud TCO | 牌價 vs 加上 security／compliance／operations overhead 的實際總成本 |
+| 資源構成（CPU + RAM） | 實作形式（virtual／physical） | 問「由什麼組成」vs 問「如何實現」 |
 
 ### 決策流程
 
@@ -676,3 +794,7 @@ Metered service         → economic / operational enabler
 - 看到 `all / always / every service model`，第一步做什麼？
 - 什麼叫 abstraction mismatch？舉 BC/DR 的例子。
 - `In all cloud models` 題，為何 Data 比 Security controls 共同性高？`customer can modify data` 要怎麼精確化？
+- ISO/IEC、CCRA、national scheme 三者在 Common Criteria 中各負責什麼？
+- Provider architecture 題，automation 為什麼比 MTTR 更像核心？
+- 為什麼 security controls 會降低 cloud migration 的實際財務效益？
+- `best / biggest / most` 題資訊不足時，該如何處理？
