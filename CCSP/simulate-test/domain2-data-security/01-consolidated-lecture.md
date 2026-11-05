@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 2 的內容，跨場次合併後依主題重組。
 > **考試權重：** 20%（六域最高）
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D2 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -39,6 +39,7 @@
 | 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §5 ECC：public-key + 短 key、AES vs ECC 分類表 | §1.7、§2.17、§3、§4、§5 Drill H |
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §4 TPI：forces collusion、單一 IAM 即可、TPI／SoD／Split Knowledge 口訣；§6 CSA Notorious Nine／data loss `[Q]` | §1.11、§2.18、§3、§4、§5 Drill H |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §1 Define scheme（lifecycle 前）vs Classify at Create | §1.1、§2.5、§3、§4、§5 Drill H |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §2 Policy／Classification／Metadata／Controls 四層模型與 `Proper _____` 題；§4 TPI／SoD／Split Knowledge 2 秒口訣與 TPI 實作清單（復現：Define vs Create、two IAM matrices） | §1.2、§1.11、§2.5、§2.19、§3、§4、§5 Drill I |
 
 ---
 
@@ -188,6 +189,30 @@ Scanner → 讀取文件 payload → 找到大量信用卡號 → 設定 PCI=tru
 > 題目問「這個分類是用哪種分析做出來的」→ 答 **content analysis**；問「`PCI=true` 本身是什麼」→ 答 **metadata**。兩個問法不要混。
 
 **Frequency 為何算 content analysis：** 同一 pattern 出現 50,000 次與 1 次，對 classification 的意義不同 → payload-derived statistic。
+
+#### Policy → Classification → Metadata／Label → Security Controls（來源：2026-11-05，`[T]`）
+
+```text
+Policy
+  ↓ defines taxonomy + handling rules
+Classification
+  ↓ sensitivity/business category
+Metadata / Label
+  ↓ marks actual data object
+Security Controls
+  ↓ protect according to classification
+```
+
+| 層 | 角色 | 例子 |
+|---|---|---|
+| **Policy** | 規則與治理層 | `Restricted data must: use encryption、require MFA、prohibit public sharing、retain for 7 years` |
+| **Classification** | 資料的 sensitivity／business bucket | Public、Internal、Confidential、Restricted |
+| **Metadata／Label** | 描述／標示實際資料物件 | `owner: finance`、`classification: restricted`、`pii: true`、`retention: 7y` |
+| **Security Controls** | 依 classification 施加的保護 | `Restricted → encryption、RBAC、MFA、DLP、logging、retention` |
+
+> **最短口訣：Metadata = label；Classification = bucket；Controls = treatment；Policy = rulebook。**
+
+本模型把 Metadata 與 Label 合為「標示實際資料物件」一層；若題目要區分兩者，仍依本節開頭的切法（Metadata 常自動產生；Label 是刻意標記）。
 
 ### 1.3 儲存模型
 
@@ -836,6 +861,16 @@ SoD = 工作拆開做
 Split Knowledge = 秘密拆開知道
 ```
 
+**2 秒對照（來源：2026-11-05）：**
+
+| 概念 | 核心問題 | 2 秒口訣 |
+|---|---|---|
+| **TPI／Dual Control** | 一個敏感操作需要多人 | **一人不能做** |
+| **SoD** | incompatible duties 是否互斥（`Developer ≠ Production approver`、`Requester ≠ Approver`、`Payment creator ≠ Payment approver`） | **一人不能包辦流程** |
+| **Split Knowledge** | 完整 secret 是否被單人知道 | **一人不能知道全部** |
+
+> **M-of-N 不等於上述任一概念本身。** 先看題目問 operation、duty 還是 secret。
+
 TPI 可視為 dynamic separation of duty／dual authorization 的一種實作，但三個詞不要當同義詞。NIST／CNSSI 的定義重點：至少兩名 authorized persons，且彼此能察覺錯誤或未授權程序。
 
 **`TPI forces collusion` 的意思：** 英文讀起來彆扭，但安全含義是——**單一惡意內部人員不夠，要完成未授權動作，至少還要拉另一名授權者一起作弊**：
@@ -850,6 +885,16 @@ One person cannot do it alone
 ```text
 One IAM platform
 Rule: Action X requires approver A + approver B
+```
+
+**再現（2026-11-05，`[T]`，Property vs Implementation）：** 兩套 IAM matrix 只是可能的 implementation，不是 TPI 的定義。其他 implementation：
+
+```text
+two approvers
+two keys
+HSM M-of-N
+two custodians
+workflow approval
 ```
 
 > 對照：`by-test/06` P0-2 的金鑰管理題中，**separation of duties** 是「金鑰管理與被加密資料分離」的正解標籤；two-person integrity 則是「關鍵動作需兩人」的標籤。兩者不可互換（見 §1.4 的誤選對照表）。
@@ -975,6 +1020,8 @@ Aggregation = 把多筆低敏感資料「拼起來」      → 常是 inference 
 
 **再現（2026-11-03，`[T]` terminology／timing）：** `According to the ISC2 Cloud Secure Data Life Cycle, in which phase should categorization/classification of data occur?` → **Create**。常見質疑「classification 應該更早 define」本身沒錯，但混了兩件事：**define schema（lifecycle 前的 governance）vs assign label（Create）**。這不是 knowledge gap，而是時點區分（見 §1.1）。
 
+**再現（2026-11-05，`[T]`）：** 同一模型再次列入 gap remediation：**Define the scheme BEFORE lifecycle；assign classification AT Create。**
+
 ### 2.6 TDE 引擎位置（`by-test/03` Q25、`by-test/07` §7.4）
 
 正解：引擎位於 **database／DBMS 層**。KMS 管金鑰、HSM 保護金鑰，**兩者都不是 TDE 引擎**。
@@ -1062,6 +1109,19 @@ Improper policy       → 題庫認為較「間接」
 **問題：** `Improper retention policy → delete data too early` 本身就可能直接造成 data loss。題庫實際上在比較 **direct mechanism vs indirect governance cause**。
 
 **處理：** 2013 九項名稱不值得高頻背；現行準備重點放 common cloud threats 與底層機制。**不要背「improper policy 不會造成 data loss」。**
+
+### 2.19 Classification 要配什麼？Security Controls，不是 Metadata（2026-11-05，`[T]`）
+
+**題幹：** `Proper _____ need(s) to be assigned to each data classification/category.` → **Security Controls**。
+
+**常見誤區：** 從「metadata 很重要」延伸成「classification／category 應該 assign metadata」。題目問的是 `Classification → 配什麼 protection？`，屬 abstraction-level mismatch（見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+
+```text
+Metadata  → 標示實際資料物件
+Controls  → 依 classification 施加的 treatment
+```
+
+> **一句話規則：** 問「每個 classification 要配什麼」→ Security Controls；問「如何標示這筆資料」→ Metadata／Label（見 §1.2）。
 
 ---
 
@@ -1157,6 +1217,10 @@ Improper policy       → 題庫認為較「間接」
 | 86 | **Classification scheme 在 lifecycle 前定義；實際 data object 在 Create 時分類。** |
 | 87 | Lost key = data inaccessible；bad backup = cannot recover；overwrite = original destroyed；錯誤 retention policy 也可能直接造成 data loss。 |
 | 88 | CSA Notorious Nine exact wording = legacy／低優先（`[Q]`）。 |
+| 89 | **Metadata = label；Classification = bucket；Controls = treatment；Policy = rulebook。** |
+| 90 | `Proper _____ assigned to each classification` → **Security Controls**。 |
+| 91 | **TPI = 一人不能做；SoD = 一人不能包辦流程；Split Knowledge = 一人不能知道全部。** |
+| 92 | M-of-N 不等於 TPI、SoD 或 Split Knowledge 本身；先看題目問 operation、duty 還是 secret。 |
 
 ---
 
@@ -1220,6 +1284,8 @@ Improper policy       → 題庫認為較「間接」
 | Define classification scheme | Classify at Create | lifecycle 前的 governance 規則 vs 實際資料物件生成時貼標 |
 | TPI（兩人一起做） | 兩套 IAM | authorization condition vs 部署架構；一套 IAM 即可實作 TPI |
 | Direct data-loss mechanism | Indirect governance cause | lost key／bad backup／overwrite vs improper policy（但錯誤 retention 也可直接導致 loss） |
+| Metadata／Label | Security Controls | 標示資料物件 vs 依分類施加保護 |
+| Classification | Policy | 資料所屬的 bucket vs 定義 taxonomy 與 handling rules 的 rulebook |
 
 ---
 
@@ -1298,6 +1364,15 @@ Improper policy       → 題庫認為較「間接」
 6. 為什麼 Notorious Nine 那題不值得高頻背？`improper policy 不會造成 data loss` 可以當原則嗎？
 
 **參考答案：** ① ECC；AES 是 symmetric ② 兩人一起做／工作拆開做／秘密拆開知道 ③ 可以，rule：Action X requires approver A + B ④ 單一 insider 不夠，至少要另一名授權者共謀 ⑤ Scheme 在 lifecycle 前；資料在 Create ⑥ 2013 舊 taxonomy；不可以，錯誤 retention policy 也可能直接刪掉資料
+
+### Drill I：2026-11-05 閉卷防守
+
+1. Metadata、Classification、Controls、Policy 各用一個詞描述。
+2. `Proper _____ need(s) to be assigned to each data classification/category` 選什麼？為何不是 metadata？
+3. 除了 two IAM matrices，再舉三種 TPI 的 implementation。
+4. M-of-N 等於 Split Knowledge 嗎？
+
+**參考答案：** ① label／bucket／treatment／rulebook ② Security Controls；題目問分類要配什麼 protection ③ two approvers、two keys、HSM M-of-N、two custodians、workflow approval（任三）④ 不一定，要看實作與題目範圍
 
 ### Drill E：維持節奏
 
