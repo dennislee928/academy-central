@@ -167,3 +167,15 @@ Exhaust → Inlet = BAD
 | Card 3 | Server 一般 airflow 方向 | **新增**至 `knowt-d3` |
 | Card 4 | 為什麼 Exhaust → Inlet 是錯誤配置 | 既有卡已覆蓋；**後果鏈另立新卡** |
 | Card 5 | 最短考試口訣（F-F／R-R／Exhaust→Inlet） | 已由既有卡覆蓋 |
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件以 Mermaid 圖解資料中心氣流，文字版規則在 D3 彙整講義 §1.1。
+
+- **基本氣流：** Server 由正面進氣、背面排氣。
+- **機列配置：** 正面對正面 = cold aisle；背面對背面 = hot aisle。
+- **錯誤配置：** 排氣直接吹入另一台的進氣口。
+- **後果鏈：** Hot-air recirculation 造成的連鎖影響。
+- **其他：** 完整機列配置、一秒記憶版，以及本檔閃卡與既有卡的對應。

@@ -901,3 +901,15 @@ Controller? Processor? Regulator?
 - `best / biggest / most` 題資訊不足時，該如何處理？
 - TOE、PP、ST 各是什麼？PP 與 ST 最短怎麼分？
 - Property 與 Implementation 差在哪？舉 TPI 的例子。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 1 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **來源對照（§0）：** 各場次講義併入的位置。
+- **核心觀念（§1）：** 服務模型責任邊界、部署模型、雲端角色、IaaS 商業價值、interoperability／portability／lock-in、虛擬化、sandbox 與服務模型、新興技術、Common Criteria 與 EAL（含 TOE／PP／ST）、題目判讀模型（量詞、角色、抽象層級、Role／Property／Mechanism）。
+- **錯題與規則（§2）：** 服務模型、部署模型、CEO 遷雲成本、`all cloud models` 題、Common Criteria 發布者、cloud TCO 等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** 對照表默寫、雲端角色、20 題 drill、跨域 closed-book 與自我檢測。

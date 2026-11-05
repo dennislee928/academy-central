@@ -669,3 +669,14 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 - Secure software development 題為什麼選 process isolation 而不是 enhancement mechanisms？
 - Broker／Proxy 在 upstream 與 downstream 各扮什麼角色？
 - Federation Authority 與 Federation Proxy 各管什麼？
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 4 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **核心觀念（§1）：** ISC2 最佳解邏輯、Secure SDLC、應用測試、web service 與 API、身分與 federation（IdP、RP／SP、Broker、Federation Authority）、雲端應用風險、政策與執法先後、Open Redirect。
+- **錯題與規則（§2）：** best-answer、SDLC 階段、cloud sandbox、SOAP、ISO 27034、federation 角色、SAST、Intuition Testing、MFA、process isolation 判讀等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** 60 分鐘補弱、federation 畫圖、最佳解判斷、gate 與自我檢測。

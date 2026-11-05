@@ -1918,3 +1918,14 @@ SAS 70     = legacy
 - STAR、Uptime Tier、Common Criteria 各是哪一套數字？
 - Regulator 與 Controller、Regulator 與 Auditor 各怎麼分？
 - 工作外包給 CSP 後，責任歸屬取決於哪些因素？Controller 通常仍需做什麼？
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 6 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **核心觀念（§1）：** 法規與產業規範、標準／框架／審計報告、OECD 隱私原則、隱私角色與跨境傳輸（含 Regulator、Auditor、委外 accountability）、法律流程與鑑識、合約與供應商治理、智慧財產權、Legal／CISO／DPO／Compliance、風險管理。
+- **錯題與規則（§2）：** SOC 報告、鑑識流程、框架對映、FedRAMP、隱私角色、ARO、PCI SSC、NIST Price、ISO 27018、CSA STAR 等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** D6 targeted drill、框架題答題方法、法規默寫、審計報告對照、法律流程與自我檢測。

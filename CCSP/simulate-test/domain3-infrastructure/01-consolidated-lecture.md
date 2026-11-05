@@ -1248,3 +1248,14 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - Secure KVM 與 IP KVM 的重點各是什麼？
 - Tier III 最重要的關鍵詞？Healthcare 是否自動對應某個 Tier？
 - Loose vs tight coupling 最大的概念差別？node count 會不會影響 aggregate capacity？
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 3 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **核心觀念（§1）：** 機房設施與環境控制、實體存取分層、網路與儲存架構、虛擬化與容器（含 sandbox、process isolation、compute、Secure KVM）、provider／customer／regulator 責任邊界、BC/DR 與韌性、監控可視性、三類 security controls。
+- **錯題與規則（§2）：** business requirements、egress monitoring、機房治理、mantrap、BC/DR plan、storage taxonomy、BIA、isolation、DC 自建與 storage cluster 等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** 90 分鐘與 60 分鐘補弱、taxonomy 快篩、gate 與自我檢測。

@@ -295,6 +295,16 @@ Guest OS sees:  /dev/sda   E:   disk
 Volume = virtual block device behaving like a disk
 ```
 
+**繁體中文：**
+
+| 類型 | 外觀 | 存取方式 |
+|---|---|---|
+| **Block／Volume** | 磁碟 | Block device |
+| **File** | 資料夾／共享 | NFS／SMB |
+| **Object** | 物件 + metadata | API／HTTP |
+
+Volume 是行為像磁碟的虛擬 block device；guest OS 看到的是 `/dev/sda`、`E:` 這類磁碟。
+
 ### 1.4 加密層級與金鑰管理
 
 | Encryption Type | 引擎位置 | 主要邏輯 |
@@ -1377,3 +1387,14 @@ Controls  → 依 classification 施加的 treatment
 ### Drill E：維持節奏
 
 每週 15–25 題 D2 mixed drill，**重點看錯題，而不是追新題量**。D2 權重最高，不可視為已補完。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **核心觀念（§1）：** 資料生命週期、治理工具邊界（含 Policy／Classification／Metadata／Controls 四層）、儲存模型、加密層級與金鑰管理、資料保護技術、銷毀與殘餘資料、密碼學與 PKI、archiving、PCI DSS、virtualization vs multitenancy、TPI／SoD／Split Knowledge、inference、Brewer–Nash。
+- **錯題與規則（§2）：** DRM、discovery、egress monitoring、classification 階段、TDE、masking 與 tokenization、遺失裝置、儲存類型、ECC、data loss 等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** 急救補弱、完整補弱、閉卷自測與多組閉卷防守。

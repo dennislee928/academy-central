@@ -678,3 +678,14 @@ Redundancy = 可用性 / 容錯
 | SLE = AV × EF | 特定 HVAC airflow 用詞 |
 | 風險處置：avoid／mitigate／transfer／accept；residual risk 在容忍範圍內才接受，否則再處置（見 [Domain 6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)） | |
 | 集中日誌必須時鐘同步 | |
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 5 的彙整講義，主體已是中文，依固定骨架 §0–§5 編排。
+
+- **核心觀念（§1）：** 維運生命週期、baseline 與 hardening、patch management、maintenance mode、監控與日誌、incident 與內部威脅、responsibility vs accountability 與供應鏈、風險指標、cloud sprawl、TLS 維運面。
+- **錯題與規則（§2）：** 特權存取、hardening vs redundancy、maintenance mode、patch 建議權重、baseline image、BC/DR 模型等修正規則。
+- **一句話規則與邊界（§3–§4）：** 考前速記與易混淆對照。
+- **演練（§5）：** 2 天 patch、閉卷問答、責任邊界演練，以及值得記與不必死磕的項目。
