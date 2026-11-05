@@ -586,7 +586,7 @@ Mouse ────┘              └─> Computer B
 ```text
 TPM / Secure Enclave / Windows Hello → endpoint platform trust / authentication / key protection
 Secure KVM                           → peripheral sharing / cross-domain isolation
-IP KVM                              → remote administration
+IP KVM                               → remote administration
 ```
 
 > **2 秒口訣：Secure KVM = 隔離多台主機的周邊分享器，不是 endpoint root of trust。**
