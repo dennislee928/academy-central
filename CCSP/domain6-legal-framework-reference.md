@@ -144,6 +144,8 @@ EU/EEA personal data
 Canadian private company + customer personal information → PIPEDA
 ```
 
+**繁體中文：** **PIPEDA**（Personal Information Protection and Electronic Documents Act）是加拿大規範私部門的聯邦隱私法，核心是商業活動中個人資訊的蒐集、使用與揭露，內含 10 項 fair-information principles。判斷式：加拿大私人公司 + 客戶個人資訊 → PIPEDA。
+
 ---
 
 ## D. 印度 🇮🇳
@@ -248,6 +250,19 @@ India + digital personal data → DPDP Act
 | **FIPS 199** | Security categorization |
 | **FIPS 200** | Minimum federal security requirements |
 | **FIPS 140-3** | Cryptographic module validation（140-2 為 legacy） |
+
+**繁體中文：**
+
+| 名稱 | 核心 |
+|---|---|
+| **NIST SP 800-37** | RMF（Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor） |
+| **NIST SP 800-53** | 安全與隱私控制目錄 |
+| **NIST SP 800-53A** | **評估**上述控制 |
+| **NIST SP 800-88** | 媒體清除 |
+| **NIST SP 800-92** | 電腦安全**日誌管理**（不是風險框架） |
+| **FIPS 199** | 安全分級 |
+| **FIPS 200** | 聯邦最低安全要求 |
+| **FIPS 140-3** | 密碼模組驗證（140-2 為 legacy） |
 
 ### 核心鏈
 
@@ -456,3 +471,13 @@ Cloud controls        → CSA CCM
 Cloud assurance       → CSA STAR
 Privacy principles    → OECD
 ```
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 6 法律、法規與框架的考前總表，範圍是 2026 outline 點名、題庫常出與實際遇過的項目。
+
+- **依地區：** 美國、EU／EEA、加拿大、印度、其他國家。
+- **依類別：** ISO／IEC、NIST 與美國標準、風險與治理框架、稽核與保證、CSA、OECD 八原則、合約與法律文件、高監管產業。
+- **建議讀法：** 先看最後的 Legacy／題庫陷阱表與 trigger word 索引，再回頭查分區。完整推導見 D6 彙整講義。

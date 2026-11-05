@@ -1971,3 +1971,16 @@ D. Load balancing
 | Chain of custody = 一般紀錄鏈          | Chain of custody = 證據保管鏈           |
 | Risk mitigation = 馬上處理            | Risk mitigation = 降低風險可能性或影響       |
 | SaaS 代表客戶沒有責任                     | SaaS 仍保留資料、使用者與合規責任                |
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 6 的完整講義。
+
+- **法規基礎（一至三）：** 核心定位；法律、法規、標準與政策；SOX、CSA CCM、CSA STAR。
+- **責任與隱私（四至七）：** shared responsibility、資料隱私與角色、data residency／sovereignty／jurisdiction、GDPR 與資料主體權利。
+- **法律流程（八至九）：** legal hold、eDiscovery、forensics、chain of custody、incident response 與 breach notification。
+- **治理（十至十三）：** 風險管理、稽核與第三方報告、雲端合約與文件、資料保留與安全銷毀。
+- **應考（十四至二十）：** 情境題判斷表、易混淆比較、答題技巧、互動複習題庫、速記表、口訣與複習方式。
+- **附錄：** Domain 6 高頻錯誤修正。

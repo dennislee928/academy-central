@@ -306,3 +306,12 @@ ISO 27017      = Cloud Security
 HIPAA          = Healthcare（法律，不是 framework）
 Argentina      = Law 25.326 = comprehensive personal-data protection
 ```
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 6 的「名稱 → 類別」歸位地圖，目標是看到名稱兩秒內知道屬於哪一類。
+
+- **分類：** 法律與法規、風險與治理框架、ISMS 與資安控制、維運與鑑識、雲端、稽核與鑑證、跨境資料傳輸、支付與產業標準。
+- **其他內容：** 一頁式總覽、版本與易錯提醒、四選一實戰範例、最該固定的五條。

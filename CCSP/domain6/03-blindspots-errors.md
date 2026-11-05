@@ -108,6 +108,8 @@ Domain 6 不是在考「哪個技術比較強」，而是在考：
 - data minimization and purpose limitation
 - privacy-by-design throughout lifecycle
 
+**繁體中文：** DPO 要求、DPIA／PIA、集中式 PII 管理搭配自動化合規檢查、資料最小化與目的限制、貫穿生命週期的 privacy by design。
+
 ### 口訣
 
 **隱私題先想治理，再想加密。**
@@ -168,6 +170,8 @@ Domain 6 不是在考「哪個技術比較強」，而是在考：
 - tailored technical + organizational measures
 - data mapping + automated compliance checks
 - privacy-by-design across lifecycle and supply chain
+
+**繁體中文：** 定期評估國際資料保護法、DPIA／傳輸影響評估、量身訂做的技術與組織措施、data mapping 搭配自動化合規檢查、貫穿生命週期與供應鏈的 privacy by design。
 
 ### 口訣
 
@@ -375,6 +379,8 @@ SOC 題容易出現以下混淆：
 - dynamic RBAC with regular reviews
 - clear roles with automated audit trails in CI/CD
 
+**繁體中文：** 集中式資料清冊、集中式 PII 管理搭配自動化合規檢查、動態 RBAC 與定期審查、CI/CD 中明確的角色與自動化稽核軌跡。
+
 ### 口訣
 
 **治理題優先選可擴展、可持續、可稽核，不優先選手工作法。**
@@ -552,6 +558,8 @@ SOC 題容易出現以下混淆：
 - focus on processing activities / transfer mechanisms
 - third-party assessment as assurance input
 
+**繁體中文：** Scope statement、範圍過窄造成盲點、聚焦處理活動與傳輸機制、以第三方評估作為保證輸入。
+
 ## 5. Contracts / jurisdiction
 
 - governing law
@@ -652,3 +660,14 @@ SOC 題容易出現以下混淆：
 調整為  
 **「哪個做法最能被法律、稽核、治理、跨境營運共同接受且持續證明」**，  
 Domain 6 正確率通常會明顯上升。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件整理 Domain 6 的盲點與錯題。
+
+- **失分輪廓與思維框架（二至三）：** 整體失分情況與 Domain 6 的核心思維。
+- **七個盲點（四）：** 隱私題偏向加密而忽略治理；跨境傳輸只看資料位置；誤解 privacy by design／default；把 SOC 當保證書；混淆 gap analysis、audit 與 attestation；過度簡化 choice of law 與 forum selection；治理題選合理作法，而非最關鍵的控制點。
+- **錯誤類型與流程（五至六）：** 四類常見錯誤，以及辨識主類型 → 判斷層級 → 排除誘答 → 找高層答案的判斷流程。
+- **收斂（七至十）：** 高頻重點清單、考場口訣與三階段複習建議。

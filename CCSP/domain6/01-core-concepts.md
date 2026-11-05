@@ -161,3 +161,9 @@ $$\text{Risk} = \text{Threat} \times \text{Vulnerability} \times \text{Impact}$$
 5. **Chain of Custody 的目的**：保護證據可信度，不只是追蹤資料位置。
 6. **把 SSAE 18 當成報告類型**：SSAE 18 是標準，SOC 1/2 才是報告。
 7. **模糊題優先選治理導向答案**：「best」、「most important」等題幹，通常答案指向責任、合約或風險管理，而非單一技術控制。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 6 的核心概念速查，依序涵蓋考試定位、法律層級、關鍵法規、雲端責任分工、合約條款、隱私核心概念、電子蒐證與數位鑑識、風險管理、稽核，以及高頻考試陷阱。

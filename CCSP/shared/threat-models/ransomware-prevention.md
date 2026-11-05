@@ -824,6 +824,8 @@ Linux 比較常見於：
 * execution user
 * first seen / last seen
 
+**繁體中文：** 程序名稱、完整路徑、hash、簽署者、父程序、命令列、執行使用者、首次與最後出現時間。
+
 ### 檔案面
 
 * create / write / rename / delete
@@ -832,6 +834,8 @@ Linux 比較常見於：
 * write burst count
 * entropy change
 * ransom note pattern
+
+**繁體中文：** 建立、寫入、重新命名、刪除；目標路徑；變更前後的副檔名；寫入突增次數；熵值變化；勒索訊息 pattern。
 
 ### 網路面
 
@@ -842,6 +846,8 @@ Linux 比較常見於：
 * bytes in/out
 * connection frequency
 * TLS/HTTP metadata
+
+**繁體中文：** 來源主機、目的 IP／網域／URL、連接埠與協定、DNS 查詢、進出流量、連線頻率、TLS／HTTP metadata。
 
 ### 身分面
 
@@ -859,6 +865,8 @@ Linux 比較常見於：
 * remote service creation
 * remote command execution
 * shared folder mass access
+
+**繁體中文：** SMB／RDP／SSH／WinRM／WMI 的扇出、遠端服務建立、遠端命令執行、大量存取共享資料夾。
 
 ---
 
@@ -918,3 +926,15 @@ Linux 比較常見於：
 
 # 同時抓病毒來源做block跟紀錄主要有益於更快圍堵、追根因、定範圍，不足以單獨阻止勒索。真正有效的是把「來源紀錄 + 行為偵測 + 橫向阻斷 + 備份隔離」一起做。**
 
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是勒索病毒防禦手冊，圍繞三段防禦：進不來、跑不起來、傳不開。
+
+- **核心防線（一）：** 最小權限、應用程式白名單、巨集與腳本與遠端管理縮限、補丁管理。
+- **偵測（二）：** 大量改檔與高熵加密、備份刪除、提權與防護停用、憑證竊取與橫向移動前兆、C2 與異常外連。
+- **阻止橫向移動（三）：** 網路分段、管理平面獨立與跳板化、共享資料夾與 NAS 權限、身分層抑制。
+- **OS 差異與復原（四至五）：** Windows、macOS、Linux 的重點，以及能扛勒索的備份。
+- **規則與處置（六至八）：** 高價值關聯規則、疑似加密時的即時處置、最少應做的 12 件事。
+- **抓來源並 block：** 有助於更快圍堵、追根因、定範圍，但不足以單獨阻止勒索。IP 與網域容易更換，應做來源關聯而非只靠 IOC 黑名單；本段也列出應記錄的欄位、block 對象與常見誤區。
