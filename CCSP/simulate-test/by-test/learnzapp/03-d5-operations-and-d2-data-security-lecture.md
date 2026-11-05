@@ -302,3 +302,13 @@ CSA CCM 是雲端控制框架，可 mapping 多種標準；CAIQ 是問卷；STAR
 8. TLS 應用流量用 symmetric AEAD，不是憑證直接加密。  
 9. Accountability 通常不能外包掉。  
 10. ISC2 常要最直接解決 scenario 目標的答案，不是範圍最大的風險名詞。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件分上下兩篇：D5 維運生命週期，以及 D2 fresh test（25 題，16 對 9 錯，64%）的錯題分析。
+
+- **上篇 D5：** P0 為 patch、baseline、hardening、maintenance；P1 為 TLS、PKI 與安全網路；另有值得記但不必死磕的項目、Uptime 四級、資料中心三層與閉卷複習問題。
+- **下篇 D2：** 工具邊界（DLP、discovery、lifecycle 等）、Cloud Secure Data Lifecycle、儲存模型、雲端刪除與殘餘資料、逐題診斷、跨域復現弱點與考場秒殺規則。
+- **提醒：** 不要把題庫 trivia 當成 2026 考綱必背。

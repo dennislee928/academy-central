@@ -165,3 +165,13 @@ ALE = SLE × ARO
 3. Golden image 一年沒開機，修補狀態會怎樣？  
 4. 沒有 documentation 的 baseline 能通過稽核嗎？  
 5. 訴訟來了，原本 90 天 log 銷毀政策要怎麼處理？
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 LearnZApp 錯題精華，涵蓋 D5 維運監控與 D6 合規風險。
+
+- **D5：** 日誌關聯的先決條件、honeypot 能做與不能做、離線系統的修補死角、baseline 沒有文件就不存在、影響 Exposure Factor 的因素。
+- **D6：** CMM 與 CSA STAR、legal hold、evidence custodian。
+- **使用方式：** 每題先找「先決條件」或「法律義務」，再選技術控制。

@@ -170,3 +170,13 @@ D4 失分多半不是「完全不會」，而是一看到技術威脅就立刻�
 3. REST 與 SOAP，誰比較依賴嚴格協定標準？  
 4. IAM 的 ultimate goal 是 authorization 還是 accountability？  
 5. ISO 27034 中，ONF 與 ANF 的數量關係是什麼？
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 LearnZApp 錯題精華，涵蓋 D3（約 71%）與 D4（約 55%）。
+
+- **D3 基礎架構與實體邊界：** 高架地板與氣流、MAD 與 RTO、hypervisor 與資源調度、服務模型與儲存對應、其他實務判斷。
+- **D4 應用安全與管理視角：** ISC2 最佳解邏輯、雲端開發者失去的控制權、測試獨立性、forklifting、定義與管理視角對照。
+- **使用方式：** 先讀錯題總表，再記秒殺規則；D4 題先判斷問的是技術動作，還是治理與調查優先。

@@ -632,6 +632,8 @@ Social engineering 屬：
 
 不是 configuration maintenance。
 
+**繁體中文：** Configuration maintenance 包含 baseline、組態變更、patching、版本控制、組態驗證、偏差管理與文件化。Social engineering 屬於人員層的攻擊或測試活動，不是 configuration maintenance。
+
 ---
 
 ## Q18
@@ -800,6 +802,14 @@ Mental model：
 4. Who operates the control?
     
 5. Who remains accountable?
+
+**繁體中文：** 每題先問：
+
+1. 資料屬於誰？
+2. 誰定義政策？
+3. 誰接受風險？
+4. 誰操作控制？
+5. 誰仍負 accountability？
     
 
 ---
@@ -845,3 +855,15 @@ BC/DR restore 問題：
 ### Rule 5
 
 **ISC2 often wants the governance/root-cause answer, not the most technical answer**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是跨域的兩日錯題精華，以 D2 為主，涵蓋 D1 責任邊界、D3 供應鏈、D5 組態維護與 D6 標準報告。
+
+- **D2 資料安全（§1–§5）：** 資料生命週期；discovery、metadata、classification、DLP、IRM 的區分；雲端儲存；資料銷毀與 crypto-erasure；PCI DSS 資料處理。
+- **責任與風險（§6–§9）：** responsibility 與 accountability、供應鏈與第三方風險、BC/DR 與 interoperability、BIA 與資產價值。
+- **維運（§10–§12）：** cloud sprawl、組態管理、hardening → patch → maintenance。
+- **標準與報告（§13）：** SOC 2、SOC 3、FIPS 的正確邊界。
+- **收斂（§14–§15）：** 五項 recurring weakness 與考前五條 Rules，後者須能閉卷複述。

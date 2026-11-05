@@ -1160,6 +1160,8 @@ HSM：
 
 不要混。
 
+**繁體中文：** Certificate = 身分與 public key 的綁定；KMS = 金鑰的建立、儲存、輪替、存取與生命週期管理；HSM = 執行密碼金鑰操作的專用受保護硬體。三者不要混。
+
 ---
 
 # 37. CCSP 常見 Scenario #1
@@ -1199,6 +1201,8 @@ Which mechanism normally encrypts bulk application data after a TLS session is e
 ### Question
 
 Which mechanism proves possession of the private key corresponding to a certificate during certificate-based TLS authentication?
+
+**繁體中文：** 在憑證式 TLS 驗證中，哪個機制可證明持有該憑證對應的 private key？
 
 ### Answer
 
@@ -1254,6 +1258,8 @@ Not:
 
 > Confidentiality.
 
+**繁體中文：** Alice 以自己的 private key 簽署訊息，Bob 以 Alice 的 public key 驗證。主要結果是完整性 + 真實性 + 支援不可否認性，而不是機密性。
+
 ---
 
 # 43. Scenario #7
@@ -1269,6 +1275,8 @@ Because:
 > Anyone who changes the message can calculate a new SHA-256 digest.
 
 There is no secret/private signing key involved.
+
+**繁體中文：** 因為任何竄改訊息的人都能重新算出新的 SHA-256 digest，過程中沒有 secret 或 private signing key。
 
 ---
 
@@ -1291,6 +1299,8 @@ Because:
 ### Question
 
 If an attacker steals only a server's public certificate but not its private key, can the attacker simply impersonate the server?
+
+**繁體中文：** 如果攻擊者只偷到伺服器的公開憑證、沒有 private key，能否直接冒充該伺服器？
 
 ### Answer
 
@@ -1325,6 +1335,8 @@ Cryptographic functionality
 vs
 Trust validity
 ```
+
+**繁體中文：** 不是。但 PKI 驗證應拒絕該憑證，因為它已超出核准的有效期間。這區分了「密碼學功能」與「信任有效性」。
 
 ---
 
@@ -1472,6 +1484,19 @@ Key establishment
 
 10. **ECDHE provides key establishment and forward secrecy; ECDSA provides digital signatures.**
 
+**繁體中文：**
+
+1. **對稱式密碼學使用共享 secret，適合大量資料加密。**
+2. **非對稱式密碼學使用 public／private key pair。**
+3. **Public-key 加密提供機密性；由對應的 private key 解密。**
+4. **數位簽章以 private key 建立，以 public key 驗證。**
+5. **數位簽章提供完整性、真實性與不可否認性支援，不提供機密性。**
+6. **X.509 憑證將主體身分綁定到 public key。**
+7. **CA 對憑證進行數位簽章；憑證不含主體的 private key。**
+8. **TLS 1.3 中，憑證與簽章驗證、ECDHE 金鑰建立是分開的功能。**
+9. **TLS 應用流量通常以對稱式 traffic key 保護。**
+10. **ECDHE 提供金鑰建立與 forward secrecy；ECDSA 提供數位簽章。**
+
 ---
 
 # 51. 一句話總結整個 TLS
@@ -1479,3 +1504,15 @@ Key establishment
 > **Certificate tells you whose public key it is; digital signature proves private-key possession; ECDHE establishes a shared secret; symmetric cryptography protects the actual traffic.**
 
 這一句如果能真正理解，LearnZapp 大部分 TLS / X.509 / certificate / asymmetric / symmetric 題都能靠 reasoning 解，而不是死背。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 TLS、PKI 與密碼學的概念講義。核心一句：certificate 說明這是誰的 public key；digital signature 證明持有 private key；(EC)DHE 建立 shared secret；應用流量以對稱金鑰保護。
+
+- **密碼學基礎（§2–§10）：** 對稱與非對稱、public／private key 用法、數位簽章、hash、HMAC／MAC。
+- **憑證與 PKI（§11–§17）：** X.509 內容、CA、trust chain、憑證驗證（簽章、有效期、hostname、key usage、撤銷），以及憑證不做的事。
+- **TLS（§18–§25）：** hybrid 設計、TLS 1.3 流程、certificate／signature／ECDHE 各自的角色、forward secrecy、TLS 1.2 vs 1.3。
+- **陷阱與對照（§26–§36）：** 常見陷阱、RSA／ECC／ECDSA／ECDHE、四項 security services、AES-GCM、cipher suite、mTLS、CRL vs OCSP、root CA、self-signed、certificate ≠ KMS。
+- **情境與總結（§37–§51）：** 十個 scenario、TLS 全圖、「不要混」清單、快速判斷表、必背 10 句與一句話總結。
