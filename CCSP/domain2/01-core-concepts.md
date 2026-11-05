@@ -65,3 +65,17 @@ Domain 2 專注於 **雲端資料安全 (Cloud Data Security)**。考試重點�
 - **Cryptoshredding = Cloud Deletion (No physical access)**
 - **Tokenization = PCI-DSS compliance (Reduce scope)**
 - **Clear < Purge < Destroy**
+
+**繁體中文：**
+
+- **Steward = 治理與品質**
+- **Custodian = 技術與備份**
+- **Cryptoshredding = 雲端刪除（無實體存取）**
+- **Tokenization = PCI DSS 合規（縮小範圍）**
+- **Clear < Purge < Destroy**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件整理 Domain 2 的核心觀念，包含 domain 定位、知識架構地圖、核心概念詳解、高頻盲點與考場秒殺口訣。

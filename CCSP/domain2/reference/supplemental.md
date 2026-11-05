@@ -2,6 +2,8 @@
 
 Here is the detailed lecture material for CCSP Domain 2 (Cloud Data Security), formatted in Markdown and provided in both English and Traditional Chinese, based entirely on the provided sources.
 
+**繁體中文：** 以下是 CCSP Domain 2（雲端資料安全）的詳細講義，以 Markdown 呈現，提供英文與繁體中文，內容完全依據所提供的來源。
+
 ---
 
 # CCSP Domain 2: Cloud Data Security / 雲端資料安全
@@ -199,3 +201,9 @@ Here is the detailed lecture material for CCSP Domain 2 (Cloud Data Security), f
 - **SIEM 工具**：安全資訊與事件管理 (SIEM) 工具對於擴展安全營運至關重要。主要功能包含：日誌集中/聚合 (提升上下文關聯)、資料完整性 (防止竄改)、正規化 (統一格式)、關聯性分析 (持續監控)、警報發布，以及調查查詢功能。
 - **監管鏈 (Chain of Custody)**：提供具說服力的證據，證明證據未被竄改。它會記錄誰處理過證據、處理時間及目的。若無監管鏈，證據在法律程序中的可靠性將遭到質疑與拒絕。
 - **不可否認性 (Non-repudiation)**：保證使用者無法否認曾執行某項操作。它透過詳盡的日誌、數位簽章和獨立的使用者帳號來實現。若使用共用帳號，將使不可否認性變得幾乎不可能達成。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件已逐節提供英文與繁體中文，涵蓋 2.1 資料概念、2.2 儲存架構、2.3 安全技術與策略、2.4 資料發現、2.5 資料分類、2.6 IRM、2.7 保留／刪除／封存、2.8 可稽核性與可追溯性。

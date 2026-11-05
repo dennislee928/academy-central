@@ -495,3 +495,14 @@ Data Custodian 通常來自**資訊科技部門（IT）**，他們不一定關�
 3. **2.7 Archive/Destroy + cryptoshredding**（雲端刪除高頻考點）
 4. **2.6 Least privilege 的 centralized IAM 模式**
 5. **2.5 classification policy（Owner）**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第一輪錯題分析。
+
+- **各小節加強點與優先序：** 依 section 列出弱點與 priority。
+- **高投報補強：** 三包補強順序與錯題分佈。
+- **錯題詳解（Q1–Q11）：** masking 技術、retention 與 lifecycle、tokenization、classification policy、lifecycle 概念、IRM、資料角色（steward、controller、processor）、destroy 與 sanitization。
+- **複習順序：** 對應 P0 與 P1 的建議順序。

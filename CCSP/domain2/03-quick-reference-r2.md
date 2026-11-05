@@ -219,3 +219,9 @@ flowchart TD
 5. Sync replication → **RPO≈0** 但 **latency** 代價
 
 6. SDS/Virtualization → **control plane / hypervisor** 是 crown jewels
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第二輪速查表：最常出錯點、CIA 與 authenticity／non-repudiation 配對、資料三狀態、加密決策、金鑰管理、先壓縮或先加密、同步與非同步複寫、object／block／file 與 SDS、storage virtualization、data residency、labeling vs marking、classification vs categorization，以及 Mermaid 決策圖和 6 條超速記。

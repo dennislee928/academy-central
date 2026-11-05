@@ -207,6 +207,8 @@ Public cloud 是由雲端服務商提供給一般大眾或多個客戶使用的�
 
 - non-sensitive workloads
 
+**繁體中文：** 公有雲、可擴充、彈性、前期成本低、按量計費、通用型工作負載、非敏感工作負載。
+
 ### 注意事項
 
 Public cloud 不代表不安全，但客戶對底層環境控制較少。若題目強調最高控制、專用環境或完全自主管理，通常不是 Public cloud。
@@ -263,6 +265,8 @@ Private cloud 是專供單一組織使用的雲端環境，可由組織自行管
 
 - self-managed security settings
 
+**繁體中文：** 最高控制權、專屬環境、單一組織、嚴格安全要求、關鍵業務應用、前期投資較高、自行管理安全設定。
+
 ### 考試重點
 
 當題目出現 **highest level of data control** 或 **maximum control**，通常優先考慮 Private cloud。
@@ -315,6 +319,8 @@ Community cloud 是由多個具有共同需求、共同任務、共同安全要�
 
 - community of organizations
 
+**繁體中文：** 多個組織、共同任務、共同合規要求、共同法規要求、同產業、組織社群。
+
 ### 考試重點
 
 Community cloud 的關鍵不是「合規」本身，而是：
@@ -366,6 +372,8 @@ Hybrid cloud 是由兩種或更多種不同部署模型組成的雲端架構，�
 - integrated environments
 
 - balance control and scalability
+
+**繁體中文：** 私有雲 + 公有雲、地端 + 公有雲、敏感工作負載留在私有端、非敏感工作負載用公有雲、整合環境、平衡控制與擴充性。
 
 ### 考試重點
 
@@ -444,6 +452,8 @@ IaaS 是 CSP 提供底層基礎設施，例如運算、儲存、網路與虛擬�
 
 - Security configuration
 
+**繁體中文：** 作業系統、OS 修補、runtime、middleware、應用程式、應用程式安全、資料、身分與存取管理、安全組態。
+
 ### 常見關鍵字
 
 - customer manages OS
@@ -459,6 +469,8 @@ IaaS 是 CSP 提供底層基礎設施，例如運算、儲存、網路與虛擬�
 - install middleware
 
 - configure operating system
+
+**繁體中文：** 客戶管理 OS、OS 修補、虛擬機、運算實例、最大彈性、安裝 middleware、設定作業系統。
 
 ### 考試記法
 
@@ -524,6 +536,8 @@ PaaS 是 CSP 提供應用程式開發與執行的平台，包括底層基礎設�
 
 - managed platform
 
+**繁體中文：** 開發者專注於程式碼、不需修補 OS、runtime 由 CSP 管理、middleware 由 CSP 管理、應用開發平台、受管平台。
+
 ### 考試記法
 
 > PaaS = 寫程式，不管 OS / runtime / middleware。
@@ -578,6 +592,8 @@ SaaS 是 CSP 提供完整可使用的應用程式。客戶通常不管理底層�
 
 - Audit logs usage
 
+**繁體中文：** 使用者、資料、權限、SaaS 組態、身分整合、合規要求、資料分享設定、稽核日誌的使用。
+
 ### 常見關鍵字
 
 - ready-to-use application
@@ -595,6 +611,8 @@ SaaS 是 CSP 提供完整可使用的應用程式。客戶通常不管理底層�
 - email service
 
 - no application development
+
+**繁體中文：** 開箱即用的應用程式、Microsoft 365、Google Workspace、Salesforce、ServiceNow、人資系統、電子郵件服務、不需開發應用程式。
 
 ### 考試記法
 
@@ -881,6 +899,8 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 
 - Cloud infrastructure availability
 
+**繁體中文：** 實體資料中心、實體安全、實體伺服器、網路硬體、儲存硬體、虛擬化層、雲端基礎架構可用性。
+
 ### 客戶通常負責
 
 - OS configuration
@@ -902,6 +922,8 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 - Security groups / firewall rules
 
 - Logging configuration
+
+**繁體中文：** OS 組態、OS 修補、runtime、middleware、應用程式、應用程式安全、資料保護、身分與存取管理、security group／防火牆規則、日誌組態。
 
 ---
 
@@ -966,6 +988,8 @@ Shared Responsibility Model 指雲端安全與合規責任由 CSP 與 cloud cons
 - Vendor risk review
 
 - Data retention and export
+
+**繁體中文：** 使用者、資料、存取權限、SaaS 組態、資料分類、合規要求、供應商風險審查、資料保留與匯出。
 
 ---
 
@@ -1195,6 +1219,8 @@ Cloud governance 是透過政策、標準、流程、控制、標籤、成本管
 
 - Resource lifecycle management
 
+**繁體中文：** 命名規則、標籤政策、成本中心對應、預算告警、核准流程、安全 baseline、身分治理、政策執行、日誌與監控標準、合規控制、資源生命週期管理。
+
 ---
 
 ## 8.3 Tagging Policy
@@ -1230,6 +1256,8 @@ Tagging policy 是要求雲端資源必須附上標籤，以利成本管理、�
 - untagged resources
 
 - cost allocation issue
+
+**繁體中文：** 沒有擁有者、沒有成本中心、無法辨識 dev／test／prod、未加標籤的資源、成本分攤問題。
 
 ### 考試判斷
 
@@ -1297,6 +1325,8 @@ Cloud sprawl 是雲端資源缺乏治理，導致資源過度建立、閒置、�
 
 - uncontrolled resource growth
 
+**繁體中文：** 閒置 VM、未加標籤的儲存、重複的測試環境、成本暴增、未受管資源、缺乏擁有者、資源不受控成長。
+
 ### 記法
 
 > Cloud sprawl = 雲資源亂長，管理熵急速增長。
@@ -1316,6 +1346,8 @@ Cloud sprawl 是雲端資源缺乏治理，導致資源過度建立、閒置、�
 - Automated cleanup
 
 - Regular inventory review
+
+**繁體中文：** 雲端治理、標籤政策、預算告警、核准流程、資源生命週期管理、自動清理、定期盤點。
 
 ---
 
@@ -1360,6 +1392,8 @@ Shadow IT 是部門或員工在未通知 IT、未經安全審查或未獲核准�
 - unauthorized cloud services
 
 - unsanctioned applications
+
+**繁體中文：** 部門未經 IT 核准就使用 SaaS、沒有安全審查、IT 不知情、未授權的雲端服務、未經批准的應用程式。
 
 ### 改善方式
 
@@ -1428,6 +1462,8 @@ Vendor lock-in 是指組織過度依賴某雲端服務商的專有技術、API�
 
 - hard to move to another provider
 
+**繁體中文：** 專有 API、專有資料庫、難以遷移、重寫成本高、依賴單一 CSP、難以移到其他 provider。
+
 ---
 
 ## 10.4 降低 Vendor Lock-in 的方法
@@ -1447,6 +1483,8 @@ Vendor lock-in 是指組織過度依賴某雲端服務商的專有技術、API�
 - Multi-cloud strategy when justified
 
 - Abstraction layers
+
+**繁體中文：** 不綁定特定雲端的架構、標準資料格式、開放標準、可攜的容器映像、避免過度使用專有 API、規劃資料匯出、有正當理由時採多雲策略、抽象層。
 
 ---
 
@@ -1497,6 +1535,8 @@ Containerization 是將應用程式與其相依套件打包成容器映像檔，
 - Better resource efficiency compared with full VMs
 
 - Supports microservices architecture
+
+**繁體中文：** 可攜性、一致的執行環境、部署較快、較易擴充、資源效率優於完整 VM、支援微服務架構。
 
 ---
 
@@ -1714,6 +1754,8 @@ Loosely coupled 表示系統元件之間依賴較少，元件可較獨立地部�
 
 - Reserved capacity / savings plans when appropriate
 
+**繁體中文：** 自動擴充規則、資源配額、預算告警、監控門檻、尖峰需求預測、效能測試、成本最佳化、限額規劃，以及適當時使用預留容量或 savings plan。
+
 ---
 
 ## 13.6 常見工具概念
@@ -1727,6 +1769,8 @@ Loosely coupled 表示系統元件之間依賴較少，元件可較獨立地部�
 - Automation scripts
 
 - Cloud-native monitoring services
+
+**繁體中文：** Kubernetes HPA／VPA／Cluster Autoscaler、Prometheus 監控、Terraform IaC、自動化腳本、雲端原生監控服務。
 
 ---
 
@@ -1963,6 +2007,8 @@ Infrastructure as Code 是用程式碼或宣告式設定檔管理基礎設施，
 
 - repeatable deployment
 
+**繁體中文：** 以程式碼管理基礎架構、自動建立資源、以 API 配置、版本控制的基礎架構、可重複部署。
+
 ### 記法
 
 > IaC = 用 code 管 infra。
@@ -2015,6 +2061,8 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 
 - IaC definition not matching deployed resources
 
+**繁體中文：** 實際環境與程式碼不同、在主控台手動變更、組態不一致、drift 偵測、IaC 定義與已部署資源不符。
+
 ### 記法
 
 > IaC 是藍圖，實際環境偏離藍圖 = drift。
@@ -2038,6 +2086,8 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 - Policy as Code
 
 - Automated compliance checks
+
+**繁體中文：** IaC pipeline、變更審查、版本控制、pull request 核准、定期 drift 偵測、停用或限制主控台手動變更、Policy as Code、自動化合規檢查。
 
 ---
 
@@ -2099,6 +2149,8 @@ Configuration drift 是指實際雲端環境設定與 IaC 定義或標準設定�
 - Backup/export strategy
 
 - Data retention settings
+
+**繁體中文：** 仍需管理或監控：身分與存取管理、SSO 整合、強制 MFA、使用者生命週期、角色與權限審查、SaaS 安全設定、資料分類、資料分享控制、API 整合、供應商風險管理、合規證據、稽核日誌、備份與匯出策略、資料保留設定。
 
 ---
 
@@ -3738,3 +3790,17 @@ Domain 1 最常輸在「題目看太快」。許多題目不是考名詞定義�
 # 結語
 
 本輪 Domain 1 複習的核心成果是建立情境判斷能力。考試時不只需背定義，更要能根據題目線索判斷：控制程度、責任分工、可攜性、治理需求、擴展特性與遷移策略。掌握本講義中的關鍵字表與易混淆比較，Domain 1 的大部分情境題即可快速排除干擾選項並選出最合理答案。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 1 的完整講義。
+
+- **定位與題型（§1–§2）：** Domain 1 的核心定位與常見考題思路。
+- **模型（§3–§6）：** 四種部署模型、IaaS／PaaS／SaaS、NIST 五大特性、shared responsibility。
+- **角色與治理（§7–§10）：** consumer、provider、auditor、carrier、broker；雲端治理；cloud sprawl 與 shadow IT；vendor lock-in。
+- **架構與維運（§11–§16）：** 容器化、serverless、rapid elasticity 與 capacity planning、遷移策略、IaC 與 configuration drift、SaaS 導入後的 IT 角色。
+- **標準（§17）：** CSA CCM 與 ISO/IEC 27017。
+- **錯題與演練（§18–§19、§25）：** 高頻錯題主軸、互動題解析、快速回顧自測。
+- **考前收斂（§20–§24、§26–§28）：** 易混淆比較、速記表、答題策略、複習順序、拼字修正表、考前提醒與一頁式濃縮。

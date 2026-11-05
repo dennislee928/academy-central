@@ -199,3 +199,13 @@
 
 - **Data Steward vs Custodian/Engineering**：區分「治理/規則/品質」與「技術控制」
 - **ABAC**：高頻出現於 hybrid/multi、合規、跨資產/跨生命週期題型
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第二輪錯題分析，重點在 storage architecture。
+
+- **量化：** 錯題核心集中點、命中題數、錯題占比與 P0／P1 權重。
+- **錯題詳解：** 最細粒度靜態加密選 object storage；SDS 的關鍵風險在 control plane；object 相對 block 的優勢是更細緻的存取控制；global distribution 最難滿足 data residency；Data Steward 的責任；hybrid cloud 全生命週期存取控制用 ABAC。
+- **複習策略：** P0 為 2.2 storage architectures，P1 為 2.1 與 2.6。

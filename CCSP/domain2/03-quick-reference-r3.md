@@ -236,3 +236,13 @@ flowchart TD
 3. 已知名單要抓外流 → DLP 用 **Fingerprinting / EDM**  
 
 4. 格式不變（16 位）→ **FPE**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第三輪速查表，聚焦保護技術的選擇。
+
+- **決策邏輯與技術專題：** 決策樹、format-preserving encryption（FPE）、tokenization、data masking。
+- **錯題解析：** DLP 實施挑戰、隱私指標與量化、資料混淆技術應用，以及行動建議。
+- **後半講義：** 10 秒選型、DLP 偵測方式、dynamic／static masking、redaction、tokenization、FPE、synthetic data、K-anonymity 與 Mermaid 決策樹。

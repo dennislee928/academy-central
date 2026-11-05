@@ -176,3 +176,9 @@
 | **2.3** | **高（至少 7 題量級）** |   **最高** | 易在「加密/金鑰/用途」與「保密 vs 完整性」概念上誤選             |
 | **2.2** | **高（至少 7 題量級）** |       次高 | Storage 題密集出現時錯題集中度高                   |
 | 2.1     |               中 |        中 | roles/shared responsibility 需穩定（2.3 未再出現） |
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第三輪錯題分析（Q1–Q8）：object vs block 的安全優勢、DR 傳輸與儲存的機密性、同步與非同步複寫的取捨、SDS 分散式資料的安全挑戰、壓縮與加密的順序、多雲 object storage 的合規與主權、storage virtualization 的取捨、多層儲存的機密性控制。文末指出最弱的是 2.3 資料安全技術與策略。

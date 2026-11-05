@@ -235,3 +235,11 @@ flowchart TD
 
 ⸻
 
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 2 第一輪速查表，聚焦 2.3 資料安全技術與 2.2 儲存架構（P0 補強），以一頁式重點、陷阱對照表、決策樹與考場速記呈現。
+
+- **兩條常見誘答主軸：** 混淆 crypto 功能邊界（confidentiality、integrity、authenticity、non-repudiation）；混淆治理與存取控制和密碼學控制（RBAC／ABAC 決定誰能做，encryption + key ownership 使人拿到也看不懂）。
+- **決策重點：** 需求對應控制的配對、傳輸保密與資料主權兩類典型題型的優先答案與陷阱。

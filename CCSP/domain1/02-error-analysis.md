@@ -140,3 +140,14 @@ RBAC、least privilege、regular access reviews 比較能同時支援：
 這題的陷阱是：  
 看到 cloud / multi-region 就想選 HA。  
 但題目問的是 **CIA triad 整體**，不能只滿足 A。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 1 第 21–24 題的錯題分析，四個主軸為：
+
+1. Hybrid vs Community vs Private 的判斷。
+2. Private vs Hybrid 的判斷。
+3. Insider threat 與 shared responsibility。
+4. CIA triad 與多租戶環境。

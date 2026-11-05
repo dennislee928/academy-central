@@ -99,3 +99,9 @@
 5. **Rapid elasticity 要靠 stateless**
 6. **Policy 是宣告，audit trail 才是證據**
 7. **多雲/混合雲題，優先想 governance consistency**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Domain 1 的快速速查表，依序涵蓋考試範圍、角色責任、SaaS／PaaS／IaaS、部署模型、shared responsibility、vendor lock-in 與 portability、NIST 雲端特性、governance 與 accountability、標準與框架，最後是考場秒殺總結。
