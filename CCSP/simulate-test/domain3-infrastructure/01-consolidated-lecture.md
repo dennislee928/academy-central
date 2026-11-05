@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -34,6 +34,7 @@
 | 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §6 Isolation = boundary + controlled flow、DNSSEC／IPsec／TLS 各自功能 `[Q]` | §1.3、§2.15 |
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.1–§1.3 Process isolation 定義、「不是什麼」與實作層次；§3 Secure KVM 與 TPM（§1.4 判讀題 → D4） | §1.4 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §3 Uptime Tier 決策模型、§4 小型 surgical center 自建 DC `[Q]`、§6 Compute = CPU + RAM、§8 Loosely vs tightly coupled storage cluster `[Q]` | §1.1、§1.3、§1.4、§2.16、§2.17 |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §3 Sandbox vs Process Isolation、design-time vs runtime；§5 Secure KVM 定義與 TPM 混淆（復現）、Secure KVM vs IP KVM（閃卡 30） | §1.4、§3、§4 |
 
 ---
 
@@ -527,6 +528,29 @@ Network isolation  → 隔離 network path / zone / segment / traffic
 
 **口訣：Process isolation = 隔執行域，不是隔網路。**
 
+#### Sandbox vs Process Isolation（來源：2026-11-05，`[T]`）
+
+> **Sandbox = 限制程式能做什麼、能接觸什麼的受控執行環境**，目的是限制 compromise 的 blast radius。
+
+Sandbox 可能限制：filesystem、network、system calls、device access、memory、privileges、IPC。
+
+```text
+Sandbox
+= restricted execution environment / security boundary
+
+Process isolation
+= one mechanism that can help build that boundary
+```
+
+**Sandbox ≠ Process Isolation。** Sandbox 還可能依賴 namespaces、seccomp、MAC、capabilities、containers、VMs、filesystem ACL、network policy。Sandbox 是否等於 service model 見 [Domain 1 §1.7](../domain1-cloud-concepts/01-consolidated-lecture.md)。
+
+```text
+Design-time: decide isolation architecture
+Runtime:     enforce isolation
+```
+
+> **口訣：設計時決定；執行時實施。**
+
 #### Secure KVM
 
 > **復現標記：** 已在 `by-test/10` 上篇 A 與 `by-test/12` §10 連續出現。
@@ -550,6 +574,22 @@ Secure KVM 要避免的是**不同 security domains 透過 peripherals 發生 cr
 **TPM 不是 Secure KVM 的必要特徵（`[T]`）：** TPM 的用途是 device／platform trust、secure key storage、measured／verified boot、attestation——屬 **endpoint／platform security primitive**，不是 **peripheral-sharing isolation primitive**。Windows Hello／Touch ID 使用 TPM／Secure Enclave 只代表 `connected endpoint may use TPM`，不能推論 `Secure KVM itself must contain TPM`。
 
 > **口訣：TPM 保主機；Secure KVM 保跨主機周邊路徑。** 背到「cross-domain peripheral isolation、explicit selector、buffer／data-path isolation、TPM 非必備」即可，不用背 PCB layout 或 Protection Profile 細項。
+
+**定義（來源：2026-11-05）：** KVM = Keyboard／Video／Mouse switch。Secure KVM 讓同一組 peripherals 在不同 security-domain computers 間切換，同時維持 isolation：
+
+```text
+Keyboard ─┐
+Monitor ──┼─> Secure KVM ──> Computer A
+Mouse ────┘              └─> Computer B
+```
+
+```text
+TPM / Secure Enclave / Windows Hello → endpoint platform trust / authentication / key protection
+Secure KVM                           → peripheral sharing / cross-domain isolation
+IP KVM                              → remote administration
+```
+
+> **2 秒口訣：Secure KVM = 隔離多台主機的周邊分享器，不是 endpoint root of trust。**
 
 ### 1.5 責任邊界：Provider／Customer／Regulator
 
@@ -1083,6 +1123,9 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 92 | Tier II = Redundant Capacity Components；III = Concurrently Maintainable；IV = Fault Tolerant；**產業名稱不決定 Tier**。 |
 | 93 | 「控制最大」≠「最佳」；小型組織自建 DC 題資訊不足時屬 `[Q]`。 |
 | 94 | **Loose coupling = independent nodes + scale-out；Tight coupling = shared components + shared bottleneck**；node count 會影響 aggregate。 |
+| 95 | **Sandbox = restricted environment；Process isolation = isolation mechanism**；後者只是建立前者的機制之一。 |
+| 96 | Process isolation：**design-time 決定、runtime 實施**。 |
+| 97 | **Secure KVM = peripheral isolation，not TPM**；IP KVM 的重點是 remote administration。 |
 
 ---
 
@@ -1136,6 +1179,8 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | Compute（CPU + RAM） | Storage（SSD／HDD） | 處理與工作記憶體 vs 持久儲存 |
 | Tier II | Tier III | 冗餘 capacity components（維護仍可能中斷） vs concurrently maintainable |
 | Loosely coupled cluster | Tightly coupled cluster | 獨立 node scale-out vs 共享 controller／backplane bottleneck |
+| Sandbox | Process isolation | 受控執行環境／security boundary vs 可用來建立該邊界的機制之一 |
+| Secure KVM | IP KVM | cross-domain isolation vs remote administration |
 
 ---
 
@@ -1198,5 +1243,8 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - Process isolation 和 network isolation 的差別？能不能保證消除所有 side-channel attack？
 - Secure KVM 真正保護的是什麼 boundary？TPM 為什麼不是必要特徵？
 - Compute 的基礎抽象資源是什麼？SSD 與 `virtualized` 為什麼不是答案？
+- Sandbox 與 process isolation 的關係？Sandbox 還可能依賴哪些機制？
+- Process isolation 在 design-time 與 runtime 各發生什麼事？
+- Secure KVM 與 IP KVM 的重點各是什麼？
 - Tier III 最重要的關鍵詞？Healthcare 是否自動對應某個 Tier？
 - Loose vs tight coupling 最大的概念差別？node count 會不會影響 aggregate capacity？
