@@ -115,3 +115,12 @@
 5. **Encryption** 是降低資料外洩後衝擊 (Impact) 的最有效手段。
 
 6. **CPTED Signage** 核心目的是導引 (Guide) 與告知，而非純粹威嚇。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件依 41 題鑑定錯題樣本分析 Domain 3 的知識盲點與邏輯誤判，並非完整成績推估。
+
+- **三種誤判模式：** 層級錯置（選局部技術控制，而非上位或根因控制）；手段與前提混淆（直接選執行工具，忽略 visibility 與 mapping 等前提）；目標識別偏差（混淆預防控制與降低衝擊控制）。
+- **必記結論：** hypervisor patching 是應對虛擬化逃逸的第一道防線；management plane 淪陷等於失去基礎設施控制權；aspirating system 是高氣流環境的偵煙標準；dependency mapping 是微服務分段的先決條件；encryption 是降低外洩衝擊的有效手段；CPTED signage 的核心目的是導引與告知。

@@ -841,3 +841,15 @@ CSP（Content Security Policy）很好。
 - **Broken Authentication 最直接主控制** = MFA
 - **SQLi 根因治理** = Secure SDLC / DevSecOps
 - **SQLi 直接技術控制** = parameterized queries
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件整理 Domain 4 的核心觀念，重點在安全設計原則與應用層控制。
+
+- **資料保護技術對照：** data masking、tokenization、encryption、redaction 的定義與機制。
+- **Threat modeling（§1）：** STRIDE、DREAD、PASTA 的詳解、比較與考題陷阱。
+- **TLS（§2）：** TLS 的用途與元件、為何不全程用非對稱加密、TLS 1.3 流程、TLS 1.2 與 1.3 的考點差別、Kerckhoffs's principle、金鑰管理基本觀念。
+- **應用安全（§3）：** XSS、broken authentication 與 MFA、SQL injection，以及答題習慣。
+- **考前版（§4）：** threat modeling、TLS、OWASP／AppSec 的濃縮重點。

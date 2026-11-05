@@ -38,6 +38,16 @@
 | **Serverless** | ephemeral, FaaS, no host access, function monitoring, provider-managed infrastructure | provider-native monitoring/logging/tracing, IAM / permissions, configuration security, event visibility |
 | **Cloud segmentation** | cloud-scale, multi-tenant segmentation, virtualization networking, VLAN limitation, software-defined segmentation | SDN, microsegmentation, virtual firewalls |
 
+**繁體中文：**
+
+| 層級 | 關鍵詞 | 主控制常見答案 |
+|---|---|---|
+| **Hypervisor／虛擬化** | VM 逃逸、guest 到 host、hypervisor 遭入侵、hypervisor 安全、長期保護 | 修補管理、安全更新、hardening、特權存取控制、管理介面的 RBAC／least privilege |
+| **VM 之間／租戶之間** | 東西向流量、橫向移動、VM 間通訊、租戶分離、分段 | Microsegmentation、虛擬防火牆、SDN、網路隔離 |
+| **Container runtime／control plane** | Orchestration、control plane、叢集管理、容器隔離、租戶隔離 | 細緻 RBAC、process isolation、以獨立 VM 達成最強隔離、workload identity／secrets 保護 |
+| **Serverless** | 短暫、FaaS、無 host 存取、函式監控、provider 管理基礎架構 | Provider 原生監控／日誌／追蹤、IAM 與權限、組態安全、事件可視性 |
+| **雲端分段** | 雲端規模、多租戶分段、虛擬化網路、VLAN 限制、軟體定義分段 | SDN、microsegmentation、虛擬防火牆 |
+
 ---
 
 ## 第二章 Hypervisor 與 VM Escape
@@ -360,6 +370,8 @@ IoT 與 AI 導入後：connected devices 增加、entry points 增加、data flo
 - Control plane abuse → RBAC  
 - Serverless monitoring → provider-native tools  
 
+**繁體中文：** Hypervisor 漏洞 → 修補；橫向移動 → 分段；control plane 濫用 → RBAC；serverless 監控 → provider 原生工具。
+
 ### Step 3：注意題目用語
 
 如 **most effective**、**most critical**、**best long-term**、**primary concern**、**strongest isolation**、**most appropriate**，通常表示應選**主控制**，而非補充控制。
@@ -368,6 +380,8 @@ IoT 與 AI 導入後：connected devices 增加、entry points 增加、data flo
 
 - **Root-layer**：patching, hardening, RBAC, process isolation  
 - **Blast-radius**：segmentation, firewalls, east-west monitoring, VLAN design  
+
+**繁體中文：** **Root-layer 控制：** 修補、hardening、RBAC、process isolation。**Blast-radius 控制：** 分段、防火牆、東西向監控、VLAN 設計。
 
 ### Step 5：排除層級不符的選項
 
@@ -409,3 +423,16 @@ Domain 3 常見失分原因之一，是將**次級控制**選為**主控制**。
 ---
 
 *本講義可搭配「一頁式考前速記」與官方 CCSP 教材使用，以鞏固 Domain 3 考點。*
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件整理 Domain 3 的虛擬化、容器、serverless、分段隔離與架構安全。
+
+- **核心架構：** 依層級對應控制，先判斷問題發生在哪一層。
+- **虛擬化：** hypervisor 與 VM 逃逸、Type 1 與 Type 2、live migration、管理介面安全。
+- **容器與 serverless：** 容器與 VM 隔離、容器安全兩類考法、serverless 安全模型。
+- **網路：** VLAN、SDN、microsegmentation、VLAN hopping、trunk 與 DTP。
+- **其他：** side-channel、IoT 與 AI、資料中心選址。
+- **收斂：** 易錯對照、考場解題流程、必背十句、複習優先順序。

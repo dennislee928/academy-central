@@ -161,6 +161,8 @@
 - scheduling vs dynamic dormant-VM patching
 - transparency vs balanced stakeholder communications
 
+**繁體中文：** 例如：monitoring vs memory introspection、核准 vs acceptance gate、排程 vs 對休眠 VM 動態修補、透明 vs 平衡的利害關係人溝通。
+
 ## 原則四：遇到法律與合規關鍵字，優先往法律義務與法域衝突想
 
 高風險關鍵字包括：
@@ -396,6 +398,8 @@ VMI 的本質是：
 - VM memory
 - malicious patterns
 - no in-guest agent dependency
+
+**繁體中文：** 在 guest OS 之外、不受 guest OS 干擾、out-of-band 分析、VM 記憶體、惡意 pattern、不依賴 guest 內的 agent。
 
 ### 常見錯誤選項模式
 
@@ -1166,6 +1170,12 @@ VMI 也不會保證標準化資料匯出或可攜性。
 - **notify obligation = Incident Reporting Requirement**
 - **legally compliant chain of custody = jurisdiction / retention law**
 
+**繁體中文：**
+
+- **第三方獨立查核 = Right to Audit**
+- **通知義務 = Incident Reporting Requirement**
+- **符合法律的 chain of custody = 管轄權與保留法規**
+
 ## D. SDLC / Release 類
 
 - **Release Acceptance = go / no-go gate**
@@ -1177,6 +1187,13 @@ VMI 也不會保證標準化資料匯出或可攜性。
 - **suspended / snapshotted VM + minimize resources = dynamic patching as needed**
 - **scenario planning = 想 disruption、備 response**
 - **incident communication = regular general updates, hold back sensitive details**
+
+**繁體中文：**
+
+- **重大修補 + HA = rolling updates**
+- **暫停或快照的 VM + 資源最小化 = 依需要動態修補**
+- **Scenario planning = 設想中斷、準備回應**
+- **Incident 溝通 = 定期提供概括更新，保留敏感細節**
 
 ## F. eDiscovery 類
 
@@ -1374,3 +1391,15 @@ VMI 也不會保證標準化資料匯出或可攜性。
 - D4 / D5 / D6 / D3 的邊界辨識
 
 本講義可作為後續題目複習、錯題回顧與考前速讀版本。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件整理三份題包的 Domain 5 與相關概念。
+
+- **判讀原則（第一、二部分）：** 不靠 domain 標籤硬背；先找主詞與動詞、辨識題型、排除次級效果，遇法律關鍵字往法律義務與法域衝突想。
+- **第一份題包：** IP-based KVM、SLA 與 uptime、Right to Audit、Privacy Level Agreement、VMI、chain of custody、release acceptance。
+- **第二份題包：** HA 與 redundancy、重大修補、暫停 VM 的修補、scenario planning、incident 溝通、多租戶 live forensics、SaaS 取證、shared storage 證據保全、eDiscovery、資料主權、ISO/IEC 27050。
+- **第三份題包：** 硬體虛擬化隔離、混合辦公遠端存取、SLA 納入 ISO 27001／SOC 2、VMI 的威脅偵測優勢與多租戶 HPC 挑戰、VMI 支援的 GDPR 原則。
+- **收斂（第六至十部分）：** 高頻口訣、考場判讀五步驟、常見錯誤答案模式、12 點考前濃縮、四輪複習順序。
