@@ -53,3 +53,8 @@ IdP、RP／SP、Broker 在 federation 中各做什麼？	IdP＝authenticate 並 
 SAML 的 Service Provider 是「提供 federation 服務的第三方公司」嗎？	不是。SP 是 federation 的正式角色：依賴 IdP assertion 並提供實際服務的一方。
 NIST 現代 federation 用語中，SP 的近義角色是什麼？	Relying Party（RP），如 NIST SP 800-63C-4（2025）。Federation 角色判斷上可當 RP ≈ SP。
 Third-party certification federation 中，third party 與 federation members 各是什麼角色？	Third party＝identity／trust function → IdP；federation members＝實際 applications／resources → SP。判斷：creates／sends assertion → IdP；consumes assertion + offers resource → RP／SP。
+SAML 的 SP 等於一般「服務商」嗎？	不一定。SP 是接受 assertion 並提供 resource 的 federation role，不是「提供 federation service 的公司」。Third-party identity company 可能是 IdP；SaaS application 通常是 SP／RP。
+Federation Broker／Proxy 的雙重角色？	Upstream 一側扮 RP；downstream 一側扮 IdP。可能做 protocol translation、identity mapping、trust mediation、assertion transformation。
+Federation Authority 做什麼？	建立／管理 federation trust framework、vet federation participants、定義 participation／assurance requirements。
+Federation Authority 與 Federation Proxy 差在哪？	Authority 管 trust relationship；Proxy 中介 federation protocol traffic。題庫舊模型的 `proxy federation` 把 proxy 當信任中介，判讀時看題幹動作。
+Technical IDENTIFY 題的原則？	選最精確 defined mechanism。例：`prevents one process affecting another` → Process Isolation，不選 broad security enhancement。

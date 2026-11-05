@@ -23,7 +23,7 @@ Privacy Level Agreement 常被考的是什麼？	隱私相關義務，尤其通�
 資料跨境時最該先想到什麼？	Jurisdiction、當地法律與能否合法轉移／存取資料。
 Forensic reporting 最在意什麼？	方法可辯護、證據完整、chain of custody 清楚。不是先追求最快修復。
 Evidence integrity 常見技術控制？	Hashing、寫保護、雙人保管、完整日誌。分類本身不能替代保管鏈。
-把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失。
+把工作交給 processor 後，controller 還要做什麼？	選擇適當 processor、用合約約束、持續監督。歸責不因委外而消失：Outsourcing execution ≠ automatically outsourcing accountability。
 SOC 報告能不能當成「已完全合規」的證明？	不能自動等同。要看 Type、期間、範圍與是否涵蓋所關心的控制。
 訴訟保全時 retention 政策怎麼辦？	與本案可能相關的資料停止例行銷毀，即使原本到期。
 NIST RMF 的七個步驟？	Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor。中文口訣「準、分、選、做、驗、准、監」比 P-C-S-I-A-A-M 好記。
@@ -141,3 +141,7 @@ ISO 27017 vs ISO 27018？	27017＝Cloud security controls（建立在 27002 之�
 ISO 27001／27002／27017／27018／27701 最短怎麼分？	27001＝ISMS requirements（可認證）；27002＝security controls guidance；27017＝cloud security；27018＝public-cloud PII processor privacy；27701＝Privacy Information Management System（PIMS）。
 ISO 27018 是 law 嗎？	不是，是國際標準／指南；不要和 GDPR、PIPEDA 等法律混淆。它也不是只適用 controller，不要背成「ISO 27018 = 每年 audit」。
 CSA STAR、Uptime Tier、Common Criteria 的數字各是哪一套？	STAR Level 1–2（self → third party）；Uptime Tier I–IV（data-center resiliency）；Common Criteria EAL1–EAL7（evaluation assurance depth）。有 7 個 assurance levels 的是 Common Criteria，不是 STAR。
+Data Subject 是誰？	個資所描述的自然人（natural person whom personal data relates to），不等於資料建立者。
+Regulator／Supervisory Authority 做什麼？	監督、調查、執法、要求 compliance。
+Regulator 與 Controller 怎麼分？	Regulator 監督與執法；Controller 決定 purposes + means（WHY + HOW）。監管 processing 不代表是 Controller。
+Auditor 與 Regulator 怎麼分？	Auditor 做 independent assessment（evidence／controls／conformity）；Regulator 有 legal authority 與 enforcement。Auditor 不因發現問題就自動擁有 governmental enforcement authority。
