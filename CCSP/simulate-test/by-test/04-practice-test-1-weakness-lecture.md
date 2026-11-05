@@ -493,6 +493,8 @@ Valid recurring deviation = update baseline through change process
 - secure KVM features
 - patch live production system：vendor guidance weight highest
 
+**繁體中文：** 錯題包含 Uptime Institute tier 的最低與最高、ASHRAE 濕度可降低靜電、發電機燃料 12 小時、maintenance mode 的動作、secure KVM 的特性，以及 live production 系統 patch 時 vendor guidance 權重最高。
+
 ### 秒殺規則表
 
 | 主題 | 規則 |
@@ -505,6 +507,19 @@ Valid recurring deviation = update baseline through change process
 | TPM | machine-level secure key storage, not a secure KVM feature |
 | Live production patch | vendor guidance carries high weight |
 | Baseline deviation | investigate + document |
+
+**繁體中文：**
+
+| 主題 | 規則 |
+|---|---|
+| Uptime tiers | 1 最低，4 最高 |
+| ASHRAE 濕度 | 降低靜電釋放 |
+| 發電機燃料 | 至少 12 小時 |
+| Maintenance mode | 移除運作中的 production instance + 阻止新登入 + 持續記錄日誌 |
+| Secure KVM | 連接埠隔離、防竄改、安全切換、無資料外洩 |
+| TPM | 機器層級的安全金鑰儲存，不是 secure KVM 特性 |
+| Live production patch | Vendor guidance 權重高 |
+| Baseline 偏差 | 調查 + 記錄 |
 
 ---
 
@@ -584,6 +599,8 @@ Cloud provider often acts as data processor
 Cloud customer/data owner/controller remains ultimately legally responsible
 Outsourcing does not transfer accountability completely
 ```
+
+**繁體中文：** 錯題包含雲端的 data processor = cloud provider，以及雲端資料揭露或遺失的最終法律責任 = cloud customer／data owner。Cloud provider 常扮演 processor，但 customer／owner／controller 仍負最終法律責任，委外不會完全移轉 accountability。
 
 ---
 
@@ -737,3 +754,19 @@ Practice Test 2 目標：≥72–75%
 Practice Test 3 目標：≥75–80%
 考前最後兩回：≥80%
 ```
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Practice Test 1（129 題，65%，每題 28 秒）依官方權重的弱點分析與優先策略。
+
+- **結論與進步（§1–§3）：** 六域成績，並與 Assessment Test、Custom Test 2 比較。
+- **補強順序（§4）：** 依 CCSP 官方權重決定優先序。
+- **D1（§5）：** service model 判斷、vendor lock-out 與遷移風險、雲端基礎特性與虛擬化。
+- **D2（§6）：** masking ≠ encryption、tokenization 需要 mapping、IP 保護。
+- **D3（§7）：** business requirements／BIA、對外連線韌性、BC/DR 紀律、risk treatment、機房事實。
+- **D4（§8）：** 驗證與授權交換、身分資格用語。
+- **D5（§9）：** egress monitoring 與分類、hardening vs redundancy、baseline 偏差、機房標準與維運。
+- **D6（§10）：** 合約作為信任機制、CSA STAR／SOC、processor／controller 責任、eDiscovery 與鑑識、隱私法與管轄、雲端角色。
+- **計畫與判斷（§11–§14）：** 七天補強、Practice Test 2 前的 gate、考前加權策略與最終判斷。

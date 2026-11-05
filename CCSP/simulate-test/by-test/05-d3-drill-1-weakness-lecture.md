@@ -381,6 +381,17 @@ BC/DR plan references laws/standards；it does not need to embed full copies。
 In data centers, generator redundancy adds fuel-related human safety risk。
 ```
 
+**繁體中文：**
+
+| 冗餘項目 | 風險 |
+|---|---|
+| 發電機 | 燃料、火災、排氣、機械與電氣安全 |
+| 通訊 | 營運依賴 |
+| 備品 | 庫存與物流 |
+| 緊急逃生出口 | 屬安全控制，不是威脅 |
+
+一句話：資料中心的發電機冗餘會增加與燃料相關的人身安全風險。
+
 ---
 
 ## 6. 下一步 Patch Plan
@@ -444,3 +455,15 @@ In data centers, generator redundancy adds fuel-related human safety risk。
 本次 D3 drill 顯示 D3 已從 54% 提升到 64%，屬於明確進步。但錯題集中在 D3 的 facility / physical security / BC-DR / provider responsibility / monitoring visibility 等核心題型，因此仍不應視為已修復。
 
 下一步不應只重刷答案，而應把錯題轉成規則，並做一輪 D3 + D5 operations/facility combined drill。若下一回 D3 drill 能達 75% 以上，才適合進入下一回 full Practice Test。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 D3 Drill 1 的弱點分析與補強。
+
+- **摘要與進步（§0–§3）：** 測驗摘要、是否進步、錯題總表與弱點總診斷。
+- **逐題解析（§4）：** encryption 影響 egress monitoring、variable keystrokes、public cloud 機房治理、VM 組態管理工具的日誌、mantrap 層級、data dispersion + encryption、雲端滲透測試需事先通知、BC/DR plan 內容、發電機對人身安全的威脅。
+- **高頻主題（§5）：** egress monitoring vs encryption；provider／customer／regulator 責任；實體存取分層；BC/DR plan 內容；設施冗餘安全。
+- **補強（§6）：** 90 分鐘與 1 小時排程，以及下一回 D3 gate。
+- **規則與評估（§7–§8）：** 最重要的 15 條規則與最終評估。

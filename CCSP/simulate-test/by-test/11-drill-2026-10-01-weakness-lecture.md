@@ -109,6 +109,15 @@ Private ≠ not Internet-facing
 | **Community** | organizations share common mission／regulatory needs |
 | **Hybrid** | combines distinct cloud environments |
 
+**繁體中文：**
+
+| 模型 | 核心 |
+|---|---|
+| **Public** | Provider 的基礎架構，通常 multi-tenant |
+| **Private** | 單一組織專用 |
+| **Community** | 多個組織共享共同任務或法規需求 |
+| **Hybrid** | 結合不同的雲端環境 |
+
 ### 快速判斷
 
 ```text
@@ -149,6 +158,8 @@ Customer controls:
 - host firewall   - subnet         - security groups / agents
 ```
 
+**繁體中文：** 適合自訂 OS、惡意程式分析、自訂防火牆、IDS/IPS、封包擷取、kernel 測試、網路分段與低階安全測試。客戶可控制 guest OS、host firewall、VPC／VNet、subnet、routing、security groups 與 agents。
+
 ### 反駁重點：Secure sandbox 為什麼不是 IaaS？
 
 反駁論點：
@@ -182,6 +193,14 @@ Insider threat 通常指已位於某種 trust boundary 內的：employee、contr
 | **Preventive** | background screening、least privilege、separation of duties、job rotation、mandatory vacation、PAM |
 | **Detective** | logging、SIEM、UEBA、DLP、privileged activity monitoring |
 | **Administrative** | policy、awareness、sanctions、offboarding |
+
+**繁體中文：**
+
+| 類別 | 控制 |
+|---|---|
+| **預防性** | 背景調查、least privilege、職責分離、職務輪調、強制休假、PAM |
+| **偵測性** | 日誌、SIEM、UEBA、DLP、特權活動監控 |
+| **行政性** | 政策、意識訓練、懲處、離職程序 |
 
 ### 反駁重點：Aggressive Background Checks
 
@@ -273,6 +292,14 @@ Guest OS sees:
 | **Block／Volume** | Disk | block device |
 | **File** | Folder／share | NFS／SMB |
 | **Object** | Object + metadata | API／HTTP |
+
+**繁體中文：**
+
+| 類型 | 外觀 | 存取方式 |
+|---|---|---|
+| **Block／Volume** | 磁碟 | Block device |
+| **File** | 資料夾／共享 | NFS／SMB |
+| **Object** | 物件 + metadata | API／HTTP |
 
 ### Exam Rule
 
@@ -609,6 +636,22 @@ HA 關注：**service remains available despite failures**。
 | D5-10 | Cold aisle？ | Rack inlet／front faces inlet／front。 |
 | D5-11 | DHCP vs NTP？ | DHCP distributes configuration；NTP synchronizes time。 |
 
+**繁體中文：**
+
+| # | 問 | 答 |
+|---|---|---|
+| D5-01 | ARO 最直接的證據？ | 歷史發生資料 |
+| D5-02 | Aggregation 對 ARO 是什麼角色？ | 計算／處理技術，不是證據來源 |
+| D5-03 | SLE × ARO？ | ALE |
+| D5-04 | Synthetic Monitoring？ | 腳本化的模擬交易，可控、可重複、可規劃大範圍涵蓋 |
+| D5-05 | RUM？ | 觀察實際 production 使用者與真實體驗 |
+| D5-06 | Synthetic vs RUM 一句話？ | Synthetic = 能不能運作？RUM = 實際運作得如何？ |
+| D5-07 | RMF 七步驟？ | Prepare → Categorize → Select → Implement → Assess → Authorize → Monitor |
+| D5-08 | RMF 以 cost／threat 為基礎嗎？ | 否。它是 risk-based 框架，cost 與 threat 都只是輸入 |
+| D5-09 | Hot aisle？ | 機櫃排氣側／背面相對 |
+| D5-10 | Cold aisle？ | 機櫃進氣側／正面相對 |
+| D5-11 | DHCP vs NTP？ | DHCP 分發組態；NTP 同步時間 |
+
 ---
 
 # 本次反駁題規則總表
@@ -695,3 +738,14 @@ Exhaust → Inlet = bad recirculation
 | 8 | Hot aisle vs Cold aisle | D3 §1.1 |
 
 能在不看筆記的情況下完整講出這八組，本次 D1／D2／D5 remediation 才算完成。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 2026-10-01 反駁題的概念釐清，也就是對題庫敘述提出質疑後整理出的規則。
+
+- **D1：** private cloud ≠ private network、部署模型、sandbox ≠ service model、insider threat、ISO 27001。
+- **D2：** volume／block storage、virtualization vs multitenancy、egress monitoring 與 EXCEPT 題型、two-person integrity。
+- **D5：** ARO 與 aggregation、SLE／ARO／ALE、synthetic monitoring vs RUM、NIST RMF、hot／cold aisle、DHCP、high availability。
+- **檔尾規則總表：** 集中列出反駁題規則與八組需要固化的 distinction。

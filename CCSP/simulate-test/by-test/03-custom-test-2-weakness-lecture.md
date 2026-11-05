@@ -22,6 +22,18 @@
 | Average Time / Question | 34 seconds |
 | Readiness Score | 45% → 42% |
 
+**繁體中文：**
+
+| 指標 | 數值 |
+|---|---:|
+| 總題數 | 50 |
+| 答對 | 25 |
+| 答錯 | 25 |
+| 未作答 | 0 |
+| 測驗分數 | 50% |
+| 平均每題時間 | 34 秒 |
+| Readiness Score | 45% → 42% |
+
 ### Domain-wise Performance from Result Screen
 
 | Domain | Score | Correct / Total | Diagnosis |
@@ -31,6 +43,16 @@
 | D6 — Legal, Risk and Compliance | 23% | 3 / 13 | Critical weakness |
 
 Only D1, D2, and D6 appeared in the score summary. The test was therefore not a balanced CCSP mock. It was effectively a **targeted weak-domain stress test**.
+
+**繁體中文：**
+
+| Domain | 分數 | 答對／總數 | 診斷 |
+|---|---:|---:|---|
+| D1 — Cloud Concepts, Architecture and Design | 56% | 10 / 18 | 偏弱但可補救 |
+| D2 — Cloud Data Security | 63% | 12 / 19 | 較先前弱項基準進步，但尚未穩定 |
+| D6 — Legal, Risk and Compliance | 23% | 3 / 13 | 嚴重弱點 |
+
+成績摘要只出現 D1、D2、D6，因此這不是均衡的 CCSP 模考，實質上是**針對弱域的壓力測試**。
 
 ---
 
@@ -51,6 +73,15 @@ Previous Custom Test baseline:
 | D6 | 55% | 23% | Down sharply |
 | Overall | 62% | 50% | Down |
 
+**繁體中文：** 與前一次 Custom Test 的基準比較：
+
+| Domain | 前次 Custom Test | 本次 Custom Test | 方向 |
+|---|---:|---:|---|
+| D1 | 69% | 56% | 下降 |
+| D2 | 54% | 63% | 上升 |
+| D6 | 55% | 23% | 大幅下降 |
+| 整體 | 62% | 50% | 下降 |
+
 ### Interpretation
 
 The score drop should not be interpreted as simple regression only. This test was much more concentrated in weak legal/compliance and conceptual edge cases.
@@ -62,6 +93,13 @@ However:
 - **D6 is the dominant risk** and needs immediate repair.
 - Average speed remains very fast at **34 seconds/question**, which likely contributes to keyword-driven errors.
 
+**繁體中文：** 分數下降不應只解讀為退步，因為本次測驗更集中於弱項的法律／合規與概念邊界題。不過：
+
+- **D2 明顯進步**，由 54% 升至 63%。
+- **D1 在治理／架構用語下不穩定。**
+- **D6 是最主要的風險**，需要立即修補。
+- 平均速度仍很快，**每題 34 秒**，可能助長只看關鍵字的錯誤。
+
 ### Current Readiness Interpretation
 
 | Area | Status |
@@ -71,6 +109,16 @@ However:
 | D6 legal / audit / privacy vocabulary | Critical weakness |
 | Mixed custom test stability | Not ready yet |
 | Full mock readiness | Should pause until D6 is patched |
+
+**繁體中文：**
+
+| 領域 | 狀態 |
+|---|---|
+| D2 修補 | 進行中，持續改善 |
+| D1 架構／治理概念 | 臨界 |
+| D6 法律／稽核／隱私用語 | 嚴重弱點 |
+| 混合 Custom Test 穩定度 | 尚未就緒 |
+| 完整模考準備度 | 應暫停，待 D6 補強後再進行 |
 
 ---
 
@@ -86,11 +134,23 @@ The main weakness is not pure technical ignorance. The dominant pattern is **tax
 6. Data archival usability vs encryption-only thinking
 7. Privacy law vocabulary and OECD principles
 
+**繁體中文：** 主要弱點不是單純的技術不懂，而是**分類（taxonomy）失誤**：
+
+1. 標準 vs 報告
+2. 法律原則 vs 法規權利
+3. 生命週期階段 vs 控制機制
+4. 雲端模型 vs 安全控制
+5. Provider／vendor 風險 vs 客戶端技術控制
+6. 歸檔資料可用性 vs 只想到加密
+7. 隱私法用語與 OECD 原則
+
 ---
 
 # 4. Wrong Question Analysis
 
 The following list paraphrases the 25 incorrect review screenshots. It avoids copying full vendor text, but preserves the tested concept, selected mistake, correct concept, and patch rule.
+
+**繁體中文：** 以下為 25 張錯題回顧截圖的改寫，未照抄原廠題目，但保留測驗概念、誤選原因、正確概念與修正規則。
 
 ---
 
@@ -103,6 +163,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Hardened perimeter devices mainly reduce external attacks, not internal threats |
 | Patch rule | **Internal threat controls = background checks, training, skills testing, monitoring. Perimeter hardening = external threat control.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1 |
+| 錯誤推理 | 把背景調查當成例外項 |
+| 正確概念 | 強化邊界設備主要降低外部攻擊，不是內部威脅 |
+| 修正規則 | **內部威脅控制 = 背景調查、訓練、技能測試、監控。邊界強化 = 外部威脅控制。** |
+
 ---
 
 ## Q2. ISO 31000 vs HIPAA / ISO 27017 / NIST 800-92
@@ -113,6 +182,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Selected NIST 800-92 |
 | Correct concept | ISO 31000 is the risk management framework focused on design, implementation, and management |
 | Patch rule | **ISO 31000 = risk management. ISO 27017 = cloud security controls. NIST 800-92 = log management. HIPAA = healthcare privacy.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了 NIST 800-92 |
+| 正確概念 | ISO 31000 是風險管理框架，著重設計、實施與管理 |
+| 修正規則 | **ISO 31000 = 風險管理。ISO 27017 = 雲端安全控制。NIST 800-92 = 日誌管理。HIPAA = 醫療隱私。** |
 
 ---
 
@@ -125,6 +203,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Use limitation principle restricts PII use to disclosed / permitted purposes |
 | Patch rule | **OECD use limitation = collected PII may only be used for the stated purpose / permitted use.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了沒有意義的干擾原則 |
+| 正確概念 | Use limitation 原則將 PII 的使用限制在已揭露／獲允許的目的 |
+| 修正規則 | **OECD use limitation = 蒐集的 PII 只能用於已聲明的目的或獲允許的用途。** |
+
 ---
 
 ## Q4. Long-Term Data Archiving Security Concern
@@ -135,6 +222,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Treated cryptographic-key retention as not a concern |
 | Correct concept | Key retention, data format, and media are all archiving concerns; underground depth is not the core data-security concern |
 | Patch rule | **Archive security = key availability + readable format + usable media. Physical depth is not the key concern.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 |
+| 錯誤推理 | 認為金鑰保存不是問題 |
+| 正確概念 | 金鑰保存、資料格式與媒體都是歸檔考量；埋在地下多深不是資料安全的核心 |
+| 修正規則 | **歸檔安全 = 金鑰可用 + 格式可讀 + 媒體可用。實體深度不是重點。** |
 
 ---
 
@@ -147,6 +243,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Create → Store → Use → Share → Archive → Destroy is not truly cyclical because destroyed data does not loop back |
 | Patch rule | **CSU-SAD ends at Destroy; the same data does not return to Create.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 |
+| 錯誤推理 | 把焦點放在各階段是否發生於雲端 |
+| 正確概念 | Create → Store → Use → Share → Archive → Destroy 並非真正循環，因為已銷毀的資料不會回到起點 |
+| 修正規則 | **CSU-SAD 終止於 Destroy；同一份資料不會回到 Create。** |
+
 ---
 
 ## Q6. Data Labels
@@ -157,6 +262,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Treated confidentiality level as invalid label content |
 | Correct concept | MFA is an authentication procedure, not a data label |
 | Patch rule | **Data labels may include classification, distribution limits, access restrictions. MFA is an access-control process, not label metadata.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 |
+| 錯誤推理 | 把機密等級當成無效的 label 內容 |
+| 正確概念 | MFA 是驗證程序，不是資料 label |
+| 修正規則 | **Data label 可包含分類、散布限制、存取限制。MFA 是存取控制流程，不是 label metadata。** |
 
 ---
 
@@ -169,6 +283,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | NIST publications are publicly available and cost-effective; they are not necessarily internationally mandated or easy |
 | Patch rule | **NIST SP 800 = strong U.S. public-sector guidance, public-domain access; not primarily international acceptance.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1 |
+| 錯誤推理 | 選了國際接受度 |
+| 正確概念 | NIST 出版品公開可取得且具成本效益；不一定受國際強制採用，也不一定容易 |
+| 修正規則 | **NIST SP 800 = 有力的美國公部門指引、公有領域可取用；主要理由不是國際接受度。** |
+
 ---
 
 ## Q8. OECD Privacy Principles vs Right to Be Forgotten
@@ -179,6 +302,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Treated refusal to share as not OECD-related |
 | Correct concept | Purge / right to be forgotten is GDPR-style, not one of the original OECD principles |
 | Patch rule | **OECD principles include collection limitation, data quality, purpose specification, use limitation, security safeguards, openness, individual participation, accountability. Right to be forgotten = GDPR-era concept.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 認為拒絕分享與 OECD 無關 |
+| 正確概念 | Purge／被遺忘權屬 GDPR 式概念，不在原始 OECD 原則內 |
+| 修正規則 | **OECD 原則包含 collection limitation、data quality、purpose specification、use limitation、security safeguards、openness、individual participation、accountability。被遺忘權 = GDPR 時代的概念。** |
 
 ---
 
@@ -191,6 +323,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | USPTO handles patent and trademark applications |
 | Patch rule | **Patent / trademark application in U.S. = USPTO. USDA = agriculture. OSHA = workplace safety. SEC = securities/public companies.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2／D6 IP |
+| 錯誤推理 | 選了 USDA |
+| 正確概念 | USPTO 受理專利與商標申請 |
+| 修正規則 | **美國專利／商標申請 = USPTO。USDA = 農業。OSHA = 職場安全。SEC = 證券／上市公司。** |
+
 ---
 
 ## Q10. Cloud BC/DR Model
@@ -201,6 +342,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Misread normal cloud backup patterns |
 | Correct concept | Cloud provider backed up by private provider is not a typical BC/DR model |
 | Patch rule | **BC/DR cloud models usually involve private architecture + cloud backup, same-provider cloud backup, or another cloud provider. “Cloud provider backup from private provider” is not the normal pattern.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1 |
+| 錯誤推理 | 誤讀常見的雲端備份模式 |
+| 正確概念 | 由 private provider 備份 cloud provider 不是典型 BC/DR 模型 |
+| 修正規則 | **雲端 BC/DR 模型通常是 private 架構 + 雲端備份、同一 provider 的雲端備份，或另一家 cloud provider。「由 private provider 備份 cloud provider」不是常態。** |
 
 ---
 
@@ -213,6 +363,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Very old copyrighted material may have entered public domain |
 | Patch rule | **Copyright expires; public-domain works can be used without seeking permission.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6／D2 IP |
+| 錯誤推理 | 假設非常古老的內容也需要授權 |
+| 正確概念 | 非常古老的著作可能已進入公有領域 |
+| 修正規則 | **著作權會到期；公有領域作品無須取得授權即可使用。** |
+
 ---
 
 ## Q12. Diffie-Hellman vs RSA
@@ -223,6 +382,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Chose RSA for session-key creation |
 | Correct concept | Diffie-Hellman enables creation of a shared symmetric secret over an untrusted channel |
 | Patch rule | **Diffie-Hellman = key exchange/shared secret. RSA = encryption/signature scheme.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 密碼學 |
+| 錯誤推理 | 建立 session key 時選了 RSA |
+| 正確概念 | Diffie-Hellman 可在不受信任的通道上建立共用對稱秘密 |
+| 修正規則 | **Diffie-Hellman = 金鑰交換／共用秘密。RSA = 加密／簽章機制。** |
 
 ---
 
@@ -235,6 +403,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Data format and type are most critical to archive usability and recovery |
 | Patch rule | **Archive value depends on future recoverability. Wrong format can equal data loss.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 |
+| 錯誤推理 | 把加密排在可復原性之前 |
+| 正確概念 | 資料格式與類型對歸檔的可用性與復原最關鍵 |
+| 修正規則 | **歸檔價值取決於未來可否復原。格式錯誤可能等同資料遺失。** |
+
 ---
 
 ## Q14. Escalation of Privilege Mitigation
@@ -245,6 +422,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Selected access control as exception |
 | Correct concept | Cryptographic sanitization reduces data remanence risk, not privilege escalation |
 | Patch rule | **Privilege escalation controls = access control, authentication, monitoring, log analysis, SIEM. Cryptographic sanitization = data remanence/destruction control.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1／D3 |
+| 錯誤推理 | 把 access control 當成例外項 |
+| 正確概念 | Cryptographic sanitization 降低的是資料殘留風險，不是權限提升 |
+| 修正規則 | **權限提升控制 = access control、驗證、監控、日誌分析、SIEM。Cryptographic sanitization = 資料殘留／銷毀控制。** |
 
 ---
 
@@ -257,6 +443,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Privileged access should be temporary / time-bound |
 | Patch rule | **Privileged access = just-in-time, temporary, least privilege, monitored.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1 |
+| 錯誤推理 | 選了 granular |
+| 正確概念 | 特權存取應為暫時、有時間限制 |
+| 修正規則 | **特權存取 = just-in-time、暫時、least privilege、受監控。** |
+
 ---
 
 ## Q16. Vendor M&A Risk
@@ -267,6 +462,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Selected an unrelated vendor-risk item |
 | Correct concept | Pending acquisition or merger may lead to vendor lockout or service discontinuation |
 | Patch rule | **Vendor acquisition/merger risk = service discontinuity / vendor lockout / contract instability.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了不相關的 vendor 風險項目 |
+| 正確概念 | 待完成的併購可能導致 vendor lockout 或服務終止 |
+| 修正規則 | **Vendor 併購風險 = 服務中斷／vendor lockout／合約不穩定。** |
 
 ---
 
@@ -279,6 +483,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Data quality principle requires personal data to remain valid, accurate, and correctable |
 | Patch rule | **OECD data quality = accurate, complete, current, and correctable.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了沒有意義的隱私原則干擾項 |
+| 正確概念 | Data quality 原則要求個資維持有效、正確且可更正 |
+| 修正規則 | **OECD data quality = 正確、完整、最新且可更正。** |
+
 ---
 
 ## Q18. PaaS Data Storage Type
@@ -289,6 +502,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Did not map PaaS to provider-managed database services |
 | Correct concept | PaaS commonly uses database storage administered by the provider but accessed by customer applications |
 | Patch rule | **PaaS = customer builds/runs applications; provider manages platform and often database services.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2／D1 |
+| 錯誤推理 | 未把 PaaS 對應到 provider 管理的資料庫服務 |
+| 正確概念 | PaaS 常用由 provider 管理、由客戶應用程式存取的資料庫儲存 |
+| 修正規則 | **PaaS = 客戶建置／執行應用程式；provider 管理平台，通常也管理資料庫服務。** |
 
 ---
 
@@ -301,6 +523,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Two-person integrity forces collusion for unauthorized access |
 | Patch rule | **Two-person integrity = no single person can perform sensitive action alone. It reduces insider risk by requiring collusion.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1／D5 |
+| 錯誤推理 | 解讀成兩套 IAM matrix |
+| 正確概念 | Two-person integrity 迫使未授權存取必須共謀 |
+| 修正規則 | **Two-person integrity = 任何單一人員都不能獨自執行敏感動作，藉由要求共謀降低內部人員風險。** |
+
 ---
 
 ## Q20. SaaS Model
@@ -311,6 +542,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Misidentified vendor-hosted application solution |
 | Correct concept | SaaS provides an application running on provider/vendor infrastructure |
 | Patch rule | **SaaS = use provider’s application. PaaS = build/deploy application. IaaS = manage OS/application/data over rented infrastructure.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1 |
+| 錯誤推理 | 誤判 vendor 代管的應用程式方案 |
+| 正確概念 | SaaS 提供在 provider／vendor 基礎設施上執行的應用程式 |
+| 修正規則 | **SaaS = 使用 provider 的應用程式。PaaS = 建置／部署應用程式。IaaS = 在租用基礎設施上管理 OS／應用程式／資料。** |
 
 ---
 
@@ -323,6 +563,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | CAIQ is the CSA questionnaire used with CCM |
 | Patch rule | **CSA CCM = control matrix. CAIQ = questionnaire. FIPS 140-2 = cryptographic module validation. OWASP Top 10 = web app risk list.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了 NIST FIPS 140-2 |
+| 正確概念 | CAIQ 是搭配 CCM 使用的 CSA 問卷 |
+| 修正規則 | **CSA CCM = 控制矩陣。CAIQ = 問卷。FIPS 140-2 = 密碼模組驗證。OWASP Top 10 = Web 應用風險清單。** |
+
 ---
 
 ## Q22. ISO 27001 Technology Preference
@@ -333,6 +582,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Thought ISO 27001 favors a technology type |
 | Correct concept | ISO 27001 is product/technology agnostic |
 | Patch rule | **ISO 27001 = ISMS framework; it does not favor open source, PC, cloud, vendor, or product type.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D1／D6 |
+| 錯誤推理 | 認為 ISO 27001 偏好某種技術 |
+| 正確概念 | ISO 27001 不綁定產品或技術 |
+| 修正規則 | **ISO 27001 = ISMS 框架；不偏好開源、PC、雲端、特定 vendor 或產品類型。** |
 
 ---
 
@@ -346,6 +604,16 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Critical note | This item is legally time-sensitive and may be outdated. Current EU adequacy lists include the Republic of Korea. |
 | Patch rule | **For exam prep: identify adequacy / cross-border transfer logic. For real-world facts: verify current official adequacy lists.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 依隱私法 adequacy 選錯國家 |
+| App 題目的正確概念 | 該題將南韓視為不符合 EU 式隱私 adequacy |
+| 重要註記 | 此題有法律時效性，可能已過時；現行 EU adequacy 清單包含大韓民國 |
+| 修正規則 | **備考：掌握 adequacy／跨境傳輸的判斷邏輯。實務事實：查證現行官方 adequacy 清單。** |
+
 ---
 
 ## Q24. Cloud Feature That Supports Audit
@@ -357,6 +625,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Correct concept | Ubiquitous baseline configuration in virtualized environments supports auditability |
 | Patch rule | **Audit support = standardized baseline, configuration evidence, repeatability, versioned artifacts.** |
 
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D6 |
+| 錯誤推理 | 選了泛泛的雲端特性 |
+| 正確概念 | 虛擬化環境中普遍一致的 baseline 組態有助於稽核 |
+| 修正規則 | **稽核支援 = 標準化 baseline、組態證據、可重複性、版本化產出物。** |
+
 ---
 
 ## Q25. Transparent Database Encryption Engine
@@ -367,6 +644,15 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | Wrong reasoning | Placed engine outside the DB |
 | Correct concept | Transparent database encryption engine resides in the database/DBMS layer |
 | Patch rule | **TDE = database-level transparent encryption. KMS manages keys; HSM protects keys; neither is the TDE engine.** |
+
+**繁體中文：**
+
+| 項目 | 分析 |
+|---|---|
+| Domain | D2 |
+| 錯誤推理 | 把引擎放在資料庫之外 |
+| 正確概念 | Transparent database encryption 引擎位於資料庫／DBMS 層 |
+| 修正規則 | **TDE = 資料庫層級的透明加密。KMS 管理金鑰；HSM 保護金鑰；兩者都不是 TDE 引擎。** |
 
 ---
 
@@ -380,6 +666,13 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 - ISO, NIST, SOC, CSA, FIPS are mixed together.
 - Vendor management and audit artifacts are not classified correctly.
 - Legal facts are treated like memorized trivia rather than taxonomy.
+
+**繁體中文：**
+
+- 把 OECD 原則與 GDPR 權利混淆。
+- ISO、NIST、SOC、CSA、FIPS 混在一起。
+- Vendor 管理與稽核產出物分類不正確。
+- 把法律事實當成零碎記憶，而不是分類體系。
 
 ### High-Risk Items
 
@@ -397,6 +690,22 @@ The following list paraphrases the 25 incorrect review screenshots. It avoids co
 | OECD Use Limitation | Use only for stated/permitted purpose |
 | OECD Data Quality | Accurate, complete, current, correctable |
 
+**繁體中文：**
+
+| 概念 | 必須知道 |
+|---|---|
+| ISO 31000 | 風險管理 |
+| ISO 27001 | ISMS；不綁定技術 |
+| ISO 27017 | 雲端安全控制 |
+| NIST 800-92 | 日誌管理 |
+| CSA CCM | Cloud Controls Matrix |
+| CAIQ | CSA 問卷 |
+| SOC 1/2/3 | 報告 |
+| SSAE 18 | Attestation 標準 |
+| FIPS 140-2 | 密碼模組驗證 |
+| OECD Use Limitation | 只用於已聲明或獲允許的目的 |
+| OECD Data Quality | 正確、完整、最新、可更正 |
+
 ### Patch
 
 Daily for 3 days:
@@ -411,6 +720,18 @@ Gate:
 - D6 mini-test >= 75%
 - No confusion between `standard`, `report`, `questionnaire`, `control matrix`, and `law`
 
+**繁體中文：** 連續 3 天，每天：
+
+- 15 分鐘：法律／稽核分類表
+- 10 分鐘：OECD 原則
+- 10 分鐘：CSA／SOC／ISO／NIST 演練
+- 15 題 D6 drill
+
+門檻：
+
+- D6 mini-test >= 75%
+- 不再混淆 `standard`、`report`、`questionnaire`、`control matrix` 與 `law`
+
 ---
 
 ## Cluster B — D2 Data Lifecycle / Archiving / Cryptography
@@ -421,6 +742,13 @@ Gate:
 - Data labels are confused with access procedures.
 - TDE/KMS/HSM roles are not fully separated.
 - PaaS storage model and data lifecycle phases need reinforcement.
+
+**繁體中文：**
+
+- 即使真正問題是可復原性，仍過度選擇加密。
+- 把 data label 與存取程序混淆。
+- TDE／KMS／HSM 的角色尚未完全分清。
+- PaaS 儲存模型與資料生命週期階段需要加強。
 
 ### High-Risk Items
 
@@ -437,6 +765,21 @@ Gate:
 | RSA | Encryption/signature |
 | CSU-SAD | Create, Store, Use, Share, Archive, Destroy |
 
+**繁體中文：**
+
+| 概念 | 必須知道 |
+|---|---|
+| Archive policy | 格式／類型與可復原性最重要 |
+| 長期歸檔 | 金鑰、格式與媒體都必須維持可用 |
+| Data label | 分類／存取／散布 metadata |
+| MFA | 驗證程序，不是 label |
+| TDE | DB／DBMS 加密引擎 |
+| KMS | 金鑰生命週期管理 |
+| HSM | 硬體金鑰保護 |
+| Diffie-Hellman | 金鑰交換 |
+| RSA | 加密／簽章 |
+| CSU-SAD | Create、Store、Use、Share、Archive、Destroy |
+
 ### Patch
 
 Daily for 3 days:
@@ -451,6 +794,18 @@ Gate:
 - D2 mini-test >= 80%
 - Can explain archive recoverability vs encryption
 
+**繁體中文：** 連續 3 天，每天：
+
+- 15 分鐘：生命週期表
+- 15 分鐘：TDE／KMS／HSM／DH／RSA
+- 15 分鐘：歸檔與 label 情境演練
+- 15 題 D2 drill
+
+門檻：
+
+- D2 mini-test >= 80%
+- 能說明歸檔可復原性 vs 加密
+
 ---
 
 ## Cluster C — D1 Cloud Models / Governance Controls
@@ -461,6 +816,13 @@ Gate:
 - NIST / ISO framework purpose is confused.
 - Internal vs external threat controls are mixed.
 - Privilege-management controls are mixed with unrelated data controls.
+
+**繁體中文：**
+
+- SaaS／PaaS／IaaS 的對應尚未完全自動化。
+- 混淆 NIST／ISO 框架的用途。
+- 內部與外部威脅控制混在一起。
+- 特權管理控制與不相關的資料控制混在一起。
 
 ### High-Risk Items
 
@@ -476,6 +838,20 @@ Gate:
 | Perimeter hardening | External attack control |
 | Background checks/training | Internal threat mitigation |
 
+**繁體中文：**
+
+| 概念 | 必須知道 |
+|---|---|
+| SaaS | 使用 provider 的應用程式 |
+| PaaS | 在 provider 平台上建置／執行應用程式 |
+| IaaS | 客戶管理 OS／應用程式／資料 |
+| NIST SP 800 | 公有領域的美國指引 |
+| ISO 31000 | 風險管理 |
+| Two-person integrity | 需要共謀 |
+| 特權存取 | 暫時／just-in-time |
+| 邊界強化 | 外部攻擊控制 |
+| 背景調查／訓練 | 降低內部威脅 |
+
 ### Patch
 
 Daily for 3 days:
@@ -489,6 +865,18 @@ Gate:
 
 - D1 mini-test >= 75–80%
 - Can separate cloud model, framework, and control category
+
+**繁體中文：** 連續 3 天，每天：
+
+- 10 分鐘：SaaS／PaaS／IaaS 對照
+- 10 分鐘：威脅與控制對應
+- 10 分鐘：特權存取／two-person integrity
+- 15 題 D1 drill
+
+門檻：
+
+- D1 mini-test >= 75–80%
+- 能區分雲端模型、框架與控制類別
 
 ---
 
@@ -588,6 +976,21 @@ Gate:
 - 6–7/10 = repeat the weak cluster
 - <=5/10 = no mock test next day
 
+**繁體中文：** 不看資料回答：
+
+1. ISO 31000 用於什麼？
+2. NIST 800-92 用於什麼？
+3. CSA CCM 與 CAIQ 差在哪？
+4. SSAE 18 與 SOC 報告差在哪？
+5. OECD use limitation 是什麼意思？
+6. TDE 引擎位於何處？
+7. MFA 屬於 data label 還是驗證？
+8. Diffie-Hellman 做什麼？
+9. SaaS 與 PaaS 的差異？
+10. Two-person integrity 降低什麼風險？
+
+門檻：8/10 正確可繼續 drill；6–7/10 重做弱項 cluster；<=5/10 隔天不做模考。
+
 ---
 
 # 7. Three-Day Recovery Plan
@@ -629,11 +1032,25 @@ Do not resume full mixed practice tests until:
 
 Current 34 sec/question is too fast for legal/audit wording. Slow down on D6 and long scenario questions.
 
+**繁體中文：** 達到以下目標之前，不恢復完整混合模考：
+
+| 條件 | 目標 |
+|---|---:|
+| D1 mini-test | >=75% |
+| D2 mini-test | >=80% |
+| D6 mini-test | >=75% |
+| D1／D2／D6 混合 mini-test | >=75% |
+| 平均時間 | 每題 45–75 秒 |
+
+目前每題 34 秒對法律／稽核用語來說太快，D6 與長情境題要放慢。
+
 ---
 
 # 9. Final Diagnosis
 
 This Custom Test is not evidence that the full preparation plan has failed. It shows that the known weak domains are still fragile when tested directly.
+
+**繁體中文：** 這次 Custom Test 不代表整體準備計畫失敗，而是顯示已知弱域在直接測試下仍然脆弱。
 
 ## Progress Exists
 
@@ -641,11 +1058,23 @@ This Custom Test is not evidence that the full preparation plan has failed. It s
 - Wrong questions are no longer random; they cluster around identifiable taxonomies.
 - The patch path is clear.
 
+**繁體中文：**
+
+- D2 較先前 Custom Test 的弱域分數進步。
+- 錯題不再隨機，而是集中在可辨識的分類體系。
+- 修補路徑明確。
+
 ## Risk Remains
 
 - D6 legal/audit/privacy remains below safe level.
 - D1 framework/control mapping is unstable.
 - D2 archiving and crypto-role boundaries still need consolidation.
+
+**繁體中文：**
+
+- D6 法律／稽核／隱私仍低於安全水準。
+- D1 框架與控制的對應不穩定。
+- D2 歸檔與密碼學角色邊界仍需鞏固。
 
 ## Correct Next Move
 
@@ -807,3 +1236,20 @@ p0永遠是保護人命![[]]，![[]]p1是恢復resume (恢復/復歸) 階段,接
 4. **Resume (復歸)：** 主要站點修好後，把系統從備援站點「切換回家 (Failback)」，全面恢復正常營運（**最後才回家**）。
 
 所以是先 **Restore (把家修好)**，然後才能 **Resume (搬回家)**。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Custom Test 2 的弱點分析與補強計畫。各英文段落後方已附繁體中文；以下為全文整理，含未逐段附譯的部分。
+
+- **成績：** 50 題答對 25 題（50%），每題平均 34 秒。D1 56%、D2 63%、D6 23%，屬針對弱域的壓力測試。
+- **進步評估（§2）：** 有部分進步，但尚未全面穩定；D2 進步，D1 與 D6 下滑。
+- **核心弱點（§3）：** 分類失誤，例如標準 vs 報告、法律原則 vs 法規權利、生命週期階段 vs 控制機制。
+- **錯題分析（§4）：** Q1–Q25 逐題記錄錯誤推理、正確概念與修正規則。
+- **弱點群（§5）：** A = D6 法律／隱私／稽核分類；B = D2 生命週期／歸檔／密碼學；C = D1 雲端模型／治理控制。
+- **一小時修補（§6）：** 先分三欄（D6、D2、D1 各自的主題），再依序背誦 D6、D2、D1 對照表，每段做 5 題，最後 10 題口試：8/10 繼續 drill；6–7/10 重做弱項；<=5/10 隔天不模考。
+- **三天計畫（§7）：** Day 1 D6（30 分鐘分類、20 題、10 題錯題檢討、5 條一句話規則）；Day 2 D2（同樣配置）；Day 3 D1 模型與控制對應，加 20 題 D1／D2／D6 混合題，門檻 >= 75%。
+- **恢復模考條件（§8）：** D1、D6 >= 75%，D2 >= 80%，混合 >= 75%，每題 45–75 秒。
+- **最終診斷（§9）：** 先補 D6 分類、D2 生命週期／密碼學／歸檔、D1 雲端模型／控制，混合 mini-test 達 75% 後才恢復完整模考。
+- **檔尾補充（已是中文）：** 弱域優先序表、電力系統與 ASHRAE、Uptime Tier I–IV、外部連線韌性、BC/DR 的 Respond → Recover → Restore → Resume 順序，以及情境測驗。

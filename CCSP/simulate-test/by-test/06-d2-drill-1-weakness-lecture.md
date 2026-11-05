@@ -20,6 +20,18 @@
 | Average Time | **34s / question** |
 | Readiness Score | **46% → 47%** |
 
+**繁體中文：**
+
+| 指標 | 結果 |
+|---|---:|
+| Domain | D2 雲端資料安全 |
+| 總題數 | 25 |
+| 答對 | 14 |
+| 答錯 | 11 |
+| 分數 | **56%** |
+| 平均時間 | **每題 34 秒** |
+| Readiness Score | **46% → 47%** |
+
 ### Immediate interpretation
 
 This is **not a passing-level D2 drill yet**.  
@@ -40,6 +52,8 @@ Gap to 75% gate = 19 percentage points
 
 This means D2 should remain a **P0 patch domain** before the next full Practice Test.
 
+**繁體中文：** 這**尚未達到 D2 drill 的及格水準**。25 題單域 drill 的目標：修補門檻 70%、安全門檻 75% 以上、強項 80% 以上。目前 56%，距 75% 門檻差 19 個百分點，因此 D2 在下一次完整 Practice Test 前應維持 **P0 修補領域**。
+
 ---
 
 ## 2. Progress Assessment
@@ -54,6 +68,16 @@ This means D2 should remain a **P0 patch domain** before the next full Practice 
 | Practice Test 1 | 82% | Good result in full mixed context |
 | Current D2 Drill | **56%** | Targeted D2 weakness still unstable |
 
+**繁體中文：**
+
+| 測驗來源 | D2 成績 | 解讀 |
+|---|---:|---|
+| 先前 Assessment Test | 50% | 最初的弱項基準 |
+| Custom Test 1 | 54% | 小幅改善 |
+| Custom Test 2 | 63% | 部分回升 |
+| Practice Test 1 | 82% | 完整混合測驗中表現良好 |
+| 本次 D2 Drill | **56%** | 針對性的 D2 弱點仍不穩定 |
+
 ### Correct interpretation
 
 There is **some long-term progress** from the earliest 50% baseline, but the current targeted D2 drill shows that the improvement has **not stabilized**.
@@ -65,6 +89,8 @@ D2 is not conceptually broken, but D2 subtopics are uneven.
 Broad mixed-test D2 can look good, but targeted D2 weak areas still cause errors.
 ```
 
+**繁體中文：** 相較最早的 50% 基準有**一些長期進步**，但本次 drill 顯示進步**尚未穩定**。最準確的結論：D2 概念沒有根本問題，但子主題不均；混合測驗的 D2 可能看起來不錯，針對性的弱點仍會造成錯誤。
+
 ### Readiness score
 
 Readiness increased from **46% to 47%**, but this should be treated as a weak positive signal only.  
@@ -73,6 +99,8 @@ The more important signal is the domain drill score:
 ```text
 D2 drill = 56% → still below next-mock gate.
 ```
+
+**繁體中文：** Readiness 由 **46% 升至 47%**，只能視為微弱的正面訊號；更重要的訊號是 D2 drill 56%，仍低於進入下一次模考的門檻。
 
 ---
 
@@ -91,6 +119,22 @@ D2 drill = 56% → still below next-mock gate.
 | 21 | PII processing exception | Storing | Viewing | Processing definition confusion | Viewing is passive; storing/destroying/printing are processing actions |
 | 22 | Data transformation cloud concern | Multitenancy | Virtualization | Cloud transformation model | Virtualization changes data form/location and can affect classification |
 | 23 | Egress monitoring deployment difficulty, except | Production impact | Redundant/resilient architecture | EXCEPT trap | Redundancy is not a deployment obstacle for egress monitoring |
+
+**繁體中文：**
+
+| Q | 主題 | 誤選 | 正解 | 錯誤類型 | 規則 |
+|---:|---|---|---|---|---|
+| 1 | 資料歸檔的業務功能 | 智慧財產保護 | BC/DR | 誤讀歸檔目的 | 歸檔支援合規與復原／BC/DR，主要不是保護 IP |
+| 3 | 應用層加密 | 承載應用的 OS | 存取資料庫的應用程式 | 加密層級混淆 | 應用層加密的引擎位於應用層 |
+| 6 | 金鑰管理隔離 | Compartmentalization | Separation of duties | 安全原則分類 | 金鑰管理與被加密資料分離 = separation of duties |
+| 10 | DLP 的法律任務 | IP 權利執行 | 證據蒐集 | 誤讀 DLP 的法律功能 | DLP 可支援證據蒐集／探索，不能起訴或作證 |
+| 15 | Data masking 的業務情境 | 帳務遮罩信用卡 | 客服遮罩 SSN | Masking 情境排序錯誤 | Masking 適合不需完整值的部分驗證 |
+| 17 | 雲端覆寫的可行性 | 沒有實體存取 | 無法確定邏輯位置 | 雲端清除理由太淺 | 覆寫失敗主要因為難以確定資料的邏輯位置 |
+| 18 | CSA CCM 法規例外項 | FERPA | DMCA | 隱私／安全法分類 | CSA CCM 對應隱私與安全控制；DMCA 屬著作權／IP |
+| 19 | Data discovery 特徵 | Frequency | Inheritance | Content analysis 分類 | Keywords、patterns、frequency 屬 content analysis；inheritance 不是 |
+| 21 | PII 處理例外項 | Storing | Viewing | 處理定義混淆 | Viewing 是被動的；storing／destroying／printing 是處理動作 |
+| 22 | 雲端資料轉換疑慮 | Multitenancy | Virtualization | 雲端轉換模型 | 虛擬化會改變資料形式與位置，可能影響分類 |
+| 23 | Egress monitoring 部署困難（EXCEPT） | Production impact | 冗餘／韌性架構 | EXCEPT 陷阱 | 冗餘不是 egress monitoring 的部署障礙 |
 
 ---
 
@@ -113,6 +157,8 @@ The errors show uncertainty around:
 - processing vs passive viewing
 - cloud sanitization feasibility
 - virtualization effects on data classification
+
+**繁體中文：** 錯誤顯示對以下主題不確定：archive vs backup vs retention、處理 vs 被動檢視、雲端清除的可行性、虛擬化對資料分類的影響。
 
 ### Correct model
 
@@ -165,6 +211,8 @@ The errors show confusion between:
 - key management separation
 - encryption impact on monitoring
 
+**繁體中文：** 錯誤顯示混淆了應用層加密、OS 層控制、DB 層加密、金鑰管理分離，以及加密對監控的影響。
+
 ### Encryption layer table
 
 | Encryption Type | Where Engine Resides | Main Logic |
@@ -175,6 +223,17 @@ The errors show confusion between:
 | Transport encryption | Network/session layer | Protects data in transit |
 | KMS | Key lifecycle management | Manages keys, does not equal encryption engine |
 | HSM | Hardware key protection | Secure key storage and crypto operations |
+
+**繁體中文：**
+
+| 加密類型 | 引擎位置 | 主要邏輯 |
+|---|---|---|
+| 應用層加密 | 存取資料庫的應用程式 | 資料到達 DB 前由應用程式加密 |
+| Transparent database encryption／TDE | 資料庫／DBMS 層 | DB 透明加密 |
+| Volume／disk 加密 | 儲存或磁碟區層 | 保護媒體與儲存 |
+| 傳輸加密 | 網路／session 層 | 保護傳輸中資料 |
+| KMS | 金鑰生命週期管理 | 管理金鑰，不等於加密引擎 |
+| HSM | 硬體金鑰保護 | 安全金鑰儲存與密碼運算 |
 
 ### Key management principle
 
@@ -189,6 +248,14 @@ Do not confuse:
 | Least privilege | Limits access, but does not specifically separate key administration from data use |
 | Two-person integrity | Requires two people for critical action |
 | Compartmentalization | Separates information into compartments, but not the best label for key/data duty separation |
+
+**繁體中文：** 金鑰管理與被加密資料分離 = separation of duties。不要混淆：
+
+| 選項 | 為何不是最佳答案 |
+|---|---|
+| Least privilege | 限制存取，但沒有特別分離金鑰管理與資料使用 |
+| Two-person integrity | 關鍵動作需要兩人 |
+| Compartmentalization | 把資訊分隔開，但不是金鑰與資料職責分離的最佳標籤 |
 
 ### Egress monitoring rule
 
@@ -286,6 +353,18 @@ CSA CCM maps cloud security/privacy controls.
 DMCA is copyright/IP law, not a privacy/security control source.
 ```
 
+**繁體中文：**
+
+| 法律／框架 | 類別 |
+|---|---|
+| HIPAA | 醫療隱私／安全 |
+| FERPA | 教育紀錄隱私 |
+| PIPEDA | 加拿大隱私 |
+| DMCA | 著作權／智慧財產 |
+| CSA CCM | 雲端安全控制矩陣 |
+
+規則：CSA CCM 對應雲端安全與隱私控制；DMCA 是著作權／IP 法，不是隱私或安全控制的來源。
+
 ---
 
 ## P0-5. EXCEPT / NOT traps
@@ -336,6 +415,17 @@ The remaining item is the answer.
 | 44–52 min | Legal taxonomy: CSA CCM, HIPAA, FERPA, PIPEDA, DMCA |
 | 52–60 min | 10-question oral self-test |
 
+**繁體中文：**
+
+| 時間 | 任務 |
+|---:|---|
+| 0–8 分鐘 | 閱讀下方 20 條一句話規則 |
+| 8–20 分鐘 | 資料生命週期：歸檔、處理、覆寫、虛擬化 |
+| 20–32 分鐘 | 加密層級：應用層、TDE、KMS、HSM、金鑰分離 |
+| 32–44 分鐘 | DLP／discovery／masking |
+| 44–52 分鐘 | 法律分類：CSA CCM、HIPAA、FERPA、PIPEDA、DMCA |
+| 52–60 分鐘 | 10 題口頭自測 |
+
 ## 2-hour patch
 
 | Time | Task |
@@ -346,6 +436,17 @@ The remaining item is the answer.
 | 60–75 min | Legal taxonomy review |
 | 75–105 min | D2 drill 25 questions |
 | 105–120 min | Wrong-answer rule extraction |
+
+**繁體中文：**
+
+| 時間 | 任務 |
+|---:|---|
+| 0–20 分鐘 | 資料生命週期與銷毀複習 |
+| 20–40 分鐘 | 加密層級比較 |
+| 40–60 分鐘 | DLP／masking／discovery 複習 |
+| 60–75 分鐘 | 法律分類複習 |
+| 75–105 分鐘 | 25 題 D2 drill |
+| 105–120 分鐘 | 從錯題萃取規則 |
 
 ---
 
@@ -406,6 +507,19 @@ Expected answers:
 10. Virtualization
 ```
 
+**繁體中文：** 不看資料回答：
+
+1. 除了法律／法規合規，歸檔常與哪個業務功能相關？（BC/DR）
+2. 應用層加密的引擎在哪裡？（存取資料庫的應用程式）
+3. 哪個原則將金鑰管理與被加密資料分離？（Separation of duties）
+4. DLP 可協助哪項法律任務？（證據蒐集）
+5. Masking 最佳的業務情境？（客服看到遮罩後的 SSN）
+6. 為什麼雲端儲存難以覆寫？（難以確定資料的邏輯位置）
+7. 對 CSA CCM 而言，HIPAA、FERPA、PIPEDA、DMCA 哪個是例外？（DMCA）
+8. Keyword、pattern matching、frequency、inheritance 哪個不是 content analysis？（Inheritance）
+9. PII 情境中，storing、viewing、destroying、printing 哪個通常最不算處理？（Viewing）
+10. 哪個雲端特性會因資料轉換而影響分類？（Virtualization）
+
 ---
 
 # 8. Next Drill Gate
@@ -421,6 +535,16 @@ Recommended next step:
 | Required score | **≥75%** |
 | If score is 70–74% | Review and retry smaller 15-question drill |
 | If score is <70% | Do not proceed to full mock; patch D2 again |
+
+**繁體中文：** 還不能視為 D2 已補好。建議下一步：
+
+| 任務 | 目標 |
+|---|---:|
+| D2 複習 | 60–90 分鐘 |
+| 下一次 D2 drill | 25–30 題 |
+| 要求分數 | **≥75%** |
+| 分數 70–74% | 複習後重做 15 題小 drill |
+| 分數 <70% | 不進完整模考，重新補 D2 |
 
 ---
 
@@ -443,6 +567,8 @@ Progress = mixed
 Readiness = slightly improved
 Next action = targeted patch, then another D2 drill
 ```
+
+**繁體中文：** 這次 D2 drill 顯示的是**真實弱點**，不只是隨機失分。主要問題不是一般安全知識不足，而是 **CCSP 特有的資料安全分類**：資料生命週期 + 加密層級 + DLP／discovery + 法律分類 + EXCEPT 陷阱。目前狀態：D2 尚未穩定、進步好壞參半、readiness 略升；下一步是針對性補強後再做一次 D2 drill。
 ---
 # CCSP Domain 2 (Cloud Data Security) 觀念急救特訓講義
 
@@ -636,3 +762,16 @@ Next action = targeted patch, then another D2 drill
 * 當題目問「遷移至公有雲 SaaS 的新風險」時：
   * **❌ 既有業務風險 (Existing business risk):** 如 PCI-DSS、信用卡處理合規。（因為在地端時就已經存在了）。
   * **✅ 雲端專屬新風險:** **多租戶環境下的邏輯隔離不足 (Multitenancy / Insufficient resource isolation)** 導致的資料外洩。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 D2 Drill 1（25 題，56%）的弱點分析與補強。各英文段落後方已附繁體中文；以下為全文整理。
+
+- **快照與進步（§1–§2）：** 低於 75% 門檻，歷次 D2 成績起伏，進步尚未穩定。
+- **錯題表（§3）：** 11 題錯誤與各自的修正規則。
+- **弱點群（§4）：** P0-1 生命週期與雲端資料位置；P0-2 加密層級與金鑰管理；P0-3 DLP、discovery、masking；P0-4 合規與法律分類；P0-5 EXCEPT／NOT 陷阱。
+- **補強計畫與規則（§5–§6）：** 60 分鐘急救、2 小時版本，以及必背一句話規則。
+- **自測、門檻與診斷（§7–§9）：** 10 題自測、下一次 drill 門檻與最終診斷。
+- **檔尾特訓（已是中文）：** D2 觀念急救講義、資料中心 Tier 1–4、D3 衝刺講義。

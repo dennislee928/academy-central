@@ -18,6 +18,16 @@
 | Score | 66% | Below the formal mock-exam safety threshold |
 | Avg Time | 31s / question | Speed is not the issue — risk is rapid pattern-matching |
 
+**繁體中文：**
+
+| 指標 | 數值 | 說明 |
+|---|---|---|
+| 總題數 | 30 | 樣本小，作為弱點探測 |
+| 答對 | 20 | 有基礎，但混合測驗不穩定 |
+| 答錯 | 10 | 集中在 D1／D2／D6 的邊界概念 |
+| 分數 | 66% | 低於正式模考的安全門檻 |
+| 平均時間 | 每題 31 秒 | 問題不在速度，風險在於快速套用 pattern |
+
 ---
 
 ## 2. Domain Performance / 領域表現
@@ -30,6 +40,17 @@
 | D4: Cloud Application Security | 100% | Good, but only 4 sampled questions |
 | D5: Cloud Security Operations | 100% | Good, but only 2 sampled questions |
 | D6: Legal, Risk & Compliance | 50% | Regulation, audit standards, compliance terminology need reinforcement |
+
+**繁體中文：**
+
+| Domain | 分數 | 主要發現 |
+|---|---|---|
+| D1 雲端概念、架構與設計 | 60% | 雲端模型、雲端角色、IaaS 商業價值需加強 |
+| D2 雲端資料安全 | 50% | 加密、金鑰管理、資料銷毀、TDE／HSM／DRM 邊界不穩 |
+| D3 雲端平台與基礎架構安全 | 75% | 可接受，不是主要問題 |
+| D4 雲端應用安全 | 100% | 良好，但僅抽 4 題 |
+| D5 雲端安全維運 | 100% | 良好，但僅抽 2 題 |
+| D6 法律、風險與合規 | 50% | 法規、稽核標準與合規用語需加強 |
 
 ---
 
@@ -47,6 +68,21 @@
 | 8 | Transparent database encryption | Chose KMS | TDE encryption engine resides in database / DBMS layer; KMS manages keys, not the engine itself | Encryption architecture |
 | 9 | HSM | Chose TOS | Tamper-resistant hardware for key storage/management = HSM | Key management |
 | 10 | DRM vs Enterprise DRM | Chose enterprise DRM | DRM is the broad mechanism against unauthorized copying; Enterprise DRM/IRM is a subset | Data protection terminology |
+
+**繁體中文：**
+
+| # | 主題 | 錯誤 | 正確概念 | 錯誤類別 |
+|---|---|---|---|---|
+| 1 | GLBA vs PCI | 把 PCI 當金融隱私法 | GLBA 是保護客戶金融資訊的美國聯邦法 | 法規名稱混淆 |
+| 2 | Public cloud 定義 | 與 private cloud 混淆 | 開放一般大眾使用、由 provider 擁有與管理 = public cloud | 雲端模型定義 |
+| 3 | 雲端資料銷毀 | 選了 degaussing | 雲端較普遍可行的是 encryption／crypto-erasure；實體銷毀、覆寫、消磁未必可行 | 雲端資料銷毀 |
+| 4 | SSAE 18／SOC 1／SOC 2 | 把 SOC 2 當稽核標準 | SSAE 18 是 attestation 標準；SOC 1/2 是報告類型 | 稽核用語 |
+| 5 | IaaS 主要效益 | 選了節能與冷卻效率 | 主要商業驅動力 = 移轉所有權成本（CapEx → OpEx） | 雲端價值主張 |
+| 6 | Mobile cloud storage | 選了 raw storage | 個人行動裝置的資料同步與遠端存取 = mobile cloud storage | 儲存類型 |
+| 7 | Reseller vs broker | 選了 broker | 購買 hosting／cloud 服務後轉售 = cloud computing reseller | 雲端角色 |
+| 8 | Transparent database encryption | 選了 KMS | TDE 引擎位於資料庫／DBMS 層；KMS 管理金鑰，不是引擎本身 | 加密架構 |
+| 9 | HSM | 選了 TOS | 用於金鑰儲存與管理的防竄改硬體 = HSM | 金鑰管理 |
+| 10 | DRM vs Enterprise DRM | 選了 enterprise DRM | DRM 是防止未授權複製的廣泛機制；Enterprise DRM／IRM 是其子集 | 資料保護用語 |
 
 ---
 
@@ -235,6 +271,15 @@ Application → DBMS (TDE Engine) → Encrypted Data
 
 **Root Cause / 根本原因:** Memorizing names without distinguishing category (law vs standard vs report vs organization).
 
+**繁體中文：**
+
+- GLBA → 美國金融機構 + 客戶非公開資訊
+- PCI DSS → 支付卡資料安全（不是聯邦隱私法）
+- SSAE 18 → attestation／稽核標準
+- SOC 1／SOC 2 → 源自 SSAE 18 的報告類型
+
+根本原因：只背名稱，沒有區分類別（法律、標準、報告、組織）。
+
 ---
 
 ### 5.2 Cloud Model & Role Boundary / 雲端模型與角色邊界
@@ -252,6 +297,16 @@ Application → DBMS (TDE Engine) → Encrypted Data
 3. Does it mention **resale / own customers**? → Reseller
 4. Does it ask about **primary benefit / business driver**? → Ownership cost transfer
 
+**繁體中文：**
+
+- Public cloud → 一般大眾／開放使用
+- Private cloud → 單一組織專用
+- Broker → 仲介、彙整、整合、管理
+- Reseller → 購買服務後轉售給自己的客戶
+- IaaS 主要效益 → 移轉所有權成本（CapEx → OpEx）
+
+判斷順序：① 提到一般大眾／開放使用？→ Public cloud ② 提到單一組織專用？→ Private cloud ③ 提到轉售／自己的客戶？→ Reseller ④ 問主要效益／商業驅動力？→ 所有權成本移轉
+
 ---
 
 ### 5.3 Cloud Disposal & Encryption / 雲端銷毀與加密
@@ -263,6 +318,14 @@ Application → DBMS (TDE Engine) → Encrypted Data
 - KMS → manages key lifecycle (not the encryption engine itself)
 - HSM → tamper-resistant hardware for key storage and crypto operations
 
+**繁體中文：**
+
+- 雲端環境下，實體銷毀、消磁、覆寫可能**不可行**
+- **Encryption／crypto-erasure** 是最普遍適用的銷毀方式
+- TDE 引擎 → 資料庫／DBMS 層（不是 KMS）
+- KMS → 管理金鑰生命週期（不是加密引擎本身）
+- HSM → 儲存金鑰並執行密碼運算的防竄改硬體
+
 ---
 
 ### 5.4 DRM vs Enterprise DRM / IRM
@@ -272,6 +335,13 @@ Application → DBMS (TDE Engine) → Encrypted Data
 - **Enterprise DRM / IRM** = enterprise-focused subset of DRM
 - Bit splitting = data dispersion (not rights management)
 - Degaussing = media sanitization (not rights management)
+
+**繁體中文：**
+
+- **DRM** = 廣泛機制：防止未授權複製，將散布限於授權使用者
+- **Enterprise DRM／IRM** = 以企業為對象的 DRM 子集
+- Bit splitting = data dispersion（不是權利管理）
+- Degaussing = 媒體清除（不是權利管理）
 
 ---
 
@@ -294,6 +364,26 @@ Application → DBMS (TDE Engine) → Encrypted Data
 | **HSM** | Tamper-resistant hardware for key storage and cryptographic operations |
 | **DRM** | Broad rights protection for paid/authorized content |
 | **Enterprise DRM / IRM** | Enterprise subset of DRM |
+
+**繁體中文：**
+
+| 主題 | 一句話規則 |
+|---|---|
+| **GLBA** | 規範金融機構、保護客戶非公開個資的美國聯邦法 |
+| **PCI DSS** | 支付卡資料安全要求，不是聯邦隱私法 |
+| **SSAE 18** | 服務組織的 attestation 標準（不是報告類型） |
+| **SOC 2** | 依 trust service criteria 出具的報告（本身不是標準） |
+| **Public cloud** | 一般大眾／開放使用 |
+| **Private cloud** | 單一組織專用 |
+| **Reseller** | 購買服務後轉售給自己的客戶 |
+| **Broker** | 仲介、彙整或管理服務 |
+| **IaaS 效益** | 主要 = 移轉所有權成本（CapEx → OpEx） |
+| **雲端銷毀** | 實體銷毀／消磁／覆寫可能不可行；encryption／crypto-erasure 較普遍適用 |
+| **TDE** | 加密引擎位於資料庫／DBMS 層 |
+| **KMS** | 管理金鑰，不一定是加密引擎 |
+| **HSM** | 用於金鑰儲存與密碼運算的防竄改硬體 |
+| **DRM** | 對付費／授權內容的廣泛權利保護 |
+| **Enterprise DRM／IRM** | DRM 的企業子集 |
 
 ---
 
@@ -326,6 +416,8 @@ Quickly distinguish:
 - CSP / CSC / CSN
 - Cloud broker / Cloud reseller
 - Cloud carrier / Cloud auditor
+
+**繁體中文：** 快速區分 CSP／CSC／CSN、cloud broker／cloud reseller、cloud carrier／cloud auditor。
 
 ### Drill C: Encryption Architecture (15 min)
 
@@ -634,3 +726,15 @@ GLBA = 金融機構個資；PCI = 支付卡資料。SSAE 18 = attestation standa
 
 ---
 
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Assessment Test（30 題，得分 66%）的錯題複習與後續複習清單。
+
+- **成績（§1–§2）：** D2、D6 各 50%，D1 60%，D3 75%，D4、D5 100% 但樣本極少。
+- **錯題總表（§3）：** 10 題錯誤集中在法規名稱、雲端模型與角色、雲端銷毀、加密架構、DRM／IRM。
+- **重點概念（§4）：** 法規與標準、部署模型、雲端角色、IaaS 商業價值、雲端資料銷毀、加密架構、DRM／IRM。
+- **錯因分析（§5）與一句話規則（§6）：** 不只背名稱，要先分清法律、標準、報告與組織。
+- **複習演練（§7）：** 法規與標準、雲端角色、加密架構三組 drill。
+- **A–G 複習主軸：** D6 法規與稽核名詞、法律流程與證據、合約與供應商治理、D2 銷毀／加密／資料保護、D1 雲模型與角色，以及 2 小時與 3 小時兩個複習版本和必背一句話規則。

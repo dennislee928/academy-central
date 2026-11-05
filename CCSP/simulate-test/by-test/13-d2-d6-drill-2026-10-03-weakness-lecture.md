@@ -867,6 +867,26 @@ CCSP 題目基本上先想：
 | Superposition | **Quantum computing** |
 | Protect crypto key | **At least as strongly as protected data** |
 
+**繁體中文：**
+
+| 關鍵字 | 秒答 |
+|---|---|
+| 加密特定 table／column | **Application-level** |
+| 對應用程式透明的 DB 加密 | **TDE** |
+| 個別物件 | **Object-level** |
+| 個別檔案 | **File-level** |
+| 以 token 替換的值 | Data masking／tokenization 情境 |
+| 敏感欄位設為 `NULL` | **Deletion／Nulling masking** |
+| 重新排列欄位值 | **Shuffling** |
+| `****1234` | **Masking-out** |
+| 跨站點分割資料 | **Bit-splitting／data dispersion** |
+| 類似 RAID 的雲端概念 | **Data dispersion** |
+| VM 磁碟 | **Volume storage** |
+| 階層式 NFS／SMB | **File storage** |
+| Key + metadata | **Object storage** |
+| Superposition | **Quantum computing** |
+| 保護密碼金鑰 | **至少與被保護資料同等強度** |
+
 ---
 
 ## CCSP D2 閃卡
@@ -1820,3 +1840,13 @@ Multi-tenant CSP hardware
 | Recover after failure? | **Backup** |
 
 這張表的 ROI 遠高於通讀任何一份 ISO 全文。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 2026-10-03 D2 與 D6 的錯題講義。
+
+- **Part 1 D2：** key vault 實務題外話、金鑰保護原則、⭐ encryption 粒度四選一（file、TDE、application、object）、⭐ data masking 九種技術、bit-splitting 與 data dispersion、跨管轄區分割、object／volume／file storage、AONT-RS、quantum computing、D2 速記表。
+- **Part 2 D6：** OECD 八原則與工程師 mental model、D6 備考的三層模型（先認類別、再比鄰近概念、最後背 trigger words）、argue 方法與備考比例。
+- **今日 D6 講義：** due care／due diligence／liability、file hash vs backup、ISO 27001／27002、SOC 2／SSAE／SAS 70、風險框架（COBIT、NIST 800-37、ISO 31000、Hex GBL）、鑑識證據、fault 比例題、seizure 題，以及速查表。

@@ -377,6 +377,19 @@ Need near-zero RPO / continuous replication? → Mirroring
 9. **DH agrees on a secret; OOB distributes a secret.**
 10. **Raised floor = cooling plenum + cabling/infrastructure space.**
 
+**繁體中文：**
+
+1. **Hardening 改變系統；audit 檢查系統。**
+2. **Audit 可能促成 hardening，但本身不是 hardening。**
+3. **Personnel control 管人；physical access control 管進出與移動。**
+4. **Management plane 應與 workload 及公共網路隔離。**
+5. **VMware Tools ≠ virtualization management plane。**
+6. **Live migration 移動運作中的 VM；snapshot 不會。**
+7. **GRE 負責 tunnel；IPsec 負責保護。**
+8. **Vendor 建議；組織決定。**
+9. **DH 協議 secret；OOB 分發 secret。**
+10. **Raised floor = 冷風 plenum + 纜線與基礎設施空間。**
+
 ---
 
 # 附錄：錯題 argue 流程的有效性
@@ -445,3 +458,16 @@ Argue 最適合修這種 boundary problem。
 > → corrected model：**作用對象相同，不代表 control category 相同。**
 
 這套流程對 CCSP 特別有效，因為 CCSP 很多題目的難點正是**「兩個答案都技術上合理，但考試在問哪個層級／角色／分類」**。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 2026-10-02 D5 錯題的考前講義，含兩個特別標記的爭點。
+
+- **虛擬化與 hardening（§1–§2）：** management plane 與 host hardening。
+- **⭐ 爭點一（§3）：** audit 不是 hardening 本身，以動詞判斷。
+- **⭐ 爭點二（§4–§5）：** physical access control 與 personnel control 的分類邊界。
+- **維運與網路（§6–§10）：** patch management、vendor 建議 vs 組織決定、maintenance mode 與 live migration、GRE vs IPsec、Secure KVM。
+- **設施與密碼學（§11–§13）：** raised floor、對稱式加密／DH／OOB、電商備份的 encryption vs mirroring。
+- **必記十句（§14）與附錄：** 附錄說明錯題 argue 流程為何有效（elaborative interrogation、error correction、boundary learning），以及要避免的陷阱。

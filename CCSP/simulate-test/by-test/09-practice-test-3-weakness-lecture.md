@@ -83,6 +83,17 @@ Current ISC2 CCSP outline weights used for planning:
 | D1 | Cloud Concepts, Architecture and Design | 4 | 17% | 0.68 |
 | D2 | Cloud Data Security | 0 | 20% | 0.00 |
 
+**繁體中文：** 依目前 ISC2 CCSP outline 權重規劃：
+
+| Domain | 名稱 | zapp_8 錯題數 | 官方權重 | 加權錯誤壓力 |
+|---|---|---:|---:|---:|
+| D3 | 雲端平台與基礎架構安全 | 14 | 17% | 2.38 |
+| D4 | 雲端應用安全 | 10 | 17% | 1.70 |
+| D6 | 法律、風險與合規 | 12 | 13% | 1.56 |
+| D5 | 雲端安全維運 | 6 | 16% | 0.96 |
+| D1 | 雲端概念、架構與設計 | 4 | 17% | 0.68 |
+| D2 | 雲端資料安全 | 0 | 20% | 0.00 |
+
 ### Priority Order
 
 ```text
@@ -147,6 +158,57 @@ Maintain = D2 Cloud Data Security
 | Q45 | D4 | SOAP uses XML instead of binary messaging | C → B |
 | Q46 | D6 | Privacy roles: data controller | D → B |
 
+**繁體中文：**
+
+| 題號 | Domain | 弱點概念 | 誤選 → 正解 |
+|---|---|---|---|
+| Q01 | D3 | 儲存協定：RAID 不是協定 | C → B |
+| Q02 | D3 | BC/DR：on-demand self-service 在應變時提供資源 | B → A |
+| Q03 | D6 | 隱私角色：data subject | B → A |
+| Q04 | D6 | CSA CCM + CAIQ 對應控制 | C → A |
+| Q05 | D5 | 雲端網路隔離：DNSSEC／IPSec／TLS | C → A |
+| Q06 | D1 | Community cloud 模型 | C → D |
+| Q07 | D4 | REST 使用 URI | D → C |
+| Q08 | D1 | Federated identity 的 cross-certification 模型 | A → B |
+| Q09 | D3 | OSI Layer 1 實體媒介 | B → A |
+| Q10 | D4 | 使用者測試需要中立主持人 | A → C |
+| Q11 | D3 | BC/DR：可從任何地點存取雲端／broad network access | B → D |
+| Q12 | D4 | Fuzz testing = 錯誤或隨機輸入 | B → C |
+| Q13 | D5 | Maintenance mode：仍可進行管理存取 | C → B |
+| Q14 | D5 | 遵循 vendor 組態指引可展現 due diligence | A → B |
+| Q15 | D4 | PaaS 是應用／遊戲測試的最佳服務模型 | A → B |
+| Q16 | D3 | UPS 時間：足以完成交易／銜接發電機 | A → D |
+| Q17 | D3 | 虛擬化管理工具使用隔離網路 | D → B |
+| Q18 | D5 | DLP／SIEM 學習曲線與 false positive | A → C |
+| Q19 | D3 | 維護期間的 VM live migration | A → C |
+| Q20 | D3 | 強化驗證：變動值不是穩定因子 | A → B |
+| Q21 | D1 | 部署模型：敏感／受管制工作用 private cloud | B → A |
+| Q22 | D3 | 煙霧偵測器：ionization 使用放射性物質 | A → B |
+| Q23 | D3 | BC/DR 事件預期來源；egress monitoring 不具預測性 | D → C |
+| Q24 | D6 | CSA CCM 效益：法規合規／控制選擇 | C → A |
+| Q25 | D6 | 隱私角色：data custodian | A → D |
+| Q26 | D6 | GLBA 規範金融服務 | D → C |
+| Q27 | D1 | EU 隱私／位置限制用 private cloud | D → A |
+| Q28 | D6 | CSA CCM 框架涵蓋範圍／無意義干擾項 | D → C |
+| Q29 | D5 | TLS session key 使用對稱式密碼學 | D → A |
+| Q30 | D6 | 客戶的合約誘因：暫停服務 | D → C |
+| Q31 | D6 | EU 隱私 adequacy／Japan 的考試邏輯 | C → A |
+| Q32 | D5 | TLS 透過 PKI 憑證建立信任 | D → C |
+| Q33 | D6 | Provider 的 SLA 誘因：財務罰則 | C → B |
+| Q34 | D4 | 主要業務疑慮：組織內的專有資訊／安全缺陷 | A → C |
+| Q35 | D3 | ENISA 雲端風險與效益 Top 8 出版品 | B → C |
+| Q36 | D6 | DMCA／著作權：公有領域 | A → B |
+| Q37 | D4 | Code signing 作為軟體所有權／IP 證據 | A → C |
+| Q38 | D3 | 容器不模擬硬體 | D → A |
+| Q39 | D4 | 非安全產品的安全缺陷 = 非功能需求 | ? → ? |
+| Q40 | D3 | 儲存控制器組態應依 vendor 指引 | ? → ? |
+| Q41 | D4 | 測試獨立性：排除開發者 | ? → ? |
+| Q42 | D3 | BC/DR：資料分類決定關鍵程度 | A → B |
+| Q43 | D4 | Federated identity 的 service provider 角色 | ? → ? |
+| Q44 | D6 | ISO 31000 vs NIST 800-37 風險管理框架 | ? → ? |
+| Q45 | D4 | SOAP 以 XML 取代二進位訊息 | C → B |
+| Q46 | D6 | 隱私角色：data controller | D → B |
+
 ---
 
 ## 5. P0 Weakness: D3 Cloud Platform & Infrastructure Security
@@ -186,6 +248,14 @@ Main subclusters:
    - Variable keystrokes are not a stable authentication factor.
    - Authentication needs a known quantity or stable template.
 
+**繁體中文：** D3 錯題最多（14／46），子群如下：
+
+1. **儲存與網路分類：** RAID 不是儲存協定；iSCSI／Fibre Channel／FCoE 才是；儲存控制器應先依 vendor 指引，而非泛用法規。
+2. **BC/DR 與韌性：** on-demand self-service 可快速配置資源；可從任何地點存取雲端，能減少對專用備援場所的需求；資料分類協助找出關鍵資產與復原優先序；egress monitoring 不是 BC/DR 的事件預測來源。
+3. **資料中心設施：** 光纖屬 OSI Layer 1；ionization 煙霧偵測器使用放射性物質；UPS 應足以完成交易或銜接發電機。
+4. **虛擬化與容器：** 虛擬化管理工具必須隔離；主機維護時移動 VM 是 live migration；容器不模擬硬體。
+5. **驗證與安全機制：** 變動的按鍵值不是穩定的驗證因子；驗證需要已知量或穩定範本。
+
 ### 5.2 Patch rules
 
 ```text
@@ -211,6 +281,17 @@ Vendor guidance usually wins for product-specific secure configuration.
 | Facility/UPS/smoke detector review | 10 min |
 | D3 targeted questions | 25–30 questions |
 | Gate | **≥75%** |
+
+**繁體中文：**
+
+| 任務 | 分量 |
+|---|---:|
+| 儲存與網路分類複習 | 15 分鐘 |
+| BC/DR 概念演練 | 20 分鐘 |
+| 虛擬化與容器複習 | 15 分鐘 |
+| 設施／UPS／煙霧偵測器複習 | 10 分鐘 |
+| D3 針對性題目 | 25–30 題 |
+| 門檻 | **≥75%** |
 
 ---
 
@@ -248,6 +329,14 @@ Main subclusters:
    - In federation among participants, participating entities can be federated service providers.
    - Do not automatically assign every federation role to the cloud provider.
 
+**繁體中文：** D4 是第二大的技術風險（10／46），子群如下：
+
+1. **Web service／API：** REST 使用 URI；SOAP 使用 XML，取代 DCOM／CORBA 的二進位訊息；選 SOAP 的理由不是輕量、較新或較安全。
+2. **軟體測試：** Fuzz testing = 錯誤或隨機輸入；公開玩家測試需要中立主持人；產品測試應排除開發者以避免影響與偏誤。
+3. **應用服務模型：** 跨 runtime／平台測試應用程式時常以 PaaS 為佳；SaaS 太固定，IaaS 提供基礎架構但客戶負擔較重。
+4. **軟體與 IP 所有權：** Code signing 有助證明軟體所有權；非安全產品的安全缺陷通常屬非功能需求。
+5. **Federated identity：** 參與者之間的 federation 中，參與實體本身可以是 federated service provider；不要自動把每個角色都指派給 cloud provider。
+
 ### 6.2 Patch rules
 
 ```text
@@ -271,6 +360,17 @@ Federation roles depend on who provides/consumes/asserts identity, not automatic
 | Federation role mapping | 15 min |
 | D4 targeted questions | 25–30 questions |
 | Gate | **≥75–80%** |
+
+**繁體中文：**
+
+| 任務 | 分量 |
+|---|---:|
+| REST／SOAP／SAML／XML 對照 | 20 分鐘 |
+| Fuzz／DAST／SAST／測試獨立性 | 20 分鐘 |
+| PaaS 測試／SDLC／非功能需求 | 20 分鐘 |
+| Federation 角色對應 | 15 分鐘 |
+| D4 針對性題目 | 25–30 題 |
+| 門檻 | **≥75–80%** |
 
 ---
 
@@ -310,6 +410,14 @@ This is not just "law memorization." It is taxonomy failure across:
    - Public domain after copyright expiration
    - Code signing can support ownership proof
 
+**繁體中文：** D6 在本次錯題中相當明顯（12／46），這不只是「背法條」，而是下列項目的分類失誤：
+
+1. **隱私角色：** data subject、data controller、data custodian。
+2. **CSA／稽核／控制框架：** CSA CCM、CAIQ、ISO 31000、NIST 800-37。
+3. **法律與法規對應：** GLBA 規範金融服務；EU 隱私 adequacy／Japan 的考試邏輯；資料在地化與隱私驅動的 private cloud 決策。
+4. **合約與 SLA 誘因：** 客戶的誘因 = 暫停服務；provider 的誘因 = 財務罰則。
+5. **智慧財產／DMCA：** 著作權到期後進入公有領域；code signing 可支援所有權證明。
+
 ### 7.2 Patch rules
 
 ```text
@@ -338,6 +446,17 @@ Public domain = no current copyright restriction.
 | D6 targeted questions | 20–25 questions |
 | Gate | **≥75–80%** |
 
+**繁體中文：**
+
+| 任務 | 分量 |
+|---|---:|
+| 隱私角色閃卡 | 15 分鐘 |
+| CSA CCM／CAIQ／STAR／ISO／NIST 比較 | 20 分鐘 |
+| GLBA／HIPAA／PCI／GDPR／EU adequacy 速查表 | 20 分鐘 |
+| 合約與 SLA 誘因模式 | 15 分鐘 |
+| D6 針對性題目 | 20–25 題 |
+| 門檻 | **≥75–80%** |
+
 ---
 
 ## 8. P3 Weakness: D5 Cloud Security Operations
@@ -358,6 +477,8 @@ Clusters:
 - DLP/SIEM false positives and learning curve
 - TLS session key = symmetric
 - TLS trust = PKI certificates
+
+**繁體中文：** D5 出現次數少於 D3／D4／D6，但仍然重要（6／46）。主要群集：雲端網路隔離、maintenance mode 行為、vendor 指引與 due diligence、DLP／SIEM 的 false positive 與學習曲線、TLS session key 為對稱式、TLS 信任來自 PKI 憑證。
 
 ### 8.2 Patch rules
 
@@ -395,6 +516,10 @@ Private cloud = strongest control for sensitive/regulated workloads.
 Cross-certification = each participant reviews/trusts others.
 Hybrid is not automatically correct for privacy/location constraints.
 ```
+
+**繁體中文：** D1 錯題較少（4／46），但都是基本觀念：community vs public／private、cross-certification 模型、高敏感或受管制產業用 private cloud、嚴格隱私與位置控制用 private cloud。
+
+修正規則：Community cloud 由有共同關注的組織共享；private cloud 對敏感與受管制工作的控制最強；cross-certification 是每個參與者各自審查並信任其他參與者；hybrid 不會因隱私或位置限制就自動正確。
 
 ---
 
@@ -490,6 +615,16 @@ Evidence from this review set:
 | Contracts | customer incentive, provider SLA incentive |
 | Governance/best answer | private cloud for privacy/location control |
 
+**繁體中文：** **是，這次 zapp_8 結果中，非技術面明顯偏弱。** 但弱點比「法律不好」更具體：法律與合規分類 + 角色對應 + 合約誘因邏輯。
+
+| 非技術群集 | 例子 |
+|---|---|
+| 隱私角色 | Data subject、controller、custodian |
+| 法律與法規對應 | GLBA、EU adequacy、DMCA／著作權 |
+| CSA 與稽核框架 | CSA CCM、CAIQ、ISO 31000、NIST 800-37 |
+| 合約 | 客戶誘因、provider 的 SLA 誘因 |
+| 治理／最佳解 | 隱私與位置控制用 private cloud |
+
 ### Interpretation
 
 Earlier Practice Test 2 scored **D6 86% (12 / 14)** — see `07-practice-test-2-weakness-lecture.md` §2 — so D6 is not permanently broken.  
@@ -501,6 +636,8 @@ Recommended handling:
 Do not spend all study time on law.
 Do spend 20–30 minutes daily on D6 taxonomy until D6 mixed mini-tests stay above 75–80%.
 ```
+
+**繁體中文：** 先前 Practice Test 2 的 **D6 為 86%（12／14）**（見 `07-practice-test-2-weakness-lecture.md` §2），所以 D6 並非一直不行；但這次顯示 D6 與非技術概念**在混合題壓力下尚未穩定**。建議：不要把全部時間花在法律上，但每天花 20–30 分鐘做 D6 分類，直到 D6 混合 mini-test 維持在 75–80% 以上。
 
 ---
 
@@ -515,6 +652,15 @@ Do spend 20–30 minutes daily on D6 taxonomy until D6 mixed mini-tests stay abo
 | 20 min | D3 targeted drill |
 | 20 min | D6 targeted drill |
 
+**繁體中文：**
+
+| 時段 | 任務 |
+|---|---|
+| 30 分鐘 | D3 儲存／網路／BC-DR／設施規則 |
+| 25 分鐘 | D6 隱私角色 + CSA CCM／CAIQ |
+| 20 分鐘 | D3 針對性 drill |
+| 20 分鐘 | D6 針對性 drill |
+
 ### Day 2: D4
 
 | Block | Task |
@@ -523,6 +669,15 @@ Do spend 20–30 minutes daily on D6 taxonomy until D6 mixed mini-tests stay abo
 | 25 min | Fuzz testing / testing independence |
 | 20 min | PaaS testing / nonfunctional requirements |
 | 25–30 Q | D4 targeted drill |
+
+**繁體中文：**
+
+| 時段 | 任務 |
+|---|---|
+| 25 分鐘 | REST／SOAP／SAML／XML |
+| 25 分鐘 | Fuzz testing／測試獨立性 |
+| 20 分鐘 | PaaS 測試／非功能需求 |
+| 25–30 題 | D4 針對性 drill |
 
 ### Day 3: Mixed Weak-Area Validation
 
@@ -534,6 +689,17 @@ Do spend 20–30 minutes daily on D6 taxonomy until D6 mixed mini-tests stay abo
 | D6 subset | **≥75%** |
 
 If mixed validation is below 70%, do not start another full Practice Test yet.
+
+**繁體中文：**
+
+| 測驗 | 門檻 |
+|---|---:|
+| D3／D4／D6 混合 45–60 題 | **≥75%** |
+| D3 子集 | **≥75%** |
+| D4 子集 | **≥75%** |
+| D6 子集 | **≥75%** |
+
+混合驗證低於 70% 時，先不要開始下一次完整 Practice Test。
 
 ---
 
@@ -609,3 +775,18 @@ Next gate = D3/D4/D6 mixed mini-test ≥75%.
     - **時間管控**：上一回平均每題僅花 31 秒，衝刺過快容易看漏細節。本回應將平均作答時間拉長至 **45-50 秒/題**，多出來的 15 秒用來雙重確認題幹是問 `Customer` 還是 `Provider`，以及要求的是 `BEST`、`FIRST` 還是 `EXCEPT`。
         
     - 目標總分：穩定複製並超越 **`≥ 77%`**。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Practice Test 3（zapp_8）的錯題分析與補強。ZIP 僅含錯題回顧頁，沒有成績總覽；若為 125 題，46 錯約當 63.2%。各英文段落後方已附繁體中文；以下為全文整理。
+
+- **摘要與進步（§0–§2）：** 擷取結果、executive summary，並與近期有效紀錄比較。
+- **優先序（§3）：** 依錯題數 × 官方權重排序：D3 > D4 > D6 > D5 > D1 > D2。
+- **錯題地圖（§4）：** 46 題的 domain、弱點概念與選項。
+- **各域弱點（§5–§9）：** 每域列出出錯原因、修正規則與 drill 計畫。
+- **複習準則（§10）：** 分類題型、找出真正的判斷軸、寫一句話規則、說明兩個干擾項為何錯、留意 CCSP 用語陷阱。
+- **非技術面（§11）：** 法律與合規分類是明顯弱點，但不是永久性的。
+- **72 小時計畫與診斷（§12–§13）：** Day 1 D3 + D6、Day 2 D4、Day 3 混合驗收與最終診斷。
+- **檔尾四日計畫（已是中文）：** D3 + D6、D4、三域驗收、全域模考驗收。

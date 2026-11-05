@@ -244,6 +244,15 @@ NIST 現行定義也是以 confidentiality、integrity、availability 或 securi
 5. Backup does not imply continuous mirroring; mirroring is driven by RPO／availability.
 6. Recoverable sensitive backups generally need confidentiality protection; encryption is a natural fit.
 
+**繁體中文：**
+
+1. GRE 負責 tunnel；IPsec 負責保護。
+2. Patch 由 vendor 建議；由組織決定。
+3. DH 協議出 secret；OOB 分發 secret。
+4. 對稱式加密需要安全共享的金鑰材料，不一定要用 OOB 傳遞。
+5. Backup 不代表持續 mirroring；mirroring 由 RPO／可用性驅動。
+6. 可復原的敏感備份通常需要機密性保護，加密是自然的選擇。
+
 ---
 
 # 下篇：D2 資料安全
@@ -539,6 +548,17 @@ LearnZapp 問：為什麼叫 Life Cycle 有點不精確？答案：Destroy 後�
 | Archive | Retention／long-term preservation |
 | Destroy | Secure deletion／sanitization |
 
+**繁體中文：**
+
+| 階段 | 核心 |
+|---|---|
+| Create | 分類 |
+| Store | 儲存 + 保護 |
+| Use | 授權處理 |
+| Share | 傳輸與接收方控制 |
+| Archive | 保留與長期保存 |
+| Destroy | 安全刪除與清除 |
+
 ---
 
 ## 9. USDA / USPTO / OSHA / SEC（D6 補充）
@@ -571,3 +591,12 @@ Stocks → SEC
 4. **Inheritance** = context／property propagation，不是 payload inspection。
 
 再加一句：Access Control 決定能不能存取；DLP 監控敏感資料被怎麼處理／移動。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 2026-09-30 D5 與 D6 drill 的錯題分析，分上下兩篇。
+
+- **上篇（D5 維運與實體／網路邊界）：** Secure KVM、對稱式加密／DH／OOB、GRE vs IPsec、production patch 的 vendor 與內部合規、電商備份與加密、ASHRAE 溫度、underfloor plenum、incident 定義。
+- **下篇（D2 資料安全）：** content／metadata／context analysis、inheritance 與 frequency 的歸類、DLP／egress monitoring vs access control、tokenization、reclassification、Cloud Secure Data Life Cycle、USDA／USPTO／OSHA／SEC 補充。

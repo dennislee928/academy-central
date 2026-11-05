@@ -302,6 +302,15 @@ Block-level storage model
 | File storage | shared filesystem |
 | Raw storage | low-level storage allocation |
 
+**繁體中文：** Volume storage = 掛載到運算實例的虛擬磁碟，行為像實體硬碟或陣列，屬 block 層級儲存模型。
+
+| 儲存類型 | 判斷 |
+|---|---|
+| Volume／block storage | 像磁碟般掛載的儲存 |
+| Object storage | bucket／object／metadata／API |
+| File storage | 共享檔案系統 |
+| Raw storage | 低階儲存配置 |
+
 ---
 
 ### 7.2 PKI
@@ -704,3 +713,20 @@ D3 / D6 的前期補強有效，D2 也在 full mock 中回穩。
 * **發動條件:** 雲端公有雲的 **「多租戶與共享資源 (Multi-tenancy / Co-tenancy / Shared resources)」** 環境。
 * **攻擊手法:** 駭客在同一個實體主機的另一個 VM 中，透過監控 CPU 快取 (Cache) 延遲、耗電量等「物理側信道」，反推並竊取其他租戶的加密金鑰。
 * **防禦關鍵:** 強制實體硬體隔離 (Dedicated Hosts / HSM)。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Practice Test 2（125 題，77%）的弱點分析與補強。
+
+- **摘要與進步（§1–§3）：** 六域成績與整體、各 domain 的進步判斷。
+- **錯題總覽（§4）：** 本次錯題主題。
+- **P0 D4（§5）：** 錯題模式與 D4 補強計畫。
+- **P1 架構與雲端模型（§6）：** Type 1 hypervisor、hybrid cloud、SaaS、public cloud 治理責任。
+- **P1 D2（§7）：** volume storage、PKI、ECC、TDE、anonymization、degaussing。
+- **P1 網路與 BC/DR（§8）：** VLAN、SDN control plane、RPO、ALE、qualitative risk。
+- **P2 D6（§9）：** FedRAMP、NIST 800-53、auditability、HIPAA、Common Criteria。
+- **閱讀模式（§10）：** 看見熟字就選、沒有先分類、作答偏快。
+- **計畫與判斷（§11–§13）：** 三天計畫、Practice Test 3 的條件與最終判斷。
+- **檔尾 D4 衝刺講義（已是中文）：** SAST／DAST／IAST／RASP、API gateway vs firewall、Secure SDLC 與 threat modeling、OWASP 與 side-channel。

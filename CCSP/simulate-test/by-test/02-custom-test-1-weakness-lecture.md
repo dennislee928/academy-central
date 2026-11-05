@@ -344,6 +344,8 @@ SOC 報告分類不穩。
 > SOC 1 = financial reporting controls。  
 > SOC 2 = detailed trust services controls。  
 
+**繁體中文：** SOC 3 = 公開摘要的 attestation 報告；SOC 1 = 財務報導相關控制；SOC 2 = 詳細的 trust services 控制。
+
 ---
 
 ### Q11. Evidence integrity comparison
@@ -469,6 +471,20 @@ SOC 報告分類不穩。
 | Egress monitoring | observes outbound data, not access control |
 | Classification | done at Create phase |
 
+**繁體中文：**
+
+| 概念 | 秒殺判斷 |
+|---|---|
+| DRM Persistence | 權利跟著物件走 |
+| Real-time analytics | 依當下行為即時推薦 |
+| Multitenancy | 雲端銷毀困難的根本原因 |
+| Copyright | 創意作品的有形表達 |
+| Patent | 發明／流程／方法 |
+| Trademark | 品牌／標誌／識別 |
+| Trade secret | 機密商業資訊 |
+| Egress monitoring | 觀察外送資料，不是存取控制 |
+| Classification | 在 Create 階段完成 |
+
 ---
 
 ## P1：D1 Interoperability / Portability / Deployment Decision
@@ -480,6 +496,16 @@ SOC 報告分類不穩。
 | Private cloud | stronger control over location / governance |
 | Hybrid cloud | combines distinct infrastructures |
 | Public cloud | open use by general public |
+
+**繁體中文：**
+
+| 概念 | 秒殺判斷 |
+|---|---|
+| Interoperability | 系統能彼此協作 |
+| Portability | 系統或資料能移到別處 |
+| Private cloud | 對位置與治理有較強控制 |
+| Hybrid cloud | 結合不同的基礎架構 |
+| Public cloud | 開放一般大眾使用 |
 
 ---
 
@@ -821,3 +847,16 @@ D2	≥75%
 D6	≥75%
 D1	≥75–80%
 D1/D2/D6 mixed mini test	≥75%
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 Custom Test 1（40 題，25 對 15 錯，62%，每題 33 秒）的弱點分析與一小時補強計畫。
+
+- **成績與進步（§1–§4）：** 比較 domain 表現與前次 Assessment Test 的弱域，判斷目前階段。
+- **錯題分析（§5）：** D2（DRM、data discovery、雲端銷毀、智慧財產、egress monitoring、分類階段）、D6（SOC 報告、鑑識報告對象、證據完整性）、D1（interoperability vs portability、歐洲公司的部署模型）。
+- **弱點分類與 P0 清單（§6–§7）：** D6 SOC／SSAE／鑑識、D2 DRM／生命週期／監控／IP，P1 為 D1 概念。
+- **一小時補強（§8）與 48 小時計畫（§9）：** 依時間分段補弱，Day 1 補弱不刷模考，Day 2 驗證弱域。
+- **模考條件（§10）：** 列出暫停與恢復完整模考的條件。
+- **高頻規則與診斷（§11–§12）：** 適合製卡的規則，以及最短結論。

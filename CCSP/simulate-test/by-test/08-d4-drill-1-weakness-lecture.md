@@ -134,6 +134,8 @@ CCSP 不只問「哪個選項正確」，常問：
 3. PCI DSS tokenization outsourcing  
 4. Tokenization used for PCI DSS compliance  
 
+**繁體中文：** 錯題包含 data masking 最佳定義（兩題）、以 tokenization 委外處理 PCI DSS，以及使用 tokenization 達成 PCI DSS 合規。
+
 ### 必背觀念
 
 | 技術 | 用途 | CCSP 秒殺判斷 |
@@ -163,6 +165,8 @@ PCI DSS 場景看到 tokenization，通常是降低 cardholder data exposure / c
 - SDLC 最重要 input：Business requirements
 - Security personnel first involved：Define phase
 - Developer cloud security training reason：library/component/security risk awareness
+
+**繁體中文：** 錯題包含 SDLC 最重要的輸入（business requirements）、安全人員最早參與的階段（Define phase）、開發者雲端安全訓練的理由（對函式庫、元件與安全風險的認知）。
 
 ### 必背觀念
 
@@ -247,6 +251,8 @@ SOAP 不是天生比 DCOM/CORBA 更安全。
 
 - ISO 27034 mandates each organization should have an ONF and each application should have its own ANF.
 
+**繁體中文：** ISO 27034 要求每個組織有一個 ONF，每個應用程式有自己的 ANF。
+
 ### 必背
 
 | 名詞 | 意義 |
@@ -281,6 +287,16 @@ Application level = ANF
 | Something you are | fingerprint, iris, face, voice biometric |
 | Somewhere you are | location |
 | Something you do | behavior / gesture / typing pattern |
+
+**繁體中文：**
+
+| 因子 | 例子 |
+|---|---|
+| 所知（know） | 密碼、PIN |
+| 所持（have） | 卡片、token、手機、智慧卡 |
+| 所是（are） | 指紋、虹膜、臉部、語音生物特徵 |
+| 所在（somewhere） | 位置 |
+| 所為（do） | 行為、手勢、打字模式 |
 
 ### 陷阱
 
@@ -454,3 +470,14 @@ Current bottleneck = D4 application security best-answer + SDLC + masking/tokeni
 ### 一句話結論
 
 > **整體模考能力已進步，但 D4 單域仍不穩；目前最大風險不是 D3/D6，而是 D4 在細節題與 best-answer 題下會掉分。**
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件是 D4 Drill 1 的弱點分析與補強。
+
+- **結果與比較（§0–§2）：** 全局表現有進步，但 D4 targeted drill 退回弱點區。
+- **錯題與弱點（§3–§4）：** P0 為 best-answer 判斷、masking／tokenization／PCI DSS、Secure SDLC、cloud sandbox 與 malware analysis 的法律邊界；P1 為 SOAP／XML、ISO 27034、MFA factor。
+- **規則與排程（§5–§6）：** 最需要修的 15 條規則與 60 分鐘補弱排程。
+- **下一步與判斷（§7–§8）：** 不建議立刻做 Practice Test 3，並列出建議步驟與一句話結論。
