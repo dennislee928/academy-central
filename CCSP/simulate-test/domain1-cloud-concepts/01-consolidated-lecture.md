@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 1 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義
+> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D1 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -28,6 +28,7 @@
 | 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §1 Common Criteria publisher、§3 provider automation、§7 D1 操題模型（已由 §1.10 涵蓋）；§2 Data Controller → D6、§4 NIST Price → D6、§5 ECC → D2、§6 Isolation → D3 | §1.9、§2.7、§2.12、§2.13 |
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §5 security controls vs cloud TCO；§1 process isolation → D3／D4、§2 ISO 27018 → D6、§3 Secure KVM → D3、§4 TPI → D2、§6 Notorious Nine → D2 | §2.7、§2.14 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §5 CEO reduced cost 再現、§10.6 `best / biggest / most` 警戒、§6 compute 抽象層級（概念 → D3）；§1 → D2、§2 → D6、§3／§4／§8 → D3、§7 → D4 | §1.10、§2.7、§2.9 |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §0 共同錯誤模式、§6 TOE／PP／ST、§8 跨主題判斷表、§10 closed-book drill、§11 考場口訣、使用優先度 | §1.9、§1.10、§3、§4、§5 Drill D |
 
 ---
 
@@ -370,6 +371,24 @@ Certificate
 
 > **口訣：ISO 寫規格，CCRA 做互認，各國 scheme 發證。**
 
+#### TOE／PP／ST：評估用語（來源：2026-11-05，`[T]`）
+
+| 名詞 | 全名 | 定義 |
+|---|---|---|
+| **TOE** | Target of Evaluation | 被評估的產品／系統或其明確範圍 |
+| **PP** | Protection Profile | 某類產品的通用 security requirements |
+| **ST** | Security Target | 特定 TOE 聲明要滿足的 security requirements |
+| **EAL** | Evaluation Assurance Level | 對 security claims 的 assurance rigor |
+
+```text
+PP = product-category requirement profile
+ST = this specific TOE's security claim
+```
+
+**Higher EAL 不等於：** security features 一定更多、適合所有 organization、EAL7 一定比 EAL4「功能更安全」。
+
+參考：[Common Criteria Portal](https://www.commoncriteriaportal.org/)。
+
 STAR、Uptime Tier、EAL 三套數字的對照見 [Domain 6 §4](../domain6-legal-compliance/01-consolidated-lecture.md)（STAR 1–2、Tier I–IV、EAL1–7）。
 
 ### 1.10 D1 題目判讀模型：量詞、角色、抽象層級（來源：2026-10-27 D1 Fresh）
@@ -469,6 +488,18 @@ Metered service   → 經濟／營運促成因素
 **錯題紀錄欄位：** `Q# / Quantifier / Role / Level / 作答 / 理由 / Confidence`，答錯後再貼 `[K/T/J/R/Q]` 標籤（見 [README](../README.md)）。
 
 > **口訣：量詞看交集，角色看職責，最佳看預設，答案看層級。**
+
+#### Role／Property／Mechanism／Implementation：先判斷題目問哪一層（來源：2026-11-05，`[T]`）
+
+Federation、classification、TPI、sandbox 這批 recurring 錯題，多半不是核心技術不會，而是以下三種模式：
+
+| 錯誤模式 | 內容 | 例子 |
+|---|---|---|
+| **Role confusion** | 把 federation 的角色名稱與一般商業角色混在一起 | 把 SAML `SP` 理解成「提供 federation service 的公司」（[Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md)） |
+| **Property vs Implementation** | 把安全性質與某個具體實作混在一起 | 把 two IAM matrices 當成 TPI 的定義（[Domain 2 §1.11](../domain2-data-security/01-consolidated-lecture.md)） |
+| **Abstraction-level mismatch** | 題目問哪一層，答案卻選了另一層 | 題目問 classification 要配什麼 protection，卻選 metadata（[Domain 2 §2.19](../domain2-data-security/01-consolidated-lecture.md)） |
+
+> **總口訣：先判斷題目問 Role、Property、Mechanism，還是 Implementation。**
 
 ---
 
@@ -722,6 +753,9 @@ Cloud base price
 | 42 | `best / biggest / most` 但 context 不足 → 找 management／risk／business perspective，不把題庫 heuristic 當 universal truth。 |
 | 43 | 上位詞不自動優先；**正式、可驗證、可直接映射題幹**的概念才優先。 |
 | 44 | CEO 題 → business outcome first；cost 只是 heuristic，**cloud 不保證比較便宜**。 |
+| 45 | **PP = 產品類別的通用 requirements；ST = 特定 TOE 的 security claim；TOE = 被評估的範圍。** |
+| 46 | Higher EAL = greater assurance／evaluation rigor，不等於 security features 更多。 |
+| 47 | 先判斷題目問 **Role、Property、Mechanism 還是 Implementation**，再看選項。 |
 
 ---
 
@@ -746,6 +780,8 @@ Cloud base price
 | EAL3 | EAL4 | 有系統地測試＋檢查 vs 有系統地設計＋測試＋審查 |
 | EAL5 | EAL6 | 半形式化**設計** vs 半形式化**驗證** |
 | EAL6 | EAL7 | **半**形式化驗證 vs **全**形式化驗證 |
+| PP（Protection Profile） | ST（Security Target） | 某類產品的通用 requirements vs 特定 TOE 的 security claim |
+| Property | Implementation | 必須成立的安全性質 vs 達成該性質的其中一種做法 |
 | EAL 等級 | 產品安全程度 | 驗證的嚴謹與深入程度 vs 產品本身多安全 |
 | CSP（商業角色） | IdP（技術角色） | 提供 cloud service vs 發出 identity assertion |
 | `all` 題 | `best` 題 | 算共同交集 vs 找預設語義下最直接的答案 |
@@ -780,6 +816,71 @@ Cloud base price
 
 目標 ≥ 75%。若低於 70%，隔天不要做綜合模考，先補 D1。
 
+### Drill D：2026-11-05 跨域 closed-book（15 分鐘）
+
+不看講義，每題 2–5 秒回答：
+
+```text
+IdP? SP/RP? Broker? Federation Authority?
+Metadata? Classification? Controls? Policy?
+Sandbox? Process Isolation?
+TPI? SoD? Split Knowledge?
+Secure KVM? TPM?
+TOE? PP? ST? EAL?
+Controller? Processor? Regulator?
+```
+
+**Gate（共 22 項）：**
+
+- **20–22 項秒答**：這批 cluster 進 maintenance
+- **17–19 項**：只複習答不出的項目
+- **≤16 項**：隔天再做同一組 recall，不增加 LearnZApp 題量
+
+**跨主題判斷表：**
+
+| 題目在問 | 反射 | 完整內容 |
+|---|---|---|
+| authenticate／assert identity | **IdP** | [D4 §1.5](../domain4-application/01-consolidated-lecture.md) |
+| consume assertion + provide service | **RP／SP** | D4 §1.5 |
+| mediate federation protocol | **Broker／Proxy** | D4 §1.5 |
+| manage trust／vet members | **Federation Authority** | D4 §1.5 |
+| mark actual data | **Metadata／Label** | [D2 §1.2](../domain2-data-security/01-consolidated-lecture.md) |
+| sensitivity bucket | **Classification** | D2 §1.2 |
+| protect based on class | **Security Controls** | D2 §1.2 |
+| define rules | **Policy** | D2 §1.2 |
+| one person cannot perform action | **TPI／Dual Control** | [D2 §1.11](../domain2-data-security/01-consolidated-lecture.md) |
+| one person cannot own incompatible duties | **SoD** | D2 §1.11 |
+| one person cannot know whole secret | **Split Knowledge** | D2 §1.11 |
+| restricted execution environment | **Sandbox** | [D3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md) |
+| stop processes interfering | **Process Isolation** | D3 §1.4 |
+| peripheral isolation across hosts | **Secure KVM** | D3 §1.4 |
+| evaluation assurance depth | **EAL** | 本檔 §1.9 |
+| determine purposes／means | **Controller** | [D6 §1.4](../domain6-legal-compliance/01-consolidated-lecture.md) |
+| enforce law／regulation | **Regulator** | D6 §1.4 |
+
+**八條考場口訣：**
+
+```text
+1. IdP asserts; RP/SP provides service.
+2. Broker = RP upstream, IdP downstream.
+3. Metadata = label; Classification = bucket; Controls = treatment; Policy = rulebook.
+4. Sandbox = restricted environment; Process isolation = isolation mechanism.
+5. TPI = one person cannot act alone.
+6. SoD = incompatible duties; Split Knowledge = no one knows the whole secret.
+7. Secure KVM = peripheral isolation, not TPM.
+8. Controller = WHY + HOW; Processor = on behalf; Regulator = enforce.
+```
+
+**使用優先度：**
+
+| 優先度 | 主題 |
+|---|---|
+| **P0** | IdP／SP／RP／Broker；Policy／Classification／Metadata／Controls；TPI／SoD／Split Knowledge；Controller／Processor／Regulator |
+| **P1** | Sandbox／Process Isolation；Common Criteria／EAL |
+| **P2** | Secure KVM 細節 |
+
+> 目標不是背整份，而是 Trigger → correct role／property／mechanism 在 2–5 秒內出現。
+
 ### 自我檢測
 
 - Hybrid cloud 的三個必要條件是什麼？
@@ -798,3 +899,5 @@ Cloud base price
 - Provider architecture 題，automation 為什麼比 MTTR 更像核心？
 - 為什麼 security controls 會降低 cloud migration 的實際財務效益？
 - `best / biggest / most` 題資訊不足時，該如何處理？
+- TOE、PP、ST 各是什麼？PP 與 ST 最短怎麼分？
+- Property 與 Implementation 差在哪？舉 TPI 的例子。
