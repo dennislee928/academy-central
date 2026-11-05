@@ -208,3 +208,12 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 1. 回到 Knowt 的 Upload 畫面。
 2. 選 `01-閃卡全部.pdf`（或進入 `KNOWT上傳用` 選分域 PDF）。
 3. 等它產出 notes／flashcards 後再存成套件。
+
+---
+
+## 繁體中文版 / Traditional Chinese Version
+
+本文件說明閃卡如何匯入 Knowt。
+
+- **TSV 閃卡：** 依六大 domain 分檔，列出各檔張數與歷次併入紀錄，`knowt-import-all.tsv` 可一次匯入全部。
+- **PDF／PPT：** 用於只接受 PDF、PPT 等格式的 AI PDF Summarizer；這些匯出檔尚未與目前的 TSV 同步。
