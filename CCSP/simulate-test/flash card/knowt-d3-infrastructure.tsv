@@ -103,3 +103,7 @@ Healthcare 是否自動對應某個固定 Uptime Tier？	否。Tier 依 business
 小型 surgical center 升級 on-prem DC，題庫選「自建全新 DC」，怎麼處理？	[Q] 低優先。題目缺 RTO／RPO、設施現況、CapEx／OpEx、staffing、法規、cloud／colo 選項等資訊；「控制最大」≠「最佳」，對小型組織甚至可能最不合理。知道題庫偏好 maximum control 即可，不修架構直覺。
 Loosely coupled 與 tightly coupled storage cluster 怎麼分？	Loose＝independent nodes（各有 CPU／RAM／storage／NIC）透過 network／fabric 組成，scale-out；Tight＝shared controller／chassis／bus／backplane，bottleneck 集中在共享元件。題庫答 performance and capacity in each node（相對於 physical backplane）。
 Loosely coupled cluster 的 node count 會不會影響 aggregate capacity／performance？	會。Raw capacity ≈ node count × per-node capacity（usable 還受 replication、erasure coding、metadata、failure domain 影響）；performance 也與 node count、NIC bandwidth、topology、coordination overhead 有關。題庫 explanation 若說不影響屬 [Q]。
+Sandbox 最短定義？	Restricted execution environment：限制程式能做什麼、能接觸什麼（filesystem、network、system calls、device access、memory、privileges、IPC），以限制 compromise 的 blast radius。
+Sandbox 等於 Process Isolation 嗎？	不等於。Process isolation 是建立 sandbox 邊界的機制之一；sandbox 還可能依賴 namespaces、seccomp、MAC、capabilities、containers、VMs、filesystem ACL、network policy。
+Process isolation 屬於 design-time 還是 runtime？	兩者都有：design-time 決定 isolation architecture；runtime 實施 isolation。
+Secure KVM 與 IP KVM 差在哪？	Secure KVM 重點是 isolation（cross-domain peripheral sharing）；IP KVM 重點是 remote administration。

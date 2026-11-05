@@ -60,3 +60,6 @@ Common Criteria 的產品證書是 ISO 直接發的嗎？	不是。ISO/IEC 出�
 為什麼 security controls 會降低 cloud migration 的實際財務效益？	Actual TCO 還包含 WAF、KMS／HSM、SIEM／logging、DLP、backup／replication、private connectivity、audit／compliance 等安全與營運 overhead。最短模型：Cloud list price ≠ actual TCO（[J]）。
 遷雲 TCO 題的「Security controls and countermeasures」只代表 network／software controls 嗎？	不是。它是廣義集合，含 technical、administrative、physical controls；但 cloud-TCO 語境通常主要指 customer 額外負擔的 technical／operational／compliance costs。
 `best / biggest / most` 題要先警戒什麼？	Context 是否足夠（RTO／RPO、預算、規模、business objective）。資訊不足時先找 management／risk／business perspective；題庫答案可能只是 heuristic（[J]／[Q]），不當 universal truth。
+Common Criteria 的 TOE 是什麼？	Target of Evaluation：被評估的產品／系統或其明確範圍。
+Common Criteria 的 PP 是什麼？	Protection Profile：某類產品（product class）的通用 security requirements。
+Common Criteria 的 ST 是什麼？與 PP 怎麼分？	Security Target：特定 TOE 聲明要滿足的 security requirements。PP＝product-category requirement profile；ST＝this specific TOE's security claim。

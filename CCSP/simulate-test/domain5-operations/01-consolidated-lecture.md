@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 5 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題
+> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D5 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -25,6 +25,7 @@
 | 2026-10-18 D3 補強（內容已併入，原檔未封存） | Virtualization sprawl 成因、風險與完整 targeted remediation、閉卷防守題 | §1.9、§3、§4、§5 Drill B |
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §5 Baseline image vs vulnerability scan vs remediation、golden image 寫入保護 | §1.2、§2.6 |
 | 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：停業務不停管理、`new instances prevented` `[Q]` | §1.4、§2.7 |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Outsourcing execution ≠ outsourcing accountability（交叉引用；完整內容在 D6 §1.4） | §1.7、§3 |
 
 ---
 
@@ -375,6 +376,8 @@ Mantrap
 
 不要看到「CSP caused the incident」就自動選「CSP has all responsibility」。
 
+> **Outsourcing execution ≠ automatically outsourcing accountability**（來源：2026-11-05）。責任如何判定、Controller 仍需做什麼，見 [Domain 6 §1.4](../domain6-legal-compliance/01-consolidated-lecture.md)。
+
 | 角色 | 定義 |
 |---|---|
 | **Controller** | 決定 **why + how** personal data is processed |
@@ -577,6 +580,7 @@ Redundancy = 可用性 / 容錯
 | 49 | Golden image 寫入保護保護的是核准的 master artifact，不是讓每台執行中的 VM 唯讀。 |
 | 50 | **Maintenance mode：停業務，不停管理**——阻止正常 production placement，保留 admin access 與 logging。 |
 | 51 | Prevent normal production placement ≠ prohibit every possible new instance。 |
+| 52 | Outsourcing execution ≠ automatically outsourcing accountability（見 D6 §1.4）。 |
 
 ---
 

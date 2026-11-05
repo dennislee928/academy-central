@@ -95,8 +95,8 @@ Multitenancy 的主要風險有哪些？	Isolation 失效、co-residency、leaka
 雲端 egress monitoring 的主要障礙有哪些？	Limited visibility、limited privileges、dynamic workloads、encryption、changing topology、performance overhead。
 「雲端 egress monitoring 障礙，EXCEPT」要選什麼？	Redundancy／resilience。題庫視其本身不是 egress monitoring 的障礙；但此說法 [Q] 高降權——分散式、多路徑的 resilience architecture 會增加監控複雜度。
 Two-Person Integrity（TPI）是什麼？	同一敏感操作至少需兩位 authorized individuals 共同參與，例如兩位管理員才能執行 HSM key export。亦稱 dual control。
-SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。口訣：TPI＝兩人一起做；SoD＝工作拆開做；Split Knowledge＝秘密拆開知道。
-3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不是 split knowledge（那需要全部拼齊）。
+SoD、TPI、Split Knowledge、M-of-N 四者怎麼切？	SoD = 不同 duties 給不同人；TPI／Dual Control = 同一動作要兩人；Split Knowledge = 每人只知 secret 的一部分；M-of-N = 門檻控制（如 3-of-5）。口訣：TPI＝兩人一起做；SoD＝工作拆開做；Split Knowledge＝秘密拆開知道。一字切法：Action／Duties／Secret（一人不能做／一人不能包辦流程／一人不能知道全部）。
+3-of-5 key custodians 屬於哪種控制？	M-of-N／threshold control。不必然等於 split knowledge（典型 split knowledge 需全部拼齊）；依實作與題目範圍判斷，先看題目問 operation、duty 還是 secret。
 E-commerce 備份／封存題看到敏感支付資料，該選 encryption 還是 mirroring？	Encryption。推理鏈：payment-card data → stored backup → data at rest → confidentiality → encryption。Mirroring 回答的是 availability／RPO。
 Backup 是否等於 continuous mirroring？	No。Mirroring 由 near-zero RPO／availability 需求驅動；需要「可回復且受保護」的敏感備份時正解是 encryption。
 Cryptographic key 應該被保護到什麼程度？	At least as strongly as the data they can decrypt。Vault／KMS／HSM 只是 implementation mechanism；Protection(Key) ≥ Protection(Data) 才是原則。
@@ -153,3 +153,6 @@ Classification scheme 何時定義？實際 data object 何時被 classify？	Sc
 Lost key／bad backup／overwrite 對 data loss 的最短映射？	Lost key＝data inaccessible；bad backup＝cannot recover；overwrite＝original data destroyed。
 「Improper policy 不會造成 data loss」可以當原則背嗎？	不可以。錯誤 retention／deletion policy 本身就可能造成 data loss；該題只能理解為 direct mechanism vs indirect governance cause（[Q]）。
 CSA Notorious Nine 的 exact wording 值得背嗎？	不值得高頻背。它是 2013 舊 threat taxonomy；現行準備重點放 common cloud threats 與底層機制（[Q]）。
+Security Controls 與 classification 的關係？	Treatment：依 classification 施加保護（Restricted → encryption、RBAC、MFA、DLP、logging、retention）。`Proper _____ assigned to each data classification/category` 選 Security Controls，不是 metadata。
+資料分類治理中，Policy 做什麼？	Rulebook：定義 taxonomy、handling rules 與 control mapping。
+Metadata／Classification／Controls／Policy 的口訣？	Label／Bucket／Treatment／Rulebook。

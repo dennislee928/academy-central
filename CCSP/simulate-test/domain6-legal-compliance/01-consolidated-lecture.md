@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 6 的內容，跨場次合併後依主題重組。
 > **考試權重：** 13%
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 > **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
@@ -40,6 +40,7 @@
 | 2026-10-30 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Data Controller = WHY + HOW、§4 NIST SP 800 Price `[Q]`；§1 Common Criteria 生態 → D1（本檔 §1.2 交叉註） | §1.2、§1.4、§2.5、§2.13 |
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §2 ISO/IEC 27018:2025 定位、與 27001／27002／27017／27701 關係、「不是什麼」 | §1.2、§2.14 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §2 CSA STAR 現行 Level 1／2、Level 3 = legacy；STAR／Tier／EAL 三套數字 | §1.2、§2.15、§3、§4 |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Regulator／Supervisory Authority、Regulator vs Auditor、Cloud outsourcing 與 accountability（復現：Controller WHY + HOW）；§6 TOE／PP／ST 併入 D1 §1.9 | §1.2、§1.4、§2.5、§3、§4 |
 
 ---
 
@@ -295,7 +296,7 @@ US        → sectoral federal + state patchwork
 | **CAIQ** | 問卷 | 搭配 CCM 使用的 CSA 問卷 |
 | **CSA STAR** | 保證／登錄計畫 | **現行官方路徑：Level 1 = Self-Assessment；Level 2 = Third-party assurance（STAR Certification／Attestation／C-STAR）**。Level 3 = Continuous 是**舊資料描述（legacy）**；**沒有 Level 4。**（題庫有時寫 `Tier 1`，看到 self-assessment 就選 Level／Tier 1）詳見下方「STAR 的層級」 |
 | **CMM** | 能力成熟度模型 | 流程的**嚴謹度、細節、可重複性（repeatability）** |
-| **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL。**ISO/IEC 出版標準；CCRA 做國際互認；national scheme 實際發證**（見 [Domain 1 §1.9](../domain1-cloud-concepts/01-consolidated-lecture.md)） |
+| **Common Criteria** | ISO/IEC 15408 | IT 產品安全評估；概念含 TOE、Protection Profile、Security Target、EAL（定義見 D1 §1.9）。**ISO/IEC 出版標準；CCRA 做國際互認；national scheme 實際發證**（見 [Domain 1 §1.9](../domain1-cloud-concepts/01-consolidated-lecture.md)） |
 | **FIPS 140-2／140-3** | 密碼模組驗證 | **140-2 = legacy；140-3 = current** |
 | **GAAP** | 會計原則 | Generally Accepted Accounting Principles——**不是** cloud security audit standard，是 distractor |
 
@@ -719,6 +720,33 @@ Regulator  = OVERSIGHT / enforcement
 > **口訣：Subject = 誰；Controller = 為何＋怎麼；Processor = 代做。**
 
 > **核心原則：** Cloud provider 常是 data processor，但 **cloud customer／data owner／controller 仍負最終法律責任**。Outsourcing 不會完全轉移 accountability。
+
+**Regulator／Supervisory Authority（來源：2026-11-05，`[T]`）：** 監督、調查、執法、要求 compliance。不要因為 regulator 監管 processing 就把它選成 Controller。
+
+```text
+Subject    → data is about this person
+Controller → decides WHY + HOW
+Processor  → processes for Controller
+Regulator  → oversees / enforces
+```
+
+**Regulator vs Auditor：**
+
+```text
+Regulator → legal/regulatory authority + enforcement
+Auditor   → independent assessment of evidence/controls/conformity
+```
+
+> Auditor 不因發現問題就自動擁有 governmental enforcement authority。
+
+**Cloud outsourcing 不等於責任消失：** Outsourcing execution ≠ automatically outsourcing accountability。
+
+| 面向 | 內容 |
+|---|---|
+| 責任取決於 | applicable law、controller／processor role、contract、service model、jurisdiction、statutory obligations |
+| Controller 通常仍需 | choose appropriate processor、establish contractual requirements、perform due diligence、monitor compliance、demonstrate accountability |
+
+參考：[EU GDPR — Controller／Processor／accountability](https://eur-lex.europa.eu/eli/reg/2016/679/oj)。
 
 **資料地理三名詞：**
 
@@ -1414,6 +1442,8 @@ Data subject／controller／processor／custodian 四者必須分清；不要把
 
 **再現（2026-10-30，`[T]`）：** `In regard to most privacy guidance, the data controller is ______.` → 題庫答案 `The entity that collects or creates the privacy data`。四選項中它是最佳答案，但 wording 不精確——controller 的判準是**決定 WHY + HOW**，不是誰 collect／create（見 §1.4）。不要背成「Controller = 產生 personal data 的人」。
 
+**再現（2026-11-05，`[T]`）：** 監管 processing 不等於決定 processing——Regulator 負責監督與執法，Controller 決定 purposes + means（見 §1.4）。
+
 ### 2.6 ARO 與 RMF 的 foundation 誤判（`by-test/11` D5 §1、§4）
 
 - 問 ARO 的直接依據時誤選 **aggregation**：那是計算手法，evidence 是 **historical occurrence data**（見 §1.9）。
@@ -1641,6 +1671,9 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | 141 | **ISO 27018 = Public cloud + PII + CSP acting as processor**；現行 **27018:2025**。 |
 | 142 | **17 雲安全，18 雲隱私**；27701 = PIMS；ISO 27018 不是 law。 |
 | 143 | **STAR 1–2、Uptime Tier I–IV、EAL1–7**：三套數字不要混。 |
+| 144 | **Subject = 資料描述的自然人；Controller = WHY + HOW；Processor = on behalf；Regulator = enforce。** |
+| 145 | Auditor assesses；Regulator has enforcement authority。 |
+| 146 | Outsourcing execution ≠ automatically outsourcing accountability；責任仍看法律、角色、合約、service model 與 jurisdiction。 |
 
 ---
 
@@ -1725,6 +1758,8 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | PCI SSC | Payment brands／acquirers | 制定與維護標準 vs 執行 compliance program 與後果 |
 | SOC 2 | SOC 3 | 客戶深度盡調、限制散布 vs general-use 公開摘要 |
 | Risk mitigation | Risk acceptance | 降低風險的動作 vs 決定保留殘餘風險 |
+| Regulator | Controller | 監督與執法 vs 決定 purposes + means |
+| Regulator | Auditor | legal authority + enforcement vs independent assessment |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
@@ -1881,3 +1916,5 @@ SAS 70     = legacy
 - NIST SP 800 的「Price」題真正能背什麼？
 - ISO 27018 的三個 trigger？27017 與 27018 最短怎麼分？ISO 27018 是 law 嗎？
 - STAR、Uptime Tier、Common Criteria 各是哪一套數字？
+- Regulator 與 Controller、Regulator 與 Auditor 各怎麼分？
+- 工作外包給 CSP 後，責任歸屬取決於哪些因素？Controller 通常仍需做什麼？

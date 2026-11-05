@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 4 的內容，跨場次合併後依主題重組。
 > **考試權重：** 16%
-> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義
+> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義、2026-11-05 Gap Remediation
 > **維護：** 新增測驗講義後，將該檔的 D4 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -25,6 +25,7 @@
 | 2026-10-27 D1 Fresh 講義與閃卡（內容已併入，原檔未封存） | Q1 cloud developer training：encryption vs regulation、Q3 brokered federation 的 SAML assertion | §1.5、§2.11、§2.12 |
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.4 Secure software development 題為何選 process isolation（概念 → D3 §1.4） | §1.6、§2.15 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §7 IdP vs SP／RP、third-party federation 的 third party = IdP、NIST RP 用語 | §1.5、§2.6 |
+| 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §1 Broker／Proxy 雙重角色、Federation Authority、2 秒 trigger；§3 Technical IDENTIFY 原則（復現：IdP vs RP／SP、process isolation 判讀） | §1.5、§2.15、§3、§4 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -295,6 +296,45 @@ SP / RP 「接受 assertion，讓 Alice 使用服務」
 
 **要點：** TTP 中的第三方通常是 **IdP／broker**，不是 service provider。要分清 IdP 與 SP／relying party。**不要自動把每個 federation 角色都指派給 cloud provider**；角色取決於誰提供／消費／宣告 identity。
 
+#### Broker／Proxy 與 Federation Authority（來源：2026-11-05，`[T]`）
+
+```text
+Upstream IdP
+     ↓ assertion
+Broker / Proxy
+     ↓ new assertion
+Downstream RP
+```
+
+> **Proxy／Broker 在 upstream 一側扮 RP，在 downstream 一側扮 IdP。**
+
+Broker／Proxy 可能做：protocol translation、identity mapping、trust mediation、assertion transformation。
+
+**Federation Authority** 的工作：建立／管理 federation trust framework、vet federation participants、定義 participation／assurance requirements。
+
+```text
+Federation Authority → manage trust relationship
+Federation Proxy     → mediate federation protocol traffic
+```
+
+**與上方「Proxy federation（題庫舊模型）」的關係：** 舊模型把 `proxy` 當成信任中介，由它審查成員；NIST SP 800-63C-4 的現行用語則把 trust 管理（Federation Authority）與 protocol 中介（Federation Proxy）分開。判讀時看題幹動作：題目明確描述舊式 `proxy federation` 信任模型 → 依上方對照表；題幹寫 `vet members／establish trust` 並列出 Federation Authority → Federation Authority；寫 `intermediate／translate／proxy` → Broker／Proxy。
+
+**2 秒 trigger：**
+
+| Trigger | 答案 |
+|---|---|
+| authenticate + issue assertion | **IdP** |
+| consume assertion + provide service | **RP／SP** |
+| intermediate／translate／proxy | **Broker／Proxy** |
+| vet members／establish trust | **Federation Authority** |
+
+```text
+Third-party identity company → 可能是 IdP
+SaaS application             → 通常是 SP/RP
+```
+
+參考：[NIST SP 800-63C-4 — Federation roles and proxied federation](https://pages.nist.gov/800-63-4/sp800-63c/Federation/)。
+
 ### 1.6 雲端應用的特殊風險
 
 | 主題 | 規則 |
@@ -473,6 +513,10 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 
 > **一句話規則：** 上位詞不是自動優先；「可驗證、可映射題幹」才優先（見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
 
+**再現（2026-11-05，`[T]`）：** `secure software design mechanism that prevents one process affecting another` → **Process Isolation**，不選 broad security enhancement。
+
+> **Technical IDENTIFY → 選最精確 defined mechanism。**
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -533,6 +577,9 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | 52 | Third-party federation：third party = IdP（identity／trust function）；federation members = SP。 |
 | 53 | NIST 現代用語 Relying Party（RP）≈ SAML Service Provider（SP）。 |
 | 54 | Secure software development 題：泛稱 vs 正式可驗證機制 → 選 **process isolation** 這類正式概念，上位詞不自動優先。 |
+| 55 | **Broker／Proxy = RP upstream，IdP downstream。** |
+| 56 | **Federation Authority 管 trust；Federation Proxy 中介 protocol。** |
+| 57 | Technical IDENTIFY 題 → 選最精確 defined mechanism。 |
 
 ---
 
@@ -566,6 +613,8 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | ONF | ANF | 組織層級（1 個） vs 應用層級（每應用 1 個） |
 | Forklifting | Re-architect | 不修改搬遷 vs 雲原生改造 |
 | Masking | Tokenization | 相似但不真實的資料集 vs vault 映射替代值 |
+| Federation Authority | Federation Proxy／Broker | 建立與管理 trust、vet members vs 中介 federation protocol traffic |
+| SAML SP（federation role） | 一般「服務商」（commercial role） | 接受 assertion 並提供 resource vs 商業上提供服務的公司 |
 
 ---
 
@@ -618,3 +667,5 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 - Open Redirect 最主要的工程修補是什麼？user training 與 audit logging 各扮演什麼角色？
 - IdP 與 RP／SP 各做什麼？Third-party certification federation 中 third party 是哪個角色？
 - Secure software development 題為什麼選 process isolation 而不是 enhancement mechanisms？
+- Broker／Proxy 在 upstream 與 downstream 各扮什麼角色？
+- Federation Authority 與 Federation Proxy 各管什麼？
