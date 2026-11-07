@@ -4,7 +4,7 @@ Hybrid cloud 的定義是什麼？	由兩個以上不同雲端基礎架構組成
 Community cloud 的定義是什麼？	供具有共同關注事項的特定消費者群體專屬使用。
 Multicloud 一定等於 Hybrid cloud 嗎？	不一定。Multicloud 是使用多家 CSP；Hybrid 強調不同基礎設施被標準化技術綁在一起。
 IaaS 最主要的商業驅動力是什麼？	Transfer of ownership cost：CapEx 轉 OpEx。不要先選能源或冷卻效率。
-IaaS／PaaS／SaaS 客戶各管什麼？	IaaS：客戶管 OS／app／data；PaaS：客戶專注 app／code；SaaS：CSP 提供完整應用。
+IaaS／PaaS／SaaS 客戶各管什麼？	IaaS：客戶管 OS／app／data；PaaS：客戶專注 app／code；SaaS：CSP 提供完整應用。最短：SaaS＝finished application；PaaS＝finished application platform（仍管 code、app config／security、data、IAM）；IaaS＝finished infrastructure。
 Cloud Broker 做什麼？	仲介、彙整、整合或管理雲端服務。
 Cloud Reseller 做什麼？	購買 hosting／cloud service 後轉售給自己的客戶。不要選 Broker。
 Cloud Carrier 做什麼？	提供連線與傳輸（connectivity and transport）。
@@ -63,3 +63,5 @@ Common Criteria 的產品證書是 ISO 直接發的嗎？	不是。ISO/IEC 出�
 Common Criteria 的 TOE 是什麼？	Target of Evaluation：被評估的產品／系統或其明確範圍。
 Common Criteria 的 PP 是什麼？	Protection Profile：某類產品（product class）的通用 security requirements。
 Common Criteria 的 ST 是什麼？與 PP 怎麼分？	Security Target：特定 TOE 聲明要滿足的 security requirements。PP＝product-category requirement profile；ST＝this specific TOE's security claim。
+`fully operational + very little administration` 與 `maximum OS／runtime control` 各指向哪個 service model？	Fully operational + minimal administration → SaaS（ready-to-use application，如 Microsoft 365）；maximum OS／runtime／network control → IaaS。Fully operational ≠ fully controllable；誤選 PaaS 是因為忽略 PaaS 仍要管 application 與 data。
+Best-answer 題遇到「最嚴重」但不符合題目 category 的選項怎麼辦？	先 obey scope／category，不選只是聽起來最災難性的選項。例：cloud environment `unviable` → VM sprawl（cloud operational risk），不是 hostile takeover（corporate ownership event）。

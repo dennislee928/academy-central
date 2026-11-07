@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **604 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **625 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、TOE／PP／ST、題目判讀模型、cloud TCO） | 65 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、TOE／PP／ST、題目判讀模型、category-first、cloud TCO） | 67 |
 | `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI、Policy／Classification／Controls 四層） | 158 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling） | 109 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling、TLS 五件事與 802.1X） | 114 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security（含 federation 角色 IdP vs RP／SP、Broker、Federation Authority） | 60 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations | 58 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、Regulator vs Auditor、CSA STAR） | 147 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations（含 maintenance mode alerting、DLP／SIEM baselining、running vs saved patch、VM sprawl） | 67 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、Regulator vs Auditor、CSA STAR、IETF／IANA／IEEE 標準組織） | 152 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 604 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 625 |
 
 ### 歷次併入紀錄
 
@@ -175,6 +175,17 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 **不新增：** IdP／RP 核心工作、Metadata、Classification、define scheme vs classify at Create、TPI／SoD／Split Knowledge 定義、Two IAM matrices、Process Isolation 定義、Secure KVM 目標與 TPM、CC 對應 ISO 15408、EAL 等級與數字、Controller、Processor、outsourcing accountability 等既有卡已覆蓋。
 
+**2026-11-06 今日講義與閃卡**（原檔未封存，知識點已併入彙整講義；原檔共 38 張卡，去重、合併並改寫為中性語氣後淨增 21 張）：
+
+- `fully operational` vs `maximum control` service model、category-first 判讀 → **D1**（+2）
+- TLS 五件事、HKDF、802.1X 用途、802.1X vs TLS／EAP-TLS、裸 DH 可遭 MITM → **D3**（+5）
+- Maintenance mode 可 suppress 的 alert、running vs saved image patch、canary、patched ≠ clean、跨區不一致 vs saved image、`unviable` → VM sprawl `[J/Q]`、DLP／SIEM baseline + tune、「Wait three weeks」`[Q]`、CSP-native vs third-party FP → **D5**（+9）
+- IETF、IANA vs IETF、IEEE、ISO/IEC、NIST trigger → **D6**（+5）
+
+**既有卡增補答案：** `IaaS／PaaS／SaaS 客戶各管什麼？`（D1，補 finished application／platform／infrastructure）、`TLS 1.3 中 certificate 與 ECDHE 各做什麼？`（D3，補口訣與 X.509 題 `[T/Q]`）、`ECDHE 最大安全特性？`（D3，補兩個 E）、`雲端自動修補最大死角是什麼？`（D5，補 mitigation）、`Maintenance mode 可以停 monitoring／logging 嗎？`（D5，補 audit logging）。
+
+**不新增：** X.509 綁定 identity–public key、ECDHE key agreement、AES-GCM traffic encryption、forward secrecy、maintenance mode 不阻 admin access、VM sprawl 定義與風險、SaaS／PaaS／IaaS 定義等既有卡已覆蓋；「今日兩個 P0」屬時效性紀錄，不保留。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -201,7 +212,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 604 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 625 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

@@ -145,3 +145,8 @@ Data Subject 是誰？	個資所描述的自然人（natural person whom persona
 Regulator／Supervisory Authority 做什麼？	監督、調查、執法、要求 compliance。
 Regulator 與 Controller 怎麼分？	Regulator 監督與執法；Controller 決定 purposes + means（WHY + HOW）。監管 processing 不代表是 Controller。
 Auditor 與 Regulator 怎麼分？	Auditor 做 independent assessment（evidence／controls／conformity）；Regulator 有 legal authority 與 enforcement。Auditor 不因發現問題就自動擁有 governmental enforcement authority。
+Internet protocols／RFC 由哪個組織制定？	IETF（Internet Engineering Task Force）：TLS、HTTP、QUIC、BGP、IPv6 等 RFC。不是 ISO/IEC。
+IANA 做什麼？與 IETF 怎麼分？	IANA（Internet Assigned Numbers Authority）管 protocol parameter registries、port numbers、DNS-related registries、Internet number coordination。IETF defines；IANA records／coordinates parameters。
+IEEE 最典型的 trigger？	802.x LAN／MAN 標準：802.3 Ethernet、802.11 Wi-Fi、802.1X。
+ISO/IEC 最典型的 trigger？	Broad international standardization：ISO/IEC 27001／27002／27017／27018、15408 等；不是專門制定 Internet protocol 的組織。
+NIST 最典型的 trigger？	US federal standards／guidance：SP 800-series（如 800-53、800-63）、NIST CSF、FIPS。

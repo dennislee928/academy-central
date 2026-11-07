@@ -30,9 +30,9 @@ OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（�
 第三方／供應鏈對基礎設施的意義？	該 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
 用一句話說明 TLS 四段工作？	Certificate 綁定身分與 public key；digital signature 證明持有 private key；(EC)DHE 建立 shared secret；symmetric crypto 保護實際流量。
 TLS 是 hybrid cryptosystem 的原因？	非對稱／DH 做認證與金鑰建立；對稱金鑰做大量加密。全非對稱太慢，全對稱無法安全起步。
-TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。
+TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。口訣：X.509 authenticates；ECDHE agrees keys。題庫「TLS uses X.509 certificates to authenticate a connection and create a shared secret」wording 過度簡化（[T/Q]），考場照選 X.509，但不要背成 X.509 產生 shared secret。
 TLS application traffic 用什麼加密？	Derived symmetric traffic keys，常見 AES-GCM 或 ChaCha20-Poly1305（AEAD）。
-ECDHE 最大安全特性？	Forward secrecy：每個 session 用 ephemeral keys，長期金鑰失竊不應讓過去流量自動可解。
+ECDHE 最大安全特性？	Forward secrecy：每個 session 用 ephemeral keys，長期金鑰失竊不應讓過去流量自動可解。ECDHE = Elliptic Curve Diffie-Hellman Ephemeral：第一個 E = Elliptic Curve，第二個 E = Ephemeral。
 TLS 1.3 還用傳統 RSA static key exchange 嗎？	不用。那是舊 TLS 常見、且無 forward secrecy 的做法。
 AES-GCM 為什麼常出現在 TLS？	它是 AEAD，可同時提供機密性與密文完整性。
 TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.3 把憑證演算法與 ECDHE group 分開協商，例如 TLS_AES_128_GCM_SHA256。
@@ -107,3 +107,8 @@ Sandbox 最短定義？	Restricted execution environment：限制程式能做什
 Sandbox 等於 Process Isolation 嗎？	不等於。Process isolation 是建立 sandbox 邊界的機制之一；sandbox 還可能依賴 namespaces、seccomp、MAC、capabilities、containers、VMs、filesystem ACL、network policy。
 Process isolation 屬於 design-time 還是 runtime？	兩者都有：design-time 決定 isolation architecture；runtime 實施 isolation。
 Secure KVM 與 IP KVM 差在哪？	Secure KVM 重點是 isolation（cross-domain peripheral sharing）；IP KVM 重點是 remote administration。
+TLS 的 X.509、(EC)DHE、HKDF、AES-GCM／ChaCha20、802.1X 各解決什麼？	X.509＝對方是誰（authentication）；(EC)DHE＝怎麼產生共同 secret（key agreement）；HKDF＝怎麼派生 traffic keys；AES-GCM／ChaCha20＝怎麼保護資料（bulk encryption）；802.1X＝能不能接入 network（不屬 TLS 本身）。
+HKDF 在 TLS 中做什麼？	從 (EC)DHE 等產生的 keying material 派生 traffic keys，之後交給 AES-GCM／ChaCha20-Poly1305 加密 application data。
+IEEE 802.1X 的核心用途？	Port-based Network Access Control：Supplicant → Authenticator（switch／AP）→ Authentication Server（RADIUS），回答「裝置／使用者能不能接入 network」，不是 TLS session 怎麼建立。
+802.1X 等於 TLS 嗎？兩者什麼關係？	不等於。802.1X 是 network access-control framework；EAP-TLS 是可在其中使用的 authentication method：802.1X → EAP → EAP-TLS → TLS → X.509 certificate。
+DH／ECDHE 單獨能證明對方身分嗎？	不能。裸 DH 可遭 MITM（Alice → Mallory → Bob）；TLS 要用 certificate／signature 把 key exchange 綁定到 authenticated identity。

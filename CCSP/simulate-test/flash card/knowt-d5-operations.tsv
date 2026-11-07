@@ -1,7 +1,7 @@
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
-雲端自動修補最大死角是什麼？	Snapshot／saved／dormant VM images 收不到 patch，被喚醒後帶已知漏洞上線。
+雲端自動修補最大死角是什麼？	Snapshot／saved／dormant VM images 收不到 patch，被喚醒後帶已知漏洞上線。Mitigation：dormant VM → patch-on-boot／compliance scan；old template → rebuild golden image。
 Baseline 發揮完整價值的必要條件？	Documentation。沒寫下來就無法定義、證明與還原偏離。
 Baseline 是防毒或 HIDS 嗎？	不是。它是用來比較的安全組態標準。
 發現 baseline deviation 應該直接改回去嗎？	不要。應 document → assess → authorize 或 remediate → 若屬合法變更則更新 baseline。
@@ -9,7 +9,7 @@ Configuration maintenance 包含什麼？不包含什麼？	包含 baseline、�
 Production patch 為什麼不能看到更新就部署？	要評估 compatibility、可用性衝擊與變更風險：Identify → Evaluate → Test → Approve → Deploy → Validate。
 Vendor guidance 能否取代 risk owner？	不能。Vendor 建議重要，但風險所有者仍是採用方組織。
 Host 進入 maintenance 前，cluster 通常先做什麼？	Move／drain workload，或確保其他節點仍能承載服務。
-Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。
+Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。Audit logging 尤其要保留——maintenance 期間的 privileged activity 更應記錄。
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
 SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
@@ -56,3 +56,12 @@ Golden image 的寫入保護主要保護什麼？	保護核准的 master image a
 Maintenance mode 的最短定義與口訣？	停止或移出正常 production workload、避免新的正常 workload placement，同時保留管理能力與 logging 進行維護。口訣：停業務，不停管理。
 Maintenance mode 會阻止 admin access 嗎？	不會。管理員必須保留 access 才能 patch、upgrade、diagnose、repair、做 hypervisor／硬體維護與 service restart。
 「Generation of new instances is prevented」為何太絕對？	真正意義是避免正常 production workload placement 到該節點；maintenance／system／admin workload、agent、DaemonSet-like workload 仍可能產生（題庫措辭 [Q] 中度，概念照學）。
+Maintenance mode 期間哪些 alert 可以 suppress？哪些要繼續？	可 suppress：expected operational／availability alerts（node unavailable、service stopped、reboot expected）。要繼續：security alerts（suspicious login、malware、privilege escalation、anomalous outbound）與 audit logs。要背：authorized admin access remains；audit remains；expected alerts may be suppressed。
+Running VM patched 是否代表 template／saved image 也 patched？	不代表。Patch agent 只在 running workload 上跑；stopped／dormant VM、saved image、old template 不會自動更新，需另外 rebuild／patch。口訣：Patch running workload ≠ patch source image。
+Canary VM／staged rollout 主要解決什麼？	Patch regression／compatibility risk；不能解決 old image／template 仍是舊版的問題（那要 rebuild golden image）。
+Patch 後就代表 host clean 嗎？	不代表。Patch 修 vulnerability，但漏洞被利用後建立的 webshell、persistence、stolen credentials、attacker-created account 可能仍在；patch management 與 incident response（forensic validation／reimage）是不同問題。Patched ≠ clean。
+Automated patching 題：「跨 data center patch 不一致」與「snapshot／saved VM images won't take a patch」為何選後者？	兩者真實環境都可能發生；但題庫考的是 canonical 風險 running state vs saved state。區域不一致的 mitigation 是 deployment verification；舊 image 的 mitigation 是 rebuild golden image。
+讓 cloud environment `unviable` 的是 VM sprawl 還是 hostile takeover？	VM sprawl：self-service provisioning → 大量無 owner／無 lifecycle 的 VM → cost、attack surface、管理複雜度上升 → 經濟／營運上不可持續。Hostile takeover 雖嚴重，但屬 corporate governance／ownership event，不是 cloud operational management risk（[J/Q]）。
+DLP／SIEM 新上線一週大量 false positives，正確思路？	Collect representative data → establish baseline → identify FP patterns → tune thresholds／policies／rules／exclusions／allowlists／correlation → measure FP／FN → re-evaluate。不要立刻換產品或搬回 on-prem。
+DLP／SIEM 題的「Wait three weeks」真正要背什麼？	不要用一週資料做 final effectiveness／migration decision——allow sufficient baselining and tuning time。不是固定要等 3 週（[Q] 低優先）。
+CSP-native 或 third-party security product 會直接決定 false positive 高低嗎？	不會。FP 更取決於 rule quality、threshold、baseline、dataset、environment context、exception configuration；題目沒有證據支持換 vendor。

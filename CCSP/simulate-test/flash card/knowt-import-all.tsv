@@ -4,7 +4,7 @@ Hybrid cloud 的定義是什麼？	由兩個以上不同雲端基礎架構組成
 Community cloud 的定義是什麼？	供具有共同關注事項的特定消費者群體專屬使用。
 Multicloud 一定等於 Hybrid cloud 嗎？	不一定。Multicloud 是使用多家 CSP；Hybrid 強調不同基礎設施被標準化技術綁在一起。
 IaaS 最主要的商業驅動力是什麼？	Transfer of ownership cost：CapEx 轉 OpEx。不要先選能源或冷卻效率。
-IaaS／PaaS／SaaS 客戶各管什麼？	IaaS：客戶管 OS／app／data；PaaS：客戶專注 app／code；SaaS：CSP 提供完整應用。
+IaaS／PaaS／SaaS 客戶各管什麼？	IaaS：客戶管 OS／app／data；PaaS：客戶專注 app／code；SaaS：CSP 提供完整應用。最短：SaaS＝finished application；PaaS＝finished application platform（仍管 code、app config／security、data、IAM）；IaaS＝finished infrastructure。
 Cloud Broker 做什麼？	仲介、彙整、整合或管理雲端服務。
 Cloud Reseller 做什麼？	購買 hosting／cloud service 後轉售給自己的客戶。不要選 Broker。
 Cloud Carrier 做什麼？	提供連線與傳輸（connectivity and transport）。
@@ -63,6 +63,8 @@ Common Criteria 的產品證書是 ISO 直接發的嗎？	不是。ISO/IEC 出�
 Common Criteria 的 TOE 是什麼？	Target of Evaluation：被評估的產品／系統或其明確範圍。
 Common Criteria 的 PP 是什麼？	Protection Profile：某類產品（product class）的通用 security requirements。
 Common Criteria 的 ST 是什麼？與 PP 怎麼分？	Security Target：特定 TOE 聲明要滿足的 security requirements。PP＝product-category requirement profile；ST＝this specific TOE's security claim。
+`fully operational + very little administration` 與 `maximum OS／runtime control` 各指向哪個 service model？	Fully operational + minimal administration → SaaS（ready-to-use application，如 Microsoft 365）；maximum OS／runtime／network control → IaaS。Fully operational ≠ fully controllable；誤選 PaaS 是因為忽略 PaaS 仍要管 application 與 data。
+Best-answer 題遇到「最嚴重」但不符合題目 category 的選項怎麼辦？	先 obey scope／category，不選只是聽起來最災難性的選項。例：cloud environment `unviable` → VM sprawl（cloud operational risk），不是 hostile takeover（corporate ownership event）。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -253,9 +255,9 @@ OSI 題在 D3 常考什麼判斷？	先判斷題目在問哪一層的控制（�
 第三方／供應鏈對基礎設施的意義？	該 CSP 還可能依賴其他 subprocessors；評估時要看整條 dependency chain。
 用一句話說明 TLS 四段工作？	Certificate 綁定身分與 public key；digital signature 證明持有 private key；(EC)DHE 建立 shared secret；symmetric crypto 保護實際流量。
 TLS 是 hybrid cryptosystem 的原因？	非對稱／DH 做認證與金鑰建立；對稱金鑰做大量加密。全非對稱太慢，全對稱無法安全起步。
-TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。
+TLS 1.3 中 certificate 與 ECDHE 各做什麼？	Certificate／signature = authentication；ECDHE = key establishment。兩者是不同功能。口訣：X.509 authenticates；ECDHE agrees keys。題庫「TLS uses X.509 certificates to authenticate a connection and create a shared secret」wording 過度簡化（[T/Q]），考場照選 X.509，但不要背成 X.509 產生 shared secret。
 TLS application traffic 用什麼加密？	Derived symmetric traffic keys，常見 AES-GCM 或 ChaCha20-Poly1305（AEAD）。
-ECDHE 最大安全特性？	Forward secrecy：每個 session 用 ephemeral keys，長期金鑰失竊不應讓過去流量自動可解。
+ECDHE 最大安全特性？	Forward secrecy：每個 session 用 ephemeral keys，長期金鑰失竊不應讓過去流量自動可解。ECDHE = Elliptic Curve Diffie-Hellman Ephemeral：第一個 E = Elliptic Curve，第二個 E = Ephemeral。
 TLS 1.3 還用傳統 RSA static key exchange 嗎？	不用。那是舊 TLS 常見、且無 forward secrecy 的做法。
 AES-GCM 為什麼常出現在 TLS？	它是 AEAD，可同時提供機密性與密文完整性。
 TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.3 把憑證演算法與 ECDHE group 分開協商，例如 TLS_AES_128_GCM_SHA256。
@@ -330,6 +332,11 @@ Sandbox 最短定義？	Restricted execution environment：限制程式能做什
 Sandbox 等於 Process Isolation 嗎？	不等於。Process isolation 是建立 sandbox 邊界的機制之一；sandbox 還可能依賴 namespaces、seccomp、MAC、capabilities、containers、VMs、filesystem ACL、network policy。
 Process isolation 屬於 design-time 還是 runtime？	兩者都有：design-time 決定 isolation architecture；runtime 實施 isolation。
 Secure KVM 與 IP KVM 差在哪？	Secure KVM 重點是 isolation（cross-domain peripheral sharing）；IP KVM 重點是 remote administration。
+TLS 的 X.509、(EC)DHE、HKDF、AES-GCM／ChaCha20、802.1X 各解決什麼？	X.509＝對方是誰（authentication）；(EC)DHE＝怎麼產生共同 secret（key agreement）；HKDF＝怎麼派生 traffic keys；AES-GCM／ChaCha20＝怎麼保護資料（bulk encryption）；802.1X＝能不能接入 network（不屬 TLS 本身）。
+HKDF 在 TLS 中做什麼？	從 (EC)DHE 等產生的 keying material 派生 traffic keys，之後交給 AES-GCM／ChaCha20-Poly1305 加密 application data。
+IEEE 802.1X 的核心用途？	Port-based Network Access Control：Supplicant → Authenticator（switch／AP）→ Authentication Server（RADIUS），回答「裝置／使用者能不能接入 network」，不是 TLS session 怎麼建立。
+802.1X 等於 TLS 嗎？兩者什麼關係？	不等於。802.1X 是 network access-control framework；EAP-TLS 是可在其中使用的 authentication method：802.1X → EAP → EAP-TLS → TLS → X.509 certificate。
+DH／ECDHE 單獨能證明對方身分嗎？	不能。裸 DH 可遭 MITM（Alice → Mallory → Bob）；TLS 要用 certificate／signature 把 key exchange 綁定到 authenticated identity。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -393,7 +400,7 @@ Technical IDENTIFY 題的原則？	選最精確 defined mechanism。例：`preve
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
-雲端自動修補最大死角是什麼？	Snapshot／saved／dormant VM images 收不到 patch，被喚醒後帶已知漏洞上線。
+雲端自動修補最大死角是什麼？	Snapshot／saved／dormant VM images 收不到 patch，被喚醒後帶已知漏洞上線。Mitigation：dormant VM → patch-on-boot／compliance scan；old template → rebuild golden image。
 Baseline 發揮完整價值的必要條件？	Documentation。沒寫下來就無法定義、證明與還原偏離。
 Baseline 是防毒或 HIDS 嗎？	不是。它是用來比較的安全組態標準。
 發現 baseline deviation 應該直接改回去嗎？	不要。應 document → assess → authorize 或 remediate → 若屬合法變更則更新 baseline。
@@ -401,7 +408,7 @@ Configuration maintenance 包含什麼？不包含什麼？	包含 baseline、�
 Production patch 為什麼不能看到更新就部署？	要評估 compatibility、可用性衝擊與變更風險：Identify → Evaluate → Test → Approve → Deploy → Validate。
 Vendor guidance 能否取代 risk owner？	不能。Vendor 建議重要，但風險所有者仍是採用方組織。
 Host 進入 maintenance 前，cluster 通常先做什麼？	Move／drain workload，或確保其他節點仍能承載服務。
-Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。
+Maintenance mode 可以停 monitoring／logging 嗎？	不行。維護期間仍要保留監控與日誌，才能驗證與調查。Audit logging 尤其要保留——maintenance 期間的 privileged activity 更應記錄。
 維運生命週期口訣？	Baseline → Harden → Document → Monitor → Detect deviation → Change management → Patch／test → Remediate → Re-baseline。
 Exposure Factor 受什麼影響最大？	Type of threat vector。它決定破壞機制與可能損失百分比。
 SLE 與 ALE 公式？	SLE = AV × EF；ALE = SLE × ARO。單位定位：ARO = 次數／year；SLE = $／incident；ALE = expected $／year。
@@ -448,6 +455,15 @@ Golden image 的寫入保護主要保護什麼？	保護核准的 master image a
 Maintenance mode 的最短定義與口訣？	停止或移出正常 production workload、避免新的正常 workload placement，同時保留管理能力與 logging 進行維護。口訣：停業務，不停管理。
 Maintenance mode 會阻止 admin access 嗎？	不會。管理員必須保留 access 才能 patch、upgrade、diagnose、repair、做 hypervisor／硬體維護與 service restart。
 「Generation of new instances is prevented」為何太絕對？	真正意義是避免正常 production workload placement 到該節點；maintenance／system／admin workload、agent、DaemonSet-like workload 仍可能產生（題庫措辭 [Q] 中度，概念照學）。
+Maintenance mode 期間哪些 alert 可以 suppress？哪些要繼續？	可 suppress：expected operational／availability alerts（node unavailable、service stopped、reboot expected）。要繼續：security alerts（suspicious login、malware、privilege escalation、anomalous outbound）與 audit logs。要背：authorized admin access remains；audit remains；expected alerts may be suppressed。
+Running VM patched 是否代表 template／saved image 也 patched？	不代表。Patch agent 只在 running workload 上跑；stopped／dormant VM、saved image、old template 不會自動更新，需另外 rebuild／patch。口訣：Patch running workload ≠ patch source image。
+Canary VM／staged rollout 主要解決什麼？	Patch regression／compatibility risk；不能解決 old image／template 仍是舊版的問題（那要 rebuild golden image）。
+Patch 後就代表 host clean 嗎？	不代表。Patch 修 vulnerability，但漏洞被利用後建立的 webshell、persistence、stolen credentials、attacker-created account 可能仍在；patch management 與 incident response（forensic validation／reimage）是不同問題。Patched ≠ clean。
+Automated patching 題：「跨 data center patch 不一致」與「snapshot／saved VM images won't take a patch」為何選後者？	兩者真實環境都可能發生；但題庫考的是 canonical 風險 running state vs saved state。區域不一致的 mitigation 是 deployment verification；舊 image 的 mitigation 是 rebuild golden image。
+讓 cloud environment `unviable` 的是 VM sprawl 還是 hostile takeover？	VM sprawl：self-service provisioning → 大量無 owner／無 lifecycle 的 VM → cost、attack surface、管理複雜度上升 → 經濟／營運上不可持續。Hostile takeover 雖嚴重，但屬 corporate governance／ownership event，不是 cloud operational management risk（[J/Q]）。
+DLP／SIEM 新上線一週大量 false positives，正確思路？	Collect representative data → establish baseline → identify FP patterns → tune thresholds／policies／rules／exclusions／allowlists／correlation → measure FP／FN → re-evaluate。不要立刻換產品或搬回 on-prem。
+DLP／SIEM 題的「Wait three weeks」真正要背什麼？	不要用一週資料做 final effectiveness／migration decision——allow sufficient baselining and tuning time。不是固定要等 3 週（[Q] 低優先）。
+CSP-native 或 third-party security product 會直接決定 false positive 高低嗎？	不會。FP 更取決於 rule quality、threshold、baseline、dataset、environment context、exception configuration；題目沒有證據支持換 vendor。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。現行官方路徑：L1 Self-Assessment、L2 Third-party assurance（Certification／Attestation／C-STAR）；L3 Continuous 屬舊資料描述（legacy）。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
@@ -595,6 +611,11 @@ Data Subject 是誰？	個資所描述的自然人（natural person whom persona
 Regulator／Supervisory Authority 做什麼？	監督、調查、執法、要求 compliance。
 Regulator 與 Controller 怎麼分？	Regulator 監督與執法；Controller 決定 purposes + means（WHY + HOW）。監管 processing 不代表是 Controller。
 Auditor 與 Regulator 怎麼分？	Auditor 做 independent assessment（evidence／controls／conformity）；Regulator 有 legal authority 與 enforcement。Auditor 不因發現問題就自動擁有 governmental enforcement authority。
+Internet protocols／RFC 由哪個組織制定？	IETF（Internet Engineering Task Force）：TLS、HTTP、QUIC、BGP、IPv6 等 RFC。不是 ISO/IEC。
+IANA 做什麼？與 IETF 怎麼分？	IANA（Internet Assigned Numbers Authority）管 protocol parameter registries、port numbers、DNS-related registries、Internet number coordination。IETF defines；IANA records／coordinates parameters。
+IEEE 最典型的 trigger？	802.x LAN／MAN 標準：802.3 Ethernet、802.11 Wi-Fi、802.1X。
+ISO/IEC 最典型的 trigger？	Broad international standardization：ISO/IEC 27001／27002／27017／27018、15408 等；不是專門制定 Internet protocol 的組織。
+NIST 最典型的 trigger？	US federal standards／guidance：SP 800-series（如 800-53、800-63）、NIST CSF、FIPS。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）
