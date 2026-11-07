@@ -28,12 +28,12 @@ simulate-test/
 
 | Domain | 權重 | 檔案 | 主要內容 |
 |---|---:|---|---|
-| **D1** Cloud Concepts, Architecture and Design | 17% | [`domain1-cloud-concepts/01-consolidated-lecture.md`](domain1-cloud-concepts/01-consolidated-lecture.md) | service／deployment model、cloud actors、interoperability／portability／lock-out、虛擬化與 hypervisor、Common Criteria 生態（ISO／CCRA／scheme、TOE／PP／ST）、cloud TCO、題目判讀模型（量詞／角色／抽象層級、Role／Property／Mechanism）、跨域 closed-book drill |
+| **D1** Cloud Concepts, Architecture and Design | 17% | [`domain1-cloud-concepts/01-consolidated-lecture.md`](domain1-cloud-concepts/01-consolidated-lecture.md) | service／deployment model、cloud actors、interoperability／portability／lock-out、虛擬化與 hypervisor、Common Criteria 生態（ISO／CCRA／scheme、TOE／PP／ST）、cloud TCO、題目判讀模型（量詞／角色／抽象層級、Role／Property／Mechanism、category-first）、跨域 closed-book drill |
 | **D2** Cloud Data Security | 20% | [`domain2-data-security/01-consolidated-lecture.md`](domain2-data-security/01-consolidated-lecture.md) | 資料生命週期、治理工具邊界（含 Policy／Classification／Metadata／Controls 四層）、儲存模型、加密層級與金鑰管理、資料保護技術、銷毀、密碼學與 PKI（含 ECC）、TPI／SoD／Split Knowledge、archiving、PCI DSS |
-| **D3** Cloud Platform & Infrastructure Security | 17% | [`domain3-infrastructure/01-consolidated-lecture.md`](domain3-infrastructure/01-consolidated-lecture.md) | 機房設施與 Uptime Tier、實體存取分層、網路與儲存架構（含 isolation 精確模型、storage cluster coupling）、虛擬化與容器（含 sandbox vs process isolation、compute 資源、Secure KVM）、責任邊界、BC/DR、監控可視性 |
+| **D3** Cloud Platform & Infrastructure Security | 17% | [`domain3-infrastructure/01-consolidated-lecture.md`](domain3-infrastructure/01-consolidated-lecture.md) | 機房設施與 Uptime Tier、實體存取分層、網路與儲存架構（含 isolation 精確模型、TLS 五件事與 802.1X、storage cluster coupling）、虛擬化與容器（含 sandbox vs process isolation、compute 資源、Secure KVM）、責任邊界、BC/DR、監控可視性 |
 | **D4** Cloud Application Security | 16% | [`domain4-application/01-consolidated-lecture.md`](domain4-application/01-consolidated-lecture.md) | ISC2 最佳解邏輯、Secure SDLC、應用測試、SOAP/REST/API、身分與 federation（IdP vs RP／SP、Broker、Federation Authority）、雲端應用風險 |
-| **D5** Cloud Security Operations | 17% | [`domain5-operations/01-consolidated-lecture.md`](domain5-operations/01-consolidated-lecture.md) | 維運生命週期、baseline 與組態管理、patch management、maintenance mode、日誌與監控、incident、responsibility vs accountability、cloud sprawl |
-| **D6** Legal, Risk and Compliance | 13% | [`domain6-legal-compliance/01-consolidated-lecture.md`](domain6-legal-compliance/01-consolidated-lecture.md) | 法規與標準（含 ISO 27018:2025、CSA STAR 現行 L1／L2）、SOC 報告、OECD 原則、隱私角色（Controller = WHY + HOW、Regulator vs Auditor）與跨境傳輸、法律流程與鑑識、合約治理、IP、風險管理 |
+| **D5** Cloud Security Operations | 17% | [`domain5-operations/01-consolidated-lecture.md`](domain5-operations/01-consolidated-lecture.md) | 維運生命週期、baseline 與組態管理、patch management（running vs saved state、patched ≠ clean）、maintenance mode（alerting 範圍）、日誌與監控（DLP／SIEM baselining）、incident、responsibility vs accountability、cloud sprawl |
+| **D6** Legal, Risk and Compliance | 13% | [`domain6-legal-compliance/01-consolidated-lecture.md`](domain6-legal-compliance/01-consolidated-lecture.md) | 法規與標準（含 ISO 27018:2025、CSA STAR 現行 L1／L2、IETF／IANA／IEEE 標準組織辨識）、SOC 報告、OECD 原則、隱私角色（Controller = WHY + HOW、Regulator vs Auditor）與跨境傳輸、法律流程與鑑識、合約治理、IP、風險管理 |
 
 **域內補充檔：** [`domain3-infrastructure/02-airflow-diagrams.md`](domain3-infrastructure/02-airflow-diagrams.md) — 資料中心氣流的 Mermaid 圖解（server 氣流、cold／hot aisle 配置、錯誤配置、熱風回流後果鏈、完整機列配置）。文字版規則在 D3 §1.1。
 
@@ -85,7 +85,7 @@ simulate-test/
 
 ## Flash card
 
-`flash card/` 內閃卡已全部歸入六大 domain，共 604 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
+`flash card/` 內閃卡已全部歸入六大 domain，共 625 張。檔案清單、張數與匯入步驟見 [`flash card/00-KNOWT導入說明.md`](flash%20card/00-KNOWT%E5%B0%8E%E5%85%A5%E8%AA%AA%E6%98%8E.md)。
 
 `knowt-00-study-progress.tsv` 是**非 domain 知識卡**（學習進度、群組決議紀錄與錯題分類標籤），不計入任何 domain。
 
