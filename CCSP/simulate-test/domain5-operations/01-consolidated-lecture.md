@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 5 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation
+> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation、2026-11-06 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D5 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -26,6 +26,7 @@
 | 2026-10-23 兩日錯題修復講義與閃卡（內容已併入，原檔未封存） | §5 Baseline image vs vulnerability scan vs remediation、golden image 寫入保護 | §1.2、§2.6 |
 | 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：停業務不停管理、`new instances prevented` `[Q]` | §1.4、§2.7 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Outsourcing execution ≠ outsourcing accountability（交叉引用；完整內容在 D6 §1.4） | §1.7、§3 |
+| 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：哪些 alert 可 suppress `[Q/T]`、§3 DLP／SIEM false positive「等三週」`[Q]`、§5 Running vs saved state patching、canary、patched ≠ clean `[T/J]`、§6 `unviable`／VM sprawl vs hostile takeover `[J/Q]` | §1.3、§1.4、§1.5、§1.9、§2.8–§2.11、§3、§4、§5 Drill B |
 
 ---
 
@@ -189,6 +190,31 @@ Business/System Owner → operational risk / accountability
 
 > **考場句型：** 問「cloud auto-patching 的最大風險」→ 找 `snapshot / saved VM images won't take a patch`。
 
+#### Running state vs Saved state（來源：2026-11-06，`[T/J]` P0）
+
+```text
+Running VM                      Stopped VM／Dormant VM／Saved image／Old template
+→ patch agent runs              → patch agent not running
+→ patched                       → scheduled patch missed
+                                        ↓
+                                stale image boots → vulnerable workload returns
+```
+
+和 container 同理：`running container patched ≠ registry 中的 old image 自動變新`；`running VM patched ≠ old template／saved image automatically patched`。**Running state 和 saved artifact 必須分開治理。**
+
+| Risk | Mitigation |
+|---|---|
+| Patch regression／compatibility | **Canary／staged rollout** |
+| Dormant VM misses patch | Patch-on-boot／compliance scan |
+| Old template remains vulnerable | **Rebuild golden image** |
+| Region／data center inconsistency | Deployment verification |
+| Exploited before patch | IR／forensic validation／reimage |
+
+- **Canary VM 解決的是 patch regression**，不能解決 old image／template 仍是舊版。
+- **Patched ≠ clean：** 若 `T0 vulnerability exists → T1 attacker compromises VM → T2 patch applied`，漏洞已修，但 webshell、stolen credentials、persistence、attacker-created account 可能仍在。Patch management 與 incident response 是不同問題。
+
+> **口訣：Patch running workload ≠ patch source image；Patched ≠ clean。**
+
 ### 1.4 Maintenance Mode 與高可用
 
 **維護模式心智模型：**
@@ -228,6 +254,22 @@ Stop / evacuate normal production workloads
 
 > **最短模型：停業務，不停管理。**
 
+#### Alerting 不應「全部停」（來源：2026-11-06，`[Q/T]`）
+
+題目 `During maintenance mode for a given node, which condition is NOT accurate?`，四選一最明顯錯的是 **Admin access prevented**；但 `Alerting mechanisms are suspended` 若照字面理解成「所有告警停止」也不合理，且題目範圍是 `for a given node`，不是整個 environment：
+
+```text
+Maintenance Node
+├─ Expected operational alerts（node unavailable、service stopped、reboot expected）
+│      → 可 suppress / mute
+├─ Security alerts（suspicious login、malware、privilege escalation、anomalous outbound）
+│      → 應繼續
+└─ Audit logs（privileged activity 更應記錄）
+       → 應繼續
+```
+
+> **要背：Authorized admin access remains；audit remains；expected alerts may be suppressed。** 不要背「Maintenance mode = alerting suspended」。
+
 #### High Availability（`by-test/11` D5 §7）
 
 HA 關注的是 **service remains available despite failures**，常見手段：redundancy、replication、clustering、failover、load balancing。
@@ -241,9 +283,23 @@ BC/DR 的完整指標與 4R 流程見 [Domain 3 §1.6](../domain3-infrastructure
 | 主題 | 規則 |
 |---|---|
 | **日誌關聯的第一先決條件** | **Clock synchronization（NTP）**——不是 RAM、磁碟空間或 SIEM 品牌。沒有一致時間戳，correlation 沒有意義 |
-| **SIEM／DLP 調校** | 需要 tuning／learning period，初期 false positive 高是正常現象 |
+| **SIEM／DLP 調校** | 需要 tuning／learning period，初期 false positive 高是正常現象；流程與「等三週」題見下方 |
 | **Egress monitoring 與 classification** | Egress monitoring 依賴 classification／labeling 才知道哪些資料不該外流；classification 從 Create 階段開始 |
 | **加密對監控的影響** | 見 [Domain 3 §1.7](../domain3-infrastructure/01-consolidated-lecture.md) |
+
+#### DLP／SIEM 新上線大量 false positives：baseline + tuning（來源：2026-11-06，`[Q]` 低）
+
+```text
+Collect representative data
+→ Establish baseline
+→ Identify false-positive patterns
+→ Tune（thresholds、policies、DLP rules、exclusions、allowlists、correlation）
+→ Measure FP／FN
+→ Evaluate effectiveness
+```
+
+- 沒有證據顯示 `CSP native → false positives` 或 `third party → fewer false positives`；FP 高低更取決於 rule quality、threshold、baseline、dataset、environment context、exception configuration。
+- 題庫答案 `Wait three weeks` 應翻譯成：**一週資料不足以做 final product／migration decision——allow sufficient baselining and tuning time before judging effectiveness**。不要背「一定要等 3 週」。
 
 #### Synthetic Monitoring vs RUM（`by-test/11` D5 §3）
 
@@ -469,6 +525,25 @@ Discover（找出全部）→ Attribute（找到 owner）→ Secure（patch／�
 
 > **出題角度：** 題目問「降低 VM sprawl 的**最佳**控制」→ 優先選 **lifecycle management／asset inventory 與 provisioning policy** 這類治理控制；「多買監控工具」「直接刪除所有閒置 VM」都不是完整答案。與 snapshot／dormant VM 收不到 patch 的盲點見 [Domain 3 §1.4](../domain3-infrastructure/01-consolidated-lecture.md)。
 
+#### `unviable`：VM sprawl 是 cloud environment management risk（來源：2026-11-06，`[J/Q]`）
+
+```text
+self-service provisioning
+→ many VMs
+→ no owner / no lifecycle
+→ cost ↑、attack surface ↑、management complexity ↑
+→ cloud environment becomes economically / operationally unviable
+```
+
+`unviable` = unable to work as intended, succeed, or survive；hostile takeover 也可能讓組織無法存續，但它是 **corporate governance／business ownership event**，不是 cloud operational management risk：
+
+```text
+Cloud environment       → VM sprawl
+Corporation／ownership  → hostile takeover
+```
+
+> 原題 `unviable` 太寬；若改成 `Which cloud-specific operational management risk can make a cloud deployment economically unsustainable?`，VM sprawl 就很明確。考場原則：**不要選最嚴重的，選最符合題目 category 的**（見 [Domain 1 §1.10](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+
 ### 1.10 TLS 的維運面
 
 ```text
@@ -518,6 +593,30 @@ Redundancy = 可用性 / 容錯
 ### 2.7 Maintenance mode：`Generation of new instances is prevented`（2026-10-26 錯題，`[Q]` 中度降權）
 
 題庫答案措辭太絕對；真正意義是避免正常 production workload placement，maintenance／system／admin workload 仍可能產生。題目措辭差，但**底層概念照學**：maintenance mode 停正常 workload、保留 admin access 與 logging。詳見 §1.4。
+
+### 2.8 Maintenance mode：Alerting suspended vs Admin access prevented（2026-11-06 錯題，`[Q/T]` P1）
+
+**錯題：** NOT accurate 的條件 → 題庫答案 **Admin access prevented**，誤選 Alerting mechanisms suspended。
+
+**判讀：** B 最明顯錯（沒有 admin access 就無法 patch／reboot／diagnose／replace／reconfigure）；C 照字面也不精確——只有 expected operational alerts 可 suppress，security alerts 與 audit 應繼續。四選一選最明顯錯的 B（見 §1.4）。
+
+### 2.9 DLP／SIEM 上線一週大量誤報 → Wait three weeks（2026-11-06 錯題，`[Q]` 低優先）
+
+**錯題：** 選項為全換 non-CSP 產品／全換 CSP 產品／wait three weeks／搬回 on-prem → 題庫答案 **Wait three weeks**，誤選換成 non-CSP security products。
+
+**判讀：** 真正專業的答案（baseline + tuning + 量測 FP／FN）不在選項中；四個選項裡「給足時間」最接近正確流程。換 vendor 沒有證據支持（見 §1.5）。
+
+### 2.10 Automated patching 的風險：Snapshot／saved VM images won't take a patch（2026-11-06 錯題，`[T/J]` P0）
+
+**錯題：** 題庫答案 **Snapshot／saved VM images won't take a patch**，誤選 patches aren't applied among all cloud data centers。
+
+**判讀：** 「跨 region patch 不一致」在真實環境完全可能（patch inconsistency／patch gap），推理成立；但題庫考的是更 canonical 的風險——**running state vs saved state**。區域不一致的 mitigation 是 deployment verification，舊 image 的 mitigation 是 rebuild golden image（見 §1.3）。
+
+### 2.11 讓 cloud environment `unviable` 的是 VM sprawl，不是 hostile takeover（2026-11-06 錯題，`[J/Q]` P1）
+
+**錯題：** 題庫答案 **VM sprawl**，誤選 Hostile takeover。
+
+**判讀：** 語意上 hostile takeover 也可能讓組織 unviable，但不屬題目的 category（cloud operational management risk）。題目 wording 過寬屬 `[Q]`；判讀原則屬 `[J]`：**Answer the category asked**（見 §1.9）。
 
 ### 2.5 BC/DR 模型（`by-test/03` Q10）
 
@@ -581,6 +680,13 @@ Redundancy = 可用性 / 容錯
 | 50 | **Maintenance mode：停業務，不停管理**——阻止正常 production placement，保留 admin access 與 logging。 |
 | 51 | Prevent normal production placement ≠ prohibit every possible new instance。 |
 | 52 | Outsourcing execution ≠ automatically outsourcing accountability（見 D6 §1.4）。 |
+| 53 | **Maintenance mode：authorized admin access remains；audit remains；只 suppress expected operational alerts**，security alerts 繼續。 |
+| 54 | DLP／SIEM 初期大量 FP → **collect representative data → baseline → tune → measure FP／FN → re-evaluate**；不是換 vendor 或搬回 on-prem。 |
+| 55 | 「Wait three weeks」= 一週資料不足以做 final effectiveness decision，不是固定天數（`[Q]`）。 |
+| 56 | **Patch running workload ≠ patch source image**；dormant VM、saved image、old template 要另外治理（patch-on-boot、rebuild golden image）。 |
+| 57 | Canary／staged rollout 解 **patch regression**，不解 stale image。 |
+| 58 | **Patched ≠ clean**：patch 修漏洞，不保證移除既有 persistence／backdoor／stolen credentials。 |
+| 59 | `unviable` cloud environment → **VM sprawl**；hostile takeover 屬 corporate governance，不在 cloud operational risk category。 |
 
 ---
 
@@ -612,6 +718,12 @@ Redundancy = 可用性 / 容錯
 | Patch | Interoperability 修正 | 軟體缺陷 vs 架構與標準 |
 | Live migration | Snapshot | 搬移執行中的 VM vs 保存時間點狀態 |
 | VM sprawl | 單純成本問題 | 安全、可視性、資料殘留與歸責問題 vs 只看帳單 |
+| Expected operational alerts | Security alerts／audit logs | maintenance 期間可 suppress vs 應繼續 |
+| Running VM patched | Saved image／template patched | patch agent 有跑 vs 不會自動更新，需 rebuild |
+| Canary rollout | Golden image rebuild | 解 patch regression vs 解 stale image |
+| Patched | Known-clean | 漏洞已修 vs 確認無 persistence（需 IR／forensic／reimage） |
+| DLP／SIEM tuning | 換產品 | 調 rule／threshold／baseline vs 沒證據支持的 vendor 替換 |
+| VM sprawl | Hostile takeover | cloud operational management risk vs corporate ownership event |
 | Baseline | Vulnerability scan | 已核准的安全狀態 vs 驗證目前狀態是否有弱點 |
 | Golden image 寫入保護 | 執行中 VM 唯讀 | 保護 master artifact vs 不合理地阻止正常運作 |
 | Decommission | 直接刪除 | 依 retention 與銷毀政策退役並更新 inventory vs 只把 VM 關掉或砍掉 |
@@ -661,6 +773,11 @@ Redundancy = 可用性 / 容錯
 21. 發現一批無 tag、無 owner 的 VM，處理順序是什麼？為什麼不能直接刪除？
 22. Baseline、vulnerability scan、remediation 各是什麼？
 23. Maintenance mode 真正阻止的是什麼？為什麼 `Generation of new instances is prevented` 太絕對？
+24. Maintenance mode 期間哪些 alert 可以 suppress？哪些必須保留？
+25. DLP／SIEM 剛上線大量 false positives，真正合理的做法是什麼？「Wait three weeks」要怎麼理解？
+26. 為什麼 running VM patched 不代表 saved image patched？canary 能解決嗎？
+27. 為什麼 patched 不等於 clean？
+28. `unviable` 題為什麼選 VM sprawl 而不是 hostile takeover？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
@@ -674,7 +791,7 @@ Redundancy = 可用性 / 容錯
 | 燃油基準：12 hours at N load | Raised floor 是 18" 還是 24" |
 | ASHRAE A1–A4 建議溫度 18–27°C（93°F 過高） | Halon「illegal」字眼 |
 | ITIL = IT service management | 醫院一定是 Tier IV |
-| NAS vs SAN | SIEM 一定要等三週 |
+| NAS vs SAN | SIEM 一定要等三週（只記「初期需 baseline + tuning」） |
 | SLE = AV × EF | 特定 HVAC airflow 用詞 |
 | 風險處置：avoid／mitigate／transfer／accept；residual risk 在容忍範圍內才接受，否則再處置（見 [Domain 6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)） | |
 | 集中日誌必須時鐘同步 | |
