@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 6 的內容，跨場次合併後依主題重組。
 > **考試權重：** 13%
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 > **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
@@ -41,6 +41,7 @@
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §2 ISO/IEC 27018:2025 定位、與 27001／27002／27017／27701 關係、「不是什麼」 | §1.2、§2.14 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §2 CSA STAR 現行 Level 1／2、Level 3 = legacy；STAR／Tier／EAL 三套數字 | §1.2、§2.15、§3、§4 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Regulator／Supervisory Authority、Regulator vs Auditor、Cloud outsourcing 與 accountability（復現：Controller WHY + HOW）；§6 TOE／PP／ST 併入 D1 §1.9 | §1.2、§1.4、§2.5、§3、§4 |
+| 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §7、§16.1 標準組織辨識：IETF／IANA／ISO-IEC／NIST／IEEE trigger `[K]` P0 | §1.2、§2.16、§3、§4 |
 
 ---
 
@@ -429,6 +430,26 @@ Public cloud
 | **ISO 27001 vs 27002** | `27001 = What an ISMS MUST satisfy（requirements，可認證）`；`27002 = HOW，控制實務指引`。工程類比：**27001 = interface／specification，27002 = implementation guidance** |
 | **ISO 27001 vs SOC 2** | `ISO 27001 → organization has an ISMS`（holistic security management program）；`SOC 2 → auditor reports on scoped service controls`（CSP／SaaS 控制是否有效運作 → SOC 2 Type 2） |
 | **SOC 2 vs SSAE** | `SSAE = auditor 遵循的 rules／standards`；`SOC 2 = 交付給 stakeholder 的 assurance examination／report`。工程類比接近 **compiler vs binary**，不是兩個競爭的 certification |
+
+#### ⭐ 標準組織辨識：IETF／IANA／ISO-IEC／NIST／IEEE（來源：2026-11-06，`[K]` P0）
+
+| Organization | 全名／定位 | Trigger |
+|---|---|---|
+| **IETF** | Internet Engineering Task Force | **Internet protocols／RFC**：TLS、HTTP、QUIC、BGP、IPv6 |
+| **IANA** | Internet Assigned Numbers Authority | **Numbers／protocol parameter registries**：port numbers、DNS-related registries、Internet number coordination |
+| **ISO／IEC** | Broad international standardization | ISO/IEC 27001／27002／27017／27018／15408——不是專門制定 Internet protocol 的組織 |
+| **NIST** | US federal standards／guidance | SP 800-53、SP 800-63、NIST CSF、FIPS |
+| **IEEE** | LAN／MAN standards | 802.3（Ethernet）、802.11（Wi-Fi）、**802.1X** |
+
+```text
+Internet protocol / RFC              → IETF
+Protocol parameters / registry       → IANA
+802.x                                → IEEE
+International IT/security standard   → ISO/IEC
+US federal guidance                  → NIST
+```
+
+> **口訣：IETF defines；IANA records／coordinates parameters。** 802.1X 在 TLS 架構中的位置見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)。
 
 #### Exam trigger words（Layer 3）
 
@@ -1514,6 +1535,12 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 
 **Level 3：** 舊資料描述為 continuous；以 2026 CSA 官方 assurance path 為主時只需牢記 L1／L2。**不要背「STAR 一定有 Level 1／2／3，Level 3 就是現行正式 continuous certification」**（見 §1.2）。
 
+### 2.16 Internet standards body 誤選 ISO/IEC（2026-11-06 錯題，`[K]` P0）
+
+**錯題：** 題目問制定 Internet standards 的組織 → 正解 **IETF**，誤選 ISO/IEC。
+
+**錯因：** ISO/IEC 是 broad international standardization（27001、15408 等），不是 Internet protocol 的制定者；Internet protocols／RFC（TLS、HTTP、BGP、IPv6）→ **IETF**。IANA 只管 registries／parameters，IEEE 管 802.x（見 §1.2）。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -1674,6 +1701,8 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | 144 | **Subject = 資料描述的自然人；Controller = WHY + HOW；Processor = on behalf；Regulator = enforce。** |
 | 145 | Auditor assesses；Regulator has enforcement authority。 |
 | 146 | Outsourcing execution ≠ automatically outsourcing accountability；責任仍看法律、角色、合約、service model 與 jurisdiction。 |
+| 147 | **IETF = Internet protocols／RFC；IANA = registries／parameters；IEEE = 802.x；ISO/IEC = international standards；NIST = US federal guidance。** |
+| 148 | IETF defines；IANA records／coordinates；看到 TLS／HTTP／BGP／IPv6 標準 → IETF，不是 ISO/IEC。 |
 
 ---
 
@@ -1697,6 +1726,9 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | ISO 27017 | ISO 27701 | 雲端安全控制 vs 隱私資訊管理系統（PIMS） |
 | NIST 文件取得成本 | Compliance 實作成本 | 公開免費 vs controls／people／assessment／monitoring 仍昂貴 |
 | ISO/IEC 15408 | CCRA／national scheme | CC 標準出版 vs 互認與實際發證 |
+| IETF | IANA | 制定 Internet protocol／RFC vs 記錄與協調 protocol parameters／numbers |
+| IETF | ISO/IEC | Internet protocols vs broad international standards（27001、15408） |
+| IEEE | IETF | 802.x LAN／WLAN（含 802.1X） vs Internet layer 以上 protocols（TLS、HTTP） |
 | SSAE 18 | GAAP | 審計 attestation 標準 vs 會計原則 |
 | CMM | CSA STAR | 流程成熟度 vs 雲端控制保證 |
 | Auditability | Regulated | 就緒狀態 vs 受監管 |
@@ -1918,3 +1950,4 @@ SAS 70     = legacy
 - STAR、Uptime Tier、Common Criteria 各是哪一套數字？
 - Regulator 與 Controller、Regulator 與 Auditor 各怎麼分？
 - 工作外包給 CSP 後，責任歸屬取決於哪些因素？Controller 通常仍需做什麼？
+- IETF、IANA、IEEE、ISO/IEC、NIST 各一句話？Internet protocol 標準由誰制定？
