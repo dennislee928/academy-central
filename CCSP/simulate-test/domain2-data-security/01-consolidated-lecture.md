@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 2 的內容，跨場次合併後依主題重組。
 > **考試權重：** 20%（六域最高）
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D2 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -40,6 +40,7 @@
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §4 TPI：forces collusion、單一 IAM 即可、TPI／SoD／Split Knowledge 口訣；§6 CSA Notorious Nine／data loss `[Q]` | §1.11、§2.18、§3、§4、§5 Drill H |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §1 Define scheme（lifecycle 前）vs Classify at Create | §1.1、§2.5、§3、§4、§5 Drill H |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §2 Policy／Classification／Metadata／Controls 四層模型與 `Proper _____` 題；§4 TPI／SoD／Split Knowledge 2 秒口訣與 TPI 實作清單（復現：Define vs Create、two IAM matrices） | §1.2、§1.11、§2.5、§2.19、§3、§4、§5 Drill I |
+| 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §9 X.509 欄位與 binding、§10.2 裸 DH 可遭 MITM（TLS stack 主體 → D3） | §1.7 |
 
 ---
 
@@ -619,6 +620,8 @@ Purpose = secure communication and trust using public key cryptography
 | **Self-signed** | Subject = Issuer，密碼學上可驗簽，但缺外部第三方保證 |
 | 憑證過期 | public key 數學上不會壞，但 PKI 驗證應拒絕（trust 與流程問題） |
 | 只偷到公開憑證 | **無法**冒充伺服器，關鍵秘密是 private key |
+| **X.509 典型欄位**（來源：2026-11-06） | Subject、Issuer、Public Key、Validity、Extensions、CA Signature——作用是 **bind identity to public key**（`example.com → public key → trusted CA signature`） |
+| **裸 DH／ECDHE 能證明身分嗎？**（來源：2026-11-06） | **不能**，`Alice → Mallory → Bob` 可遭 MITM；TLS 用 certificate／signature 把 key exchange 綁到 authenticated identity。TLS 各元件分工見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md) |
 
 **ECC：** Elliptic Curve Cryptography，以較小金鑰提供與傳統公鑰密碼相當的安全強度。
 

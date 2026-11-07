@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -35,6 +35,7 @@
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.1–§1.3 Process isolation 定義、「不是什麼」與實作層次；§3 Secure KVM 與 TPM（§1.4 判讀題 → D4） | §1.4 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §3 Uptime Tier 決策模型、§4 小型 surgical center 自建 DC `[Q]`、§6 Compute = CPU + RAM、§8 Loosely vs tightly coupled storage cluster `[Q]` | §1.1、§1.3、§1.4、§2.16、§2.17 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §3 Sandbox vs Process Isolation、design-time vs runtime；§5 Secure KVM 定義與 TPM 混淆（復現）、Secure KVM vs IP KVM（閃卡 30） | §1.4、§3、§4 |
+| 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §8–§14 TLS stack：X.509／(EC)DHE／HKDF／AES-GCM・ChaCha20、802.1X 與 EAP-TLS 層級、TLS 題 `[T/Q]` | §1.3、§2.18、§3、§4 |
 
 ---
 
@@ -382,6 +383,53 @@ Internet → WAF / FW → DMZ → App subnet → DB subnet
 三者組合更自然描述的是 **secure／protected communications**，不是單純 isolation（題庫例見 §2.15）。
 
 > **口訣：Isolation 看 boundary；TLS／IPsec 看 channel；DNSSEC 看 DNS integrity／authenticity。**
+
+#### TLS stack：五件事一次分清（來源：2026-11-06，`[T]` P0）
+
+```text
+            TLS Connection
+                  │
+      ┌───────────┴───────────┐
+ Authentication            Key Agreement
+ X.509 Certificate          (EC)DHE
+ CertificateVerify             │
+「對方是誰？」            「共享 secret 怎麼來？」
+      └────────────┬──────────┘
+                   ↓
+                 HKDF
+                   ↓
+             Traffic Keys
+                   ↓
+         AES-GCM / ChaCha20-Poly1305
+```
+
+| 技術 | 解決什麼？ |
+|---|---|
+| **X.509** | 對方是誰？（identity ↔ public key binding，見 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)） |
+| **(EC)DHE** | 怎麼產生共同 secret？（E = Elliptic Curve、E = **Ephemeral** → forward secrecy；裸 DH 不驗證身分，可遭 MITM） |
+| **HKDF** | 怎麼從 keying material 派生 traffic keys？ |
+| **AES-GCM／ChaCha20-Poly1305** | 怎麼保護 application data？（symmetric bulk traffic encryption） |
+| **802.1X** | 能不能接入 network？ |
+
+**IEEE 802.1X = port-based Network Access Control**，不是 TLS session 的建立機制：
+
+```text
+Supplicant → Authenticator（Switch / AP）→ Authentication Server（RADIUS）
+```
+
+容易混的原因是 EAP-TLS 可以跑在 802.1X 裡：
+
+```text
+802.1X
+└── EAP
+    └── EAP-TLS
+        └── TLS
+            └── X.509 certificate
+```
+
+> **802.1X ≠ TLS**；802.1X 可承載使用 TLS 的 EAP authentication。Federation 層的 SAML／OAuth 2.0／OIDC 分工見 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md)。
+
+> **口訣：X.509 authenticates；ECDHE agrees keys；HKDF derives；AES-GCM encrypts；802.1X admits。**
 
 ### 1.4 虛擬化、容器與管理平面
 
@@ -1023,6 +1071,16 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 
 題庫答案 `performance and capacity in each node`（相對於 physical backplane）可以學；但 explanation 若暗示「node count 不影響 performance／capacity」則錯——node count 是 aggregate scale 的重要變數之一。背 scale-out 模型，不背錯誤 explanation（見 §1.3）。
 
+### 2.18 TLS uses ______ to authenticate a connection and create a shared secret（2026-11-06 錯題，`[T/Q]` P0）
+
+**錯題：** 題庫答案 **X.509 certificates**，誤選 802.1X。
+
+**錯因：** 802.1X 回答「能不能接入 network」（port-based NAC），不是 TLS session 怎麼建立；EAP-TLS 可在 802.1X 內使用 TLS，造成混淆。
+
+**題庫 wording 過度簡化：** 精確版本是 `Certificate → authenticate server`、`ECDHE → establish shared keying material`、`HKDF → derive traffic keys`。**不要背「X.509 直接產生 TLS shared secret」。**
+
+**考場：** TLS + certificate authentication → **X.509**；工程上保留 **X.509 authenticates；ECDHE agrees keys**（見 §1.3）。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -1126,6 +1184,9 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 95 | **Sandbox = restricted environment；Process isolation = isolation mechanism**；後者只是建立前者的機制之一。 |
 | 96 | Process isolation：**design-time 決定、runtime 實施**。 |
 | 97 | **Secure KVM = peripheral isolation，not TPM**；IP KVM 的重點是 remote administration。 |
+| 98 | **X.509 authenticates；(EC)DHE agrees keys；HKDF derives traffic keys；AES-GCM／ChaCha20 encrypts bulk traffic。** |
+| 99 | **802.1X = port-based Network Access Control**（Supplicant → Authenticator → RADIUS）；802.1X ≠ TLS，EAP-TLS 可在其中使用 TLS。 |
+| 100 | 裸 DH／ECDHE 不驗證身分，可遭 MITM；TLS 用 certificate／signature 綁定 authenticated identity。 |
 
 ---
 
@@ -1181,6 +1242,9 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | Loosely coupled cluster | Tightly coupled cluster | 獨立 node scale-out vs 共享 controller／backplane bottleneck |
 | Sandbox | Process isolation | 受控執行環境／security boundary vs 可用來建立該邊界的機制之一 |
 | Secure KVM | IP KVM | cross-domain isolation vs remote administration |
+| X.509 | (EC)DHE | authentication／identity–public key binding vs shared-secret key agreement |
+| 802.1X | TLS | 能否接入 network（port-based NAC）vs 傳輸通道保護；EAP-TLS 是兩者交會點 |
+| HKDF | AES-GCM／ChaCha20 | 派生 traffic keys vs 用 traffic keys 加密資料 |
 
 ---
 
@@ -1248,3 +1312,5 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - Secure KVM 與 IP KVM 的重點各是什麼？
 - Tier III 最重要的關鍵詞？Healthcare 是否自動對應某個 Tier？
 - Loose vs tight coupling 最大的概念差別？node count 會不會影響 aggregate capacity？
+- TLS 中 X.509、ECDHE、HKDF、AES-GCM 各負責什麼？
+- 802.1X 是什麼？和 EAP-TLS 是什麼關係？
