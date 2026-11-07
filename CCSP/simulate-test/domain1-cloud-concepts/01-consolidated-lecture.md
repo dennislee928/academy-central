@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 1 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation
+> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
 > **維護：** 新增測驗講義後，將該檔的 D1 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -29,6 +29,7 @@
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §5 security controls vs cloud TCO；§1 process isolation → D3／D4、§2 ISO 27018 → D6、§3 Secure KVM → D3、§4 TPI → D2、§6 Notorious Nine → D2 | §2.7、§2.14 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §5 CEO reduced cost 再現、§10.6 `best / biggest / most` 警戒、§6 compute 抽象層級（概念 → D3）；§1 → D2、§2 → D6、§3／§4／§8 → D3、§7 → D4 | §1.10、§2.7、§2.9 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §0 共同錯誤模式、§6 TOE／PP／ST、§8 跨主題判斷表、§10 closed-book drill、§11 考場口訣、使用優先度 | §1.9、§1.10、§3、§4、§5 Drill D |
+| 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §4 SaaS vs PaaS：fully operational ≠ fully controllable、§6.3／§16.5 category-first 判讀；§2／§3／§5／§6 → D5、§7 → D6、§8–§14 → D3 | §1.1、§1.10、§2.15、§3、§4 |
 
 ---
 
@@ -49,6 +50,27 @@ IaaS = 在租來的基礎架構上管 OS／application／data
 ```
 
 **PaaS 儲存型態：** PaaS 常使用 **provider 管理、customer application 存取的 database storage**（來源：`by-test/03` Q18）。
+
+#### Fully operational ≠ Fully controllable（來源：2026-11-06，`[K]`）
+
+```text
+SaaS = finished application            （Salesforce、Microsoft 365、Google Workspace：login → configure users → use）
+PaaS = finished application platform   （customer 仍管 application code／configuration／security、data、IAM）
+IaaS = finished infrastructure         （customer 管 OS、runtime、application、data）
+```
+
+```text
+Least customer maintenance
+↑  SaaS
+│  PaaS
+↓  IaaS
+Most customer administration
+```
+
+- `fully operational environment with very little maintenance or administration` → **SaaS**（ready-to-use application）。
+- `maximum control over OS／runtime／network` → **IaaS**。
+
+> **口訣：very little administration + fully operational → SaaS；maximum control → IaaS。**
 
 ### 1.2 Deployment Model
 
@@ -501,6 +523,12 @@ Federation、classification、TPI、sandbox 這批 recurring 錯題，多半不�
 
 > **總口訣：先判斷題目問 Role、Property、Mechanism，還是 Implementation。**
 
+#### Category-first：選最符合題目 scope 的答案，不選聽起來最嚴重的（來源：2026-11-06，`[J]`）
+
+Best-answer 題不要先問「哪個最嚴重？」，先問「**哪個最符合題目指定的 category／scope？**」。例：`unviable` 題中 hostile takeover 也可能讓組織無法存續，但它屬 corporate governance／ownership event；題目真正問的是 **cloud environment management risk** → VM sprawl（見 [Domain 5 §2.11](../domain5-operations/01-consolidated-lecture.md)）。
+
+> **口訣：Answer the category asked, not the option that merely sounds most catastrophic.**
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -703,6 +731,12 @@ Cloud base price
 
 > **一句話規則：** **Cloud list price ≠ Cloud TCO。**
 
+### 2.15 Fully operational + minimal administration 誤選 PaaS（2026-11-06 錯題，`[K]` P0）
+
+**錯題：** `fully operational environment with very little maintenance or administration necessary` → 正解 **SaaS**，誤選 PaaS。
+
+**錯因：** PaaS 仍需 customer 管 application code、configuration、application security、data、IAM；「fully operational」指的是 ready-to-use application，不是「平台已就緒」。注意 `fully operational ≠ fully controllable`——要最大控制權時反而偏 IaaS（見 §1.1）。
+
 ---
 
 ## 3. 一句話規則表 / One-liner Rules
@@ -756,6 +790,9 @@ Cloud base price
 | 45 | **PP = 產品類別的通用 requirements；ST = 特定 TOE 的 security claim；TOE = 被評估的範圍。** |
 | 46 | Higher EAL = greater assurance／evaluation rigor，不等於 security features 更多。 |
 | 47 | 先判斷題目問 **Role、Property、Mechanism 還是 Implementation**，再看選項。 |
+| 48 | **SaaS = finished application；PaaS = finished application platform；IaaS = finished infrastructure。** |
+| 49 | `fully operational + very little administration` → **SaaS**；`maximum OS／runtime control` → **IaaS**；fully operational ≠ fully controllable。 |
+| 50 | Best-answer 題先 obey **category／scope**，不選只是聽起來最嚴重的選項。 |
 
 ---
 
@@ -790,6 +827,8 @@ Cloud base price
 | Automation（provider trait） | MTTR／MTBF | 雲端營運模式核心 vs reliability metric |
 | Cloud list price | Cloud TCO | 牌價 vs 加上 security／compliance／operations overhead 的實際總成本 |
 | 資源構成（CPU + RAM） | 實作形式（virtual／physical） | 問「由什麼組成」vs 問「如何實現」 |
+| Fully operational（SaaS） | Fully controllable（IaaS） | 現成可用、管理最少 vs OS／runtime／network 控制最多 |
+| 題目 category 內的答案 | 最嚴重的選項 | 符合 scope（如 cloud operational risk）vs 範圍外但聽起來災難性（如 hostile takeover） |
 
 ### 決策流程
 
@@ -901,3 +940,5 @@ Controller? Processor? Regulator?
 - `best / biggest / most` 題資訊不足時，該如何處理？
 - TOE、PP、ST 各是什麼？PP 與 ST 最短怎麼分？
 - Property 與 Implementation 差在哪？舉 TPI 的例子。
+- SaaS vs PaaS 最簡單的區別？`fully operational + very little administration` 最可能是哪個 service model？
+- Best-answer 題遇到「最嚴重」但不符合 category 的選項怎麼處理？
