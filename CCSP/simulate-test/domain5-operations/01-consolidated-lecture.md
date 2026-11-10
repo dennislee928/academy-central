@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 5 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation、2026-11-06 錯題講義
+> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
 > **維護：** 新增測驗講義後，將該檔的 D5 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -27,6 +27,7 @@
 | 2026-10-26 今日錯題講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：停業務不停管理、`new instances prevented` `[Q]` | §1.4、§2.7 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Outsourcing execution ≠ outsourcing accountability（交叉引用；完整內容在 D6 §1.4） | §1.7、§3 |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：哪些 alert 可 suppress `[Q/T]`、§3 DLP／SIEM false positive「等三週」`[Q]`、§5 Running vs saved state patching、canary、patched ≠ clean `[T/J]`、§6 `unviable`／VM sprawl vs hostile takeover `[J/Q]` | §1.3、§1.4、§1.5、§1.9、§2.8–§2.11、§3、§4、§5 Drill B |
+| 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §25 0-RTT mitigation（維運面）；協定本體 → D3、HTTP Early Data → D4 | §1.10、§3、Drill B |
 
 ---
 
@@ -556,6 +557,22 @@ TLS
 
 **TLS session key = symmetric cryptography；TLS trust 通常來自 PKI certificates。** 密碼學原理見 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)，協定與傳輸面見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)。
 
+#### 0-RTT 的維運 mitigation（來源：2026-11-10，`[T]`）
+
+ISC2 2026-08 outline 把 TLS 放在 Domain 5.2 secure network configuration。啟用 TLS 1.3 0-RTT（Early Data）時，維運端可採：
+
+```text
+Disable 0-RTT（最直接）
+Reject unsafe requests／回 425 Too Early
+Replay cache／single-use ticket
+Ticket age validation
+Shared anti-replay state（多台 server／CDN 節點）
+Limit early-data size
+Only allow replay-safe operations
+```
+
+> **不要假設 anti-replay mechanism 能消除所有 replay risk。** 0-RTT 的 replay 與 no-forward-secrecy 原理見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)，HTTP safe method／425 見 [Domain 4 §1.9](../domain4-application/01-consolidated-lecture.md)。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -687,6 +704,7 @@ Redundancy = 可用性 / 容錯
 | 57 | Canary／staged rollout 解 **patch regression**，不解 stale image。 |
 | 58 | **Patched ≠ clean**：patch 修漏洞，不保證移除既有 persistence／backdoor／stolen credentials。 |
 | 59 | `unviable` cloud environment → **VM sprawl**；hostile takeover 屬 corporate governance，不在 cloud operational risk category。 |
+| 60 | 啟用 TLS 1.3 0-RTT 時：disable、只允許 replay-safe operations、replay cache／single-use ticket、ticket age validation；**anti-replay 無法消除所有 replay risk**。 |
 
 ---
 
@@ -778,6 +796,7 @@ Redundancy = 可用性 / 容錯
 26. 為什麼 running VM patched 不代表 saved image patched？canary 能解決嗎？
 27. 為什麼 patched 不等於 clean？
 28. `unviable` 題為什麼選 VM sprawl 而不是 hostile takeover？
+29. 啟用 TLS 1.3 0-RTT 的維運 mitigation 有哪些？為什麼 anti-replay 機制不能當成萬無一失？
 
 ### Drill C：責任邊界演練（15 分鐘）
 

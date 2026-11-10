@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 4 的內容，跨場次合併後依主題重組。
 > **考試權重：** 16%
-> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義、2026-11-05 Gap Remediation
+> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
 > **維護：** 新增測驗講義後，將該檔的 D4 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -26,6 +26,7 @@
 | 2026-10-31 今日講義與閃卡（內容已併入，原檔未封存） | §1.4 Secure software development 題為何選 process isolation（概念 → D3 §1.4） | §1.6、§2.15 |
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §7 IdP vs SP／RP、third-party federation 的 third party = IdP、NIST RP 用語 | §1.5、§2.6 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §1 Broker／Proxy 雙重角色、Federation Authority、2 秒 trigger；§3 Technical IDENTIFY 原則（復現：IdP vs RP／SP、process isolation 判讀） | §1.5、§2.15、§3、§4 |
+| 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §19–§24 HTTP Early Data、safe vs idempotent、425 Too Early、`Early-Data: 1`；協定本體 → D3、mitigation 維運 → D5 | §1.9、§3、§4、自我檢測 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -374,6 +375,25 @@ SaaS application             → 通常是 SP/RP
 
 > **最短模型：** Open Redirect = 驗證 destination。
 
+### 1.9 HTTP Early Data（TLS 1.3 0-RTT 的應用層面）（來源：2026-11-10，`[T]` P0）
+
+HTTP 走 TLS 1.3 0-RTT 時，request 可能在 TLS handshake 完成前就送出（RFC 8470 *Using Early Data in HTTP*）。協定本體見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)；application 必須考慮 **request 被 replay 的副作用**。
+
+| 類型 | 定義 | 例子 | 適合 early data？ |
+|---|---|---|---|
+| **Safe** | 理論上不改變 resource state | `GET`、`HEAD` | **最適合**（read-only） |
+| **Idempotent** | 做 N 次效果等同做一次 | `PUT`、`DELETE` | 仍是 state-changing，不優先 |
+| **State-changing** | 重做會產生實際副作用 | `POST /payment`、`POST /transfer`、`POST /create-user`、`DELETE /account` | **應避免** |
+
+> **Safe ≠ Idempotent。** 問「哪種 request 最適合 0-RTT」→ **safe／read-only**。
+
+- **`425 Too Early`**（RFC 8470）：server 不願冒 replay risk 處理這個 early-data request。Client 應**等 handshake 完成後再 retry**，不要再用 early data 重送。
+- **`Early-Data: 1` header**：intermediary／gateway（reverse proxy、CDN）告知 downstream origin，這個 request 可能來自 early data。語法細節不考；看到就聯想 **TLS 1.3 0-RTT／replay**。
+
+```text
+425 Too Early → HTTP Early Data → 0-RTT → replay risk
+```
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -580,6 +600,8 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | 55 | **Broker／Proxy = RP upstream，IdP downstream。** |
 | 56 | **Federation Authority 管 trust；Federation Proxy 中介 protocol。** |
 | 57 | Technical IDENTIFY 題 → 選最精確 defined mechanism。 |
+| 58 | **哪種 request 最適合 0-RTT early data？→ safe／read-only（GET、HEAD）**；payment、transfer 等 state-changing 不適合，idempotent 仍是 state-changing。 |
+| 59 | **HTTP 425 Too Early = server 拒絕處理可能被 replay 的 early-data request**；client 等 handshake 完成後再 retry。 |
 
 ---
 
@@ -615,6 +637,7 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | Masking | Tokenization | 相似但不真實的資料集 vs vault 映射替代值 |
 | Federation Authority | Federation Proxy／Broker | 建立與管理 trust、vet members vs 中介 federation protocol traffic |
 | SAML SP（federation role） | 一般「服務商」（commercial role） | 接受 assertion 並提供 resource vs 商業上提供服務的公司 |
+| Safe method | Idempotent method | 不改變 resource state（GET／HEAD）vs 重複 N 次效果同一次但仍可能 state-changing（PUT／DELETE） |
 
 ---
 
@@ -669,3 +692,4 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 - Secure software development 題為什麼選 process isolation 而不是 enhancement mechanisms？
 - Broker／Proxy 在 upstream 與 downstream 各扮什麼角色？
 - Federation Authority 與 Federation Proxy 各管什麼？
+- Safe 與 idempotent HTTP method 差在哪？哪種 request 適合 0-RTT？425 Too Early 代表什麼、client 該怎麼 retry？

@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -36,6 +36,7 @@
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §3 Uptime Tier 決策模型、§4 小型 surgical center 自建 DC `[Q]`、§6 Compute = CPU + RAM、§8 Loosely vs tightly coupled storage cluster `[Q]` | §1.1、§1.3、§1.4、§2.16、§2.17 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §3 Sandbox vs Process Isolation、design-time vs runtime；§5 Secure KVM 定義與 TPM 混淆（復現）、Secure KVM vs IP KVM（閃卡 30） | §1.4、§3、§4 |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §8–§14 TLS stack：X.509／(EC)DHE／HKDF／AES-GCM・ChaCha20、802.1X 與 EAP-TLS 層級、TLS 題 `[T/Q]` | §1.3、§2.18、§3、§4 |
+| 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §0–§18 RTT、TLS 1.3 1-RTT、PSK／NewSessionTicket、0-RTT 流程、replay、no forward secrecy；§26–§38 QUIC／HTTP/3、TFO、False Start、0-RTT vs resumption／X.509／ECDHE；§40 traps、§41 範例題；§19–§25 HTTP Early Data → D4；§25 mitigation 維運面 → D5；§39 標準對照（IETF 已在 D6） | §1.3、§3、§4、自我檢測 |
 
 ---
 
@@ -430,6 +431,98 @@ Supplicant → Authenticator（Switch / AP）→ Authentication Server（RADIUS�
 > **802.1X ≠ TLS**；802.1X 可承載使用 TLS 的 EAP authentication。Federation 層的 SAML／OAuth 2.0／OIDC 分工見 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md)。
 
 > **口訣：X.509 authenticates；ECDHE agrees keys；HKDF derives；AES-GCM encrypts；802.1X admits。**
+
+#### TLS 1.3 0-RTT、Session Resumption 與 QUIC（來源：2026-11-10，`[T]` P0）
+
+> **版本註：** 依來源講義，2026 年 RFC 9846 取代 RFC 8446，協定版本仍是 TLS 1.3。舊書寫 RFC 8446 不算錯；考試通常不考 RFC 編號，只考 TLS 1.3 的概念。
+
+**先記 7 條：**
+
+```text
+TLS 1.3 normal handshake  → 1-RTT
+0-RTT                     → session resumption 時，handshake 完成前就送 early data
+0-RTT prerequisite        → PSK／previous session ticket（NewSessionTicket）
+0-RTT main benefit        → lower latency
+0-RTT main risk           → replay attack
+0-RTT early data          → no forward secrecy
+HTTP mitigation           → 只放 safe／replay-safe request；必要時回 425 Too Early
+```
+
+**RTT = Round-Trip Time。** 「0」不代表網路延遲為 0，而是 client **不必先等一個額外 round trip 就能送 application data**——是 handshake 與 application data 的排程概念。
+
+**流程：**
+
+```text
+FIRST CONNECTION
+Full TLS 1.3 handshake（1-RTT）
+  ├─ X.509 → authentication
+  ├─ ECDHE → key agreement（forward secrecy）
+  ├─ HKDF → derive keys
+  └─ AES-GCM／ChaCha20 → traffic protection
+Server → NewSessionTicket → client 保留 resumption PSK
+
+NEXT CONNECTION
+ClientHello + pre_shared_key + early_data + Application Data  ──→ Server accept／reject 0-RTT
+```
+
+- **PSK 來源：** external PSK，或先前 TLS session 的 session ticket（web／HTTPS 最常見的是 resumption PSK）。
+- **Session ticket ≠ plaintext encryption key**，它是 resumption protocol state 的一部分。
+- **0-RTT ⊂ session resumption：** resumption 是「沿用先前 state、降低 handshake 成本」；0-RTT 是 resumption 中「第一個 flight 就帶 early application data」的模式，兩者不是同義詞。
+- **TLS 1.3 安全改進：** 移除 static RSA key exchange、static DH 與非 AEAD cipher；只用 AEAD（AES-GCM、ChaCha20-Poly1305 = confidentiality + integrity）；以 HKDF 派生金鑰。
+
+**最大風險：Replay。** 攻擊者不必解密，只要擷取一筆合法的加密 early data（如 `POST /transfer amount=1000`）再重送，server 可能重複處理。
+
+> **Confidentiality ≠ Replay protection。** 0-RTT data 仍有加密與完整性，但跨 connection 沒有 1-RTT data 同等的 non-replay guarantee。
+
+**第二弱點：No forward secrecy。** Early data key 由 PSK-derived keying material 而來，送出時 fresh ECDHE 尚未完成，因此 early data 不具 ephemeral key exchange 的 forward secrecy。
+
+> 0-RTT 不是二元的「不安全」：它的 security properties 比 1-RTT 弱，**只能用在應用層可接受 replay 的情境**。HTTP 層的處理（safe method、425 Too Early、`Early-Data: 1`）見 [Domain 4 §1.9](../domain4-application/01-consolidated-lecture.md)；維運 mitigation 見 [Domain 5 §1.10](../domain5-operations/01-consolidated-lecture.md)。
+
+| Feature | 0-RTT | Normal TLS 1.3 1-RTT |
+|---|---|---|
+| Startup latency | 最低 | 低 |
+| 需要 prior state／PSK | 是 | 否 |
+| Handshake 完成前送 app data | 是 | 否 |
+| Replay guarantee | 弱 | 強 |
+| Forward secrecy | early data 沒有 | 正常 ECDHE data 有 |
+| 適合 state-changing request | 否 | 較適合 |
+
+**QUIC／HTTP/3：**
+
+```text
+HTTP/1.1 → TCP（+ TLS for HTTPS）
+HTTP/2   → TCP（+ TLS）
+HTTP/3   → QUIC（transport + 整合 TLS 1.3 cryptographic handshake）→ UDP
+```
+
+- **QUIC = UDP-based secure multiplexed transport**（RFC 9000）：connection-oriented semantics、multiplexed streams、低延遲建立、整合 TLS 1.3、network path migration。
+- **為何較低延遲：** TCP handshake 與 TLS handshake 分開；QUIC 將 transport 與 cryptographic handshake 整合。
+- **Head-of-line blocking：** HTTP/2 多個 stream 共用一條 TCP，掉包會卡住整條 ordered delivery；QUIC streams 在 transport 層獨立 multiplex → reduced cross-stream HOL blocking。
+- **Path migration：** 以 Connection ID 支援 Wi-Fi → 5G 切換；這是 QUIC 特性，**不是 0-RTT 本身**。
+- **QUIC 0-RTT** 也繼承 replay concern。
+
+**不要混：**
+
+| 技術 | 是什麼 | 與 TLS 0-RTT 的差別 |
+|---|---|---|
+| TCP Fast Open（TFO） | TCP 層 latency optimization | 不是 TLS early data |
+| TLS False Start | 部分 handshake 完成後提前送 app data | 0-RTT 在 first client flight 就送 |
+| X.509 | certificate-based authentication | 不產生 0-RTT secret；0-RTT 用 PSK-derived keys |
+| ECDHE | ephemeral key agreement → forward secrecy | early data 送出時 ECDHE 尚未完成 |
+| 802.1X | network access control | 與 0-RTT 無關 |
+
+**常見錯誤選項：**
+
+1. 「0-RTT removes encryption」→ 錯，early data 仍加密；弱點是 replay + no FS。
+2. 「0-RTT means zero network latency」→ 錯。
+3. 「Payment 用 0-RTT 因為比較快」→ 錯，payment 是 replay-sensitive state-changing operation。
+4. 「X.509 creates the 0-RTT shared secret」→ 錯，是 PSK-derived early traffic keys。
+5. 「ECDHE protects 0-RTT early data with forward secrecy」→ 錯。
+6. 「QUIC does not use TLS」→ 錯，QUIC integrates TLS 1.3 handshake。
+
+**學習深度：** P0 = 0-RTT／early data／lower latency／PSK／replay／no FS／425；P1 = X.509 vs ECDHE、HKDF、AEAD、QUIC、HTTP/3、safe vs idempotent、session ticket；P2（不必死磕）= False Start、TFO、packet layout、QUIC frame types、handshake bytes。
+
+> **口訣：0-RTT = early data + PSK；快，但可 replay、無 forward secrecy。**
 
 ### 1.4 虛擬化、容器與管理平面
 
@@ -1187,6 +1280,10 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 98 | **X.509 authenticates；(EC)DHE agrees keys；HKDF derives traffic keys；AES-GCM／ChaCha20 encrypts bulk traffic。** |
 | 99 | **802.1X = port-based Network Access Control**（Supplicant → Authenticator → RADIUS）；802.1X ≠ TLS，EAP-TLS 可在其中使用 TLS。 |
 | 100 | 裸 DH／ECDHE 不驗證身分，可遭 MITM；TLS 用 certificate／signature 綁定 authenticated identity。 |
+| 101 | **0-RTT = TLS 1.3 session resumption 時於 handshake 完成前送 early data**；前提是 PSK／previous session ticket，效益是 lower latency。 |
+| 102 | **What is the primary security concern with TLS 1.3 0-RTT? → Replay attack**；不是破解 AES、偷 X.509 private key 或必然 MITM。 |
+| 103 | **0-RTT early data 沒有 forward secrecy**（PSK-derived keys，fresh ECDHE 尚未完成）；0-RTT data 仍加密，confidentiality ≠ replay protection。 |
+| 104 | **HTTP/3 runs over QUIC；QUIC = UDP-based，integrates TLS 1.3 handshake**；path migration 是 QUIC 特性，不是 0-RTT。 |
 
 ---
 
@@ -1245,6 +1342,10 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | X.509 | (EC)DHE | authentication／identity–public key binding vs shared-secret key agreement |
 | 802.1X | TLS | 能否接入 network（port-based NAC）vs 傳輸通道保護；EAP-TLS 是兩者交會點 |
 | HKDF | AES-GCM／ChaCha20 | 派生 traffic keys vs 用 traffic keys 加密資料 |
+| 0-RTT | 1-RTT | handshake 完成前送 early data（需 PSK、可 replay、無 FS）vs 完成 handshake 後送（ECDHE FS、強 replay guarantee） |
+| 0-RTT | Session resumption | resumption 中 first flight 帶 early data 的模式 vs 沿用先前 state 降低 handshake 成本的總稱 |
+| TLS 0-RTT | TCP Fast Open／TLS False Start | TLS early data vs TCP 層 optimization／部分 handshake 完成後才提前送 |
+| Replay | MITM | 重送擷取到的合法訊息 vs 介入雙方通訊；0-RTT 經典風險是 replay |
 
 ---
 
@@ -1314,3 +1415,5 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - Loose vs tight coupling 最大的概念差別？node count 會不會影響 aggregate capacity？
 - TLS 中 X.509、ECDHE、HKDF、AES-GCM 各負責什麼？
 - 802.1X 是什麼？和 EAP-TLS 是什麼關係？
+- TLS 1.3 0-RTT 的前提、效益與兩大弱點？為什麼 payment API 不該用 0-RTT？
+- 0-RTT 和 session resumption 是什麼關係？QUIC、HTTP/3、TLS 1.3 的層級怎麼畫？
