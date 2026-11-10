@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 6 的內容，跨場次合併後依主題重組。
 > **考試權重：** 13%
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`09`、`10`、`by-test/learnzapp/02`、`04`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D6 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 > **速查表：** 法規、標準與框架的分區總表（含 Legacy／題庫陷阱表與 trigger word 索引）見 [`CCSP/domain6-legal-framework-reference.md`](../../domain6-legal-framework-reference.md)；「名稱 → 類別」的歸位地圖見 [`CCSP/domain6/Framework_Law_Standard_Map.md`](../../domain6/Framework_Law_Standard_Map.md)。
@@ -42,6 +42,7 @@
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §2 CSA STAR 現行 Level 1／2、Level 3 = legacy；STAR／Tier／EAL 三套數字 | §1.2、§2.15、§3、§4 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Regulator／Supervisory Authority、Regulator vs Auditor、Cloud outsourcing 與 accountability（復現：Controller WHY + HOW）；§6 TOE／PP／ST 併入 D1 §1.9 | §1.2、§1.4、§2.5、§3、§4 |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §7、§16.1 標準組織辨識：IETF／IANA／ISO-IEC／NIST／IEEE trigger `[K]` P0 | §1.2、§2.16、§3、§4 |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §41–§50 AI privacy、controller vs processor、explainability、automated decision risk、AI vendor risk、cross-border／sovereignty、AI eDiscovery、NIST AI RMF、NIST AI 600-1、CSA AICM；§51 Scenario G、§53 Trap 5、§55 D6 三句；總覽 → D1 §1.11 | §1.10、§3、§4、自我檢測 |
 
 ---
 
@@ -1431,6 +1432,58 @@ BIA           回答：What matters most?
 
 > BIA 的完整輸出（Criticality／Impact／Dependencies／Recovery Priority）與「BIA informs BC/DR、Secure Acquisition 不是 BIA output」見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)。
 
+### 1.10 AI 的法律、風險與合規（來源：2026-11-10 AI Additions Guideline，`[K]` P1）
+
+ISC2 對 D6 的 AI 說明強調 automated processing、explainability、GDPR／EU AI Act、cross-border data processing、vendor risk、ethical guidelines、eDiscovery／forensics。總覽見 [Domain 1 §1.11](../domain1-cloud-concepts/01-consolidated-lecture.md)。
+
+#### AI Privacy 與 Controller／Processor
+
+Prompt、RAG document、training data、chat history、telemetry 都可能含 PII——**送進 AI 不會讓 privacy obligation 消失**。
+
+```text
+Company sends customer PII to managed AI API
+Who determines purpose／means？ → Controller（通常仍是公司）
+Who processes on behalf？       → Processor（AI provider）
+```
+
+AI service 不改變 §1.4 的核心 privacy model。
+
+#### Explainability 與 Automated Decision Risk
+
+- **Explainability：** 能理解／說明 AI decision 的依據或過程，達到 business／legal requirements 的程度。**Explainability ≠ 必須公開所有 model weights。**
+- **Automated decision：** 用於 hiring、credit、insurance、healthcare、access control 時，bias、fairness、transparency、appeal、regulatory issue 風險更高。
+
+#### AI Vendor Risk
+
+評估項目：data retention、是否用 customer data 訓練、subprocessors、region／jurisdiction、breach notification、model／data ownership、right to audit、security certification、incident handling、export／deletion（合約面見 §1.6）。
+
+> **Outsourcing AI ≠ outsourcing accountability.**
+
+#### Cross-Border／Sovereignty
+
+```text
+User in EU → API region A → model service region B → logging region C
+```
+
+要問：資料在哪處理？在哪儲存？subprocessors 是誰？適用哪個 jurisdiction？能否 delete／export？
+
+#### AI eDiscovery／Forensics
+
+AI record 包含 prompt、output、model version、tool calls、RAG context、logs、agent action，需維持 **chain of custody、retention、auditability**（§1.5；保留項目見 [Domain 5 §1.11](../domain5-operations/01-consolidated-lecture.md)）。
+
+#### AI 框架辨識（不背 control IDs）
+
+| 框架 | 一句話 |
+|---|---|
+| **NIST AI RMF** | AI risk governance framework；core functions **Govern、Map、Measure、Manage** |
+| **NIST AI 600-1 Generative AI Profile** | 將 AI RMF 套用到 GenAI-specific risks（AI RMF = general AI risk） |
+| **CSA AI Controls Matrix（AICM）** | cloud／AI controls framework，可能在 CSA context 出現 |
+| **OWASP Top 10 for LLM Applications** | LLM application 風險分類，見 [Domain 4 §1.10](../domain4-application/01-consolidated-lecture.md) |
+
+**Trap：** 「Managed AI provider 負責所有 privacy」錯，shared responsibility 與 controller accountability 仍在。
+
+> **D6 三句：** ① AI 不會讓 controller／accountability 消失 ② Cross-border processing、retention、vendor contract 要確認 ③ Explainability、privacy、regulation、vendor risk 都可能是考點。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -1703,6 +1756,9 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | 146 | Outsourcing execution ≠ automatically outsourcing accountability；責任仍看法律、角色、合約、service model 與 jurisdiction。 |
 | 147 | **IETF = Internet protocols／RFC；IANA = registries／parameters；IEEE = 802.x；ISO/IEC = international standards；NIST = US federal guidance。** |
 | 148 | IETF defines；IANA records／coordinates；看到 TLS／HTTP／BGP／IPv6 標準 → IETF，不是 ISO/IEC。 |
+| 149 | **AI 不會讓 controller／accountability 消失**：公司把 PII 送進 managed AI API，通常仍是 controller，AI provider 是 processor；outsourcing AI ≠ outsourcing accountability。 |
+| 150 | **NIST AI RMF = Govern／Map／Measure／Manage**；NIST AI 600-1 = Generative AI Profile；CSA AICM = AI controls matrix。 |
+| 151 | **Explainability ≠ 公開 model weights**；AI 用於 hiring／credit／insurance／healthcare 等 automated decision → bias、transparency、appeal、regulatory 風險升高。 |
 
 ---
 
@@ -1792,6 +1848,8 @@ document acquisition cost ≠ implementation cost ≠ compliance cost
 | Risk mitigation | Risk acceptance | 降低風險的動作 vs 決定保留殘餘風險 |
 | Regulator | Controller | 監督與執法 vs 決定 purposes + means |
 | Regulator | Auditor | legal authority + enforcement vs independent assessment |
+| NIST AI RMF | NIST AI 600-1 | general AI risk framework（Govern／Map／Measure／Manage）vs 套用到 generative AI 的 profile |
+| Explainability | Transparency of model weights | 說明 decision 依據到滿足法遵需求 vs 公開模型內部參數（不是必要條件） |
 
 > **註：** ISO 31000 與 NIST 800-37 都是風險管理框架，差別在前者偏原則與治理架構，後者是可執行的七步驟流程。
 
@@ -1951,3 +2009,5 @@ SAS 70     = legacy
 - Regulator 與 Controller、Regulator 與 Auditor 各怎麼分？
 - 工作外包給 CSP 後，責任歸屬取決於哪些因素？Controller 通常仍需做什麼？
 - IETF、IANA、IEEE、ISO/IEC、NIST 各一句話？Internet protocol 標準由誰制定？
+- 公司把客戶 PII 送進 managed AI API，controller 與 processor 各是誰？AI vendor assessment 要問哪些項目？
+- NIST AI RMF 四個 functions？AI RMF 與 NIST AI 600-1 差在哪？
