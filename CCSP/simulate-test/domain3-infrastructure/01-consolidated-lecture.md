@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 3 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
+> **來源：** `by-test/03`、`04`、`05`、`06`、`07`、`09`、`10`、`by-test/learnzapp/01`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D3 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -37,6 +37,7 @@
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §3 Sandbox vs Process Isolation、design-time vs runtime；§5 Secure KVM 定義與 TPM 混淆（復現）、Secure KVM vs IP KVM（閃卡 30） | §1.4、§3、§4 |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §8–§14 TLS stack：X.509／(EC)DHE／HKDF／AES-GCM・ChaCha20、802.1X 與 EAP-TLS 層級、TLS 題 `[T/Q]` | §1.3、§2.18、§3、§4 |
 | 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §0–§18 RTT、TLS 1.3 1-RTT、PSK／NewSessionTicket、0-RTT 流程、replay、no forward secrecy；§26–§38 QUIC／HTTP/3、TFO、False Start、0-RTT vs resumption／X.509／ECDHE；§40 traps、§41 範例題；§19–§25 HTTP Early Data → D4；§25 mitigation 維運面 → D5；§39 標準對照（IETF 已在 D6） | §1.3、§3、§4、自我檢測 |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §17–§21 AI infrastructure threat model、isolation、GPU／accelerator、HSM、micro-segmentation；§51 Scenario C、§55 D3 三句；總覽 → D1 §1.11 | §1.9、§3、§4、自我檢測 |
 
 ---
 
@@ -1071,6 +1072,38 @@ Egress monitoring difficulty
 
 > 相關：Defense in Depth 是**根本原則**，MFA 只是其中一項控制——見 `by-test/learnzapp/01` §2.5 與 [Domain 4 §1.5](../domain4-application/01-consolidated-lecture.md) 的 MFA factor 分類。風險處置（avoid／mitigate／transfer／accept）見 [Domain 6 §1.9](../domain6-legal-compliance/01-consolidated-lecture.md)。
 
+### 1.9 AI 基礎架構安全（來源：2026-11-10 AI Additions Guideline，`[K]` P1）
+
+ISC2 對 D3 的 AI 說明涵蓋 hardened infrastructure、virtualization／containerization、micro-segmentation、AI training clusters、HSM、DDoS／WAF、availability／resilience。總覽見 [Domain 1 §1.11](../domain1-cloud-concepts/01-consolidated-lecture.md)。
+
+**AI workload 仍是 cloud workload：** GPU node、container、Kubernetes、storage、network、IAM、management plane——原有 cloud controls（§1.3、§1.4）全部適用。
+
+#### Isolation
+
+需隔離的對象：Tenant A model／Tenant B model、training cluster／inference cluster、RAG database、management plane。
+
+做法：network segmentation、workload isolation、namespace／project isolation、least privilege、separate service accounts、management-plane protection。
+
+#### GPU／Accelerator
+
+不考 GPU architecture。要知道：GPU 是 **expensive／scarce compute resource**；resource exhaustion 會影響 availability 與 cost（對應 OWASP LLM「Unbounded Consumption」，見 [Domain 4 §1.10](../domain4-application/01-consolidated-lecture.md)）；multi-tenant isolation 與 training／inference 的 access boundary 都重要。
+
+#### HSM／Key Protection
+
+AI 環境仍有 data encryption keys、model signing keys、API secrets、TLS certs、service identities。
+
+> **HSM 保護 cryptographic key material 與 cryptographic operations，不是保護 model logic 本身。**
+
+#### Micro-Segmentation
+
+```text
+Internet → API Gateway → Inference Service → Vector DB → Sensitive Data Store
+```
+
+不允許 **LLM agent → unrestricted lateral movement**；要做 explicit network policy、limited egress、service identity、east-west controls。
+
+> **D3 三句：** ① AI workloads 仍需要 isolation、segmentation、IAM ② GPU／AI cluster 是 high-value compute resource ③ HSM 保護 cryptographic keys，不是「保護 AI 智慧本身」。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -1284,6 +1317,8 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 102 | **What is the primary security concern with TLS 1.3 0-RTT? → Replay attack**；不是破解 AES、偷 X.509 private key 或必然 MITM。 |
 | 103 | **0-RTT early data 沒有 forward secrecy**（PSK-derived keys，fresh ECDHE 尚未完成）；0-RTT data 仍加密，confidentiality ≠ replay protection。 |
 | 104 | **HTTP/3 runs over QUIC；QUIC = UDP-based，integrates TLS 1.3 handshake**；path migration 是 QUIC 特性，不是 0-RTT。 |
+| 105 | **AI workload 仍是 cloud workload**：training／inference cluster、RAG DB、management plane 都要 isolation、segmentation、separate service accounts。 |
+| 106 | **HSM 保護 keys 與 cryptographic operations（含 model signing keys），不是保護 model logic**；LLM agent 不得 unrestricted lateral movement → micro-segmentation + limited egress。 |
 
 ---
 
@@ -1346,6 +1381,7 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 0-RTT | Session resumption | resumption 中 first flight 帶 early data 的模式 vs 沿用先前 state 降低 handshake 成本的總稱 |
 | TLS 0-RTT | TCP Fast Open／TLS False Start | TLS early data vs TCP 層 optimization／部分 handshake 完成後才提前送 |
 | Replay | MITM | 重送擷取到的合法訊息 vs 介入雙方通訊；0-RTT 經典風險是 replay |
+| HSM 保護 model signing keys | HSM 保護 model 本身 | 金鑰與密碼運算 vs model weights／logic（另需 access control、signing、integrity check） |
 
 ---
 
@@ -1417,3 +1453,4 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - 802.1X 是什麼？和 EAP-TLS 是什麼關係？
 - TLS 1.3 0-RTT 的前提、效益與兩大弱點？為什麼 payment API 不該用 0-RTT？
 - 0-RTT 和 session resumption 是什麼關係？QUIC、HTTP/3、TLS 1.3 的層級怎麼畫？
+- AI training／inference 環境要隔離哪些對象？HSM 在 AI 環境保護什麼、不保護什麼？
