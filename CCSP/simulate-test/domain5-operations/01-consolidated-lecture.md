@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 5 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
+> **來源：** `by-test/03`、`04`、`07`、`09`、`10`、`by-test/learnzapp/02`、`03`、`04`、2026-10-23 兩日錯題修復、2026-10-26 錯題、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 0-RTT／TLS 1.3／QUIC 講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D5 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -28,6 +28,7 @@
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §7 Outsourcing execution ≠ outsourcing accountability（交叉引用；完整內容在 D6 §1.4） | §1.7、§3 |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：哪些 alert 可 suppress `[Q/T]`、§3 DLP／SIEM false positive「等三週」`[Q]`、§5 Running vs saved state patching、canary、patched ≠ clean `[T/J]`、§6 `unviable`／VM sprawl vs hostile takeover `[J/Q]` | §1.3、§1.4、§1.5、§1.9、§2.8–§2.11、§3、§4、§5 Drill B |
 | 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §25 0-RTT mitigation（維運面）；協定本體 → D3、HTTP Early Data → D4 | §1.10、§3、Drill B |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §35–§40 D5 5.6 AI in SOC、FP／FN、AI + SIEM 證據鏈、AI + SOAR、model drift、AI incident response；§51 Scenario A／F、§53 Trap 2、§55 D5 三句；總覽 → D1 §1.11 | §1.11、§3、§4、Drill B |
 
 ---
 
@@ -573,6 +574,56 @@ Only allow replay-safe operations
 
 > **不要假設 anti-replay mechanism 能消除所有 replay risk。** 0-RTT 的 replay 與 no-forward-secrecy 原理見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)，HTTP safe method／425 見 [Domain 4 §1.9](../domain4-application/01-consolidated-lecture.md)。
 
+### 1.11 AI 與 Intelligent Monitoring（outline 5.6；來源：2026-11-10 AI Additions Guideline，`[K]` P0／P1）
+
+新版 outline 5.6：intelligent monitoring of security controls，包含 AI。ISC2 說明另提 AI／ML threat hunting、multi-cloud event correlation、SIEM／SOAR、model drift、continuous monitoring。總覽見 [Domain 1 §1.11](../domain1-cloud-concepts/01-consolidated-lecture.md)。
+
+#### AI in SOC
+
+AI 可協助 alert correlation、anomaly detection、threat hunting、log summarization、incident enrichment、prioritization、response suggestion。
+
+> **AI conclusion ≠ verified incident。**
+
+#### False Positive／False Negative
+
+```text
+False Positive → benign 被判 malicious
+False Negative → malicious 被判 benign
+```
+
+不能只壓低 FP 而不管 FN；做法同 §1.5 的 DLP／SIEM 調校：**baseline → validate → measure → tune → monitor drift**。
+
+#### AI + SIEM：AI summary 不是 forensic evidence
+
+AI 可把大量 logs 關聯成 candidate incident，但證據鏈仍要 raw logs、timestamps、identity、immutable records、auditability。
+
+> **AI summary 不是 forensic evidence 的替代品**（chain of custody 見 [Domain 6 §1.5](../domain6-legal-compliance/01-consolidated-lecture.md)）。
+
+#### AI + SOAR
+
+| 適合自動化 | 高風險（需 deterministic control／approval） |
+|---|---|
+| enrich IP、gather context、tag event、建立低風險 ticket | delete data、revoke production credentials、isolate critical server、block entire region |
+
+#### Model Drift
+
+**Model drift = model behavior／performance 隨時間偏離原本 baseline。** 原因：input distribution changes、environment changes、data changes、attacker manipulation。
+
+> Unexpected drift 應觸發 investigation，但**不要把所有 drift 都當 attack**。
+
+#### AI Incident Response 要保留的紀錄
+
+```text
+Prompt／input、Model／version、System prompt／config、Retrieved context、Tool calls、
+Output、User identity、Service identity、Model endpoint、Timestamps
+```
+
+缺這些就難以 reconstruct incident。
+
+**Trap：** 「AI output 是 security evidence」錯，AI output 需要 validation。
+
+> **D5 三句：** ① AI SIEM／SOAR 可以協助，但不應無限制自動執行高風險動作 ② Model drift 要監控 ③ IR 必須保留 prompt／model／tool／context logs。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -705,6 +756,10 @@ Redundancy = 可用性 / 容錯
 | 58 | **Patched ≠ clean**：patch 修漏洞，不保證移除既有 persistence／backdoor／stolen credentials。 |
 | 59 | `unviable` cloud environment → **VM sprawl**；hostile takeover 屬 corporate governance，不在 cloud operational risk category。 |
 | 60 | 啟用 TLS 1.3 0-RTT 時：disable、只允許 replay-safe operations、replay cache／single-use ticket、ticket age validation；**anti-replay 無法消除所有 replay risk**。 |
+| 61 | **AI conclusion ≠ verified incident；AI summary ≠ forensic evidence**——證據鏈仍靠 raw logs、timestamps、identity、immutable records。 |
+| 62 | **AI SOAR 高風險動作（delete、revoke production credentials、isolate critical server）需 approval／deterministic control**；低風險 enrichment 可自動。 |
+| 63 | **Model drift = 行為／效能偏離 baseline** → 持續監控，unexpected drift 觸發調查，但 drift ≠ 必然 attack。 |
+| 64 | **AI IR 要保留 prompt、model version、system prompt／config、retrieved context、tool calls、output、identity、timestamps。** |
 
 ---
 
@@ -745,6 +800,8 @@ Redundancy = 可用性 / 容錯
 | Baseline | Vulnerability scan | 已核准的安全狀態 vs 驗證目前狀態是否有弱點 |
 | Golden image 寫入保護 | 執行中 VM 唯讀 | 保護 master artifact vs 不合理地阻止正常運作 |
 | Decommission | 直接刪除 | 依 retention 與銷毀政策退役並更新 inventory vs 只把 VM 關掉或砍掉 |
+| False Positive | False Negative | benign 被判 malicious（alert fatigue）vs malicious 被判 benign（漏報）；不能只壓 FP |
+| Model drift | Attack | 行為偏離 baseline 的現象（原因多元）vs 其中一種可能原因；drift 觸發調查而非直接定性 |
 
 > **Boundary learning 提示：** Audit vs Hardening、Personnel vs Physical Access 這兩組都屬「兩個答案技術上都合理，但題目在問分類」的典型。處理流程見 [README 的錯題複習與 argue 流程](../README.md)。
 
@@ -797,6 +854,8 @@ Redundancy = 可用性 / 容錯
 27. 為什麼 patched 不等於 clean？
 28. `unviable` 題為什麼選 VM sprawl 而不是 hostile takeover？
 29. 啟用 TLS 1.3 0-RTT 的維運 mitigation 有哪些？為什麼 anti-replay 機制不能當成萬無一失？
+30. AI SOC 工具標出異常行為，下一步是什麼？AI summary 能當 forensic evidence 嗎？
+31. Model drift 是什麼？AI incident response 必須保留哪些紀錄？
 
 ### Drill C：責任邊界演練（15 分鐘）
 
