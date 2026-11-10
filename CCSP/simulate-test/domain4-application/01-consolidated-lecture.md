@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 4 的內容，跨場次合併後依主題重組。
 > **考試權重：** 16%
-> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-10 0-RTT／TLS 1.3／QUIC 講義
+> **來源：** `by-test/04`、`07`、`08`、`09`、`by-test/learnzapp/01`、`daily/`、2026-10-23 兩日錯題修復、2026-10-27 D1 Fresh、2026-10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-10 0-RTT／TLS 1.3／QUIC 講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D4 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -27,6 +27,7 @@
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §7 IdP vs SP／RP、third-party federation 的 third party = IdP、NIST RP 用語 | §1.5、§2.6 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §1 Broker／Proxy 雙重角色、Federation Authority、2 秒 trigger；§3 Technical IDENTIFY 原則（復現：IdP vs RP／SP、process isolation 判讀） | §1.5、§2.15、§3、§4 |
 | 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §19–§24 HTTP Early Data、safe vs idempotent、425 Too Early、`Early-Data: 1`；協定本體 → D3、mitigation 維運 → D5 | §1.9、§3、§4、自我檢測 |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §22–§34 D4 4.1 OWASP LLM Top 10（2026）、prompt injection、sensitive information disclosure、excessive agency、supply chain、poisoning、unbounded consumption、misinformation、hidden context exposure、vector／embedding、improper output handling、AI SDLC；§51 Scenario C／D／E、§53 Trap 3、§55 D4 三句；總覽 → D1 §1.11 | §1.10、§3、§4、自我檢測 |
 
 > **交叉引用：** Data masking／tokenization／PCI DSS 的完整整理見 [Domain 2 §1.5、§1.9](../domain2-data-security/01-consolidated-lecture.md)（多份 D4 drill 錯題落在該邊界）。
 
@@ -394,6 +395,49 @@ HTTP 走 TLS 1.3 0-RTT 時，request 可能在 TLS handshake 完成前就送出�
 425 Too Early → HTTP Early Data → 0-RTT → replay risk
 ```
 
+### 1.10 OWASP Top 10 for LLM Applications 與 AI SDLC（outline 4.1；來源：2026-11-10 AI Additions Guideline，`[K]` P0）
+
+新版 outline 4.1 明列 **OWASP Top 10 for Large Language Model Applications**，是最直接的 AI application-security 考點。總覽見 [Domain 1 §1.11](../domain1-cloud-concepts/01-consolidated-lecture.md)。不需背 exploit 細節，但要能**從 scenario 認出 category**。
+
+> **版本註：** outline 未指定 OWASP 版本。依來源講義，2026-08 發布的 2026 版為最新；舊教材的 2025 版名稱「System Prompt Leakage」在 2026 版擴大為「Hidden Context Exposure」。
+
+| # | Category（2026 版，依來源） | Scenario 認法 | 核心 control |
+|---|---|---|---|
+| 1 | **Prompt Injection** | direct：`Ignore previous instructions...`；indirect：website、email、PDF、issue、RAG document、MCP／tool output 裡藏 instruction | least privilege、deterministic policy、approval、output validation |
+| 2 | **Sensitive Information Disclosure** | 洩漏 PII、credentials、private documents、system context、secrets | minimize exposure、DLP、output filtering、access control、classification、tenant isolation |
+| 3 | **Excessive Agency** | agent 權限／功能／自主性過大（shell、production DB、email、cloud admin API） | least privilege + human approval + scoped tools |
+| 4 | **Supply Chain** | ML libraries、pretrained models、model registries、datasets、MCP servers／tools、plugins、vector data sources | pin version、signed artifact、provenance、trusted registry、SCA、vendor assessment |
+| 5 | **Data and Model Poisoning** | 竄改 training set、fine-tuning、RAG corpus、memory、model artifact 以操縱未來行為 | integrity、provenance（見 [Domain 2 §1.14](../domain2-data-security/01-consolidated-lecture.md)） |
+| 6 | **Unbounded Consumption** | token、GPU、API calls、tool loops、cost ↑，availability ↓ = resource exhaustion + economic DoS | quota、rate limit、budget、token limit、timeout、tool-call cap |
+| 7 | **Misinformation** | 流暢但錯誤 → 錯誤設定、IR 決策、unsafe code、compliance 解讀 | verification + authoritative data + human review |
+| 8 | **Hidden Context Exposure** | hidden prompt、internal context、tool metadata、private instructions 外洩 | 不把 secret 放進「只是 hidden」的 context |
+| 9 | **Vector and Embedding Weaknesses** | cross-tenant retrieval、poisoned embeddings、unauthorized RAG access、bad metadata filter、stale documents | **RAG authorization 在 model 之外執行** |
+| 10 | **Improper Output Handling** | LLM output（SQL、shell、HTML、JavaScript、API arguments）未驗證就執行 | **Treat model output as untrusted input** |
+
+#### Prompt Injection 的 mitigation mindset
+
+核心：**untrusted content becomes instruction-like input。** 不要相信「prompt 寫得更好就能完全解決」。
+
+```text
+Least privilege
+Deterministic policy checks
+Human approval for sensitive actions
+Output validation
+Tool allowlist
+Egress restriction
+Separate trusted／untrusted data
+```
+
+> **Assume model can eventually be fooled; limit blast radius.** Excessive agency 放大 prompt injection 的後果。
+
+#### AI SDLC
+
+Threat modeling、abuse cases、prompt-injection testing、adversarial testing、supply-chain review、model／data validation、rate limiting、tool permission review、output validation、monitoring——仍然是 **Secure SDLC／Shift Left**（§1.2）。
+
+**Trap：** 「Prompt injection 可以靠 system prompt 完全阻止」錯，應 assume model may be fooled 並限制權限。
+
+> **D4 三句：** ① Prompt injection 是 input-side risk ② Excessive agency 放大 prompt injection 的後果 ③ Model output 要當 untrusted input 驗證。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -602,6 +646,10 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | 57 | Technical IDENTIFY 題 → 選最精確 defined mechanism。 |
 | 58 | **哪種 request 最適合 0-RTT early data？→ safe／read-only（GET、HEAD）**；payment、transfer 等 state-changing 不適合，idempotent 仍是 state-changing。 |
 | 59 | **HTTP 425 Too Early = server 拒絕處理可能被 replay 的 early-data request**；client 等 handshake 完成後再 retry。 |
+| 60 | **Prompt injection 無法只靠 system prompt 根治** → assume model can be fooled：least privilege、tool allowlist、deterministic policy、human approval、egress restriction。 |
+| 61 | **Excessive Agency = 權限／功能／自主性過大** → least privilege + human approval + scoped tools；它放大 prompt injection 的 blast radius。 |
+| 62 | **Treat model output as untrusted input**：LLM 產生的 SQL／shell／HTML／API arguments 直接執行 = Improper Output Handling。 |
+| 63 | **Unbounded Consumption = resource exhaustion + economic DoS** → quota、rate limit、budget、token limit、timeout、tool-call cap。 |
 
 ---
 
@@ -638,6 +686,9 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 | Federation Authority | Federation Proxy／Broker | 建立與管理 trust、vet members vs 中介 federation protocol traffic |
 | SAML SP（federation role） | 一般「服務商」（commercial role） | 接受 assertion 並提供 resource vs 商業上提供服務的公司 |
 | Safe method | Idempotent method | 不改變 resource state（GET／HEAD）vs 重複 N 次效果同一次但仍可能 state-changing（PUT／DELETE） |
+| Prompt Injection | Excessive Agency | 不可信內容變成指令（input side）vs agent 權限過大導致後果放大（blast radius） |
+| Prompt Injection | Improper Output Handling | 輸入端操縱 model vs 輸出未驗證就交給下游執行 |
+| Hidden Context Exposure | Sensitive Information Disclosure | hidden prompt／internal context／tool metadata 外洩 vs PII、credentials、文件等資料外洩 |
 
 ---
 
@@ -693,3 +744,5 @@ Process isolation      = 明確 security mechanism，直接對 shared-resource /
 - Broker／Proxy 在 upstream 與 downstream 各扮什麼角色？
 - Federation Authority 與 Federation Proxy 各管什麼？
 - Safe 與 idempotent HTTP method 差在哪？哪種 request 適合 0-RTT？425 Too Early 代表什麼、client 該怎麼 retry？
+- OWASP LLM Top 10 各 category 的 scenario 認法？Direct 與 indirect prompt injection 差在哪？
+- 為什麼 prompt injection 的 mitigation 重點是 limit blast radius？AI 產生的 command 直接在 server 執行屬於哪一類？
