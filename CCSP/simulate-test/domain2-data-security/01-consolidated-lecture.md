@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 2 的內容，跨場次合併後依主題重組。
 > **考試權重：** 20%（六域最高）
-> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
+> **來源：** `by-test/01`、`02`、`03`、`04`、`06`、`07`、`08`、`10`、`by-test/learnzapp/03`、`04`、`05`、`daily/`、2026-10-23 兩日錯題修復、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D2 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -41,6 +41,7 @@
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §1 Define scheme（lifecycle 前）vs Classify at Create | §1.1、§2.5、§3、§4、§5 Drill H |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §2 Policy／Classification／Metadata／Controls 四層模型與 `Proper _____` 題；§4 TPI／SoD／Split Knowledge 2 秒口訣與 TPI 實作清單（復現：Define vs Create、two IAM matrices） | §1.2、§1.11、§2.5、§2.19、§3、§4、§5 Drill I |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §9 X.509 欄位與 binding、§10.2 裸 DH 可遭 MITM（TLS stack 主體 → D3） | §1.7 |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §9–§16 D2 2.9 AI data lifecycle、dataset security、data poisoning、model security／privacy、embeddings／vector DB、differential privacy、homomorphic encryption；§51 Scenario B／D、§53 Trap 4／6、§55 D2 三句；總覽 → D1 §1.11 | §1.14、§3、§4、Drill J |
 
 ---
 
@@ -984,6 +985,66 @@ Aggregation = 把多筆低敏感資料「拼起來」      → 常是 inference 
 
 > **出題角度：** 題目描述「攻擊者沒有存取敏感欄位，卻知道了敏感事實」→ **Inference**，不是 disclosure、也不是 access control failure。題目描述「敏感資料被未授權者看到」→ disclosure。
 
+### 1.14 AI／ML 資料保護（outline 2.9；來源：2026-11-10 AI Additions Guideline，`[K]` P0）
+
+D2 2.9 範圍：dataset privacy、model privacy、dataset security、model security、validation、verification。總覽與六域對照見 [Domain 1 §1.11](../domain1-cloud-concepts/01-consolidated-lecture.md)。
+
+#### AI Data Lifecycle
+
+```text
+Raw data → Training dataset → Fine-tuning dataset → Embeddings → Model weights
+→ RAG index／vector DB → Prompts → Outputs → Logs
+```
+
+每一項都有 confidentiality、integrity、availability、privacy、retention、ownership 問題，都要納入 classification 與 lifecycle 管理（§1.1、§1.2）。
+
+#### Dataset Security
+
+| 風險 | Controls |
+|---|---|
+| Data poisoning、unauthorized modification、sensitive data inclusion、bad provenance、label manipulation、cross-tenant leakage | integrity validation、provenance、access control、versioning、signed datasets／artifacts、change review、data classification、DLP |
+
+#### Data Poisoning
+
+攻擊者修改 training data、fine-tuning data、RAG data 或 embedding source，**目的在改變 model behavior**（poisoned training examples → model 學到攻擊者選定的行為）。
+
+> **Prompt injection = inference-time input 問題；Data poisoning = dataset／model pipeline integrity 問題。**（OWASP LLM 分類見 [Domain 4 §1.10](../domain4-application/01-consolidated-lecture.md)）
+
+#### Model Security
+
+Model artifact 也是資產：model weights、config、tokenizer、adapter、LoRA、system prompt、model package。
+
+| 風險 | Controls |
+|---|---|
+| theft、tampering、unauthorized replacement、malicious model artifact、supply-chain compromise | artifact signing、hash／integrity check、trusted registry、least privilege、version control、provenance |
+
+#### Model Privacy
+
+training data memorization、extraction、model inversion、membership inference、sensitive prompt leakage。
+
+> **Model 本身可能洩漏 training data／sensitive information**——不是只有 database 才有 privacy risk。
+
+#### Embeddings／Vector DB（RAG）
+
+```text
+Private documents → Embedding → Vector DB → Retrieval → LLM
+```
+
+風險：unauthorized retrieval、cross-user／cross-tenant leakage、poisoned vector data、weak access filtering、sensitive embeddings、stale／incorrect data。
+
+> **Vector DB 仍需 IAM／authorization**；資料變成 embedding 不代表安全。Embeddings 可能仍暴露 sensitive semantic relationships 或可被檢索的資料。
+
+#### Privacy-enhancing techniques（只需概念）
+
+| 技術 | CCSP 深度 |
+|---|---|
+| **Differential privacy** | 降低從統計／model output 反推單一個體資料的可能性；不算 epsilon |
+| **Homomorphic encryption** | 可在 encrypted data 上做某些 computation，不必先完全解密；不讀演算法 |
+
+**Traps：** 「RAG data 是 internal 所以可信」錯（internal data 也可能被 poisoning 或被低權限 contributor 修改）；「Embeddings 不算 sensitive data」錯。
+
+> **D2 三句：** ① Dataset、model weights、embeddings 都是 security assets ② Poisoning 是 integrity 問題 ③ Model／RAG 不能繞過 classification、IAM、privacy。
+
 ---
 
 ## 2. 錯題與修正規則 / Errors & Corrections
@@ -1224,6 +1285,9 @@ Controls  → 依 classification 施加的 treatment
 | 90 | `Proper _____ assigned to each classification` → **Security Controls**。 |
 | 91 | **TPI = 一人不能做；SoD = 一人不能包辦流程；Split Knowledge = 一人不能知道全部。** |
 | 92 | M-of-N 不等於 TPI、SoD 或 Split Knowledge 本身；先看題目問 operation、duty 還是 secret。 |
+| 93 | **Dataset、model weights、embeddings、prompts、outputs、logs 都是 data security assets**，須納入 classification、IAM、retention。 |
+| 94 | **Data poisoning = dataset／model pipeline integrity 問題**（training、fine-tuning、RAG）；prompt injection = inference-time input 問題。 |
+| 95 | **Model 本身可能洩漏 training data**（memorization、inversion、membership inference）；vector DB 仍需 authorization，embedding ≠ 去識別化。 |
 
 ---
 
@@ -1289,6 +1353,8 @@ Controls  → 依 classification 施加的 treatment
 | Direct data-loss mechanism | Indirect governance cause | lost key／bad backup／overwrite vs improper policy（但錯誤 retention 也可直接導致 loss） |
 | Metadata／Label | Security Controls | 標示資料物件 vs 依分類施加保護 |
 | Classification | Policy | 資料所屬的 bucket vs 定義 taxonomy 與 handling rules 的 rulebook |
+| Data poisoning | Prompt injection | 竄改 training／fine-tuning／RAG 資料以改變未來行為（integrity）vs inference 時以輸入操縱 model |
+| Differential privacy | Homomorphic encryption | 降低從 output 反推個體 vs 在加密資料上運算 |
 
 ---
 
@@ -1376,6 +1442,16 @@ Controls  → 依 classification 施加的 treatment
 4. M-of-N 等於 Split Knowledge 嗎？
 
 **參考答案：** ① label／bucket／treatment／rulebook ② Security Controls；題目問分類要配什麼 protection ③ two approvers、two keys、HSM M-of-N、two custodians、workflow approval（任三）④ 不一定，要看實作與題目範圍
+
+### Drill J：2026-11-10 AI 資料閉卷防守
+
+1. 列出 AI data lifecycle 的 9 個資產。
+2. Data poisoning 與 prompt injection 差在哪？各屬什麼安全屬性問題？
+3. Model artifact 有哪些？保護它的 controls？
+4. RAG 回傳另一個 tenant 的文件，屬於什麼問題？
+5. Differential privacy 與 homomorphic encryption 各一句話？
+
+**參考答案：** ① raw data、training、fine-tuning、embeddings、weights、vector DB、prompts、outputs、logs ② poisoning = pipeline integrity；injection = inference-time input ③ weights、config、tokenizer、adapter／LoRA、system prompt、package；signing、hash、trusted registry、least privilege、versioning、provenance ④ data authorization／vector & embedding weakness（D2／D4）⑤ 降低反推個體／在加密資料上運算
 
 ### Drill E：維持節奏
 
