@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **625 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **677 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
-| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、TOE／PP／ST、題目判讀模型、category-first、cloud TCO） | 67 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI、Policy／Classification／Controls 四層） | 158 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling、TLS 五件事與 802.1X） | 114 |
-| `knowt-d4-application.tsv` | D4 Cloud Application Security（含 federation 角色 IdP vs RP／SP、Broker、Federation Authority） | 60 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations（含 maintenance mode alerting、DLP／SIEM baselining、running vs saved patch、VM sprawl） | 67 |
-| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、Regulator vs Auditor、CSA STAR、IETF／IANA／IEEE 標準組織） | 152 |
+| `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、TOE／PP／ST、題目判讀模型、category-first、cloud TCO、AI/ML 與 AIaaS shared responsibility） | 75 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI、Policy／Classification／Controls 四層、AI/ML 資料保護與 poisoning） | 165 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling、TLS 五件事與 802.1X、TLS 1.3 0-RTT／QUIC、AI 基礎架構） | 125 |
+| `knowt-d4-application.tsv` | D4 Cloud Application Security（含 federation 角色 IdP vs RP／SP、Broker、Federation Authority、HTTP Early Data／425、OWASP LLM Top 10） | 72 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations（含 maintenance mode alerting、DLP／SIEM baselining、running vs saved patch、VM sprawl、0-RTT 維運、AI SOC 與 model drift） | 73 |
+| `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、Regulator vs Auditor、CSA STAR、IETF／IANA／IEEE 標準組織、AI privacy／vendor risk、NIST AI RMF） | 160 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 625 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 677 |
 
 ### 歷次併入紀錄
 
@@ -186,6 +186,19 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 **不新增：** X.509 綁定 identity–public key、ECDHE key agreement、AES-GCM traffic encryption、forward secrecy、maintenance mode 不阻 admin access、VM sprawl 定義與風險、SaaS／PaaS／IaaS 定義等既有卡已覆蓋；「今日兩個 P0」屬時效性紀錄，不保留。
 
+**2026-11-10 0-RTT／TLS 1.3／QUIC 講義、CCSP 2026 AI Security Additions D1–D6 Guideline**（兩份原檔未封存、皆無原生閃卡；依講義內容產出並以中性語氣撰寫，淨增 52 張）：
+
+- 新版 outline AI 範圍、AI 讀法深度、AIaaS 責任、hosted vs self-hosted、AI detection validation、AI + SOAR approval、data source validation、AI control hierarchy → **D1**（+8）
+- AI data lifecycle、data poisoning、model artifact、model privacy、vector DB、internal RAG 不等於可信、differential privacy vs homomorphic encryption → **D2**（+7）
+- 0-RTT 定義、replay、no forward secrecy、0-RTT vs resumption、X.509 不產生 0-RTT secret、QUIC／HTTP/3、QUIC 優勢、TFO／False Start；AI infrastructure isolation、HSM、LLM agent micro-segmentation → **D3**（+11）
+- Safe method 與 0-RTT、safe vs idempotent、425 Too Early、`Early-Data: 1`；OWASP LLM Top 10、direct vs indirect prompt injection、prompt injection mitigation、Excessive Agency、Improper Output Handling、Unbounded Consumption、Hidden Context Exposure、AI supply chain → **D4**（+12）
+- 0-RTT 維運 mitigation、AI SOC validation、AI summary ≠ forensic evidence、FP／FN、model drift、AI IR 紀錄 → **D5**（+6）
+- AI 下的 controller／processor、explainability、automated decision、AI vendor assessment、sovereignty 情境、NIST AI RMF、NIST AI 600-1、CSA AICM → **D6**（+8）
+
+**既有卡增補答案：** `問 forward secrecy 選什麼？`（D3，補 0-RTT early data 無 forward secrecy）。
+
+**不新增：** TLS 1.3 移除 static RSA、ECDHE forward secrecy、X.509 vs ECDHE、HKDF、AES-GCM、802.1X、IETF 制定 TLS／QUIC 等既有卡已覆蓋；RFC 9846 編號僅記於講義版本註（考試不考 RFC 編號）。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -212,7 +225,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 625 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 677 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

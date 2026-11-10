@@ -58,3 +58,15 @@ Federation Broker／Proxy 的雙重角色？	Upstream 一側扮 RP；downstream 
 Federation Authority 做什麼？	建立／管理 federation trust framework、vet federation participants、定義 participation／assurance requirements。
 Federation Authority 與 Federation Proxy 差在哪？	Authority 管 trust relationship；Proxy 中介 federation protocol traffic。題庫舊模型的 `proxy federation` 把 proxy 當信任中介，判讀時看題幹動作。
 Technical IDENTIFY 題的原則？	選最精確 defined mechanism。例：`prevents one process affecting another` → Process Isolation，不選 broad security enhancement。
+哪種 HTTP request 最適合 TLS 0-RTT early data？	Safe／read-only（GET、HEAD）。Payment、transfer、create-user、delete account 等 state-changing request 應避免，因 early data 可能被 replay。
+Safe 與 idempotent HTTP method 差在哪？	Safe：不改變 resource state（GET、HEAD）。Idempotent：做 N 次效果等同一次（PUT、DELETE），但仍可能 state-changing。
+HTTP 425 Too Early 代表什麼？	RFC 8470：server 不願冒 replay risk 處理可能來自 early data 的 request；client 應等 handshake 完成後再 retry，不再用 early data。
+Early-Data: 1 header 用途？	Intermediary／gateway（reverse proxy、CDN）告知 downstream origin：這個 request 可能來自 TLS 1.3 0-RTT early data。
+OWASP Top 10 for LLM Applications 在新版 CCSP 哪裡出現？	D4 4.1 明列。依來源講義 2026 版：Prompt Injection、Sensitive Information Disclosure、Excessive Agency、Supply Chain、Data and Model Poisoning、Unbounded Consumption、Misinformation、Hidden Context Exposure、Vector and Embedding Weaknesses、Improper Output Handling。
+Direct 與 indirect prompt injection 差在哪？	Direct：user 直接輸入惡意指令。Indirect：LLM 讀到的 website、email、PDF、RAG document、tool output 內藏指令。核心：untrusted content becomes instruction-like input。
+Prompt injection 能靠更好的 system prompt 完全阻止嗎？	不能。Assume model can eventually be fooled; limit blast radius：least privilege、deterministic policy checks、human approval、output validation、tool allowlist、egress restriction。
+Excessive Agency 是什麼？怎麼控制？	Agent 擁有過多 functionality／permission／autonomy（如 shell、production DB、cloud admin API），放大 prompt injection 後果。控制：least privilege + human approval + scoped tools。
+Improper Output Handling 是什麼？	LLM output（SQL、shell、HTML、JavaScript、API arguments）未驗證就交給下游執行。原則：treat model output as untrusted input。
+Unbounded Consumption 是什麼？	Token、GPU、API calls、tool loops 失控 → cost ↑、availability ↓，即 resource exhaustion + economic DoS。控制：quota、rate limit、budget、token limit、timeout、tool-call cap。
+Hidden Context Exposure 是什麼？	2026 版由 System Prompt Leakage 擴大：hidden prompt、internal context、tool metadata、private instructions 外洩。不要把 secret 放進只是 hidden 的 context。
+AI supply chain 包含什麼？	ML libraries、pretrained models、model registries、datasets、MCP servers／tools、plugins、vector data sources。控制：pin version、signed artifact、provenance、trusted registry、SCA、vendor assessment。

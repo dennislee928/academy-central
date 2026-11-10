@@ -150,3 +150,11 @@ IANA 做什麼？與 IETF 怎麼分？	IANA（Internet Assigned Numbers Authorit
 IEEE 最典型的 trigger？	802.x LAN／MAN 標準：802.3 Ethernet、802.11 Wi-Fi、802.1X。
 ISO/IEC 最典型的 trigger？	Broad international standardization：ISO/IEC 27001／27002／27017／27018、15408 等；不是專門制定 Internet protocol 的組織。
 NIST 最典型的 trigger？	US federal standards／guidance：SP 800-series（如 800-53、800-63）、NIST CSF、FIPS。
+公司把客戶 PII 送進 managed AI API，controller 與 processor 是誰？	決定 purpose／means 的公司通常仍是 controller；AI provider 代為處理是 processor。送進 AI 不會讓 privacy obligation 消失。
+Explainability 是什麼？要公開 model weights 嗎？	能說明 AI decision 的依據或過程，達到 business／legal requirements；explainability ≠ 必須公開所有 model weights。
+AI 用於 automated decision 時風險為何升高？	用於 hiring、credit、insurance、healthcare、access control 時，bias、fairness、transparency、appeal 與 regulatory 問題更嚴重。
+AI vendor assessment 要問什麼？	Data retention、是否用 customer data 訓練、subprocessors、region／jurisdiction、breach notification、model／data ownership、right to audit、certification、incident handling、export／deletion。Outsourcing AI ≠ outsourcing accountability。
+Managed AI provider 在另一司法管轄區保存 prompts，屬於什麼問題？	Privacy／data sovereignty／vendor contract（D6）：確認資料處理與儲存地、subprocessors、適用 jurisdiction、能否 delete／export。
+NIST AI RMF 的四個 core functions？	Govern、Map、Measure、Manage；AI risk governance framework。
+NIST AI 600-1 是什麼？	Generative AI Profile：把 NIST AI RMF 套用到 generative AI-specific risks。AI RMF = general AI risk。
+CSA AICM 是什麼？	CSA AI Controls Matrix：cloud／AI controls framework；不需背 control IDs。

@@ -65,3 +65,11 @@ Common Criteria 的 PP 是什麼？	Protection Profile：某類產品（product 
 Common Criteria 的 ST 是什麼？與 PP 怎麼分？	Security Target：特定 TOE 聲明要滿足的 security requirements。PP＝product-category requirement profile；ST＝this specific TOE's security claim。
 `fully operational + very little administration` 與 `maximum OS／runtime control` 各指向哪個 service model？	Fully operational + minimal administration → SaaS（ready-to-use application，如 Microsoft 365）；maximum OS／runtime／network control → IaaS。Fully operational ≠ fully controllable；誤選 PaaS 是因為忽略 PaaS 仍要管 application 與 data。
 Best-answer 題遇到「最嚴重」但不符合題目 category 的選項怎麼辦？	先 obey scope／category，不選只是聽起來最災難性的選項。例：cloud environment `unviable` → VM sprawl（cloud operational risk），不是 hostile takeover（corporate ownership event）。
+新版 CCSP outline（2026-08-01 起）中 AI 是第七個 domain 嗎？	不是。AI security 整合進全部六個 domain，沒有獨立 exam weight；明列處：D1 1.6 AI/ML、D2 2.9 AI/ML data、D4 4.1 OWASP LLM Top 10、D5 5.6 intelligent monitoring including AI。
+CCSP 的 AI 題考什麼深度？	考 cloud security 判斷：責任歸屬、資料風險、最佳 control、trust boundary、privacy／legal、operational response、隔離與監控。不考 Transformer、backpropagation、CUDA、gradient descent。
+AIaaS 下 customer 仍要負責什麼？	Prompts、input／RAG data、IAM 與 API keys、tool permissions、model／application configuration、output handling、legal use of data。Managed AI does NOT transfer accountability。
+Hosted AI API 與 self-hosted model 的 customer 責任差在哪？	Hosted API：customer 不管 GPU、serving infra、inference runtime，但管資料、誰能 invoke、output 能觸發什麼。Self-hosted：另外要管 container／runtime、model artifact、patching、GPU node、segmentation、model server security。
+AI threat detection 的結論可以直接當事實嗎？	不行。AI detection output ≠ ground truth；需要 validation、human review、baseline、false-positive tuning 與 monitoring。
+AI + SOAR 哪些動作需要 approval？	Delete、disable account、block critical workload、revoke keys、quarantine production 等高風險動作，需 policy guardrail／approval／deterministic control；enrich、correlate、suggest 可自動。
+AI 資料來源驗證（data source validation）要問哪些問題？	來源與 provenance、integrity 是否驗證、是否有授權使用、是否含 PII、攻擊者能否 poison。Untrusted data → training／fine-tuning／RAG → AI behavior changes。
+AI security control hierarchy？	Governance → Data classification → IAM／least privilege → Isolation → Input validation → Tool control → Output validation → Monitoring → IR／audit。AI 讓 least privilege、data governance、monitoring 更重要。

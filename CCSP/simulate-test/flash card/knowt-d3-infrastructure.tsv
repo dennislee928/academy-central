@@ -38,7 +38,7 @@ AES-GCM 為什麼常出現在 TLS？	它是 AEAD，可同時提供機密性與�
 TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.3 把憑證演算法與 ECDHE group 分開協商，例如 TLS_AES_128_GCM_SHA256。
 mTLS 是什麼？	雙方都出示憑證：server authentication + client certificate authentication。一般公開 HTTPS 未必做 client cert。
 問 TLS fresh shared secret 選什麼？	(EC)DHE。
-問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
+問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。注意：TLS 1.3 0-RTT early data 用 PSK-derived keys，沒有 forward secrecy。
 Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
 為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。
 「Raised floor increases structural soundness」為什麼是錯的？	Raised floor 本身必須被設計成能承受 rack 重量，它是需要被結構設計照顧的對象，不是結構補強手段。
@@ -112,3 +112,14 @@ HKDF 在 TLS 中做什麼？	從 (EC)DHE 等產生的 keying material 派生 tra
 IEEE 802.1X 的核心用途？	Port-based Network Access Control：Supplicant → Authenticator（switch／AP）→ Authentication Server（RADIUS），回答「裝置／使用者能不能接入 network」，不是 TLS session 怎麼建立。
 802.1X 等於 TLS 嗎？兩者什麼關係？	不等於。802.1X 是 network access-control framework；EAP-TLS 是可在其中使用的 authentication method：802.1X → EAP → EAP-TLS → TLS → X.509 certificate。
 DH／ECDHE 單獨能證明對方身分嗎？	不能。裸 DH 可遭 MITM（Alice → Mallory → Bob）；TLS 要用 certificate／signature 把 key exchange 綁定到 authenticated identity。
+TLS 1.3 0-RTT 是什麼？	Session resumption 時，client 在 handshake 完成前就送 early application data。前提：PSK／previous session ticket（NewSessionTicket）；效益：lower latency。「0」不代表網路延遲為 0。
+TLS 1.3 0-RTT 的 primary security concern？	Replay attack：攻擊者不必解密，擷取合法的加密 early data 重送即可能被重複處理。不是破解 AES、偷 X.509 private key 或必然 MITM。
+0-RTT early data 有 forward secrecy 嗎？	沒有。Early data 用 PSK-derived keys，送出時 fresh ECDHE 尚未完成。0-RTT data 仍加密，但 confidentiality ≠ replay protection。
+0-RTT 與 session resumption 的關係？	0-RTT 是 resumption 中「first flight 就帶 early data」的模式；resumption 是沿用先前 state 降低 handshake 成本的總稱，兩者不是同義詞。
+X.509 會產生 0-RTT 的 shared secret 嗎？	不會。X.509 在初次 full handshake 負責 authentication；0-RTT 使用 PSK-derived early traffic keys。
+QUIC 是什麼？與 TLS 1.3、HTTP/3 的關係？	QUIC = UDP-based secure multiplexed transport（RFC 9000），整合 TLS 1.3 cryptographic handshake；HTTP/3 runs over QUIC。QUIC 0-RTT 同樣有 replay concern。
+QUIC 相對 TCP + TLS 的優勢？	Transport 與 cryptographic handshake 整合 → 較低建立延遲；streams 在 transport 層獨立 multiplex → reduced cross-stream head-of-line blocking；Connection ID 支援 path migration（非 0-RTT 本身）。
+TCP Fast Open、TLS False Start 和 TLS 0-RTT 一樣嗎？	不一樣。TFO = TCP 層 latency optimization；False Start = 部分 handshake 完成後提前送 app data；0-RTT = first client flight 就送 TLS early data。
+AI workload 的 infrastructure 要隔離什麼？	Tenant A／B model、training cluster vs inference cluster、RAG database、management plane；用 segmentation、workload／namespace isolation、least privilege、separate service accounts。
+HSM 在 AI 環境保護什麼？	Cryptographic key material 與 operations：data encryption keys、model signing keys、API secrets、TLS certs。不保護 model logic 本身。
+LLM agent 的網路該怎麼限制？	Micro-segmentation：explicit network policy、limited egress、service identity、east-west controls；不允許 agent unrestricted lateral movement。

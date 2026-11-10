@@ -156,3 +156,10 @@ CSA Notorious Nine 的 exact wording 值得背嗎？	不值得高頻背。它是
 Security Controls 與 classification 的關係？	Treatment：依 classification 施加保護（Restricted → encryption、RBAC、MFA、DLP、logging、retention）。`Proper _____ assigned to each data classification/category` 選 Security Controls，不是 metadata。
 資料分類治理中，Policy 做什麼？	Rulebook：定義 taxonomy、handling rules 與 control mapping。
 Metadata／Classification／Controls／Policy 的口訣？	Label／Bucket／Treatment／Rulebook。
+AI data lifecycle 包含哪些資產？	Raw data、training dataset、fine-tuning dataset、embeddings、model weights、RAG index／vector DB、prompts、outputs、logs；各自都有 CIA、privacy、retention、ownership 問題。
+Data poisoning 是什麼？屬於哪種安全屬性問題？	竄改 training、fine-tuning、RAG 或 embedding source 資料以改變 model 行為；屬 dataset／model pipeline integrity 問題。Prompt injection 則是 inference-time input 問題。
+Model artifact 包含什麼？怎麼保護？	Model weights、config、tokenizer、adapter／LoRA、system prompt、model package。Controls：artifact signing、hash／integrity check、trusted registry、least privilege、version control、provenance。
+Model privacy 風險有哪些？	Training data memorization、extraction、model inversion、membership inference、sensitive prompt leakage。Model 本身可能洩漏 training data。
+Vector DB／embeddings 安全嗎？	不能假設安全。風險：unauthorized retrieval、cross-tenant leakage、poisoned vectors、weak access filtering、sensitive embeddings、stale data。Vector DB 仍需 IAM／authorization。
+RAG data 是 internal，所以可信嗎？	不一定。Internal data 也可能遭 poisoning 或被低權限 contributor 修改；仍需 integrity、provenance 與 access control。
+Differential privacy 與 homomorphic encryption 各一句話？	Differential privacy：降低從統計／model output 反推單一個體資料的可能性。Homomorphic encryption：可在 encrypted data 上做某些運算而不必先解密。CCSP 只需概念。

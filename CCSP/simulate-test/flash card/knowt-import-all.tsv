@@ -65,6 +65,14 @@ Common Criteria 的 PP 是什麼？	Protection Profile：某類產品（product 
 Common Criteria 的 ST 是什麼？與 PP 怎麼分？	Security Target：特定 TOE 聲明要滿足的 security requirements。PP＝product-category requirement profile；ST＝this specific TOE's security claim。
 `fully operational + very little administration` 與 `maximum OS／runtime control` 各指向哪個 service model？	Fully operational + minimal administration → SaaS（ready-to-use application，如 Microsoft 365）；maximum OS／runtime／network control → IaaS。Fully operational ≠ fully controllable；誤選 PaaS 是因為忽略 PaaS 仍要管 application 與 data。
 Best-answer 題遇到「最嚴重」但不符合題目 category 的選項怎麼辦？	先 obey scope／category，不選只是聽起來最災難性的選項。例：cloud environment `unviable` → VM sprawl（cloud operational risk），不是 hostile takeover（corporate ownership event）。
+新版 CCSP outline（2026-08-01 起）中 AI 是第七個 domain 嗎？	不是。AI security 整合進全部六個 domain，沒有獨立 exam weight；明列處：D1 1.6 AI/ML、D2 2.9 AI/ML data、D4 4.1 OWASP LLM Top 10、D5 5.6 intelligent monitoring including AI。
+CCSP 的 AI 題考什麼深度？	考 cloud security 判斷：責任歸屬、資料風險、最佳 control、trust boundary、privacy／legal、operational response、隔離與監控。不考 Transformer、backpropagation、CUDA、gradient descent。
+AIaaS 下 customer 仍要負責什麼？	Prompts、input／RAG data、IAM 與 API keys、tool permissions、model／application configuration、output handling、legal use of data。Managed AI does NOT transfer accountability。
+Hosted AI API 與 self-hosted model 的 customer 責任差在哪？	Hosted API：customer 不管 GPU、serving infra、inference runtime，但管資料、誰能 invoke、output 能觸發什麼。Self-hosted：另外要管 container／runtime、model artifact、patching、GPU node、segmentation、model server security。
+AI threat detection 的結論可以直接當事實嗎？	不行。AI detection output ≠ ground truth；需要 validation、human review、baseline、false-positive tuning 與 monitoring。
+AI + SOAR 哪些動作需要 approval？	Delete、disable account、block critical workload、revoke keys、quarantine production 等高風險動作，需 policy guardrail／approval／deterministic control；enrich、correlate、suggest 可自動。
+AI 資料來源驗證（data source validation）要問哪些問題？	來源與 provenance、integrity 是否驗證、是否有授權使用、是否含 PII、攻擊者能否 poison。Untrusted data → training／fine-tuning／RAG → AI behavior changes。
+AI security control hierarchy？	Governance → Data classification → IAM／least privilege → Isolation → Input validation → Tool control → Output validation → Monitoring → IR／audit。AI 讓 least privilege、data governance、monitoring 更重要。
 Cloud Secure Data Lifecycle 六個階段依序是什麼？	Create → Store → Use → Share → Archive → Destroy。口訣 C-S-U-S-A-D。
 資料一建立時，最早應執行哪項治理活動？	Classification。後續 encryption、IAM、DLP、retention、sharing、destruction 都可能依賴它。
 Share 之前是哪一個 lifecycle phase？	Use。Encrypt／Protect／Validate 是 control，不是 phase。
@@ -223,6 +231,13 @@ CSA Notorious Nine 的 exact wording 值得背嗎？	不值得高頻背。它是
 Security Controls 與 classification 的關係？	Treatment：依 classification 施加保護（Restricted → encryption、RBAC、MFA、DLP、logging、retention）。`Proper _____ assigned to each data classification/category` 選 Security Controls，不是 metadata。
 資料分類治理中，Policy 做什麼？	Rulebook：定義 taxonomy、handling rules 與 control mapping。
 Metadata／Classification／Controls／Policy 的口訣？	Label／Bucket／Treatment／Rulebook。
+AI data lifecycle 包含哪些資產？	Raw data、training dataset、fine-tuning dataset、embeddings、model weights、RAG index／vector DB、prompts、outputs、logs；各自都有 CIA、privacy、retention、ownership 問題。
+Data poisoning 是什麼？屬於哪種安全屬性問題？	竄改 training、fine-tuning、RAG 或 embedding source 資料以改變 model 行為；屬 dataset／model pipeline integrity 問題。Prompt injection 則是 inference-time input 問題。
+Model artifact 包含什麼？怎麼保護？	Model weights、config、tokenizer、adapter／LoRA、system prompt、model package。Controls：artifact signing、hash／integrity check、trusted registry、least privilege、version control、provenance。
+Model privacy 風險有哪些？	Training data memorization、extraction、model inversion、membership inference、sensitive prompt leakage。Model 本身可能洩漏 training data。
+Vector DB／embeddings 安全嗎？	不能假設安全。風險：unauthorized retrieval、cross-tenant leakage、poisoned vectors、weak access filtering、sensitive embeddings、stale data。Vector DB 仍需 IAM／authorization。
+RAG data 是 internal，所以可信嗎？	不一定。Internal data 也可能遭 poisoning 或被低權限 contributor 修改；仍需 integrity、provenance 與 access control。
+Differential privacy 與 homomorphic encryption 各一句話？	Differential privacy：降低從統計／model output 反推單一個體資料的可能性。Homomorphic encryption：可在 encrypted data 上做某些運算而不必先解密。CCSP 只需概念。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -263,7 +278,7 @@ AES-GCM 為什麼常出現在 TLS？	它是 AEAD，可同時提供機密性與�
 TLS 1.3 cipher suite 名稱還會寫出 ECDHE／RSA 嗎？	通常不會。TLS 1.3 把憑證演算法與 ECDHE group 分開協商，例如 TLS_AES_128_GCM_SHA256。
 mTLS 是什麼？	雙方都出示憑證：server authentication + client certificate authentication。一般公開 HTTPS 未必做 client cert。
 問 TLS fresh shared secret 選什麼？	(EC)DHE。
-問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。
+問 forward secrecy 選什麼？	Ephemeral Diffie-Hellman／ECDHE。注意：TLS 1.3 0-RTT early data 用 PSK-derived keys，沒有 forward secrecy。
 Cold aisle 與 hot aisle 的機櫃擺法規則？	Front ↔ Front = cold aisle（進氣面相對）；Rear ↔ Rear = hot aisle（排氣面相對）。絕不讓 exhaust 吹進 inlet。
 為什麼 exhaust 對 inlet 的擺法是錯的？	會造成 hot air recirculation：前一排的排氣直接被下一排吸入，伺服器進氣溫度升高、冷卻效率崩壞。
 「Raised floor increases structural soundness」為什麼是錯的？	Raised floor 本身必須被設計成能承受 rack 重量，它是需要被結構設計照顧的對象，不是結構補強手段。
@@ -337,6 +352,17 @@ HKDF 在 TLS 中做什麼？	從 (EC)DHE 等產生的 keying material 派生 tra
 IEEE 802.1X 的核心用途？	Port-based Network Access Control：Supplicant → Authenticator（switch／AP）→ Authentication Server（RADIUS），回答「裝置／使用者能不能接入 network」，不是 TLS session 怎麼建立。
 802.1X 等於 TLS 嗎？兩者什麼關係？	不等於。802.1X 是 network access-control framework；EAP-TLS 是可在其中使用的 authentication method：802.1X → EAP → EAP-TLS → TLS → X.509 certificate。
 DH／ECDHE 單獨能證明對方身分嗎？	不能。裸 DH 可遭 MITM（Alice → Mallory → Bob）；TLS 要用 certificate／signature 把 key exchange 綁定到 authenticated identity。
+TLS 1.3 0-RTT 是什麼？	Session resumption 時，client 在 handshake 完成前就送 early application data。前提：PSK／previous session ticket（NewSessionTicket）；效益：lower latency。「0」不代表網路延遲為 0。
+TLS 1.3 0-RTT 的 primary security concern？	Replay attack：攻擊者不必解密，擷取合法的加密 early data 重送即可能被重複處理。不是破解 AES、偷 X.509 private key 或必然 MITM。
+0-RTT early data 有 forward secrecy 嗎？	沒有。Early data 用 PSK-derived keys，送出時 fresh ECDHE 尚未完成。0-RTT data 仍加密，但 confidentiality ≠ replay protection。
+0-RTT 與 session resumption 的關係？	0-RTT 是 resumption 中「first flight 就帶 early data」的模式；resumption 是沿用先前 state 降低 handshake 成本的總稱，兩者不是同義詞。
+X.509 會產生 0-RTT 的 shared secret 嗎？	不會。X.509 在初次 full handshake 負責 authentication；0-RTT 使用 PSK-derived early traffic keys。
+QUIC 是什麼？與 TLS 1.3、HTTP/3 的關係？	QUIC = UDP-based secure multiplexed transport（RFC 9000），整合 TLS 1.3 cryptographic handshake；HTTP/3 runs over QUIC。QUIC 0-RTT 同樣有 replay concern。
+QUIC 相對 TCP + TLS 的優勢？	Transport 與 cryptographic handshake 整合 → 較低建立延遲；streams 在 transport 層獨立 multiplex → reduced cross-stream head-of-line blocking；Connection ID 支援 path migration（非 0-RTT 本身）。
+TCP Fast Open、TLS False Start 和 TLS 0-RTT 一樣嗎？	不一樣。TFO = TCP 層 latency optimization；False Start = 部分 handshake 完成後提前送 app data；0-RTT = first client flight 就送 TLS early data。
+AI workload 的 infrastructure 要隔離什麼？	Tenant A／B model、training cluster vs inference cluster、RAG database、management plane；用 segmentation、workload／namespace isolation、least privilege、separate service accounts。
+HSM 在 AI 環境保護什麼？	Cryptographic key material 與 operations：data encryption keys、model signing keys、API secrets、TLS certs。不保護 model logic 本身。
+LLM agent 的網路該怎麼限制？	Micro-segmentation：explicit network policy、limited egress、service identity、east-west controls；不允許 agent unrestricted lateral movement。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -397,6 +423,18 @@ Federation Broker／Proxy 的雙重角色？	Upstream 一側扮 RP；downstream 
 Federation Authority 做什麼？	建立／管理 federation trust framework、vet federation participants、定義 participation／assurance requirements。
 Federation Authority 與 Federation Proxy 差在哪？	Authority 管 trust relationship；Proxy 中介 federation protocol traffic。題庫舊模型的 `proxy federation` 把 proxy 當信任中介，判讀時看題幹動作。
 Technical IDENTIFY 題的原則？	選最精確 defined mechanism。例：`prevents one process affecting another` → Process Isolation，不選 broad security enhancement。
+哪種 HTTP request 最適合 TLS 0-RTT early data？	Safe／read-only（GET、HEAD）。Payment、transfer、create-user、delete account 等 state-changing request 應避免，因 early data 可能被 replay。
+Safe 與 idempotent HTTP method 差在哪？	Safe：不改變 resource state（GET、HEAD）。Idempotent：做 N 次效果等同一次（PUT、DELETE），但仍可能 state-changing。
+HTTP 425 Too Early 代表什麼？	RFC 8470：server 不願冒 replay risk 處理可能來自 early data 的 request；client 應等 handshake 完成後再 retry，不再用 early data。
+Early-Data: 1 header 用途？	Intermediary／gateway（reverse proxy、CDN）告知 downstream origin：這個 request 可能來自 TLS 1.3 0-RTT early data。
+OWASP Top 10 for LLM Applications 在新版 CCSP 哪裡出現？	D4 4.1 明列。依來源講義 2026 版：Prompt Injection、Sensitive Information Disclosure、Excessive Agency、Supply Chain、Data and Model Poisoning、Unbounded Consumption、Misinformation、Hidden Context Exposure、Vector and Embedding Weaknesses、Improper Output Handling。
+Direct 與 indirect prompt injection 差在哪？	Direct：user 直接輸入惡意指令。Indirect：LLM 讀到的 website、email、PDF、RAG document、tool output 內藏指令。核心：untrusted content becomes instruction-like input。
+Prompt injection 能靠更好的 system prompt 完全阻止嗎？	不能。Assume model can eventually be fooled; limit blast radius：least privilege、deterministic policy checks、human approval、output validation、tool allowlist、egress restriction。
+Excessive Agency 是什麼？怎麼控制？	Agent 擁有過多 functionality／permission／autonomy（如 shell、production DB、cloud admin API），放大 prompt injection 後果。控制：least privilege + human approval + scoped tools。
+Improper Output Handling 是什麼？	LLM output（SQL、shell、HTML、JavaScript、API arguments）未驗證就交給下游執行。原則：treat model output as untrusted input。
+Unbounded Consumption 是什麼？	Token、GPU、API calls、tool loops 失控 → cost ↑、availability ↓，即 resource exhaustion + economic DoS。控制：quota、rate limit、budget、token limit、timeout、tool-call cap。
+Hidden Context Exposure 是什麼？	2026 版由 System Prompt Leakage 擴大：hidden prompt、internal context、tool metadata、private instructions 外洩。不要把 secret 放進只是 hidden 的 context。
+AI supply chain 包含什麼？	ML libraries、pretrained models、model registries、datasets、MCP servers／tools、plugins、vector data sources。控制：pin version、signed artifact、provenance、trusted registry、SCA、vendor assessment。
 日誌跨系統關聯的第一先決條件是什麼？	Clock synchronization／NTP。不是 RAM 或磁碟容量。
 Honeypot 的合法用途有哪些？	偵測、分流注意力、拖延、蒐集威脅情報。
 Honeypot 不能做什麼？	主動招攬攻擊者（luring）。那可能構成 entrapment，傷害後續追訴。
@@ -464,6 +502,12 @@ Automated patching 題：「跨 data center patch 不一致」與「snapshot／s
 DLP／SIEM 新上線一週大量 false positives，正確思路？	Collect representative data → establish baseline → identify FP patterns → tune thresholds／policies／rules／exclusions／allowlists／correlation → measure FP／FN → re-evaluate。不要立刻換產品或搬回 on-prem。
 DLP／SIEM 題的「Wait three weeks」真正要背什麼？	不要用一週資料做 final effectiveness／migration decision——allow sufficient baselining and tuning time。不是固定要等 3 週（[Q] 低優先）。
 CSP-native 或 third-party security product 會直接決定 false positive 高低嗎？	不會。FP 更取決於 rule quality、threshold、baseline、dataset、environment context、exception configuration；題目沒有證據支持換 vendor。
+啟用 TLS 1.3 0-RTT 的維運 mitigation？	Disable 0-RTT、只允許 replay-safe operations、拒絕 unsafe request／425、replay cache、single-use ticket、ticket age validation、shared anti-replay state、限制 early-data size。Anti-replay 無法消除所有 replay risk。
+AI SOC 工具標出異常，可以直接當 incident 嗎？	不行。AI conclusion ≠ verified incident；需 validation 與 human review，再依 baseline 判斷。
+AI summary 可以取代 forensic evidence 嗎？	不行。證據鏈仍靠 raw logs、timestamps、identity、immutable records、auditability。
+AI detection 的 FP 與 FN？	False Positive：benign 被判 malicious；False Negative：malicious 被判 benign。不能只壓 FP 而不管 FN：baseline → validate → measure → tune → monitor drift。
+Model drift 是什麼？一定是攻擊嗎？	Model behavior／performance 隨時間偏離 baseline；原因含 input distribution、environment、data 改變或 attacker manipulation。Unexpected drift 觸發調查，但不是所有 drift 都是攻擊。
+AI incident response 要保留哪些紀錄？	Prompt／input、model／version、system prompt／config、retrieved context、tool calls、output、user identity、service identity、model endpoint、timestamps。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。現行官方路徑：L1 Self-Assessment、L2 Third-party assurance（Certification／Attestation／C-STAR）；L3 Continuous 屬舊資料描述（legacy）。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。
@@ -616,6 +660,14 @@ IANA 做什麼？與 IETF 怎麼分？	IANA（Internet Assigned Numbers Authorit
 IEEE 最典型的 trigger？	802.x LAN／MAN 標準：802.3 Ethernet、802.11 Wi-Fi、802.1X。
 ISO/IEC 最典型的 trigger？	Broad international standardization：ISO/IEC 27001／27002／27017／27018、15408 等；不是專門制定 Internet protocol 的組織。
 NIST 最典型的 trigger？	US federal standards／guidance：SP 800-series（如 800-53、800-63）、NIST CSF、FIPS。
+公司把客戶 PII 送進 managed AI API，controller 與 processor 是誰？	決定 purpose／means 的公司通常仍是 controller；AI provider 代為處理是 processor。送進 AI 不會讓 privacy obligation 消失。
+Explainability 是什麼？要公開 model weights 嗎？	能說明 AI decision 的依據或過程，達到 business／legal requirements；explainability ≠ 必須公開所有 model weights。
+AI 用於 automated decision 時風險為何升高？	用於 hiring、credit、insurance、healthcare、access control 時，bias、fairness、transparency、appeal 與 regulatory 問題更嚴重。
+AI vendor assessment 要問什麼？	Data retention、是否用 customer data 訓練、subprocessors、region／jurisdiction、breach notification、model／data ownership、right to audit、certification、incident handling、export／deletion。Outsourcing AI ≠ outsourcing accountability。
+Managed AI provider 在另一司法管轄區保存 prompts，屬於什麼問題？	Privacy／data sovereignty／vendor contract（D6）：確認資料處理與儲存地、subprocessors、適用 jurisdiction、能否 delete／export。
+NIST AI RMF 的四個 core functions？	Govern、Map、Measure、Manage；AI risk governance framework。
+NIST AI 600-1 是什麼？	Generative AI Profile：把 NIST AI RMF 套用到 generative AI-specific risks。AI RMF = general AI risk。
+CSA AICM 是什麼？	CSA AI Controls Matrix：cloud／AI controls framework；不需背 control IDs。
 T001 兩筆 Disputed 錯題（M001、M002）應如何計入正確率？	Disputed／Unresolved 不算進正確率。原始 19/25（76%）；排除 2 題爭議後 19/23（約 83%）。皆非 readiness 指標。（來源 study_state）
 Plan A（2026-09-26 核准）在 CCSP 進度上代表什麼？	先完成全部剩餘課程（§21–§26），再進入密集測驗；全部 section 完成並經確認後，六個 domain 才一併開放 Fresh／Mixed Test。（來源 study_state）
 目前 Udemy 課程還剩哪些 section？影片大約多長？	§21 Software Assurance and Validation、§22 Cloud Service Management、§23 Practice Exam、§24 Conclusion、§25 Risk Management、§26 Auditing Cloud Environments；影片合計約 2h27m。section↔domain 對應尚未明確確認。（來源 study_state）
