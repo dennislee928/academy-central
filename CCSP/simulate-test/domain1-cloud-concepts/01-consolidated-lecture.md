@@ -2,7 +2,7 @@
 
 > **範圍：** `simulate-test/` 內所有測驗講義中屬於 Domain 1 的內容，跨場次合併後依主題重組。
 > **考試權重：** 17%
-> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義
+> **來源：** `by-test/01`、`by-test/02`、`by-test/03`、`by-test/04`、`by-test/07`、`by-test/09`、`by-test/learnzapp/04`、2026-10-27 D1 Fresh、2026-10-30／10-31／11-03 錯題講義、2026-11-05 Gap Remediation、2026-11-06 錯題講義、2026-11-10 AI Security Additions Guideline
 > **維護：** 新增測驗講義後，將該檔的 D1 章節併入本檔，並更新 §0 來源對照。
 > **註：** 各場次分數、進步判定與補強排程留在 `by-test/` 原檔，不併入本檔。
 
@@ -30,6 +30,7 @@
 | 2026-11-03 今日講義與閃卡（內容已併入，原檔未封存） | §5 CEO reduced cost 再現、§10.6 `best / biggest / most` 警戒、§6 compute 抽象層級（概念 → D3）；§1 → D2、§2 → D6、§3／§4／§8 → D3、§7 → D4 | §1.10、§2.7、§2.9 |
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §0 共同錯誤模式、§6 TOE／PP／ST、§8 跨主題判斷表、§10 closed-book drill、§11 考場口訣、使用優先度 | §1.9、§1.10、§3、§4、§5 Drill D |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §4 SaaS vs PaaS：fully operational ≠ fully controllable、§6.3／§16.5 category-first 判讀；§2／§3／§5／§6 → D5、§7 → D6、§8–§14 → D3 | §1.1、§1.10、§2.15、§3、§4 |
+| 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §0–§2 新版 outline AI 範圍與六域優先度、§3–§8 D1 1.6 AIaaS shared responsibility／AI threat detection／data source validation／AI + SOAR／ethics、§52 control hierarchy、§53 traps、§57 讀法；§9–§16 → D2、§17–§21 → D3、§22–§34 → D4、§35–§40 → D5、§41–§50 → D6；§51 scenario mapping 拆入各域 | §1.8、§1.11、§3、§4、自我檢測 |
 
 ---
 
@@ -302,6 +303,10 @@ quantum interference
 
 其中 `superposition of physical states` 幾乎是送分 keyword。
 
+#### Artificial Intelligence／Machine Learning
+
+2026-08-01 起生效的新版 outline 把 AI/ML 明列為 **D1 1.6**，並把 AI security 整合進全部六個 domain，見 §1.11。
+
 **反例提醒：** **AONT-RS**（All-or-Nothing Transform + Reed-Solomon）屬於 data transformation／dispersion，**不是** quantum computing——詳見 [Domain 2 §1.5](../domain2-data-security/01-consolidated-lecture.md)。密碼學本身的整理在 [Domain 2 §1.7](../domain2-data-security/01-consolidated-lecture.md)。
 
 ### 1.9 Common Criteria 與 EAL（來源：2026-10-15 D1 錯題補強）
@@ -528,6 +533,107 @@ Federation、classification、TPI、sandbox 這批 recurring 錯題，多半不�
 Best-answer 題不要先問「哪個最嚴重？」，先問「**哪個最符合題目指定的 category／scope？**」。例：`unviable` 題中 hostile takeover 也可能讓組織無法存續，但它屬 corporate governance／ownership event；題目真正問的是 **cloud environment management risk** → VM sprawl（見 [Domain 5 §2.11](../domain5-operations/01-consolidated-lecture.md)）。
 
 > **口訣：Answer the category asked, not the option that merely sounds most catastrophic.**
+
+### 1.11 AI／ML 與 AI-as-a-Service（outline 1.6；來源：2026-11-10 AI Additions Guideline，`[K]` P0）
+
+#### 新版 outline 的 AI 範圍
+
+2026-08-01 起生效的 CCSP outline 明列：
+
+```text
+D1 1.6 → Comprehend Artificial Intelligence (AI)/Machine Learning (ML)
+D2 2.9 → Comprehend data protection of AI and ML data
+D4 4.1 → OWASP Top 10 for Large Language Model Applications
+D5 5.6 → Intelligent monitoring of security controls, including AI
+```
+
+ISC2 官方說明：**AI security is integrated across all six domains。** 因此 AI 不能完全不讀；但 **AI 不是第七個 domain，沒有獨立 exam weight。**
+
+**正確讀法：** 不考 Transformer equation、backpropagation、CUDA、gradient descent、model architecture 實作。會考的是：Who is responsible？What data is at risk？Which control is BEST？Trust boundary 在哪？Privacy／legal issue？Operational response？What should be isolated／monitored？——把 AI 放回 **cloud security**，不是 ML engineering。
+
+| Domain | AI 重要度 | 應讀深度 | 本系列位置 |
+|---|---|---|---|
+| D1 | **P0** | AIaaS、shared responsibility、AI threat detection、validation、ethics | 本節 |
+| D2 | **P0** | dataset／model privacy、poisoning、classification、model artifacts | [Domain 2 §1.14](../domain2-data-security/01-consolidated-lecture.md) |
+| D3 | P1 | isolation、GPU／compute、segmentation、HSM、availability | [Domain 3 §1.9](../domain3-infrastructure/01-consolidated-lecture.md) |
+| D4 | **P0** | OWASP LLM Top 10、prompt injection、agency、RAG、output validation | [Domain 4 §1.10](../domain4-application/01-consolidated-lecture.md) |
+| D5 | **P0／P1** | AI SIEM／SOAR、model drift、monitoring、IR、human validation | [Domain 5 §1.11](../domain5-operations/01-consolidated-lecture.md) |
+| D6 | P1 | explainability、privacy、vendor risk、jurisdiction、AI regulation | [Domain 6 §1.10](../domain6-legal-compliance/01-consolidated-lecture.md) |
+
+D1 1.6 範圍：cloud threat detection and analysis、data source validation and verification、SOAR、ethical concerns、regulatory requirements。
+
+#### AIaaS Shared Responsibility
+
+```text
+CSP                                   Customer
+├─ model hosting infrastructure       ├─ prompts／input data
+├─ physical hardware                  ├─ RAG data
+├─ managed AI platform                ├─ IAM、API keys
+├─ base service availability          ├─ tool permissions
+└─ some platform security controls    ├─ model／application configuration
+                                      ├─ output handling（output 能觸發什麼）
+                                      └─ legal use of data
+```
+
+> **Managed AI does NOT transfer accountability away from customer.**（與 §1.1 service model 責任邊界同一邏輯）
+
+| 型態 | Customer 不管 | Customer 仍要管 |
+|---|---|---|
+| **Hosted AI API**（類 SaaS） | GPU、model serving infra、inference runtime | 哪些資料進 model、誰能 invoke、output 能觸發什麼、API keys、downstream permissions |
+| **Self-hosted model**（類 IaaS） | 實體硬體 | 再加上 container／runtime、model artifact、patching、GPU node、network segmentation、model server security |
+
+#### AI Threat Detection
+
+AI／ML 用於 anomaly detection、behavior analytics、log correlation、fraud detection、malware classification、threat hunting、prioritization。
+
+> **AI detection output ≠ ground truth。** 仍需 confidence／validation、human review、baseline、false-positive tuning、monitoring。AI 提升 scale 與 correlation，但 human validation／governance 仍必要（SOC 實務見 [Domain 5 §1.11](../domain5-operations/01-consolidated-lecture.md)）。
+
+#### Data Source Validation
+
+```text
+Untrusted data → training／fine-tuning／RAG → AI behavior changes
+```
+
+要問：資料從哪來？provenance 已知嗎？integrity 驗證過嗎？有授權使用嗎？含 PII 嗎？攻擊者能 poison 嗎？（資料面控制見 [Domain 2 §1.14](../domain2-data-security/01-consolidated-lecture.md)）
+
+#### AI + SOAR
+
+| 合理自動化 | 高風險動作（需 policy guardrail／approval／deterministic control） |
+|---|---|
+| enrich alert、correlate events、suggest response、低風險 action | delete、disable account、block critical workload、revoke keys、quarantine production |
+
+> AI 不能因 hallucination 就直接執行 destructive action。
+
+#### Ethical Concerns
+
+bias、discrimination、transparency、explainability、accountability、misuse、excessive automation、data consent。
+
+> **Technical accuracy alone does not satisfy governance.**（法規面見 [Domain 6 §1.10](../domain6-legal-compliance/01-consolidated-lecture.md)）
+
+#### AI Security Control Hierarchy
+
+```text
+Governance → Data classification → IAM／least privilege → Isolation → Input validation
+→ Tool control → Output validation → Monitoring → IR／audit
+```
+
+AI 沒有讓傳統 controls 失效，反而讓 **least privilege、data governance、monitoring 更重要**。新版 AI 題的本質不是「會不會訓練 Transformer」，而是**能否把既有 cloud-security principles 套到 AI workload、AI data、LLM app、agent、SOC automation 與 compliance**。
+
+**Scenario → Domain 快速對照：**
+
+| Scenario | Domain | 核心 |
+|---|---|---|
+| AI SOC tool flags unusual behavior | D1／D5 | AI threat detection + validation + monitoring |
+| Attacker poisons training data | D2／D4 | dataset integrity／poisoning |
+| AI agent 可用 full permissions 呼叫 cloud admin API | D1／D3／D4 | Excessive Agency／IAM／least privilege |
+| RAG 回傳另一個 tenant 的私人文件 | D2／D4 | data authorization／vector DB weakness |
+| AI 產生的 command 直接在 server 執行 | D4 | Improper Output Handling |
+| Model 上線數月後行為改變 | D5 | Model Drift／continuous monitoring |
+| Managed AI provider 在另一司法管轄區保存 prompts | D6 | privacy／data sovereignty／vendor contract |
+
+**Traps：** 「AI 自動化越多越安全」錯（放大錯誤與 blast radius）；「Managed AI provider 負責所有 privacy」錯（shared responsibility 仍在）。
+
+> **D1 三句：** ① AIaaS 仍是 shared responsibility ② AI threat detection 需要 validation，AI output ≠ ground truth ③ AI automation 要受 governance／ethical／regulatory controls。
 
 ---
 
@@ -793,6 +899,9 @@ Cloud base price
 | 48 | **SaaS = finished application；PaaS = finished application platform；IaaS = finished infrastructure。** |
 | 49 | `fully operational + very little administration` → **SaaS**；`maximum OS／runtime control` → **IaaS**；fully operational ≠ fully controllable。 |
 | 50 | Best-answer 題先 obey **category／scope**，不選只是聽起來最嚴重的選項。 |
+| 51 | **AI 不是第七個 domain**：新版 outline 將 AI security 整合進六域（D1 1.6、D2 2.9、D4 4.1、D5 5.6 明列）；考 cloud security 判斷，不考 ML 數學。 |
+| 52 | **Managed AI／AIaaS does NOT transfer accountability**；customer 仍管 prompts、input／RAG data、IAM、tool permissions、output handling、legal use of data。 |
+| 53 | **AI detection output ≠ ground truth**；AI + SOAR 的 destructive action 需 guardrail／approval／deterministic control。 |
 
 ---
 
@@ -829,6 +938,8 @@ Cloud base price
 | 資源構成（CPU + RAM） | 實作形式（virtual／physical） | 問「由什麼組成」vs 問「如何實現」 |
 | Fully operational（SaaS） | Fully controllable（IaaS） | 現成可用、管理最少 vs OS／runtime／network 控制最多 |
 | 題目 category 內的答案 | 最嚴重的選項 | 符合 scope（如 cloud operational risk）vs 範圍外但聽起來災難性（如 hostile takeover） |
+| Hosted AI API | Self-hosted model | CSP 管 GPU／serving／runtime，customer 管資料、IAM、output vs customer 另管 runtime、model artifact、patching、GPU node、segmentation |
+| AI 提升 scale／correlation | AI 結論 = 已驗證 incident | 輔助偵測 vs 仍需 human validation、baseline、tuning |
 
 ### 決策流程
 
@@ -942,3 +1053,6 @@ Controller? Processor? Regulator?
 - Property 與 Implementation 差在哪？舉 TPI 的例子。
 - SaaS vs PaaS 最簡單的區別？`fully operational + very little administration` 最可能是哪個 service model？
 - Best-answer 題遇到「最嚴重」但不符合 category 的選項怎麼處理？
+- 新版 outline 中 AI 明列在哪四個 objective？AI 有獨立 exam weight 嗎？
+- AIaaS 下 CSP 與 customer 各管什麼？Hosted AI API 與 self-hosted model 責任差在哪？
+- AI + SOAR 哪些動作可以自動、哪些需要 approval？
