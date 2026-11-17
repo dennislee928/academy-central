@@ -42,7 +42,7 @@ ISC2 官方頁另外明確說：
 
 # 1. CCSP AI 的正確讀法
 
-CCSP 不太可能考你：
+CCSP 不太可能考：
 
 ```text
 Transformer equation
@@ -77,7 +77,7 @@ What should be monitored?
 
 # 2. 六域優先度
 
-| Domain | AI 考試重要度 | 你要讀的深度 |
+| Domain | AI 考試重要度 | 應讀深度 |
 |---|---:|---|
 | D1 Cloud Concepts/Architecture | **P0** | AIaaS、shared responsibility、AI threat detection、validation、ethics |
 | D2 Cloud Data Security | **P0** | dataset/model privacy、poisoning、classification、model artifacts |
@@ -1537,11 +1537,11 @@ Training algorithm mathematics
 
 新版 CCSP AI 題的本質，不會是：
 
-> 「你會不會訓練 Transformer？」
+> 「會不會訓練 Transformer？」
 
 而會是：
 
-> **你能不能把既有 cloud-security principles 正確套到 AI workload、AI data、LLM app、agent、SOC automation 與 compliance。**
+> **能否把既有 cloud-security principles 正確套到 AI workload、AI data、LLM app、agent、SOC automation 與 compliance。**
 
 所以讀法應該是：
 
