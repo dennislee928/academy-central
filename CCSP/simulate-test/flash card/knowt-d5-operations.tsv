@@ -71,3 +71,4 @@ AI summary 可以取代 forensic evidence 嗎？	不行。證據鏈仍靠 raw lo
 AI detection 的 FP 與 FN？	False Positive：benign 被判 malicious；False Negative：malicious 被判 benign。不能只壓 FP 而不管 FN：baseline → validate → measure → tune → monitor drift。
 Model drift 是什麼？一定是攻擊嗎？	Model behavior／performance 隨時間偏離 baseline；原因含 input distribution、environment、data 改變或 attacker manipulation。Unexpected drift 觸發調查，但不是所有 drift 都是攻擊。
 AI incident response 要保留哪些紀錄？	Prompt／input、model／version、system prompt／config、retrieved context、tool calls、output、user identity、service identity、model endpoint、timestamps。
+RAID 能否取代 backup？為什麼？	不能（RAID 0/1/5/6/10 皆然）。誤刪、勒索軟體、邏輯損毀會同步影響整個陣列，RAID 也不保存歷史版本；仍需獨立、受保護的備份。且磁碟容錯 ≠ 全面高可用（controller、電源、機房、共因故障）。

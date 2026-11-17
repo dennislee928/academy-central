@@ -163,3 +163,4 @@ Model privacy 風險有哪些？	Training data memorization、extraction、model
 Vector DB／embeddings 安全嗎？	不能假設安全。風險：unauthorized retrieval、cross-tenant leakage、poisoned vectors、weak access filtering、sensitive embeddings、stale data。Vector DB 仍需 IAM／authorization。
 RAG data 是 internal，所以可信嗎？	不一定。Internal data 也可能遭 poisoning 或被低權限 contributor 修改；仍需 integrity、provenance 與 access control。
 Differential privacy 與 homomorphic encryption 各一句話？	Differential privacy：降低從統計／model output 反推單一個體資料的可能性。Homomorphic encryption：可在 encrypted data 上做某些運算而不必先解密。CCSP 只需概念。
+RAID 5／6 的 Parity（erasure coding）是不是 encryption？	不是。Parity 是冗餘編碼，用於磁碟失效時重建資料（availability）；encryption 用於機密性（confidentiality）。Parity 也不保存獨立歷史版本，不是 backup。

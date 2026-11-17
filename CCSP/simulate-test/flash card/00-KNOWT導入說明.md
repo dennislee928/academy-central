@@ -4,18 +4,18 @@ Knowt 的 **AI PDF Summarizer**（`knowt.com/ai-pdf-summarizer`）只接受 **PD
 
 ## 一、TSV 閃卡（依 CCSP 六大 Domain 分類）
 
-全部閃卡已按 CCSP 六大 domain 歸類，共 **677 張**：
+全部閃卡已按 CCSP 六大 domain 歸類，共 **687 張**：
 
 | 檔案 | Domain | 張數 |
 |---|---|---:|
 | `knowt-d1-cloud-concepts.tsv` | D1 Cloud Concepts, Architecture and Design（含新興技術、Common Criteria／EAL 與 CCRA、TOE／PP／ST、題目判讀模型、category-first、cloud TCO、AI/ML 與 AIaaS shared responsibility） | 75 |
-| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI、Policy／Classification／Controls 四層、AI/ML 資料保護與 poisoning） | 165 |
-| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling、TLS 五件事與 802.1X、TLS 1.3 0-RTT／QUIC、AI 基礎架構） | 125 |
+| `knowt-d2-data-security.tsv` | D2 Cloud Data Security（含密碼學與 ECC、金鑰、PKI／憑證、masking 技術分類、inference、TPI、Policy／Classification／Controls 四層、AI/ML 資料保護與 poisoning、Parity ≠ Encryption） | 166 |
+| `knowt-d3-infrastructure.tsv` | D3 Cloud Platform & Infrastructure Security（含 TLS 協定面、OSI、BC/DR 指標、isolation 與 process isolation、sandbox、Secure KVM、compute、storage coupling、TLS 五件事與 802.1X、TLS 1.3 0-RTT／QUIC、AI 基礎架構、RAID 0/1/5/6/10） | 133 |
 | `knowt-d4-application.tsv` | D4 Cloud Application Security（含 federation 角色 IdP vs RP／SP、Broker、Federation Authority、HTTP Early Data／425、OWASP LLM Top 10） | 72 |
-| `knowt-d5-operations.tsv` | D5 Cloud Security Operations（含 maintenance mode alerting、DLP／SIEM baselining、running vs saved patch、VM sprawl、0-RTT 維運、AI SOC 與 model drift） | 73 |
+| `knowt-d5-operations.tsv` | D5 Cloud Security Operations（含 maintenance mode alerting、DLP／SIEM baselining、running vs saved patch、VM sprawl、0-RTT 維運、AI SOC 與 model drift、RAID ≠ Backup） | 74 |
 | `knowt-d6-legal-compliance.tsv` | D6 Legal, Risk and Compliance（含 ISO 27018:2025、Data Controller、Regulator vs Auditor、CSA STAR、IETF／IANA／IEEE 標準組織、AI privacy／vendor risk、NIST AI RMF） | 160 |
 | `knowt-00-study-progress.tsv` | **非 domain 知識卡**：學習進度、群組決議與錯題分類標籤 | 7 |
-| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 677 |
+| `knowt-import-all.tsv` | 以上全部串接（匯入單一套件用） | 687 |
 
 ### 歷次併入紀錄
 
@@ -199,6 +199,14 @@ EU transfer（adequacy／SCC／BCR、Privacy Shield = legacy）既有卡已覆�
 
 **不新增：** TLS 1.3 移除 static RSA、ECDHE forward secrecy、X.509 vs ECDHE、HKDF、AES-GCM、802.1X、IETF 制定 TLS／QUIC 等既有卡已覆蓋；RFC 9846 編號僅記於講義版本註（考試不考 RFC 編號）。
 
+**2026-11-17 RAID 0/1/5/6/10 預習講義**（原檔未封存、無原生閃卡；依講義內容產出並以中性語氣撰寫，淨增 10 張）：
+
+- Striping／Mirroring／Parity 三機制、RAID 0／1／5／6／10 各自的容錯與可用容量、RAID 10 故障條件、四顆 2 TB 容量比較 → **D3**（+8）
+- Parity／erasure coding ≠ encryption → **D2**（+1）
+- RAID ≠ Backup、磁碟容錯 ≠ 全面高可用 → **D5**（+1）
+
+**不新增：** `FC／FCoE／iSCSI vs RAID`（D3）、`Bit-splitting vs RAID`（D2）、`Backup ≠ continuous mirroring`（D2）等既有卡已覆蓋；五句記憶併入上述 D3 卡答案。
+
 ### 手動匯入步驟
 
 Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI PDF Summarizer）。
@@ -225,7 +233,7 @@ Knowt 首頁 → Create → **Flashcards** → **Import manually**（不是 AI P
 - `07-D6法律合規.pdf`
 - `08-TLS-PKI-密碼學.pdf`
 
-> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 677 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
+> ⚠️ **PDF／PPTX 尚未同步：** 這些檔案是 2026-09-25 依舊分類（含獨立的 TLS-PKI 檔）匯出的 232 張版本，與現行 TSV 的 687 張分域結果**不一致**。需要分域 PDF 時請依上表的 TSV 重新匯出。
 
 操作：
 

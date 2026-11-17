@@ -238,6 +238,7 @@ Model privacy 風險有哪些？	Training data memorization、extraction、model
 Vector DB／embeddings 安全嗎？	不能假設安全。風險：unauthorized retrieval、cross-tenant leakage、poisoned vectors、weak access filtering、sensitive embeddings、stale data。Vector DB 仍需 IAM／authorization。
 RAG data 是 internal，所以可信嗎？	不一定。Internal data 也可能遭 poisoning 或被低權限 contributor 修改；仍需 integrity、provenance 與 access control。
 Differential privacy 與 homomorphic encryption 各一句話？	Differential privacy：降低從統計／model output 反推單一個體資料的可能性。Homomorphic encryption：可在 encrypted data 上做某些運算而不必先解密。CCSP 只需概念。
+RAID 5／6 的 Parity（erasure coding）是不是 encryption？	不是。Parity 是冗餘編碼，用於磁碟失效時重建資料（availability）；encryption 用於機密性（confidentiality）。Parity 也不保存獨立歷史版本，不是 backup。
 高架地板（raised flooring）的設計目的是什麼？	只有兩項：空調送／回風管道（air plenum）與纜線管路通道（power／network／fiber／piping）。不是避難所、不是儲藏室，也不是為了增加結構強度。
 高架地板下方線材不整理，最大危害通常是什麼？	阻礙氣流、降低 HVAC 效率。不要先選防跌倒。
 MAD 是什麼？	Maximum Allowable Downtime（亦見 MTD／MAO）：業務決定的最大可容忍停機時間。必背關係式 RTO + WRT ≤ MTD／MAO。
@@ -363,6 +364,14 @@ TCP Fast Open、TLS False Start 和 TLS 0-RTT 一樣嗎？	不一樣。TFO = TCP
 AI workload 的 infrastructure 要隔離什麼？	Tenant A／B model、training cluster vs inference cluster、RAG database、management plane；用 segmentation、workload／namespace isolation、least privilege、separate service accounts。
 HSM 在 AI 環境保護什麼？	Cryptographic key material 與 operations：data encryption keys、model signing keys、API secrets、TLS certs。不保護 model logic 本身。
 LLM agent 的網路該怎麼限制？	Micro-segmentation：explicit network policy、limited egress、service identity、east-west controls；不允許 agent unrestricted lateral movement。
+RAID 的三個基本機制是什麼？各自是否提供冗餘？	Striping（條帶化）：資料分散到多顆磁碟，提升平行存取，單獨使用無冗餘；Mirroring（鏡像）：不同磁碟存相同資料，有冗餘；Parity（同位檢查資訊）：以冗餘計算資訊在容許故障數內重建資料，有冗餘。
+RAID 0 的機制、容錯與可用容量？	Striping，無冗餘；保證可容忍 0 顆磁碟故障；可用容量 N × S；最少 2 顆。RAID 數字越低不代表越安全。
+RAID 1 的機制、容錯與可用容量？	Mirroring；兩碟鏡像容忍 1 顆，N-way 全鏡像容忍 N−1 顆；可用容量 S（同容量全鏡像）；最少 2 顆。
+RAID 5 的機制、容錯與可用容量？	Striping + Distributed Parity；保證容忍 1 顆；可用容量 (N−1) × S；最少 3 顆。
+RAID 6 的機制、容錯與可用容量？	Striping + Dual Parity；保證容忍 2 顆；可用容量 (N−2) × S；最少 4 顆。
+RAID 10 的機制、容錯與可用容量？	Striping across mirrored pairs（1+0，stripe of mirrors）；保證容忍至少 1 顆，多顆取決於是否落在不同鏡像組；可用容量 (N/2) × S；最少 4 顆（通常偶數）。
+RAID 10 為何不能說「固定可容忍兩顆磁碟故障」？	四碟兩組鏡像 [A1,A2]、[B1,B2]：A1＋B1 同時壞仍可存取；A1＋A2 同時壞則失去該鏡像組資料。Failure pattern matters。
+四顆 2 TB 磁碟在 RAID 0／5／6／10／1 的可用容量與容錯？	RAID 0：8 TB、無容錯；RAID 5：6 TB、任意 1 顆；RAID 6：4 TB、任意 2 顆；RAID 10：4 TB、1 顆可容忍，2 顆看鏡像配對；RAID 1 四路完整鏡像：2 TB。
 發現未授權 API 時，為什麼不該立刻封鎖？	可能中斷合法業務。ISC2 常要先 gather more data，釐清業務需求與影響。
 雲端開發者最容易失去哪項控制權？	底層 logging，因為日誌設施通常由 CSP 掌握。不是欄位驗證。
 開發人員測試自己程式的核心問題是什麼？	Conflict of interest／vested interest：他們希望軟體表現良好，因而產生盲點。
@@ -508,6 +517,7 @@ AI summary 可以取代 forensic evidence 嗎？	不行。證據鏈仍靠 raw lo
 AI detection 的 FP 與 FN？	False Positive：benign 被判 malicious；False Negative：malicious 被判 benign。不能只壓 FP 而不管 FN：baseline → validate → measure → tune → monitor drift。
 Model drift 是什麼？一定是攻擊嗎？	Model behavior／performance 隨時間偏離 baseline；原因含 input distribution、environment、data 改變或 attacker manipulation。Unexpected drift 觸發調查，但不是所有 drift 都是攻擊。
 AI incident response 要保留哪些紀錄？	Prompt／input、model／version、system prompt／config、retrieved context、tool calls、output、user identity、service identity、model endpoint、timestamps。
+RAID 能否取代 backup？為什麼？	不能（RAID 0/1/5/6/10 皆然）。誤刪、勒索軟體、邏輯損毀會同步影響整個陣列，RAID 也不保存歷史版本；仍需獨立、受保護的備份。且磁碟容錯 ≠ 全面高可用（controller、電源、機房、共因故障）。
 CMM 用來評估什麼？	流程機制的嚴謹度、細節與可重複性（repeatability）。看到這些詞不要選 CSA STAR。
 CSA STAR 用來做什麼？	檢驗／展示雲端安全控制保證的 registry program，不是量測流程成熟度。現行官方路徑：L1 Self-Assessment、L2 Third-party assurance（Certification／Attestation／C-STAR）；L3 Continuous 屬舊資料描述（legacy）。
 收到訴訟通知應立刻做什麼？	啟動 Legal Hold，暫停常規 secure destruction／retention 銷毀，以保全證據。

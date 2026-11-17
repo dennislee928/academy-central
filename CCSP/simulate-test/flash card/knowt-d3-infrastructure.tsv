@@ -123,3 +123,11 @@ TCP Fast Open、TLS False Start 和 TLS 0-RTT 一樣嗎？	不一樣。TFO = TCP
 AI workload 的 infrastructure 要隔離什麼？	Tenant A／B model、training cluster vs inference cluster、RAG database、management plane；用 segmentation、workload／namespace isolation、least privilege、separate service accounts。
 HSM 在 AI 環境保護什麼？	Cryptographic key material 與 operations：data encryption keys、model signing keys、API secrets、TLS certs。不保護 model logic 本身。
 LLM agent 的網路該怎麼限制？	Micro-segmentation：explicit network policy、limited egress、service identity、east-west controls；不允許 agent unrestricted lateral movement。
+RAID 的三個基本機制是什麼？各自是否提供冗餘？	Striping（條帶化）：資料分散到多顆磁碟，提升平行存取，單獨使用無冗餘；Mirroring（鏡像）：不同磁碟存相同資料，有冗餘；Parity（同位檢查資訊）：以冗餘計算資訊在容許故障數內重建資料，有冗餘。
+RAID 0 的機制、容錯與可用容量？	Striping，無冗餘；保證可容忍 0 顆磁碟故障；可用容量 N × S；最少 2 顆。RAID 數字越低不代表越安全。
+RAID 1 的機制、容錯與可用容量？	Mirroring；兩碟鏡像容忍 1 顆，N-way 全鏡像容忍 N−1 顆；可用容量 S（同容量全鏡像）；最少 2 顆。
+RAID 5 的機制、容錯與可用容量？	Striping + Distributed Parity；保證容忍 1 顆；可用容量 (N−1) × S；最少 3 顆。
+RAID 6 的機制、容錯與可用容量？	Striping + Dual Parity；保證容忍 2 顆；可用容量 (N−2) × S；最少 4 顆。
+RAID 10 的機制、容錯與可用容量？	Striping across mirrored pairs（1+0，stripe of mirrors）；保證容忍至少 1 顆，多顆取決於是否落在不同鏡像組；可用容量 (N/2) × S；最少 4 顆（通常偶數）。
+RAID 10 為何不能說「固定可容忍兩顆磁碟故障」？	四碟兩組鏡像 [A1,A2]、[B1,B2]：A1＋B1 同時壞仍可存取；A1＋A2 同時壞則失去該鏡像組資料。Failure pattern matters。
+四顆 2 TB 磁碟在 RAID 0／5／6／10／1 的可用容量與容錯？	RAID 0：8 TB、無容錯；RAID 5：6 TB、任意 1 顆；RAID 6：4 TB、任意 2 顆；RAID 10：4 TB、1 顆可容忍，2 顆看鏡像配對；RAID 1 四路完整鏡像：2 TB。

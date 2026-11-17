@@ -42,7 +42,7 @@
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §2 Policy／Classification／Metadata／Controls 四層模型與 `Proper _____` 題；§4 TPI／SoD／Split Knowledge 2 秒口訣與 TPI 實作清單（復現：Define vs Create、two IAM matrices） | §1.2、§1.11、§2.5、§2.19、§3、§4、§5 Drill I |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §9 X.509 欄位與 binding、§10.2 裸 DH 可遭 MITM（TLS stack 主體 → D3） | §1.7 |
 | 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §9–§16 D2 2.9 AI data lifecycle、dataset security、data poisoning、model security／privacy、embeddings／vector DB、differential privacy、homomorphic encryption；§51 Scenario B／D、§53 Trap 4／6、§55 D2 三句；總覽 → D1 §1.11 | §1.14、§3、§4、Drill J |
-| 2026-11-17 RAID 0/1/5/6/10 預習講義（內容已併入，原檔未封存） | §1 Parity 定義、§4 誤區 2 Parity ≠ Backup、誤區 4 Erasure Coding ≠ Encryption（RAID 本體 → D3、RAID ≠ Backup 維運面 → D5） | §1.6、§3、§4 |
+| 2026-11-17 RAID 0/1/5/6/10 預習講義（內容已併入，原檔未封存） | §1 Parity 定義、§4 誤區 2 Parity ≠ Backup、誤區 4 Erasure Coding ≠ Encryption（RAID 本體 → D3、RAID ≠ Backup 維運面 → D5） | §1.5、§3、§4 |
 
 ---
 
