@@ -38,6 +38,7 @@
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §8–§14 TLS stack：X.509／(EC)DHE／HKDF／AES-GCM・ChaCha20、802.1X 與 EAP-TLS 層級、TLS 題 `[T/Q]` | §1.3、§2.18、§3、§4 |
 | 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §0–§18 RTT、TLS 1.3 1-RTT、PSK／NewSessionTicket、0-RTT 流程、replay、no forward secrecy；§26–§38 QUIC／HTTP/3、TFO、False Start、0-RTT vs resumption／X.509／ECDHE；§40 traps、§41 範例題；§19–§25 HTTP Early Data → D4；§25 mitigation 維運面 → D5；§39 標準對照（IETF 已在 D6） | §1.3、§3、§4、自我檢測 |
 | 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §17–§21 AI infrastructure threat model、isolation、GPU／accelerator、HSM、micro-segmentation；§51 Scenario C、§55 D3 三句；總覽 → D1 §1.11 | §1.9、§3、§4、自我檢測 |
+| 2026-11-17 RAID 0/1/5/6/10 預習講義（內容已併入，原檔未封存） | §1 Striping／Mirroring／Parity、§2 RAID 等級速查與 RAID 10 故障條件、§3 四顆 2 TB 容量比較、§4 誤區 1／5、§5 五句記憶；§4 誤區 2／4（Parity ≠ Backup／Encryption）→ D2、誤區 3（RAID ≠ Backup）→ D5 | §1.3、§1.6、§3、§4、自我檢測 |
 
 ---
 
@@ -284,6 +285,50 @@ RAID              = 磁碟裡怎麼排
 RAID 處理的是 striping／mirroring／parity／disk redundancy，**不是在回答「host 要怎麼把 storage command 傳到 storage array」**。
 
 > 題庫以 `storage protocols except RAID` 出題，**答案方向正確**，但把前三者粗略統稱 `storage protocols` 不夠精準——列為**中度 `[Q]`**，概念仍必須會（見 [README 的降權處理](../README.md)）。
+
+#### ⭐ RAID 0/1/5/6/10：機制、容錯與可用容量（來源：2026-11-17 RAID 預習講義，`[K]`）
+
+**三個基本機制：**
+
+- **Striping（條帶化）**：把資料分散到多顆磁碟，提升平行存取能力；**單獨使用不提供冗餘**。
+- **Mirroring（鏡像）**：在不同磁碟保存相同資料，一顆損壞時由鏡像接手。
+- **Parity（同位檢查資訊）**：以冗餘計算資訊，在容許的磁碟故障數內重建資料。Parity 不是獨立 Backup，也不是加密（見 [Domain 2](../domain2-data-security/01-consolidated-lecture.md)、[Domain 5](../domain5-operations/01-consolidated-lecture.md)）。
+
+**RAID 等級速查**（N 顆容量相同、每顆 S 的磁碟；容量為理想化邏輯可用容量，實際仍有系統開銷）：
+
+| RAID | 主要機制 | 冗餘 | 保證可容忍的磁碟故障 | 典型可用容量 | 最少磁碟數 |
+|---|---|---|---|---|---|
+| **RAID 0** | Striping | 無 | **0 顆** | **N × S** | 2 |
+| **RAID 1** | Mirroring | 有 | 兩碟鏡像容忍 1 顆；N-way 全鏡像容忍 N−1 顆 | **S**（同容量全鏡像） | 2 |
+| **RAID 5** | Striping + Distributed Parity | 有 | **1 顆** | **(N−1) × S** | 3 |
+| **RAID 6** | Striping + Dual Parity | 有 | **2 顆** | **(N−2) × S** | 4 |
+| **RAID 10** | Striping across mirrored pairs（1+0） | 有 | 至少 **1 顆**；多顆取決於是否落在不同鏡像組 | **(N/2) × S** | 4（通常偶數顆） |
+
+**RAID 10 故障條件：** 四顆磁碟組成兩組鏡像 `[A1, A2]` 與 `[B1, B2]`。`A1` 與 `B1` 同時壞掉仍可存取；`A1` 與 `A2` 同時壞掉則失去該鏡像組資料。因此 **RAID 10 不能簡化成「固定可容忍兩顆磁碟故障」**。
+
+**四顆 2 TB 磁碟容量比較：**
+
+```text
+RAID 0  → 8 TB   無容錯
+RAID 5  → 6 TB   任意 1 顆
+RAID 6  → 4 TB   任意 2 顆
+RAID 10 → 4 TB   1 顆可容忍；2 顆取決於鏡像配對
+RAID 1  → 2 TB   四路完整鏡像（常見兩碟 RAID 1：2 × 2 TB → 2 TB）
+```
+
+**常見誤區：**
+
+1. **RAID 0 沒有容錯**：數字越低不代表越安全；RAID 0 的目的是 striping，沒有 redundancy。
+2. **磁碟容錯 ≠ 全面高可用**：controller、電源、機房、應用程式或共因故障仍可能造成服務中斷（見 §1.6）。
+3. **RAID ≠ Backup、Parity ≠ Encryption** → 詳見 D2／D5。
+
+```text
+RAID 0  = Stripe, no redundancy.
+RAID 1  = Mirror.
+RAID 5  = Distributed parity, one-disk tolerance.
+RAID 6  = Dual parity, two-disk tolerance.
+RAID 10 = Stripe of mirrors; failure pattern matters.
+```
 
 #### Fibre Channel vs FCP（更精確的區分）
 
@@ -1011,6 +1056,7 @@ BC/DR kit 的內容由 recovery plan 決定（organization、threat model、site
 - **雲端特性對 BC/DR 的幫助：** on-demand self-service 可快速供裝；任意位置存取可降低對專屬備援設施的需求；**data classification 可辨識關鍵資產與復原優先序**。
 - **反例：** Egress monitoring **不是** BC/DR 事件預測來源。
 - **跨 CSP 備份的最大技術風險：** interoperability／proprietary format incompatibility（見 [Domain 1 §2.2](../domain1-cloud-concepts/01-consolidated-lecture.md)）。
+- **RAID 容錯 ≠ 服務韌性：** RAID 只處理磁碟層級故障；controller、電源、機房、應用程式或共因故障仍需 BC/DR 與多站點設計處理，也不能替代獨立備份（RAID 0/1/5/6/10 細節見 §1.3）。
 
 ### 1.7 監控可視性與控制搭配
 
@@ -1319,6 +1365,10 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | 104 | **HTTP/3 runs over QUIC；QUIC = UDP-based，integrates TLS 1.3 handshake**；path migration 是 QUIC 特性，不是 0-RTT。 |
 | 105 | **AI workload 仍是 cloud workload**：training／inference cluster、RAG DB、management plane 都要 isolation、segmentation、separate service accounts。 |
 | 106 | **HSM 保護 keys 與 cryptographic operations（含 model signing keys），不是保護 model logic**；LLM agent 不得 unrestricted lateral movement → micro-segmentation + limited egress。 |
+| 107 | **RAID 0 = stripe, no redundancy（0 顆容錯，N × S）**；數字越低不代表越安全。 |
+| 108 | **RAID 1 = mirror；RAID 5 = distributed parity（容忍 1 顆，(N−1) × S）；RAID 6 = dual parity（容忍 2 顆，(N−2) × S）。** |
+| 109 | **RAID 10 = stripe of mirrors（(N/2) × S）**；保證容忍 1 顆，第二顆是否可容忍取決於是否落在同一鏡像組。 |
+| 110 | 磁碟容錯 ≠ 全面高可用：controller、電源、機房、應用程式與共因故障仍可中斷服務。 |
 
 ---
 
@@ -1382,6 +1432,10 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 | TLS 0-RTT | TCP Fast Open／TLS False Start | TLS early data vs TCP 層 optimization／部分 handshake 完成後才提前送 |
 | Replay | MITM | 重送擷取到的合法訊息 vs 介入雙方通訊；0-RTT 經典風險是 replay |
 | HSM 保護 model signing keys | HSM 保護 model 本身 | 金鑰與密碼運算 vs model weights／logic（另需 access control、signing、integrity check） |
+| RAID 5 | RAID 6 | single distributed parity（容忍 1 顆、最少 3 碟）vs dual parity（容忍 2 顆、最少 4 碟） |
+| RAID 6 | RAID 10 | 任意 2 顆皆可容忍 vs 第二顆取決於鏡像配對（四碟同為 4 TB／2 TB×4） |
+| RAID 0 | RAID 1 | striping 求效能、無冗餘 vs mirroring 求冗餘 |
+| 磁碟容錯（RAID） | 服務高可用（HA／BC/DR） | 只處理 disk failure vs 涵蓋 controller、電源、機房、應用與共因故障 |
 
 ---
 
@@ -1454,3 +1508,4 @@ BC/DR 時間軸題被題幹的 `point` 字眼帶走。修正：RPO 只回答「�
 - TLS 1.3 0-RTT 的前提、效益與兩大弱點？為什麼 payment API 不該用 0-RTT？
 - 0-RTT 和 session resumption 是什麼關係？QUIC、HTTP/3、TLS 1.3 的層級怎麼畫？
 - AI training／inference 環境要隔離哪些對象？HSM 在 AI 環境保護什麼、不保護什麼？
+- RAID 0/1/5/6/10 各自的機制、保證容錯顆數與可用容量公式？四顆 2 TB 磁碟各得多少？RAID 10 為何不能說「固定容忍兩顆」？
