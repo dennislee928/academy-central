@@ -29,6 +29,7 @@
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §2 Maintenance mode：哪些 alert 可 suppress `[Q/T]`、§3 DLP／SIEM false positive「等三週」`[Q]`、§5 Running vs saved state patching、canary、patched ≠ clean `[T/J]`、§6 `unviable`／VM sprawl vs hostile takeover `[J/Q]` | §1.3、§1.4、§1.5、§1.9、§2.8–§2.11、§3、§4、§5 Drill B |
 | 2026-11-10 0-RTT／TLS 1.3／QUIC 講義（內容已併入，原檔未封存） | §25 0-RTT mitigation（維運面）；協定本體 → D3、HTTP Early Data → D4 | §1.10、§3、Drill B |
 | 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §35–§40 D5 5.6 AI in SOC、FP／FN、AI + SIEM 證據鏈、AI + SOAR、model drift、AI incident response；§51 Scenario A／F、§53 Trap 2、§55 D5 三句；總覽 → D1 §1.11 | §1.11、§3、§4、Drill B |
+| 2026-11-17 RAID 0/1/5/6/10 預習講義（內容已併入，原檔未封存） | §4 誤區 3 RAID ≠ Backup、誤區 5 磁碟容錯 ≠ 全面高可用（RAID 本體 → D3、Parity ≠ Encryption → D2） | §1.4、§3、§4 |
 
 ---
 
@@ -277,6 +278,21 @@ Maintenance Node
 HA 關注的是 **service remains available despite failures**，常見手段：redundancy、replication、clustering、failover、load balancing。
 
 > **易錯點：failback to on-prem 不是所有 cloud HA 架構的必備元素。** 它是否存在取決於 hybrid architecture、組織環境與 DR strategy——看到選項列出「必須能 failback 回自有機房」時不要反射選它。
+
+#### RAID ≠ Backup（來源：2026-11-17 RAID 預習講義，`[K]`）
+
+不論 RAID 0、1、5、6、10，都**不能代替獨立、受保護的備份**：
+
+- **誤刪、勒索軟體、邏輯損毀**會即時同步到整個陣列（mirror／parity 忠實複製錯誤）。
+- RAID 不保存**獨立的歷史版本**，無法回到事故前的 restore point（RPO 仍要靠 backup／snapshot 策略）。
+- **磁碟容錯 ≠ 全面高可用**：controller、電源、機房、應用程式或共因故障仍可能造成服務中斷。
+
+```text
+RAID   = 磁碟故障時維持可用（availability / fault tolerance）
+Backup = 獨立、受保護、可回到過去版本的復原能力（recoverability）
+```
+
+RAID 等級、容錯顆數與可用容量見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)。
 
 BC/DR 的完整指標與 4R 流程見 [Domain 3 §1.6](../domain3-infrastructure/01-consolidated-lecture.md)。
 
@@ -760,6 +776,7 @@ Redundancy = 可用性 / 容錯
 | 62 | **AI SOAR 高風險動作（delete、revoke production credentials、isolate critical server）需 approval／deterministic control**；低風險 enrichment 可自動。 |
 | 63 | **Model drift = 行為／效能偏離 baseline** → 持續監控，unexpected drift 觸發調查，但 drift ≠ 必然 attack。 |
 | 64 | **AI IR 要保留 prompt、model version、system prompt／config、retrieved context、tool calls、output、identity、timestamps。** |
+| 65 | **RAID ≠ Backup**：誤刪、勒索軟體、邏輯損毀會同步影響整個陣列；仍需獨立、受保護、有歷史版本的備份。 |
 
 ---
 
@@ -802,6 +819,7 @@ Redundancy = 可用性 / 容錯
 | Decommission | 直接刪除 | 依 retention 與銷毀政策退役並更新 inventory vs 只把 VM 關掉或砍掉 |
 | False Positive | False Negative | benign 被判 malicious（alert fatigue）vs malicious 被判 benign（漏報）；不能只壓 FP |
 | Model drift | Attack | 行為偏離 baseline 的現象（原因多元）vs 其中一種可能原因；drift 觸發調查而非直接定性 |
+| RAID | Backup | 磁碟故障時維持可用 vs 獨立、受保護、可回到過去版本的復原 |
 
 > **Boundary learning 提示：** Audit vs Hardening、Personnel vs Physical Access 這兩組都屬「兩個答案技術上都合理，但題目在問分類」的典型。處理流程見 [README 的錯題複習與 argue 流程](../README.md)。
 

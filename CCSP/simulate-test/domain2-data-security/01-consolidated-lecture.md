@@ -42,6 +42,7 @@
 | 2026-11-05 Gap Remediation 講義與閃卡（內容已併入，原檔未封存） | §2 Policy／Classification／Metadata／Controls 四層模型與 `Proper _____` 題；§4 TPI／SoD／Split Knowledge 2 秒口訣與 TPI 實作清單（復現：Define vs Create、two IAM matrices） | §1.2、§1.11、§2.5、§2.19、§3、§4、§5 Drill I |
 | 2026-11-06 今日講義與閃卡（內容已併入，原檔未封存） | §9 X.509 欄位與 binding、§10.2 裸 DH 可遭 MITM（TLS stack 主體 → D3） | §1.7 |
 | 2026-11-10 CCSP 2026 AI Security Additions D1–D6 Guideline（內容已併入，原檔未封存） | §9–§16 D2 2.9 AI data lifecycle、dataset security、data poisoning、model security／privacy、embeddings／vector DB、differential privacy、homomorphic encryption；§51 Scenario B／D、§53 Trap 4／6、§55 D2 三句；總覽 → D1 §1.11 | §1.14、§3、§4、Drill J |
+| 2026-11-17 RAID 0/1/5/6/10 預習講義（內容已併入，原檔未封存） | §1 Parity 定義、§4 誤區 2 Parity ≠ Backup、誤區 4 Erasure Coding ≠ Encryption（RAID 本體 → D3、RAID ≠ Backup 維運面 → D5） | §1.6、§3、§4 |
 
 ---
 
@@ -494,6 +495,8 @@ Split / Transform
 | 主要目的 | availability、resilience、有時 performance | 另提供 **confidentiality benefit**、compromise isolation、provider／site diversity |
 
 **不要理解成 `bit-splitting = RAID`。**
+
+**Parity／Erasure coding ≠ Encryption（來源：2026-11-17 RAID 預習講義）：** RAID 5／6 的 parity 屬於簡單的冗餘編碼，目的是在容許的磁碟故障數內**重建資料（availability／integrity）**；encryption 的目的是**機密性（confidentiality）**。拿到 parity 或單一磁碟不代表資料受加密保護，兩者不能互相替代。Parity 也不是 backup——它不保存獨立的歷史版本（RAID 等級細節見 [Domain 3 §1.3](../domain3-infrastructure/01-consolidated-lecture.md)）。
 
 **跨 jurisdiction 的正確說法：** 題庫常說分散多 jurisdiction 會讓單一 jurisdiction 的執法 seizure 更複雜。其邏輯可以理解（只取得 Fragment A 無法 reconstruct），但**不要把「阻撓 law enforcement」當成 security objective 去背**。較好的 security model 是：
 
@@ -1288,6 +1291,7 @@ Controls  → 依 classification 施加的 treatment
 | 93 | **Dataset、model weights、embeddings、prompts、outputs、logs 都是 data security assets**，須納入 classification、IAM、retention。 |
 | 94 | **Data poisoning = dataset／model pipeline integrity 問題**（training、fine-tuning、RAG）；prompt injection = inference-time input 問題。 |
 | 95 | **Model 本身可能洩漏 training data**（memorization、inversion、membership inference）；vector DB 仍需 authorization，embedding ≠ 去識別化。 |
+| 96 | **Parity／erasure coding = 冗餘重建（availability）≠ encryption（confidentiality）**；parity 也不保存歷史版本，不是 backup。 |
 
 ---
 
@@ -1355,6 +1359,7 @@ Controls  → 依 classification 施加的 treatment
 | Classification | Policy | 資料所屬的 bucket vs 定義 taxonomy 與 handling rules 的 rulebook |
 | Data poisoning | Prompt injection | 竄改 training／fine-tuning／RAG 資料以改變未來行為（integrity）vs inference 時以輸入操縱 model |
 | Differential privacy | Homomorphic encryption | 降低從 output 反推個體 vs 在加密資料上運算 |
+| Parity／Erasure coding | Encryption | 磁碟失效時重建資料（availability）vs 保護機密性 |
 
 ---
 
